@@ -1,7 +1,0 @@
-# pack-refs with: peeled fully-peeled sorted 
-7ab26a7bb2565b28d8540ff52c21124e60b0bfb9 refs/remotes/origin/#64-installation-wsl2
-5234ee698083bd6888ee860f8337afc299bff7a4 refs/remotes/origin/develop
-3de1fc02306a0f96431c0c400190b5ca3630d655 refs/remotes/origin/main
-6098e569f69b69df751a732242cb55e9732e234b refs/remotes/origin/renovate/configure
-2eb7f50281284bff120fe9cf67b42597c8755720 refs/remotes/origin/task/add-typoscript-linter
-e6f0d2f357f92592b9fe6614908ab3505dcb3d59 refs/tags/node-build-test
