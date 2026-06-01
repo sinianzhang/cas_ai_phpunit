@@ -1,0 +1,68 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:ac="http://typo3.org/ns/B13/Assetcollector/ViewHelpers"
+	xmlns:i="http://typo3.org/ns/B13/Picture/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<f:if condition="{file}">
+	<figure class="b_tm__figure {f:if(condition: modifier, then: 'b_tm__figure--{modifier}')}">
+		<f:switch expression="{layout}">
+			<f:case value="full">
+				<f:if condition="{file.type} == 4">
+					<f:then>
+						<f:render section="Video" arguments="{file: file, modifier: 'full'}" />
+					</f:then>
+					<f:else>
+						<f:render section="Image-Full" arguments="{file: file}" />
+					</f:else>
+				</f:if>
+
+			</f:case>
+			<f:defaultCase>
+				<f:if condition="{file.type} == 4">
+					<f:then>
+						<f:render section="Video" arguments="{file: file, modifier: 'half'}" />
+					</f:then>
+					<f:else>
+						<f:render section="Image-Half" arguments="{file:file}" />
+					</f:else>
+				</f:if>
+			</f:defaultCase>
+		</f:switch>
+		<f:if condition="{file.description} || {file.properties.copyright}">
+			<figcaption class="b_tm__caption">
+				<ac:svg name="camera" class="b_tm__caption-icon" additionalAttributes="{aria-hidden: 'true'}"/>
+				<f:if condition="{file.description}">
+					{file.description -> f:format.nl2br()}
+				</f:if>
+				<f:if condition="{file.properties.copyright}">
+					&copy; {file.properties.copyright}
+				</f:if>
+			</figcaption>
+		</f:if>
+	</figure>
+</f:if>
+
+<f:section name="Image-Full">
+	<i:image src="{file.uid}" treatIdAsReference="1" width="384"
+					 class="b_tm__image" pictureClass="b_tm__picture"
+					 sources="{lg: {width: '780'},
+						 	md: {width: '708'},
+						 	sm-md: {width: '737'},
+						 	sm: {width: '538'}}"
+	/>
+</f:section>
+
+<f:section name="Image-Half">
+	<i:image src="{file.uid}" treatIdAsReference="1" width="380"
+					 class="b_tm__image" pictureClass="b_tm__picture"
+	/>
+</f:section>
+
+<f:section name="Video">
+	<div class="b_tm__videocontainer">
+		<f:media class="b_tm__video b_tm__video--{modifier}" file="{file}" width="160" height="90" alt="{file.alternative}" title="{file.title}" additionalConfig="{settings.media.additionalConfig}" />
+	</div>
+</f:section>
+</html>

@@ -1,0 +1,30 @@
+mod.web_layout.BackendLayouts.Contentpage {
+  title = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:backendlayout.contentpage.title
+  config {
+    backend_layout {
+      doktype = 1
+      colCount = 1
+      rowCount = 2
+      rows {
+        1 {
+          columns {
+            1 {
+              name = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:backendlayout.stage.name
+              colPos = 1
+              allowedContentTypes = keyvisual
+            }
+          }
+        }
+        2 {
+          columns {
+            1 {
+              name = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:backendlayout.maincontent.name
+              colPos = 0
+              allowedContentTypes = contentstage,textmedia,felogin_login,form_formframework
+            }
+          }
+        }
+      }
+    }
+  }
+}

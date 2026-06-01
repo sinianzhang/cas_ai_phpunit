@@ -1,0 +1,85 @@
+@import "variables";
+
+@import "Mixins/media";
+@import "Mixins/disableScrolling";
+@import "Mixins/teaserhover";
+
+@import "fonts";
+@import	"base";
+@import "zindex";
+@import "page";
+@import "contentcontainer";
+@import "pseudo";
+@import "clearfix";
+@import "header";
+@import "typo3universe";
+@import "navtrigger";
+@import "navi";
+@import "langswitch";
+@import "footer";
+@import "footercontent";
+@import "profiles";
+@import "footernavi";
+@import "copyright";
+@import "button";
+@import "lead";
+@import "tm";
+@import "keyvisual";
+@import "contentstage";
+@import "table";
+@import "teasermenu";
+@import "teaser";
+@import "mainteaser";
+@import "resetbanner";
+@import "search";
+@import "result";
+@import "breadcrumb";
+@import "pagination";
+
+@include media(md) {
+	@include base-md;
+	@include clearfix-md;
+	@include contentcontainer-md;
+	@include typo3universe-md;
+	@include footercontent-md;
+	@include copyright-md;
+	@include tm-md;
+	@include table-md;
+	@include teasermenu-md;
+	@include teaser-md;
+	@include resetbanner-md;
+}
+
+@include media(md, down) {
+	@include resetbanner-md-down;
+	@include result-md-down;
+}
+
+@include media(lg, down) {
+	@include header-lg-down;
+	@include navi-lg-down;
+    @include search-lg-down;
+}
+
+@include media(lg) {
+	@include contentcontainer-lg;
+	@include navi-lg;
+	@include langswitch-lg;
+	@include navtrigger-lg;
+	@include header-lg;
+	@include footer-lg;
+	@include footernavi-lg;
+	@include copyright-lg;
+	@include keyvisual-lg;
+	@include teaser-lg;
+	@include mainteaser-lg;
+	@include resetbanner-lg;
+}
+
+@include media(xl) {
+	@include contentcontainer-xl;
+	@include typo3universe-xl;
+	@include keyvisual-xl;
+	@include mainteaser-xl;
+    @include search-xl;
+}

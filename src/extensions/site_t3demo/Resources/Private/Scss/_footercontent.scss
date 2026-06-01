@@ -1,0 +1,12 @@
+.b_footercontent {
+	background: $color-white;
+	display: block;
+	padding: $content-spacing-m;
+	padding-inline-end: 10px;
+}
+
+@mixin footercontent-md {
+	.b_footercontent {
+		padding: $content-spacing-m;
+	}
+}

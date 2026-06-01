@@ -1,0 +1,118 @@
+.b_langswitch {
+    display: inline;
+    padding: 0 15px;
+    margin: 0;
+
+    &__label {
+        display: none;
+    }
+
+    &__trigger {
+        .b_navi__icon {
+            display: none;
+        }
+    }
+
+    &__item {
+        display: inline-block;
+        line-height: $line-height-meta-menu;
+    }
+
+    &__link {
+        line-height: 48px;
+        height: 48px;
+        min-width: 32px;
+        display: inline-block;
+        color: $color-gray-light;
+
+        &--active {
+            color: $color-black;
+        }
+
+        &:hover {
+            color: $color-primary;
+            text-decoration: none;
+        }
+    }
+
+    &__linktitle {
+        display: none;
+    }
+}
+
+@mixin langswitch-lg {
+    .b_langswitch {
+        $self: &;
+        padding: 0 8px 15px;
+        display: none;
+        background: #fff;
+        position: absolute;
+        top: 52px;
+        width: 170px;
+        left: -24px; // 32-8
+        box-shadow: 0px 3px 6px #00000029;
+
+        &__label {
+            display: inline;
+        }
+
+        &__item {
+            display: block;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 18px;
+            line-height: 27px;
+            text-align: center;
+        }
+
+        &--link {
+            color: $color-black;
+
+            &--active,
+            &--active:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &__trigger {
+            display: inline-block;
+            font-size: 18px;
+            padding: 0 16px;
+            cursor: pointer;
+            position: relative;
+            height: 52px;
+
+            .b_navi__icon--closed {
+                display: inline;
+            }
+
+            &:hover {
+                #{$self} {
+                    display: block;
+                }
+
+                .b_navi__icon--closed {
+                    display: none;
+                }
+
+                .b_navi__icon--opened {
+                    display: inline;
+                }
+            }
+        }
+
+        &__linktitle {
+            display: inline;
+        }
+
+        &__linkabbr {
+            &:before {
+                content: "[";
+            }
+
+            &:after {
+                content: "]";
+            }
+        }
+    }
+}

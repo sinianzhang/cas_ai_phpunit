@@ -1,0 +1,5 @@
+mod.web_layout.tt_content.preview.view {
+  layoutRootPaths.10 = EXT:site_t3demo/Resources/Private/Contenttypes/Backend/Layouts/
+  partialRootPaths.10 = EXT:site_t3demo/Resources/Private/Contenttypes/Backend/Partials/
+  templateRootPaths.10 = EXT:site_t3demo/Resources/Private/Contenttypes/Backend/Templates/
+}

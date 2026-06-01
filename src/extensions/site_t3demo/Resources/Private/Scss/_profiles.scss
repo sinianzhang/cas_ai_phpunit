@@ -1,0 +1,20 @@
+.b_profiles {
+	display: flex;
+	justify-content: space-between;
+	padding: 0;
+	margin-top: $content-spacing-m;
+	&__item {
+		display: inline;
+	}
+	&__link {
+		color: $color-white;
+	}
+	&__icon {
+		height: 40px;
+		width: 40px;
+		fill: $color-white;
+		&--typo3 {
+			width: 144px;
+		}
+	}
+}

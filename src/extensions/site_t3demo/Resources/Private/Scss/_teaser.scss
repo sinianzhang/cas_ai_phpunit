@@ -1,0 +1,48 @@
+.b_teaser {
+	&__header {
+		font-size: 20px;
+		font-family: $font-bold
+	}
+	&__text {
+		margin: 0;
+	}
+	&__link {
+		color: $color-black;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+	&__picture-container {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+		border-radius: $border-radius;
+		overflow: hidden;
+		line-height: 1px;
+		margin-bottom: 10px;
+		@include teasercontainer-safarifix();
+	}
+	&__image {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+		@include teaserhover('.b_teaser__link');
+	}
+}
+
+@mixin teaser-md {
+	.b_teaser__text {
+		font-size: 16px;
+	}
+}
+
+@mixin teaser-lg {
+	.b_teaser {
+		&__header {
+			font-size: 24px;
+		}
+		&__text {
+			font-size: 18px;
+		}
+	}
+}

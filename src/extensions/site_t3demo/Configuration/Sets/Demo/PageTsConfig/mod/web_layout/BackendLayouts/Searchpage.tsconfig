@@ -1,0 +1,10 @@
+mod.web_layout.BackendLayouts.Searchpage {
+  title = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:backendlayout.search.title
+  config {
+    backend_layout {
+      doktype = 14
+      colCount = 0
+      rowCount = 0
+    }
+  }
+}

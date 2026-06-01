@@ -1,0 +1,77 @@
+
+renderingOptions:
+  submitButtonLabel: Submit
+type: Form
+identifier: contactForm
+label: 'Contact Form'
+prototypeName: standard
+finishers:
+  -
+    options:
+      pageUid: '98'
+      additionalParameters: ''
+    identifier: Redirect
+renderables:
+  -
+    renderingOptions:
+      previousButtonLabel: 'Previous step'
+      nextButtonLabel: 'Next step'
+    type: Page
+    identifier: page-1
+    label: 'Contact Form'
+    renderables:
+      -
+        type: GridRow
+        identifier: gridrow-1
+        label: 'Grid: Row'
+        renderables:
+          -
+            defaultValue: ''
+            type: Text
+            identifier: text-1
+            label: 'First Name'
+            properties:
+              elementDescription: ''
+          -
+            defaultValue: ''
+            type: Text
+            identifier: text-2
+            label: 'Last Name'
+            properties:
+              elementDescription: ''
+      -
+        defaultValue: ''
+        type: Email
+        identifier: email-1
+        label: 'Email address'
+        validators:
+          -
+            identifier: EmailAddress
+      -
+        defaultValue: ''
+        type: Textarea
+        identifier: textarea-1
+        label: 'Your message'
+      -
+        type: Checkbox
+        identifier: checkbox-1
+        label: 'I am aware that this contact form is a demo'
+        properties:
+          fluidAdditionalAttributes:
+            required: required
+          validationErrorMessages:
+            -
+              code: 1221560910
+              message: 'You know we won''t contact you back, do you?'
+            -
+              code: 1221560718
+              message: 'You know we won''t contact you back, do you?'
+            -
+              code: 1347992400
+              message: 'You know we won''t contact you back, do you?'
+            -
+              code: 1347992453
+              message: 'You know we won''t contact you back, do you?'
+        validators:
+          -
+            identifier: NotEmpty

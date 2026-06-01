@@ -1,0 +1,13 @@
+<svg id="b13-pagetype-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16">
+    <defs>
+        <style>
+            .apps-pagetree-page-search-hideinmenu-1{fill:#efefef;}.apps-pagetree-page-search-hideinmenu-2{fill:#fff;isolation:isolate;opacity:0.65;}.apps-pagetree-page-search-hideinmenu-3{fill:#b9b9b9;}.apps-pagetree-page-search-hideinmenu-4{fill:#999;}
+        </style>
+    </defs>
+    <path opacity=".5" class="apps-pagetree-page-search-hideinmenu-1" d="M2,0V16H14V4L10,0Z" transform="translate(-2)"/>
+    <path opacity=".5" class="apps-pagetree-page-search-hideinmenu-2" d="M10,4V0l4,4Z" transform="translate(-2)"/>
+    <path opacity=".5" class="apps-pagetree-page-search-hideinmenu-3" d="M13,5v5L9,5Z" transform="translate(-2)"/>
+    <path opacity=".5" class="apps-pagetree-page-search-hideinmenu-4" d="M2,0V16H14V4h0L10,0H2ZM3,1H9V5h4V15H3Zm7,.41L12.59,4H10Z" transform="translate(-2)"/>
+    <path opacity=".5" d="M11.75,12.35,9.19,9.79a2.65,2.65,0,1,0-.82.82l2.57,2.56a.58.58,0,0,0,.81,0A.57.57,0,0,0,11.75,12.35ZM5.66,9.67a1.84,1.84,0,1,1,2.6,0A1.83,1.83,0,0,1,5.66,9.67Z"
+          transform="translate(-2)"/>
+</svg>

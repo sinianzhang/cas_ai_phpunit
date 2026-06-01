@@ -1,0 +1,27 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<a id="c{data.uid}" class="b_anchor" href="{f:uri.page(pageUid: data.pid, section: 'c{data.uid}')}"
+    aria-label="{f:if(condition: data.header, then: data.header, else: '{data.bodytext -> f:format.stripTags() -> f:format.crop(maxCharacters: 72, append: \'...\')}')}"></a>
+
+<f:render section="Before" optional="true">
+    <f:render partial="DropIn/Before/All" arguments="{_all}" />
+</f:render>
+
+<f:render section="Header" optional="true">
+    <f:render partial="Header/All" arguments="{_all}" />
+</f:render>
+
+<f:render section="Main" optional="true" />
+
+<f:render section="Footer" optional="true">
+    <f:render partial="Footer/All" arguments="{_all}" />
+</f:render>
+
+<f:render section="After" optional="true">
+    <f:render partial="DropIn/After/All" arguments="{_all}" />
+</f:render>
+
+</html>

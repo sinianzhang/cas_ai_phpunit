@@ -1,0 +1,35 @@
+@import './PageTsConfig/mod/web_layout/BackendLayouts/*.tsconfig'
+@import './PageTsConfig/mod/web_layout/tt_content/preview/view.tsconfig'
+@import './PageTsConfig/TCEFORM.tsconfig'
+
+mod.wizards.newContentElement.wizardItems.common.show = *
+mod.wizards.newContentElement.wizardItems.special.show = *
+
+mod.wizards.newContentElement.wizardItems.menu.elements.menu_pages.title = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:CType.menu_pages.name
+mod.wizards.newContentElement.wizardItems.menu.elements.menu_pages.description = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:CType.menu_pages.description
+mod.wizards.newContentElement.wizardItems.menu.elements.menu_subpages.title = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:CType.menu_subpages.name
+mod.wizards.newContentElement.wizardItems.menu.elements.menu_subpages.description = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:CType.menu_subpages.description
+
+# remove the column view of the backend
+mod.web_layout.menu.functions.1 = 0
+
+# page tree permissions
+TCEMAIN.permissions {
+  user = show,edit,delete,new,editcontent
+  group = show,edit,delete,new,editcontent
+  everybody = show
+
+  userid = 1
+  groupid = 1
+}
+
+# remove "Translate to:" Prefix
+TCEMAIN.translateToMessage >
+
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.tt_content.disablePrependAtCopy = 1
+
+# clear cache for faqs when editing something in the faq sys folder
+[page["uid"] == 36]
+  TCEMAIN.clearCacheCmd = cacheTag:faq
+[end]

@@ -1,0 +1,28 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<div class="b_notes">
+	<input type="checkbox" id="notes_detail" class="b_pseudo" />
+	<label class="b_notes__header-label {f:if(condition: data.infotext, then: 'b_notes__header-label--expandable')}" for="notes_detail">
+		<h3 class="b_notes__header">
+			<f:if condition="{data.infotext}">
+				<span class="b_notes__indicator b_notes__indicator--expand">
+					<core:icon identifier="actions-add" size="small"/>
+				</span>
+				<span class="b_notes__indicator b_notes__indicator--collapse">
+					<core:icon identifier="actions-remove" size="small"/>
+				</span>
+			</f:if>
+			{data.infotext_header}</h3>
+	</label>
+	<f:if condition="{data.infotext}">
+		<div class="b_notes__detailcontainer">
+			{data.infotext -> f:format.raw()}
+		</div>
+	</f:if>
+</div>
+
+</html>

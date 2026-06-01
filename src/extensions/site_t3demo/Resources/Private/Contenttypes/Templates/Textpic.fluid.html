@@ -1,0 +1,34 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+	<f:comment>
+		<!--
+			default/0: full width
+			17: in text, end
+			18: in text, start
+		-->
+	</f:comment>
+	<f:switch expression="{data.imageorient}">
+		<f:case value="17">
+			<f:render partial="Figure" arguments="{file: files.0, width: '380', modifier: 'end'}" />
+		</f:case>
+		<f:case value="18">
+			<f:render partial="Figure" arguments="{file: files.0, width: '380', modifier: 'start'}" />
+		</f:case>
+		<f:defaultCase>
+			<f:render partial="Figure" arguments="{file: files.0, width: '780', modifier: 'full', layout: 'full'}" />
+		</f:defaultCase>
+	</f:switch>
+
+	<f:format.html>{data.bodytext}</f:format.html>
+
+	<div class="b_clearfix"></div>
+
+</f:section>
+
+</html>

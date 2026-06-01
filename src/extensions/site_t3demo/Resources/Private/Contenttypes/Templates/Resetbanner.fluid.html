@@ -1,0 +1,53 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:ac="http://typo3.org/ns/B13/Assetcollector/ViewHelpers"
+	xmlns:i="http://typo3.org/ns/B13/Picture/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<input type="checkbox" name="resetbanner" id="resetbanner" class="b_pseudo" />
+<div class="b_resetbanner__overlay"></div>
+<div class="b_resetbanner">
+	<label class="b_resetbanner__close" for="resetbanner">
+		<ac:svg name="exit" class="b_resetbanner__icon" additionalAttributes="{aria-hidden: 'true'}" />
+	</label>
+	<div class="b_resetbanner__innerwrap b_resetbanner__innerwrap--contentcontainer">
+
+		<div class="b_resettimer__container">
+			<div class="b_resetbanner__timer" id="b13-t3demo-timerwrap">
+				<span class="b_resetbanner__timewrapper">
+					<span id="b13-t3demo-timer" class="b_resetbanner__time"></span>
+					<span class="b_resetbanner__timeunit">min.</span>
+				</span><br/>
+				<span class="b_resetbanner__resettext">
+					<f:translate key="resetbanner.text" extensionName="site_t3demo" />
+				</span>
+			</div>
+			<div class="b_resetbanner__placeholder" id="b13-t3demo-timerplaceholder">
+				<i:image
+					src="EXT:site_t3demo/Resources/Public/Assets/Images/TYPO3-Demo-Timer-Placeholder.png"
+					title="TYPO3 Demo Project — Server reset placeholder image"
+					width="158"
+					class="b_resetbanner__placeholder-image"
+					sources="{sm: '{width: 225}'}"
+				/>
+			</div>
+		</div>
+
+		<div class="b_resetbanner__textblock">
+			<f:if condition="{data.header}">
+				<h3>{data.header}</h3>
+			</f:if>
+
+			<f:if condition="{data.bodytext}">
+				{data.bodytext -> f:format.html(parseFuncTSPath: 'lib.parseFunc_RTE--resetbanner')}
+			</f:if>
+		</div>
+	</div>
+</div>
+<label for="resetbanner" class="b_resetbanner__trigger bJS_resetbanner-trigger">
+	<ac:svg name="infobanner" class="b_resetbanner__infoicon" additionalAttributes="{aria-hidden: 'true'}" />
+</label>
+
+</html>
+

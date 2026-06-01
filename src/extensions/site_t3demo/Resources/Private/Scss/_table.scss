@@ -1,0 +1,45 @@
+.b_table {
+	border-collapse: collapse;
+	width: 100%;
+	thead,
+	thead p {
+		color: #828282;
+		font-size: 12px;
+		text-transform: uppercase;
+	}
+	thead p {
+		margin: 0;
+	}
+	th {
+		font-weight: normal;
+		border-bottom: 1px solid $color-gray-light;
+		padding: 8px 0;
+		text-align: start;
+		vertical-align: bottom;
+	}
+	td {
+		border-bottom: 1px solid $color-gray-light;
+		padding: 8px 0;
+		padding-inline-end: 32px;
+		vertical-align: top;
+		&:first-child {
+			min-width: 140px;
+		}
+		&:last-child {
+			padding-inline-end: 0;
+			width: 100%;
+		}
+	}
+}
+
+@mixin table-md {
+	.b_table {
+		font-size: 18px;
+		td {
+			&:first-child {
+				min-width: 180px;
+			}
+		}
+	}
+}
+

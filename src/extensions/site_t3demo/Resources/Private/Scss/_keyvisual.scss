@@ -1,0 +1,63 @@
+.b_keyvisual {
+	background-color: $color-white;
+	margin-bottom: $content-spacing-l;
+	padding-bottom: $content-spacing-m;
+	&__picture {
+		display: contents;
+	}
+	&__image {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+	}
+	&__textblock {
+		margin-top: 16px;
+		margin-bottom: 0;
+	}
+}
+
+@mixin keyvisual-lg {
+	.b_keyvisual {
+		padding-bottom: 0;
+		margin-bottom: 0;
+		&__contentcontainer {
+			display: flex;
+			flex-direction: row-reverse;
+		}
+		&__image {
+			width: 563px;
+			height: 375px;
+		}
+		&__textblock {
+			margin-inline-start: 40px;
+			margin-inline-end: 40px;
+			flex-grow: 1;
+			vertical-align: middle;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		&__header {
+			margin-bottom: $content-spacing-m;
+		}
+		&__text {
+			margin-top: 0;
+		}
+	}
+}
+
+@mixin keyvisual-xl {
+	.b_keyvisual {
+		&__image {
+			width: 709px;
+			height: 474px;
+		}
+		&__textblock {
+			margin-inline-start: 50px;
+			margin-inline-end: 50px;
+		}
+	}
+}
+
+
+

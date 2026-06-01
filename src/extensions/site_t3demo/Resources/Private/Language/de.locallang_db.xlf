@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file>
+		<header>
+			<description>Language Labels for EXT:site_t3demo backend</description>
+			<authorName>David Steeb</authorName>
+			<authorEmail>typo3@b13.com</authorEmail>
+		</header>
+		<body>
+			<trans-unit id="pageLayoutView.elementNotVisible" resname="pageLayoutView.elementNotVisible">
+				<source>This element is not used, no image is visible!</source>
+				<target>Das Element wird nicht verwendet, es ist kein sichtbares Bild vorhanden!</target>
+			</trans-unit>
+			<trans-unit id="pageLayoutView.noImageVisible" resname="pageLayoutView.noImageVisible">
+				<source>Note: No image is visible!</source>
+				<target>Hinweis: Kein Bild sichtbar!</target>
+			</trans-unit>
+			<trans-unit id="pageLayoutView.noAssetVisible" resname="pageLayoutView.noAssetVisible">
+				<source>Note: No asset (video or image) is visible!</source>
+				<target>Hinweis: Kein Asset (Video oder Bild) sichtbar!</target>
+			</trans-unit>
+			<trans-unit id="pageLayoutView.onlyFirstImageInUse" resname="pageLayoutView.onlyFirstImageInUse">
+				<source>Note: Only the first visible image is used.</source>
+				<target>Hinweis: Es wird nur das erste sichtbare Bild verwendet.</target>
+			</trans-unit>
+			<trans-unit id="pageLayoutView.onlyFirstAssetInUse" resname="pageLayoutView.onlyFirstAssetInUse">
+				<source>Note: Only the first visible asset (video or image) is used.</source>
+				<target>Hinweis: Nur das erste sichtbare Asset (Video oder Bild) wird verwendet.</target>
+			</trans-unit>
+			<trans-unit id="pageLayoutView.multipleH1Warning" resname="pageLayoutView.multipleH1Warning">
+				<source>This page probably has more than one active h1 element, which is bad SEO. Please double-check your configuration.</source>
+				<target>Diese Seite hat möglicherweise mehr als ein aktives H1-Element. Das ist aus SEO-Gesichtspunkten schlecht. Bitte prüfen Sie Ihre Konfiguration.</target>
+			</trans-unit>
+			<trans-unit id="pageLayoutView.moreThan4Items" resname="pageLayoutView.moreThan4Items">
+				<source>Only 4 links/teasers will be shown in the frontend.</source>
+				<target>Es werden maximal 4 Links/Teaser im Frontend angezeigt.</target>
+			</trans-unit>
+			<trans-unit id="pageLayoutView.lessThan4Items" resname="pageLayoutView.lessThan4Items">
+				<source>You should aim for 4 visible links/teasers (frontend output expects four teaser elements).</source>
+				<target>Es sollten 4 sichtbare Links/Teaser gepflegt werden. Die Webseitenansicht erwartet vier Teaser-Elemente.</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.contentpage.title" resname="backendlayout.contentpage.title">
+				<source>Content Page</source>
+				<target>Inhaltsseite</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.applepage.title" resname="backendlayout.applepage.title">
+				<source>Apple</source>
+				<target>Apfel</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.recipepage.title" resname="backendlayout.recipepage.title">
+				<source>Recipe</source>
+				<target>Rezept</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.startpage.title" resname="backendlayout.startpage.title">
+				<source>Start Page</source>
+				<target>Startseite</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.overviewpage.title" resname="backendlayout.overviewpage.title">
+				<source>Overview Page (Apples/Recipes)</source>
+				<target>Übersichtsseite (Äpfel/Rezepte)</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.faqpage.title" resname="backendlayout.faqpage.title">
+				<source>FAQ Page</source>
+				<target>FAQ-Seite</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.search.title" resname="backendlayout.search.title">
+				<source>Search</source>
+				<target>Suche</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.stage.name" resname="backendlayout.stage.name">
+				<source>Stage Content</source>
+				<target>Inhalt Bühne</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.maincontent.name" resname="backendlayout.maincontent.name">
+				<source>Main Content</source>
+				<target>Hauptinhaltsbereich</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.teasercontent.name" resname="backendlayout.teasercontent.name">
+				<source>Teaser Content</source>
+				<target>Inhalte Teaserbereich</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.footercontent.name" resname="backendlayout.footercontent.name">
+				<source>Footer Content (shown on all pages)</source>
+				<target>Inhalt Footer (auf allen Seiten verwendet)</target>
+			</trans-unit>
+			<trans-unit id="backendlayout.resetbanner.name" resname="backendlayout.resetbanner.name">
+				<source>Server Reset Banner (shown on all pages)</source>
+				<target>Server Reset Banner (wird auf allen Seiten verwendet)</target>
+			</trans-unit>
+			<trans-unit id="pages.doktype.contentpage" resname="pages.doktype.contentpage">
+				<source>Content Page</source>
+				<target>Inhaltsseite</target>
+			</trans-unit>
+			<trans-unit id="pages.doktype.apple" resname="pages.doktype.apple">
+				<source>Apple</source>
+				<target>Apfel</target>
+			</trans-unit>
+			<trans-unit id="pages.doktype.recipe" resname="pages.doktype.recipe">
+				<source>Recipe</source>
+				<target>Rezept</target>
+			</trans-unit>
+			<trans-unit id="pages.doktype.startpage" resname="pages.doktype.startpage">
+				<source>Start Page</source>
+				<target>Startseite</target>
+			</trans-unit>
+			<trans-unit id="pages.doktype.overview" resname="pages.doktype.overview">
+				<source>Overview Page (Apples/Recipes)</source>
+				<target>Übersichtsseite (Äpfel/Rezepte)</target>
+			</trans-unit>
+			<trans-unit id="pages.doktype.faqpage" resname="pages.doktype.faqpage">
+				<source>FAQ Page</source>
+				<target>FAQ-Seite</target>
+			</trans-unit>
+			<trans-unit id="pages.doktype.search" resname="pages.doktype.search">
+				<source>Search</source>
+				<target>Suche</target>
+			</trans-unit>
+			<trans-unit id="pages.palettes.teaserdata.label" resname="pages.palettes.teaserdata.label">
+				<source>Teaser Data</source>
+				<target>Teaserdaten</target>
+			</trans-unit>
+			<trans-unit id="pages.media.label" resname="pages.media.label">
+				<source>Teaser Image</source>
+				<target>Teaser Bild</target>
+			</trans-unit>
+			<trans-unit id="pages.abstract.label" resname="pages.abstract.label">
+				<source>Teaser Text</source>
+				<target>Teaser Text</target>
+			</trans-unit>
+			<trans-unit id="pages.media.crop.default.title" resname="pages.media.crop.title">
+				<source>Teaser Image (3:2 ratio)</source>
+				<target>Teaser Bild (3:2 Bildformat)</target>
+			</trans-unit>
+			<trans-unit id="pages.media.crop.default.label" resname="pages.media.crop.label">
+				<source>Teaser Image</source>
+				<target>Teaser Bild</target>
+			</trans-unit>
+			<trans-unit id="cropvariants.default.label" resname="cropvariants.default.label">
+				<source>Default</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="cropvariants.desktop.label" resname="cropvariants.desktop.label">
+				<source>Desktop (1024px)</source>
+				<target>Desktop (1024px)</target>
+			</trans-unit>
+			<trans-unit id="cropvariants.desktop-xl.label" resname="cropvariants.desktop-xl.label">
+				<source>Desktop (1280px)</source>
+				<target>Desktop (1280px)</target>
+			</trans-unit>
+			<trans-unit id="CType.footerinfo.name" resname="CType.footerinfo.name">
+				<source>Footer Info Teaser</source>
+				<target>Infor-Teaser im Footer</target>
+			</trans-unit>
+			<trans-unit id="CType.footerinfo.description" resname="CType.footerinfo.description">
+				<source>Teaser for footer, shown on all pages.</source>
+				<target>Teaser für Verwendung im Footer, wird auf allen Seiten gezeigt.</target>
+			</trans-unit>
+			<trans-unit id="CType.ingredients.name" resname="CType.ingredients.name">
+				<source>Ingredients Table</source>
+				<target>Zutatentabelle</target>
+			</trans-unit>
+			<trans-unit id="CType.ingredients.description" resname="CType.ingredients.description">
+				<source>Table for listing ingredients.</source>
+				<target>Tabelle mit Auflistung dfer Zutaten.</target>
+			</trans-unit>
+			<trans-unit id="CType.keyvisual.name" resname="CType.keyvisual.name">
+				<source>Keyvisual</source>
+				<target>Keyvisual</target>
+			</trans-unit>
+			<trans-unit id="CType.mainteaser.name" resname="CType.mainteaser.name">
+				<source>Main Teaser</source>
+				<target>Hauptteaser</target>
+			</trans-unit>
+			<trans-unit id="CType.mainteaser.description" resname="CType.mainteaser.description">
+				<source>Main Teaser, big image, headline, text and link.</source>
+				<target>Hauptteaser mit einem großen Bild, Überschrift, Text und einem Link.</target>
+			</trans-unit>
+			<trans-unit id="CType.mainteaser.crop.default.title" resname="CType.mainteaser.crop.default.title">
+				<source>Image (2.8:1 ratio)</source>
+				<target>Bild (2,8:1 Bildformat)</target>
+			</trans-unit>
+			<trans-unit id="CType.mainteaser.crop.desktop.title" resname="CType.mainteaser.crop.desktop.title">
+				<source>Image (1.07:1 ratio)</source>
+				<target>Bild (1,07:1 Bildformat)</target>
+			</trans-unit>
+			<trans-unit id="CType.mainteaser.crop.desktop-xl.title" resname="CType.mainteaser.crop.desktop-xl.title">
+				<source>Image (1.81:1 ratio))</source>
+				<target>Bild (1,81:1 Bildformat)</target>
+			</trans-unit>
+			<trans-unit id="CType.keyvisual.description" resname="CType.keyvisual.description">
+				<source>Keyvisual header element with headline, text, image and optional cta.</source>
+				<target>Keyvisual Header Element mit Überschrift, Text, Bild und einem optionalen Call-to-action Button/Link.</target>
+			</trans-unit>
+			<trans-unit id="CType.keyvisual.crop.default.title" resname="CType.keyvisual.crop.default.title">
+				<source>Image (3:2 ratio)</source>
+				<target>Bild (3:2 Bildformat)</target>
+			</trans-unit>
+			<trans-unit id="CType.keyvisual.crop.default.label" resname="CType.keyvisual.crop.default.label">
+				<source>Image</source>
+				<target>Bild</target>
+			</trans-unit>
+			<trans-unit id="CType.contentstage.name" resname="CType.contentstage.name">
+				<source>Content Header Element</source>
+				<target>Header Element (Inhaltsbereich)</target>
+			</trans-unit>
+			<trans-unit id="CType.contentstage.description" resname="CType.contentstage.description">
+				<source>Big image or graphic with a short text and optional cta.</source>
+				<target>Großes Bild oder große Grafik mit einem kurzen Text und optionalem Call-to-action.</target>
+			</trans-unit>
+			<trans-unit id="CType.resetbanner.name" resname="CType.resetbanner.name">
+				<source>Server Reset Banner</source>
+				<target>Server Reset Banner</target>
+			</trans-unit>
+			<trans-unit id="CType.resetbanner.description" resname="CType.resetbanner.description">
+				<source>Add the Server Reset Banner to show the timer and some descriptive text.</source>
+				<target>Fügt das Server Reset Banner Element ein, um einen Timer mit Beschreibungstext anzuzeigen.</target>
+			</trans-unit>
+			<trans-unit id="CType.menu_pages.name" resname="CType.menu_pages.name">
+				<source>Teaser List (Related Pages)</source>
+				<target>Teaserliste (für Verwandte Seiten)</target>
+			</trans-unit>
+			<trans-unit id="CType.menu_pages.description" resname="CType.menu_pages.description">
+				<source>Insert a list of teasers to related pages.</source>
+				<target>Fügt eine Liste mit Teasern auf verwandte Seiten ein.</target>
+			</trans-unit>
+			<trans-unit id="CType.menu_subpages.name" resname="CType.menu_subpages.name">
+				<source>Teaser List of all Subpages</source>
+				<target>Teaserliste aller Unterseiten</target>
+			</trans-unit>
+			<trans-unit id="CType.menu_subpages.description" resname="CType.menu_subpages.description">
+				<source>Insert a list of teasers to all subpages of a selected or the current page.</source>
+				<target>FÜgt eine Liste mit Teasern auf alle Unterseiten einer gewählten oder der aktuellen Seite ein.</target>
+			</trans-unit>
+			<trans-unit id="CType.lead.name" resname="CType.lead.name">
+				<source>Lead</source>
+				<target>Einleitung</target>
+			</trans-unit>
+			<trans-unit id="CType.lead.description" resname="CType.lead.description">
+				<source>Lead text, presented in bold as part of the introduction of the content.</source>
+				<target>Einleitungstext, wird in fetter Formatierung als Teil der Einleitung ausgegeben.</target>
+			</trans-unit>
+			<trans-unit id="CType.textmedia.assets.description" resname="CType.textmedia.assets.description">
+				<source>For video assets we expect a 16:9 ratio. Other formats might be truncated.</source>
+				<target>Video Assets werden im Format 16:9 erwartet. Andere Seitenverhältnisse werden möglicherweise in der Ausgabe abgeschnitten.</target>
+			</trans-unit>
+			<trans-unit id="CType.textmedia.name" resname="CType.textmedia.name">
+				<source>Text w/ Media</source>
+				<target>Text mit Medienasset</target>
+			</trans-unit>
+			<trans-unit id="CType.faqlist.name" resname="CType.faqlist.name">
+				<source>FAQ Listing</source>
+				<target>Liste mit häufig gestellten Fragen</target>
+			</trans-unit>
+			<trans-unit id="CType.faqlist.description" resname="CType.faqlist.description">
+				<source>Show all FAQ questions and answers as a list.</source>
+				<target>Zeigt alle FAQ Fragen und Antworten als eine Liste.</target>
+			</trans-unit>
+			<trans-unit id="pages.div.infotext" resname="pages.div.infotext">
+				<source>Notes of Interest</source>
+				<target>Hinweise</target>
+			</trans-unit>
+			<trans-unit id="pages.palettes.infotext.label" resname="pages.palettes.infotext.label">
+				<source>Notes of Interest</source>
+				<target>Hinweise</target>
+			</trans-unit>
+			<trans-unit id="pages.infotext_header" resname="pages.infotext_header">
+				<source>Info Text Header</source>
+				<target>Header für Infotext</target>
+			</trans-unit>
+			<trans-unit id="pages.infotext" resname="pages.infotext">
+				<source>Info Text</source>
+				<target>Infotext</target>
+			</trans-unit>
+			<trans-unit id="pages.infotext.description" resname="pages.infotext.description">
+				<source>This info text will be shown in the backend Page Layout view for users as Notes of Interest.</source>
+				<target>Dieser Infotext wird im Backend Page Layout View für die Nutzer als Hinweistext angezeigt.</target>
+			</trans-unit>
+			<trans-unit id="tt_content.pages.types.menu_pages.description"
+						resname="tt_content.pages.menu_types.pages.description">
+				<source>Only the first four visible pages will be used to display teasers.</source>
+				<target>Nur die ersten vier sichtbaren Seiten werden für die Teaserdarstellung verwendet.</target>
+			</trans-unit>
+			<trans-unit id="tt_content.pages.types.menu_subpages.description"
+						resname="tt_content.pages.types.menu_subpages.description">
+				<source>Select a page here; if empty, the current page will be used.
+				The menu displays as teasers using values and teaser image from every pages's page properties.</source>
+				<target>Wählen Sie eine Seite aus. Bleibt die Auswahl leer, wird die aktuelle Seite verwendet.
+				Die Menüansicht zeigt Teaser mit den Daten aus den Seiteneigenschaften der verlinkten Seiten.</target>
+			</trans-unit>
+			<trans-unit id="tt_content.header_layout.I.default_value" resname="tt_content.header_layout.I.default_value">
+				<source>Default</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="tt_content.header_layout.I.1" resname="tt_content.header_layout.I.1">
+				<source>H1</source>
+				<target>H1</target>
+			</trans-unit>
+			<trans-unit id="tt_content.header_layout.I.2" resname="tt_content.header_layout.I.2">
+				<source>H2</source>
+				<target>H2</target>
+			</trans-unit>
+			<trans-unit id="tt_content.header_layout.I.3" resname="tt_content.header_layout.I.3">
+				<source>H3</source>
+				<target>H3</target>
+			</trans-unit>
+			<trans-unit id="tt_content.header_layout.I.4" resname="tt_content.header_layout.I.4">
+				<source>H4</source>
+				<target>H4</target>
+			</trans-unit>
+			<trans-unit id="tt_content.header_layout.I.5" resname="tt_content.header_layout.I.5">
+				<source>H5</source>
+				<target>H5</target>
+			</trans-unit>
+			<trans-unit id="tt_content.header_layout.I.100" resname="tt_content.header_layout.I.100">
+				<source>Hidden</source>
+				<target>Versteckt</target>
+			</trans-unit>
+			<trans-unit id="cta.linkconfig.I.0" resname="cta.linkconfig.I.0">
+				<source>Default</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="cta.linkconfig.I.primary" resname="cta.linkconfig.I.primary">
+				<source>Primary Button</source>
+				<target>Button in Primärfarbe</target>
+			</trans-unit>
+			<trans-unit id="cta.linkconfig.I.secondary" resname="cta.linkconfig.I.secondary">
+				<source>Secondary Button</source>
+				<target>Button in Sekundärfarbe</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

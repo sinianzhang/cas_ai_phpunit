@@ -1,0 +1,81 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:ac="http://typo3.org/ns/B13/Assetcollector/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<ac:css file="EXT:site_t3demo/Resources/Public/Css/login.css" />
+
+<f:flashMessages/>
+
+<f:if condition="{messageKey}">
+    <h3>
+        <f:render partial="RenderLabelOrMessage" arguments="{key: '{messageKey}_header'}"/>
+    </h3>
+    <p>
+        <f:render partial="RenderLabelOrMessage" arguments="{key: '{messageKey}_message'}"/>
+    </p>
+</f:if>
+<f:if condition="{onSubmit}">
+    <f:then>
+        <f:form target="_top" fieldNamePrefix="" action="login" onsubmit="{onSubmit}">
+            <f:render section="content" arguments="{_all}"/>
+        </f:form>
+    </f:then>
+    <f:else>
+        <f:form target="_top" fieldNamePrefix="" action="login" requestToken="{requestToken}" additionalAttributes="{spellcheck: 'false'}">
+            <f:render section="content" arguments="{_all}"/>
+        </f:form>
+    </f:else>
+</f:if>
+
+<f:if condition="{settings.showForgotPassword}">
+    <f:link.action action="recovery" controller="PasswordRecovery">
+        <f:render partial="RenderLabelOrMessage" arguments="{key: 'forgot_header'}"/>
+    </f:link.action>
+</f:if>
+
+<f:section name="content">
+    <fieldset class="b_login__fieldset">
+        <legend class="b_login__legend">
+            <f:translate key="login"/>
+        </legend>
+        <div class="b_login__row">
+            <label class="b_login__label" for="user">
+                <f:translate key="username" extensionName="site_t3demo"/>
+            </label>
+            <f:form.textfield name="user" id="user" class="b_login__input" value="pomologist3000" required="true" additionalAttributes="{autocomplete: 'username'}"/>
+        </div>
+        <div class="b_login__row">
+            <label class="b_login__label" for="password">
+							<f:translate key="password" extensionName="site_t3demo"/>
+            </label>
+            <f:form.password name="pass" data="{rsa-encryption: ''}" id="password" class="b_login__input" value="Iloveapples.1" additionalAttributes="{required: 'required', autocomplete: 'current-password'}"/>
+        </div>
+
+        <div class="b_login__row b_login__row--submit">
+            <f:form.submit value="{f:translate(key: 'login.login', extensionName: 'site_t3demo')}" name="submit" class="b_button b_button--login-submit"
+						onclick="umami.track('Frontend Login');"/>
+        </div>
+
+        <div class="b_login__container b_login__container--hidden">
+            <f:form.hidden name="logintype" value="login"/>
+            <f:form.hidden name="pid" value="{storagePid}"/>
+            <f:if condition="{redirectURL}!=''">
+                <f:form.hidden name="redirect_url" value="{redirectURL}" />
+            </f:if>
+            <f:if condition="{referer}!=''">
+                <f:form.hidden name="referer" value="{referer}" />
+            </f:if>
+            <f:if condition="{redirectReferrer}!=''">
+                <f:form.hidden name="redirectReferrer" value="off" />
+            </f:if>
+            <f:if condition="{noRedirect}!=''">
+                <f:form.hidden name="noredirect" value="1" />
+            </f:if>
+
+            {extraHidden}
+        </div>
+    </fieldset>
+</f:section>
+</html>

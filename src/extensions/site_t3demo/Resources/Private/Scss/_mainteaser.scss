@@ -1,0 +1,81 @@
+.b_mainteaser {
+	background: $color-white;
+	border-radius: $border-radius;
+	color: $color-black;
+	display: block;
+	// this can be a div container or a link
+	&:hover {
+		color: $color-black;
+		text-decoration: none;
+	}
+	&__picture-container {
+		width: 100%;
+		height: auto;
+		border-radius: $border-radius $border-radius 0 0;
+		overflow: hidden;
+		line-height: 1px;
+		@include teasercontainer-safarifix();
+	}
+	&__image {
+		width: 100%;
+		height: auto;
+		@include teaserhover('.b_mainteaser');
+	}
+	&__textblock {
+		margin: $content-spacing-s;
+		margin-bottom: $content-spacing-m;
+		padding-bottom: 10px;
+	}
+	&__caption {
+		font-size: $caption-font-size;
+		color: $color-gray-dark;
+	}
+}
+
+@mixin mainteaser-lg {
+	.b_mainteaser {
+		display: grid;
+		grid-template-columns: 344px 1fr;
+		height: 320px;
+		overflow: hidden;
+		position: relative;
+		&__picture-container {
+			border-radius: $border-radius 0 0 $border-radius;
+			width: 344px;
+			height: 320px;
+			[dir="rtl"] & {
+				border-radius: 0 $border-radius $border-radius 0;
+			}
+		}
+		&__textblock {
+			margin-inline-start: 18px;
+			padding-inline-end: 20px;
+			margin-top: $content-spacing-s;
+		}
+		&__caption {
+			position: absolute;
+			width: 582px;
+			bottom: 0;
+			background: #fff;
+			padding-top: 30px;
+			margin-bottom: 0;
+			padding-bottom: 12px;
+			background: linear-gradient(180deg, rgba($color-white, 0) 0, rgba($color-white, 1) 50%, rgba($color-white, 1) 100%);
+			background-position: 50% 50%;
+		}
+	}
+}
+@mixin mainteaser-xl {
+	.b_mainteaser {
+		grid-template-columns: 580px 1fr;
+		&__picture-container {
+			width: 580px;
+		}
+		&__header {
+			margin-bottom: $content-spacing-s;
+		}
+		&__textblock {
+			margin-top: $content-spacing-m;
+		}
+	}
+}

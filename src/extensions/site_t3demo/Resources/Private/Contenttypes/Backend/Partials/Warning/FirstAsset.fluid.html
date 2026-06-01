@@ -1,0 +1,9 @@
+<html
+    data-namespace-typo3-fluid="true"
+>
+
+<f:if condition="{assets} > 1  && !{hidden}">
+    <f:render partial="Warning/Message" arguments="{type: 'warning', key: 'pageLayoutView.onlyFirstAssetInUse'}" />
+</f:if>
+
+</html>

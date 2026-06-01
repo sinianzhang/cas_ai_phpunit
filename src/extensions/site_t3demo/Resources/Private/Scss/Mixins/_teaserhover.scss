@@ -1,0 +1,14 @@
+@mixin teaserhover($linkclass) {
+	transition: transform 0.5s linear;
+	transform: scale(1);
+	transform-origin: center center;
+	#{$linkclass}:hover & {
+		transform: scale(1.06);
+	}
+}
+
+// fix for Safari:
+// Images in teaser container with border-radius do not hide inside the border radius constraints while transitioning/zooming
+@mixin teasercontainer-safarifix() {
+	-webkit-mask-image: -webkit-radial-gradient(white, black);
+}

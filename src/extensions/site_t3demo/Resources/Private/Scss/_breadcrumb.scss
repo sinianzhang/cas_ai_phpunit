@@ -1,0 +1,14 @@
+.b_breadcrumb {
+    font-size: 12px;
+
+    &__item {
+        color: $color-gray;
+    }
+
+    &__icon {
+        width: 16px;
+        height: 16px;
+        fill: $color-gray;
+        vertical-align: top;
+    }
+}

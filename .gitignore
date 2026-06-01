@@ -1,0 +1,36 @@
+# PHPStorm workspace files
+.idea/*
+!.idea/sasslintPlugin.xml
+
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore platform db dumps
+*--dump.sql
+
+# Frontend
+node_modules/
+
+# misc (needs to be removed)
+.vagrant/
+/vaultpw.txt
+
+# TYPO3 cache
+/var/
+/bin/
+/vendor/
+/.php-cs-fixer.cache
+/.env
+
+# Exclude web, but allow TYPO3-specific files
+/web/*
+!/web/favicon.*
+# Exclude everything in typo3conf/ except typo3conf itself
+/web/typo3conf/*
+!/web/typo3conf
+!/config/system/settings.php
+!/config/system/additional.php
+
+# exclude demo files
+.ddev/typo3-demo-data
+!.ddev//nginx_full/nginx-site.conf

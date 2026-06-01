@@ -1,0 +1,26 @@
+<html
+    data-namespace-typo3-fluid="true"
+>
+<f:layout name="Default"/>
+
+<f:section name="Type">
+    {f:translate(key: 'LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:CType.menu_subpages.name')}
+</f:section>
+
+<f:section name="Main">
+	<f:if condition="{record.subPages}">
+		<ul class="b_ce__list">
+			<f:for each="{record.subPages}" as="page">
+				<li class="b_ce__listitem {f:if(condition: page.hidden, then: 'b_ce__listitem--hidden')}">
+					{page.title} ({page.uid}): {page.abstract}
+				</li>
+			</f:for>
+		</ul>
+	</f:if>
+
+    <f:render partial="Link" arguments="{link: link, linklabel: linklabel}" />
+</f:section>
+
+</html>
+
+

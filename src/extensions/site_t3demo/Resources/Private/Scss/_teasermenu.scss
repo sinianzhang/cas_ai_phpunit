@@ -1,0 +1,21 @@
+.b_teasermenu {
+	padding: 0;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: 20px;
+	&__item {
+		display: inline-block;
+		width: 100%;
+		max-width: 100%;
+		margin-bottom: 32px;
+	}
+	&__cta {
+		text-align: center;
+	}
+}
+
+@mixin teasermenu-md {
+	.b_teasermenu {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"name": "b13/site-t3demo",
+	"type": "typo3-cms-extension",
+	"description": "Site Package for demo.typo3.org",
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "site_t3demo"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"B13\\SiteT3demo\\": "Classes/"
+		}
+	}
+}

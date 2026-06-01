@@ -1,0 +1,20 @@
+plugin.tx_assetcollector.icons {
+  logo = EXT:site_t3demo/Resources/Public/Assets/SVGs/logo.svg
+  facebook = EXT:site_t3demo/Resources/Public/Assets/SVGs/facebook.svg
+  instagram = EXT:site_t3demo/Resources/Public/Assets/SVGs/instagram.svg
+  youtube = EXT:site_t3demo/Resources/Public/Assets/SVGs/youtube.svg
+  twitter = EXT:site_t3demo/Resources/Public/Assets/SVGs/twitter.svg
+  gitlab = EXT:site_t3demo/Resources/Public/Assets/SVGs/gitlab.svg
+  typo3 = EXT:site_t3demo/Resources/Public/Assets/SVGs/TYPO3.svg
+  infobanner = EXT:site_t3demo/Resources/Public/Assets/SVGs/infobanner.svg
+  exit = EXT:site_t3demo/Resources/Public/Assets/SVGs/exit.svg
+  camera = EXT:site_t3demo/Resources/Public/Assets/SVGs/camera.svg
+  arrow-left = EXT:site_t3demo/Resources/Public/Assets/SVGs/arrow-left.svg
+  arrow-right = EXT:site_t3demo/Resources/Public/Assets/SVGs/arrow-right.svg
+  arrow-up = EXT:site_t3demo/Resources/Public/Assets/SVGs/arrow-up.svg
+  arrow-down = EXT:site_t3demo/Resources/Public/Assets/SVGs/arrow-down.svg
+  x = EXT:site_t3demo/Resources/Public/Assets/SVGs/x.svg
+  check = EXT:site_t3demo/Resources/Public/Assets/SVGs/check.svg
+  more = EXT:site_t3demo/Resources/Public/Assets/SVGs/more.svg
+  search = EXT:site_t3demo/Resources/Public/Assets/SVGs/search.svg
+}

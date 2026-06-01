@@ -1,0 +1,53 @@
+TYPO3:
+  CMS:
+    Form:
+      persistenceManager:
+        allowedExtensionPaths:
+          10: EXT:site_t3demo/Resources/Private/Plugins/Form/Forms/
+      prototypes:
+        standard:
+          formElementsDefinition:
+            # remove field types we do not show or have no custom template/styling for
+            FileUpload: null
+            ImageUpload: null
+            AdvancedPassword: null
+            DatePicker: null
+            ContentElement: null
+            # remove responsive options/field width from text input fields (not used)
+            Text:
+              formEditor:
+                editors:
+                  700: null
+            # reset the grid class to only use 2 or 1 column
+            GridRow:
+              properties:
+                elementClassAttribute: 'b_form__row'
+                gridColumnClassAutoConfiguration:
+                  viewPorts:
+                    xs:
+                      classPattern: 'b_form__col'
+                    sm: null
+                    md: null
+                    lg: null
+            Form:
+              formEditor:
+                editors:
+                  900:
+                    # remove finishers not needed or wanted for demo project
+                    selectOptions:
+                      # email finishers: we do not want to send out any emails
+                      20: null
+                      30: null
+                      # "delete upload": no file uploads possible
+                      50: null
+              renderingOptions:
+                templateRootPaths:
+                  20: 'EXT:site_t3demo/Resources/Private/Plugins/Form/Templates/'
+                partialRootPaths:
+                  20: 'EXT:site_t3demo/Resources/Private/Plugins/Form/Partials/'
+                layoutRootPaths:
+                  20: 'EXT:site_t3demo/Resources/Private/Plugins/Form/Layouts/'
+            # remove honeypot from visible area for rtl languages as well
+            Honeypot:
+              properties:
+                styleAttribute: 'position: absolute; margin-inline-start: 999em;'

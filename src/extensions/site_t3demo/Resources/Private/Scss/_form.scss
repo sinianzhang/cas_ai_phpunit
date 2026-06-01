@@ -1,0 +1,233 @@
+.b_form {
+	$self: &;
+
+	--border-color: #{$color-gray-light};
+	--checkbox-border-color: #{$color-black};
+
+	&__fieldset {
+		margin: 30px 0 60px;
+		padding: 0;
+		border: 0;
+	}
+	&__legend {
+		font-size: 18px;
+		text-transform: uppercase;
+		margin: 20px 0 15px;
+		padding: 0;
+	}
+	&__group {
+		margin: 16px 0;
+		&--has-error {
+			--border-color: #{$color-error};
+			--checkbox-border-color: #{$color-error};
+		}
+		&--navigation {
+			margin: 30px 0 60px;
+		}
+	}
+
+	&__label {
+		display: inline-block;
+	}
+
+	&__error {
+		color: $color-error;
+		line-height: 1;
+		margin-bottom: 5px;
+		font-size: 12px;
+	}
+
+	&__field {
+		margin-top: 5px;
+		position: relative;
+	}
+
+	&__button {
+		& + & {
+			margin-inline-start: 20px;
+		}
+	}
+
+	&__field-help {
+		font-size: 14px;
+		margin-top: 5px;
+		display: block;
+		#{$self}__label ~ & {
+			margin-top: -8px;
+		}
+	}
+
+	&__static-text-header {
+		font-weight: bold;
+	}
+
+	&__text,
+	&__select {
+		width: 100%;
+		border: 1px solid var(--border-color);
+		border-radius: 10px;
+		font-size: 18px;
+		background: $color-white;
+		max-width: 100%;
+		box-sizing: border-box;
+		padding: 12px;
+		height: 48px;
+		font-family: inherit;
+
+		&::placeholder {
+			color: $color-gray-light;
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&__text {
+		line-height: 48px;
+
+		&--password {}
+		&--date {}
+		&--email {}
+		&--number {}
+	}
+
+	&__select {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		-o-appearance: none;
+		appearance: none;
+		// this is the SVG we have in our Resources folder *except* with added width to
+		// allow for consistent positioning (48px instead of 24px)
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M0,0H24V24H0Z' fill='none'/%3E%3Cpath d='M18,15,12,9,6,15H18' transform='translate(24 26) rotate(180)' fill='none' stroke='%232f292c' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3C/svg%3E%0A");
+		background-repeat: no-repeat;
+		background-position: right center;
+
+		[dir="rtl"] & {
+			background-position: left center;
+		}
+
+		&--multi {
+			height: auto;
+			background-image: none;
+
+			option {
+				line-height: 1.5;
+				padding-top: 5px;
+				padding-bottom: 5px;
+			}
+		}
+	}
+
+	&__textarea {
+		width: 100%;
+		border: 1px solid var(--border-color);
+		border-radius: 10px;
+		font-size: 18px;
+		background: $color-white;
+		max-width: 100%;
+		box-sizing: border-box;
+		padding: 12px;
+		height: 148px;
+		font-family: inherit;
+		&::placeholder {
+			color: $color-gray-light;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+
+	/* checkbox and radios
+	   we hide the form controls but do not remove the field with display:none; as this
+	   breaks browser native validation for required checkbox inputs
+    */
+	&__checkbox,
+	&__radio {
+		display: block;
+		height: 34px;
+		width: 34px;
+		position: absolute;
+		top: -8px;
+		opacity: 0;
+
+		[dir="ltr"] & {
+			left: -4px;
+		}
+
+		[dir="rtl"] & {
+			right: -4px;
+		}
+	}
+
+	&__radio {
+		display: none;
+	}
+
+	&__label--checkbox,
+	&__label--radio {
+		position: relative;
+		display: block;
+		margin: 8px 0;
+		min-height: 40px;
+
+		[dir="ltr"] & {
+			padding-left: 45px;
+		}
+
+		[dir="rtl"] & {
+			padding-right: 45px;
+		}
+	}
+
+	&__label--checkbox:before,
+	&__label--radio:before {
+		width: 32px;
+		height: 32px;
+		content: "";
+		position: absolute;
+		top: -5px;
+		border-radius: 8px;
+		background: $color-white;
+		border: 1px solid var(--checkbox-border-color);
+
+		[dir="ltr"] & {
+			left: 0;
+		}
+
+		[dir="rtl"] & {
+			right: 0;
+		}
+	}
+
+	&__label--checkbox:before {
+		#{$self}__checkbox:checked + & {
+			background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M0,0H24V24H0Z' fill='none'/%3E%3Cpath d='M5,12l5,5L20,7' fill='none' stroke='%232f292c' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3C/svg%3E%0A");
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+	}
+
+	&__label--radio:before {
+		border-radius: 32px;
+	}
+
+	&__label--radio:before {
+		#{$self}__radio:checked + & {
+			border-width: 9px;
+			width: 18px;
+			height: 18px;
+		}
+	}
+
+}
+
+@mixin form-md {
+	.b_form__row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-column-gap: 30px;
+		// removing additional spacing on top/bottom of form rows
+		margin: -16px 0;
+	}
+}

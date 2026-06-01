@@ -1,0 +1,17 @@
+<html
+	data-namespace-typo3-fluid="true"
+>
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:render partial="ImagesWithCropVariants" arguments="{images: record.image, cropVariants: '{0: \'default\', 1: \'desktop\', 2: \'desktop-xl\'}'}" />
+    <f:render partial="Text" arguments="{text: record.bodytext}" />
+    <f:render partial="Link" arguments="{link: record.tx_cta_link, linklabel: record.tx_cta_linklabel}" />
+    <f:render partial="Warning/NoImage" arguments="{images: record.image, hidden: record.hidden}" />
+    <f:render partial="Warning/FirstImage" arguments="{images: record.image, hidden: record.hidden}" />
+</f:section>
+
+</html>
+
+

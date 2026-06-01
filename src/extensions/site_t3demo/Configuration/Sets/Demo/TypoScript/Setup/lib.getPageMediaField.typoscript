@@ -1,0 +1,13 @@
+lib.getPageMediaField = FILES
+lib.getPageMediaField {
+  references {
+    table = pages
+    uid.data = FIELD:pageUid
+    fieldName = media
+  }
+  renderObj = TEXT
+  renderObj {
+    data.dataWrap = file:current:{FIELD:mediaField}
+  }
+  maxItems = 1
+}

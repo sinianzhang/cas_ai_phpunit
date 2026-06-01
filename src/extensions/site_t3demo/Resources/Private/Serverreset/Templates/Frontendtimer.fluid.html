@@ -1,0 +1,19 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<span class="b_resetbanner__timewrapper">
+	<span id="b13-t3demo-timer" class="b_resetbanner__time" data-endtime="{f:cObject(typoscriptObjectPath: 'lib.getNextSync')}"></span>
+	<span class="b_resetbanner__timeunit"><f:translate key="resetbanner.timeunit" extensionName="site_t3demo" /></span>
+</span><br/>
+<span class="b_resetbanner__resettext">
+	<f:translate key="resetbanner.text" extensionName="site_t3demo" />
+</span>
+
+<script>
+	initResetTimer();
+</script>
+
+</html>
+

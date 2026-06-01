@@ -1,0 +1,77 @@
+
+renderingOptions:
+  submitButtonLabel: Submit
+type: Form
+identifier: kontaktformular
+label: Kontaktformular
+prototypeName: standard
+finishers:
+  -
+    options:
+      pageUid: '98'
+      additionalParameters: ''
+    identifier: Redirect
+renderables:
+  -
+    renderingOptions:
+      previousButtonLabel: zurück
+      nextButtonLabel: weiter
+    type: Page
+    identifier: page-1
+    label: Kontaktformular
+    renderables:
+      -
+        type: GridRow
+        identifier: gridrow-1
+        label: 'Grid: Zeile'
+        renderables:
+          -
+            defaultValue: ''
+            type: Text
+            identifier: text-1
+            label: Vorname
+            properties:
+              elementDescription: ''
+          -
+            defaultValue: ''
+            type: Text
+            identifier: text-2
+            label: Nachname
+            properties:
+              elementDescription: ''
+      -
+        defaultValue: ''
+        type: Email
+        identifier: email-1
+        label: E-Mail-Adresse
+        validators:
+          -
+            identifier: EmailAddress
+      -
+        defaultValue: ''
+        type: Textarea
+        identifier: textarea-1
+        label: 'Deine Nachricht'
+      -
+        type: Checkbox
+        identifier: checkbox-1
+        label: 'Ich habe verstanden, dass dieses Formular nur eine Demo ist'
+        properties:
+          fluidAdditionalAttributes:
+            required: required
+          validationErrorMessages:
+            -
+              code: 1221560910
+              message: 'Du weißt, dass wir diese Nachricht nicht lesen werden, oder?'
+            -
+              code: 1221560718
+              message: 'Du weißt, dass wir diese Nachricht nicht lesen werden, oder?'
+            -
+              code: 1347992400
+              message: 'Du weißt, dass wir diese Nachricht nicht lesen werden, oder?'
+            -
+              code: 1347992453
+              message: 'Du weißt, dass wir diese Nachricht nicht lesen werden, oder?'
+        validators:
+          -
+            identifier: NotEmpty

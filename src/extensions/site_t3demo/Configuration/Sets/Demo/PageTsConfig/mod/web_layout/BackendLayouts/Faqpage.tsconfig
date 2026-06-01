@@ -1,0 +1,30 @@
+mod.web_layout.BackendLayouts.Faqpage {
+  title = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:backendlayout.faqpage.title
+  config {
+    backend_layout {
+      doktype = 15
+      colCount = 1
+      rowCount = 2
+      rows {
+        1 {
+          columns {
+            1 {
+              name = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:backendlayout.stage.name
+              colPos = 1
+              allowedContentTypes = keyvisual
+            }
+          }
+        }
+        2 {
+          columns {
+            1 {
+              name = LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:backendlayout.maincontent.name
+              colPos = 0
+              allowedContentTypes = faqlist,textmedia
+            }
+          }
+        }
+      }
+    }
+  }
+}

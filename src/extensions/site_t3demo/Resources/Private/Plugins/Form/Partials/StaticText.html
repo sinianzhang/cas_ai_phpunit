@@ -1,0 +1,19 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+<formvh:renderRenderable renderable="{element}">
+	<div class="b_form__group b_form__group--static-text">
+		<f:if condition="{element.label}">
+			<p class="b_form__static-text-header">{formvh:translateElementProperty(element: element, property: 'label')}</p>
+		</f:if>
+		<f:if condition="{element.properties.text}">
+			<p class="b_form__static-text-text{f:if(condition: element.properties.elementClassAttribute,
+				then: '{element.properties.elementClassAttribute}')}">{formvh:translateElementProperty(element: element,
+				property: 'text') -> f:format.nl2br()}</p>
+		</f:if>
+	</div>
+</formvh:renderRenderable>
+</html>
+

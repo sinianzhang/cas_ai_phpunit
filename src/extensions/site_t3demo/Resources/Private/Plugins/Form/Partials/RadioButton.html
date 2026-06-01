@@ -1,0 +1,23 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+<formvh:renderRenderable renderable="{element}">
+	<f:render partial="Field/Field" arguments="{element: element, doNotShowLabel: 0}" contentAs="elementContent">
+		<f:for each="{element.properties.options}" as="label" key="value" iteration="idIterator">
+			<f:form.radio
+				property="{element.identifier}"
+				id="{element.uniqueIdentifier}-{idIterator.index}"
+				class="b_form__radio {element.properties.elementClassAttribute}"
+				value="{value}"
+				errorClass="{element.properties.elementErrorClassAttribute}"
+				additionalAttributes="{formvh:translateElementProperty(element: element, property: 'fluidAdditionalAttributes')}"
+			/>
+			<label class="b_form__label b_form__label--radio" for="{element.uniqueIdentifier}-{idIterator.index}">
+				<span>{formvh:translateElementProperty(element: element, property: '{0: \'options\', 1: value}')}</span>
+			</label>
+		</f:for>
+	</f:render>
+</formvh:renderRenderable>
+</html>

@@ -1,0 +1,73 @@
+.b_tm {
+	&__figure {
+		.b_anchor + & {
+			margin-top: $paragraph-margin-sm; // same as paragraph
+			margin-bottom: $paragraph-margin-sm; // same as paragraph
+		}
+		&--start,
+		&--end {
+			width: 380px;
+			max-width: 100%;
+		}
+	}
+	&__image {
+		border-radius: $border-radius;
+		width: 100%;
+		height: auto;
+	}
+	&__caption {
+		font-size: $caption-font-size;
+		color: $color-gray-dark;
+	}
+	&__caption-icon {
+		height: 12px;
+		width: 12px;
+		vertical-align: text-top;
+	}
+	&__videocontainer {
+		position: relative;
+		display: block;
+		width: 100%;
+		padding: 0;
+		overflow: hidden;
+		&:before {
+			padding-top: 56.25%;
+			display: block;
+			content: "";
+		}
+	}
+	&__video {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+}
+
+@mixin tm-md {
+	.b_tm {
+		&__figure {
+			.b_anchor + & {
+				margin-top: $paragraph-margin-md; // same as paragraph
+				margin-bottom: $paragraph-margin-md; // same as paragraph
+			}
+			&--start {
+				margin-inline-end: 20px;
+				float: left;
+				[dir="rtl"] & {
+					float: right;
+				}
+			}
+			&--end {
+				margin-inline-start: 20px;
+				float: right;
+				[dir="rtl"] & {
+					float: left;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve" opacity=".5">
+<style type="text/css">
+	.b_st-r0{fill:#EFEFEF;}
+	.b_st-r1{opacity:0.2;enable-background:new;}
+	.b_st-r2{fill:#999999;}
+	.b_st-r3{fill:#666666;}
+	.b_st-r4{fill:#FFFFFF;}
+</style>
+    <path class="b_st-r0" d="M2,0v16h12V4l-4-4H2z"/>
+    <path class="b_st-r1" d="M13,5v5L9,5H13z"/>
+    <path class="b_st-r2" d="M2,0v16h12V4l0,0l0,0l-4-4l0,0l0,0H2z M3,1h6v4h4v10H3V1z M10,1.4L12.6,4H10V1.4z"/>
+    <path class="b_st-r3" d="M5,5h11v11H5V5z"/>
+    <path class="b_st-r4" d="M6,6h9v9H6V6z"/>
+    <path d="M7,9.7v0.5c0,0.2,0.1,0.3,0.3,0.3l0,0h0.5v2.3c0,0.3,0.3,0.6,0.6,0.6h4.2c0.3,0,0.6-0.3,0.6-0.6v-2.3h0.5
+	c0.2,0,0.3-0.1,0.3-0.3l0,0V9.7H7z"/>
+    <path d="M12.6,8.3h-1.3V7.9c0-0.2-0.2-0.3-0.3-0.3l0,0h-1c-0.2,0-0.3,0.2-0.3,0.3v0.4H8.4c-0.3,0-0.6,0.3-0.6,0.6l0,0v0.4h5.4V8.9
+	C13.2,8.6,12.9,8.3,12.6,8.3z"/>
+</svg>

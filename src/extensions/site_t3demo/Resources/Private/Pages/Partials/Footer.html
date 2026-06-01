@@ -1,0 +1,53 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:b13="http://typo3.org/ns/B13/SiteT3demo/ViewHelpers"
+	xmlns:ac="http://typo3.org/ns/B13/Assetcollector/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<footer class="b_footer">
+	<div class="b_contentcontainer">
+		<div class="b_footer__top">
+			<div class="b_footercontent">
+				{f:cObject(typoscriptObjectPath: 'lib.renderContent', data: '{colPos: 21, slide: "-1", max: 1}')}
+			</div>
+			<f:if condition="{profileLinks}">
+				<ul class="b_profiles">
+					<f:for each="{profileLinks}" as="item">
+						<f:variable name="platform" value="{b13:getSocialMediaPlatformFromUrl(url: '{f:uri.typolink(parameter: item.uid)}')}" />
+						<li class="b_profiles__item">
+							<a href="{f:uri.typolink(parameter: item.uid)}" class="b_profiles__link" target="_blank" aria-label="{item.title}" rel="noreferrer">
+								<ac:svg name="{platform}" class="b_profiles__icon b_profiles__icon--{platform}" additionalAttributes="{aria-hidden: 'true'}" />
+							</a>
+						</li>
+					</f:for>
+				</ul>
+			</f:if>
+		</div>
+	</div>
+	<div class="b_footer__bottom">
+		<div class="b_contentcontainer">
+
+			<ul class="b_footernavi">
+				<f:for each="{footerMenu}" as="item">
+					<li class="b_footernavi__item">
+						<f:link.typolink parameter="{item.uid}" class="b_footernavi__link">
+							{item.nav_title}
+						</f:link.typolink>
+					</li>
+				</f:for>
+			</ul>
+
+			<p class="b_copyright">
+				<span dir="ltr">
+					&copy; {f:format.date(format: 'Y', date: 'NOW')}
+					<a href="https://typo3.org" class="b_copyright__link" target="_blank" rel="noreferrer">TYPO3 Association.</a>
+					<a href="https://b13.com" class="b_copyright__link" target="_blank" rel="noreferrer">Made with ❤ by b13.</a>
+				</span>
+			</p>
+
+		</div>
+	</div>
+</footer>
+
+</html>

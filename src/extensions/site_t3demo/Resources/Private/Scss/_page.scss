@@ -1,0 +1,9 @@
+.b_page {
+	$self: &;
+	&__maincontent {
+		margin-top: $content-spacing-l;
+	}
+	&__teasercontent {
+		margin-top: $content-spacing-l;
+	}
+}

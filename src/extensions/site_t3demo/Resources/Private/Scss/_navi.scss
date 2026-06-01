@@ -1,0 +1,173 @@
+.b_navi {
+	display: none;
+	width: 100%;
+	&__link {
+		cursor: pointer;
+		&:hover {
+			text-decoration: none;
+			color: $color-primary;
+		}
+		&--active {
+			span {
+				text-decoration: underline;
+			}
+		}
+	}
+	&__icon {
+		width: 20px;
+		height: 20px;
+		top: 4px;
+		vertical-align: sub;
+		[dir="rtl"] & {
+			transform: rotate(180deg)
+		}
+	}
+	&__submenu {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		background: $color-white;
+	}
+	&__sublist {
+		margin: 0;
+	}
+	&__subitem {
+		display: block;
+	}
+}
+
+@mixin navi-lg-down {
+	.b_navi {
+		$self: &;
+		position: absolute;
+		background: $color-white;
+		left: 0;
+		right: 0;
+		margin: 0;
+		top: 52px + 44px; // account for header and typo3 universe bar
+		bottom: 0;
+		// viewport - sticky header - sticky bottom language switch - inner padding-top
+		height: calc(100vh - 52px - 68px - 32px);
+		height: -webkit-fill-available;
+		padding: 32px 0 0;
+		overflow: scroll;
+
+		// this prevents page scrolling behind mobile navigation
+		&--open {
+			@include disableScrolling();
+		}
+
+		#navtrigger:checked ~ & {
+			display: block;
+		}
+
+		&__item {
+			display: block;
+			text-align: center;
+		}
+
+		&__link {
+			display: block;
+			line-height: 24px;
+			padding-top: 14px;
+			padding-bottom: 14px;
+			text-align: center;
+			color: $color-black;
+			& + & {
+				display: none; // hide the link on mobile to only show the label for the submenu
+			}
+		}
+
+		&__submenu {
+			bottom: 0;
+			padding-left: 15px;
+			padding-right: 15px;
+			[id^="submenu-"]:checked ~ & {
+				display: block;
+			}
+		}
+
+		&__sublist {
+			padding: 32px 0 96px;
+		}
+		&__subitem {
+			text-align: center;
+			#{$self}--open &:last-child {
+				padding-bottom: 190px;
+			}
+		}
+	}
+}
+
+@mixin navi-lg {
+	.b_navi {
+		$self: &;
+		padding: 0;
+		display: inline;
+
+		&__item {
+			padding: 0 25px;
+			height: 84px;
+			display: inline-block;
+			&:first-of-type {
+				padding-inline-start: 80px;
+			}
+		}
+
+		&__link {
+			color: $color-black;
+			line-height: 48px;
+			height: 48px;
+			display: inline-block;
+			&--label {
+				display: none;
+			}
+			&--level-2 {
+				line-height: 1.5em;
+				display: block;
+			}
+		}
+
+		&__icon {
+			&--opened {
+				display: none;
+			}
+			#{$self}__item:hover & {
+				&--closed {
+					display: none;
+				}
+				&--opened {
+					display: inline;
+				}
+			}
+		}
+
+		&__submenu {
+			top: 80px;
+			border-top: 1px solid $color-gray-light;
+			box-shadow: 0px 3px 6px $color-gray-light;
+			#{$self}__item:hover & {
+				display: block;
+			}
+		}
+
+		&__sublist {
+			display: flex;
+			padding: 32px 0;
+			flex-wrap: wrap;
+		}
+
+		&__subitem {
+			width: 200px;
+			padding-right: 20px;
+			&--back {
+				display: none;
+			}
+			&--parentpage {
+				display: none;
+			}
+		}
+	}
+}

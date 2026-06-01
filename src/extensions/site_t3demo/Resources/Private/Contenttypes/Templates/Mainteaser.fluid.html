@@ -1,0 +1,63 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:i="http://typo3.org/ns/B13/Picture/ViewHelpers"
+	xmlns:ac="http://typo3.org/ns/B13/Assetcollector/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<f:if condition="{data.link}">
+	<f:then>
+		<f:link.typolink class="b_mainteaser" parameter="{data.link}">
+			<f:render section="content" arguments="{images: images, data: data}" />
+		</f:link.typolink>
+	</f:then>
+	<f:else>
+		<div class="b_mainteaser">
+			<f:render section="content" arguments="{images: images, data: data}" />
+		</div>
+	</f:else>
+</f:if>
+
+<f:section name="content">
+	<f:if condition="{images}">
+		<div class="b_mainteaser__picture-container">
+			<i:image src="{images.0.uid}" treatIdAsReference="1" width="384c" height="185c"
+							 class="b_mainteaser__image" pictureClass="b_mainteaser__picture"
+							 sources="{xl: {width: '580c', height: '320c', cropVariant: 'desktop-xl'},
+									lg: {width: '344c', height: '320c', cropVariant: 'desktop'},
+									sm-md: {width: '737c', height: '354c'},
+									sm: {width: '538c', height: '258c'}}"
+			/>
+		</div>
+	</f:if>
+
+	<div class="b_mainteaser__textblock">
+		<f:if condition="{data.header}">
+			<h2 class="b_mainteaser__header">{data.header}</h2>
+		</f:if>
+		<f:if condition="{data.bodytext}">
+			<p class="b_mainteaser__text">
+                <f:format.stripTags>{data.bodytext -> f:format.nl2br()}</f:format.stripTags>
+            </p>
+		</f:if>
+		<f:if condition="{data.link}">
+			<f:switch expression="{data.linkconfig}">
+				<f:case value="secondary">
+					<f:variable name="cta-class" value="b_button--secondary" />
+				</f:case>
+			</f:switch>
+		</f:if>
+		<f:if condition="{images.0.description} || {images.0.properties.copyright}">
+			<p class="b_mainteaser__caption">
+				<ac:svg name="camera" class="b_tm__caption-icon" additionalAttributes="{aria-hidden: 'true'}"/>
+				<f:if condition="{images.0.description}">
+					{images.0.description -> f:format.nl2br()}
+				</f:if>
+				<f:if condition="{images.0.properties.copyright}">
+					&copy; {images.0.properties.copyright}
+				</f:if>
+			</p>
+		</f:if>
+	</div>
+</f:section>
+</html>

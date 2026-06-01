@@ -1,0 +1,27 @@
+.b_pagination {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 32px;
+    font-family: $font-regular;
+    font-size: 18px;
+
+    &__item {
+        text-decoration: none;
+        color: $color-black;
+
+        &:hover {
+            color: $color-primary;
+            text-decoration: none;
+        }
+
+        &--active {
+            text-decoration: underline;
+        }
+    }
+
+    &__arrow {
+        width: 24px;
+        height: 24px;
+    }
+}

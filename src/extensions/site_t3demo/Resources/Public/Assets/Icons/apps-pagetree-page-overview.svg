@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.b_st-o0{fill:#EFEFEF;}
+	.b_st-o1{opacity:0.2;enable-background:new;}
+	.b_st-o2{fill:#999999;}
+	.b_st-o3{fill:#666666;}
+	.b_st-o4{fill:#FFFFFF;}
+</style>
+<path class="b_st-o0" d="M2,0v16h12V4l-4-4H2z"/>
+<path class="b_st-o1" d="M13,5v5L9,5H13z"/>
+<path class="b_st-o2" d="M2,0v16h12V4l0,0l0,0l-4-4l0,0l0,0H2z M3,1h6v4h4v10H3V1z M10,1.4L12.6,4H10V1.4z"/>
+<path class="b_st-o3" d="M5,5h11v11H5V5z"/>
+<path class="b_st-o4" d="M6,6h9v9H6V6z"/>
+<path d="M10.5,8.1c-1.4,0-2.6,0.8-3.5,2.4c0.9,1.6,2.1,2.4,3.5,2.4s2.6-0.8,3.5-2.4C13.1,8.9,11.9,8.1,10.5,8.1z M10.5,11.6
+	c-0.6,0-1.1-0.5-1.1-1.1s0.5-1.1,1.1-1.1s1.1,0.5,1.1,1.1S11.1,11.6,10.5,11.6z"/>
+</svg>

@@ -1,0 +1,47 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:i="http://typo3.org/ns/B13/Picture/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<div class="b_keyvisual">
+	<div class="b_keyvisual__contentcontainer b_keyvisual__contentcontainer--stage">
+
+		<f:if condition="{images}">
+			<i:image src="{images.0.uid}" treatIdAsReference="1" width="375c" height="250c"
+							 class="b_keyvisual__image" pictureClass="b_keyvisual__picture"
+							 sources="{xl: {width: '709c', height: '474c'},
+								lg: {width: '563c', height: '375c'},
+								md: {width: '708c', height: '472c'},
+								sm-md: {width: '773c', height: '491c'},
+								sm: {width: '538c', height: '369c'}}"
+			/>
+		</f:if>
+
+		<div class="b_keyvisual__textblock">
+			<f:if condition="{data.header}">
+				<h1 class="b_keyvisual__header">{data.header}</h1>
+			</f:if>
+			<f:if condition="{data.bodytext}">
+				<p class="b_keyvisual__text">{data.bodytext -> f:format.nl2br()}</p>
+			</f:if>
+			<f:if condition="{data.link}">
+				<f:switch expression="{data.linkconfig}">
+					<f:case value="secondary">
+						<f:variable name="cta-class" value="b_button--secondary" />
+					</f:case>
+				</f:switch>
+				<p class="b_keyvisual__text">
+					<f:link.typolink parameter="{data.link}" class="b_button {cta-class}">
+						{data.linklabel}
+					</f:link.typolink>
+				</p>
+			</f:if>
+		</div>
+
+	</div>
+
+
+</div>
+
+</html>

@@ -1,0 +1,26 @@
+
+.b_typo3universe {
+	background: $typo3universe-background;
+	&__contentcontainer {
+		max-width: 100%;
+		margin: 0;
+	}
+	typo3-universe {
+		--universe-button-background: #{$typo3universe-button-background};
+		--universe-button-hover-background: #{$typo3universe-hover-background};
+		--universe-button-hover-color: #{$typo3universe-background};
+		--universe-button-color: #{$typo3universe-background};
+	}
+}
+
+@mixin typo3universe-md {
+	.b_typo3universe__contentcontainer {
+		max-width: 100%;
+	}
+}
+
+@mixin typo3universe-xl {
+	.b_typo3universe__contentcontainer {
+		padding-inline-start: 80px;
+	}
+}

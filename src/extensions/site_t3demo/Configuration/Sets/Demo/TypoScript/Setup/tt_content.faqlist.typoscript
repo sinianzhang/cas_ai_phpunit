@@ -1,0 +1,10 @@
+tt_content.faqlist =< lib.contentElement
+tt_content.faqlist {
+  dataProcessing.1603879767439 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+  dataProcessing.1603879767439 {
+    table = tx_faqt3demo_faq
+    orderBy = sorting
+    pidInList = {$pages.faqFolder}
+    as = faqs
+  }
+}

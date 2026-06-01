@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file>
+		<header>
+			<description>Language Labels for EXT:site_t3demo frontend templates</description>
+			<authorName>David Steeb</authorName>
+			<authorEmail>typo3@b13.com</authorEmail>
+		</header>
+		<body>
+			<trans-unit id="login.login" resname="login.login">
+				<source>Log In</source>
+				<target>Log In</target>
+			</trans-unit>
+			<trans-unit id="login.logout" resname="login.logout">
+				<source>Log Out</source>
+				<target>Log Out</target>
+			</trans-unit>
+			<trans-unit id="mobile-menu-back" resname="mobile-menu-back">
+				<source>Back</source>
+				<target>Zurück</target>
+			</trans-unit>
+			<trans-unit id="resetbanner.text" resname="resetbanner.text">
+				<source>Next Server Reset</source>
+				<target>Nächster Server Reset</target>
+			</trans-unit>
+			<trans-unit id="resetbanner.timeunit" resname="resetbanner.timeunit">
+				<source>min.</source>
+				<target>min.</target>
+			</trans-unit>
+			<trans-unit id="username" resname="username">
+				<source>Username</source>
+				<target>Benutzername</target>
+			</trans-unit>
+			<trans-unit id="password" resname="password">
+				<source>Password</source>
+				<target>Passwort</target>
+			</trans-unit>
+
+			<trans-unit id="search.placeholder">
+				<source>Search</source>
+				<target>Suche</target>
+			</trans-unit>
+			<trans-unit id="search.facet.all">
+				<source>All</source>
+				<target>Alle</target>
+			</trans-unit>
+			<trans-unit id="search.facet.recipe">
+				<source>Recipes</source>
+				<target>Rezepte</target>
+			</trans-unit>
+			<trans-unit id="search.facet.variety">
+				<source>Varieties</source>
+				<target>Sorten</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

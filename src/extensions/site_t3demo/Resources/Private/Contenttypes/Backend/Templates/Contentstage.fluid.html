@@ -1,0 +1,16 @@
+<html
+	data-namespace-typo3-fluid="true"
+>
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:render partial="Images" arguments="{images: record.image}" />
+    <f:render partial="Link" arguments="{link: record.tx_cta_link, linklabel: record.tx_cta_linklabel}" />
+    <f:render partial="Warning/NoImage" arguments="{images: record.image, hidden: record.hidden}" />
+    <f:render partial="Warning/FirstImage" arguments="{images: record.image, hidden: record.hidden}" />
+</f:section>
+
+</html>
+
+

@@ -1,0 +1,89 @@
+.b_search {
+
+    &--header {
+        position: relative;
+    }
+
+    &__input-wrap {
+        position: relative;
+    }
+
+    &__header-input-wrap {
+        position: absolute;
+        right: 0;
+        top: 14px;
+    }
+
+    &__input {
+        width: 100%;
+        font-size: 17px;
+        padding: 17px 17px 17px 56px;
+        border-radius: 8px;
+        background: $color-white;
+        border: 1px solid $color-gray-light;
+        transition: border-color $transition;
+
+        &::placeholder {
+            color: $color-gray-light;
+            opacity: 1;
+        }
+
+        &:focus,
+        &:focus-visible {
+            outline: none;
+            border-color: $color-black;
+        }
+
+        &--header {
+            width: 0;
+            padding-left: 36px;
+            border-color: transparent;
+            transition: width $transition, border-color $transition;
+            cursor: pointer;
+
+            &:focus,
+            &:focus-visible {
+                width: 680px;
+                border-color: $color-primary;
+                padding-left: 56px;
+                cursor: unset;
+            }
+        }
+    }
+
+    &__input-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        width: 24px;
+        height: 24px;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    &__highlight {
+        color: $color-primary;
+    }
+
+    &__facets {
+        display: flex;
+        gap: 16px;
+        margin-top: 16px;
+        font-size: 18px;
+    }
+}
+
+@mixin search-lg-down {
+    .b_search--header {
+        display: none;
+    }
+}
+
+@mixin search-xl {
+    .b_search__input--header {
+        &:focus,
+        &:focus-visible {
+            width: 900px;
+        }
+    }
+}

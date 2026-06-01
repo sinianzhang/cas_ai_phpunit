@@ -1,0 +1,39 @@
+<html
+	data-namespace-typo3-fluid="true"
+>
+<f:layout name="Default"/>
+
+<f:section name="Type">
+    {f:translate(key: 'LLL:EXT:site_t3demo/Resources/Private/Language/locallang_db.xlf:CType.menu_pages.name')}
+</f:section>
+
+<f:section name="Main">
+	<f:variable name="numberOfPages" value="0" />
+
+    <f:for each="{record.pages}" as="page">
+        <f:if condition="!{page.hidden}"><f:variable name="numberOfPages" value="{numberOfPages + 1}" /></f:if>
+    </f:for>
+
+    <f:if condition="{numberOfPages} > 0">
+        <ul class="b_ce__list">
+            <f:for each="{record.pages}" as="page">
+                <li class="b_ce__listitem {f:if(condition: page.hidden, then: 'b_ce__listitem--hidden')}">
+                    {page.title} ({page.uid}): {page.abstract}
+                </li>
+            </f:for>
+        </ul>
+    </f:if>
+
+    <f:render partial="Link" arguments="{link: record.tx_cta_link, linklabel: record.tx_cta_linklabel}" />
+
+	<f:if condition="{numberOfPages} > 4">
+        <f:render partial="Warning/Message" arguments="{type: 'warning', key: 'pageLayoutView.moreThan4Items'}" />
+	</f:if>
+	<f:if condition="{numberOfPages} < 4">
+        <f:render partial="Warning/Message" arguments="{type: 'warning', key: 'pageLayoutView.lessThan4Items'}" />
+	</f:if>
+</f:section>
+
+</html>
+
+

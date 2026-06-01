@@ -1,0 +1,21 @@
+.b_footernavi {
+	padding: $content-spacing-s 0;
+	text-align: center;
+	&__item {
+		display: block;
+	}
+	&__link {
+		display: block;
+		color: $color-white;
+		padding: 10px 0;
+	}
+}
+
+@mixin footernavi-lg {
+	.b_footernavi {
+		display: inline-block;
+		margin-inline-start: 100px;
+		margin-inline-end: 100px;
+		text-align: start;
+	}
+}

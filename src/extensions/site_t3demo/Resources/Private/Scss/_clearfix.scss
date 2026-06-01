@@ -1,0 +1,20 @@
+.b_clearfix {
+	// using this kind of clearfix to not mess up margins by breaking the flow of elements.
+	// if the clearfix after e.g a textpic element "is not needed" because the text part actually flows around
+	// the image, adding a default clearfix to the flow of elements enlarges the spacing to the following element
+	// as the margins of the paragraph (textpic, current element) and the headline (next element) do not collapse.
+	// this way we can add a negative margin based on the preceding element.
+	display: table;
+	width: 100%;
+	p + & {
+		margin-top: -$paragraph-margin-sm;
+	}
+}
+
+@mixin clearfix-md {
+	.b_clearfix {
+		p + & {
+			margin-top: -$paragraph-margin-md;
+		}
+	}
+}

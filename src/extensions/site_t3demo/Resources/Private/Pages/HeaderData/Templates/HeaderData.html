@@ -1,0 +1,49 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:schema="http://typo3.org/ns/Brotkrueml/Schema/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<f:render partial="Favicons"/>
+
+<link rel="preload" as="font" crossorigin="" type="font/woff" href="{f:uri.resource(path: 'EXT:site_t3demo/Resources/Public/Fonts/SourceSerifPro/SourceSerifPro-Bold.ttf.woff2')}">
+<link rel="preload" as="font" crossorigin="" type="font/woff" href="{f:uri.resource(path: 'EXT:site_t3demo/Resources/Public/Fonts/Lato/Lato-Light.woff2')}">
+<link rel="preload" as="font" crossorigin="" type="font/woff" href="{f:uri.resource(path: 'EXT:site_t3demo/Resources/Public/Fonts/Lato/Lato-Regular.woff2')}">
+
+<script async defer data-website-id="{settings.umami-website-id}" src="https://p.demo.typo3.org/script.js"></script>
+
+<f:comment>
+	<!-- add structured data for different backendLayouts -->
+</f:comment>
+<f:if condition="{data.abstract}">
+	<f:then>
+		<f:variable name="description">{data.abstract}</f:variable>
+	</f:then>
+	<f:else>
+		<f:variable name="description">{data.description}</f:variable>
+	</f:else>
+</f:if>
+<f:switch expression="{pagelayout}">
+	<f:case value="Faqpage">
+		<schema:type.fAQPage
+			url="{f:uri.page(pageUid: data.uid, absolute: 1)}"
+			name="TYPO3 Demo Project"
+			headline="{data.title}"
+			description="{description}"
+		>
+			<f:render partial="StructuredData/Organization" arguments="{sameas: sameas}"/>
+		</schema:type.fAQPage>
+	</f:case>
+	<f:defaultCase>
+		<schema:type.webPage
+			url="{f:uri.page(pageUid: data.uid, absolute: 1)}"
+			name="TYPO3 Demo Project"
+			headline="{data.title}"
+			description="{description}"
+		>
+			<f:render partial="StructuredData/Organization" arguments="{sameas: sameas}"/>
+		</schema:type.webPage>
+	</f:defaultCase>
+</f:switch>
+
+</html>

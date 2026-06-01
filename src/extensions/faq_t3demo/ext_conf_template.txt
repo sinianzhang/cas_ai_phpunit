@@ -1,0 +1,2 @@
+# cat=default; type=int; label=storage pid
+pid = 1

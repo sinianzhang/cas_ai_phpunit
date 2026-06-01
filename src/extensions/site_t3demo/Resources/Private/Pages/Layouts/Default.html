@@ -1,0 +1,46 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<f:render section="DropIn/Before" optional="true" />
+
+<f:render partial="Header" arguments="{mainMenu: mainMenu, languageMenu: languageMenu, startpage: startpage, currentpage: currentpage}" />
+
+<main>
+    <!-- TYPO3SEARCH_begin -->
+	<f:render section="Stage" optional="true">
+		<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.hasContent', data: '{colPos: 1}')}">
+			<div class="b_page__stage">
+				{f:cObject(typoscriptObjectPath: 'lib.renderContent', data: '{colPos: 1}')}
+			</div>
+		</f:if>
+	</f:render>
+
+	<f:render section="Main" optional="true">
+		<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.hasContent', data: '{colPos: 0}')}">
+			<div class="b_page__maincontent">
+				<div class="b_contentcontainer b_contentcontainer--text">
+					{f:cObject(typoscriptObjectPath: 'lib.renderContent', data: '{colPos: 0}')}
+				</div>
+			</div>
+		</f:if>
+	</f:render>
+    <!-- TYPO3SEARCH_end -->
+
+	<f:render section="Teaser" optional="true">
+		<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.hasContent', data: '{colPos: 2}')}">
+			<div class="b_page__teasercontent">
+				<div class="b_contentcontainer">
+					{f:cObject(typoscriptObjectPath: 'lib.renderContent', data: '{colPos: 2}')}
+				</div>
+			</div>
+		</f:if>
+	</f:render>
+</main>
+
+<f:render partial="Footer" arguments="{footerMenu: footerMenu, profileLinks: profileLinks}"/>
+
+<f:render partial="Resetbanner" />
+
+</html>

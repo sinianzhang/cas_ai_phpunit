@@ -1,0 +1,13 @@
+imports:
+  - { resource: "EXT:rte_ckeditor/Configuration/RTE/Processing.yaml" }
+  - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml" }
+  - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml" }
+
+editor:
+  config:
+    contentsCss: "EXT:site_t3demo/Resources/Public/Backend/Css/be_rte.css"
+
+    autoParagraph: false
+    fillEmptyBlocks: false
+
+    format_tags: "p;h2;h3"

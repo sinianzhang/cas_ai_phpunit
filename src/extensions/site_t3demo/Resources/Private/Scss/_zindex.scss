@@ -1,0 +1,37 @@
+// do not use "!important"
+
+/*
+	use z-index-list to add selectors to the global sorted list of z-index-values.
+	use z-index-defaults in addition to the list if you need to set a specific value.
+*/
+
+$z-index-list: (
+	'.b_form__checkbox',
+	'.b_form__label--checkbox:before',
+	'.b_footer__top',
+	'.b_navi',
+	'.b_navi__submenu',
+	'.b_header__meta',
+    '.b_search--header',
+	'.b_header',
+	'.b_resetbanner__overlay',
+	'.b_resetbanner',
+	'.b_resetbanner__trigger'
+);
+
+$z-index-defaults: (
+);
+
+// create all z-index values
+$temp-z: 10;
+@each $class in $z-index-list {
+	#{$class} {
+		@if map-has-key($z-index-defaults, $class) {
+			z-index: map-get($z-index-defaults, $class);
+			$temp-z: map-get($z-index-defaults, $class);
+		} @else {
+			z-index: $temp-z + 10;
+			$temp-z: $temp-z + 10;
+		}
+	}
+}

@@ -1,0 +1,34 @@
+.b_button {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    background: $color-primary;
+    border: 1px solid $color-primary;
+    color: $color-white;
+    border-radius: 8px;
+    padding: 0 16px;
+    transition: background-color $transition, border-color $transition;
+
+    &:hover {
+        text-decoration: none;
+        background: $color-primary-dark;
+        border-color: $color-primary-dark
+    }
+
+    &--secondary {
+        background: transparent;
+        border-color: $color-black;
+        color: $color-black;
+
+        &:hover {
+            color: $color-primary;
+            border-color: $color-primary;
+            background: transparent;
+        }
+    }
+
+    &--inactive {
+        background: $color-gray-light;
+        border-color: $color-gray-light;
+    }
+}

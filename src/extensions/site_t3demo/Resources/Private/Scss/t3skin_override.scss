@@ -1,0 +1,141 @@
+@import "variables";
+
+/* custom login screen */
+body > .typo3-login {
+	background-repeat: repeat;
+	background-size: 600px;
+}
+
+.typo3-login-logo {
+	width: 90px;
+	margin: 0 auto 30px;
+	padding-top: 0;
+}
+
+.typo3-login-image {
+	width: 60px;
+	height: 60px;
+}
+
+/* backend logo */
+.topbar-header-site-logo img {
+	width: 24px;
+	height: 24px;
+}
+
+#demo-login-dropdown {
+	line-height: 1em;
+}
+
+// login notice
+@media (min-width: 700px) {
+	.panel.panel-lg.panel-login {
+		display: grid;
+		grid-column: 320px 320px;
+		grid-template-columns: 320px 320px;
+		grid-column-gap: px;
+	}
+
+	#loginNews {
+		background: $color-white;
+		border-bottom: 3px solid $color-primary;
+	}
+
+	.panel-footer {
+		grid-column-start: 1;
+		grid-column-end: 3;
+	}
+    .typo3-login-container .typo3-login-wrap {
+		max-width: 640px;
+	}
+}
+
+#loginNews h3 {
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 1em;
+}
+
+#loginNews .text-muted {
+	display: none;
+}
+
+
+
+/* backend page module element previews */
+.b_ce {
+	&__list {
+		padding-left: 0;
+	}
+
+	&__listitem {
+		margin-left: 18px;
+		font-weight: normal;
+	}
+}
+
+/* backend page layout header "notes of interest" */
+
+.b_pseudo {
+	display: none;
+}
+
+.b_notes {
+	padding: 15px;
+	background: rgba(160, 230, 146, 0.5);
+	margin-bottom: 33px;
+
+	&__detailcontainer {
+		display: none;
+		column-count: 3;
+		column-width: 450px;
+		column-gap: 35px;
+		& > * {
+			max-width: 450px;
+		}
+		#notes_detail:checked ~ & {
+			margin-top: 10px;
+			display: block;
+		}
+	}
+
+	&__header {
+		margin: 5px 0 0;
+		line-height: 1.5;
+		padding-right: 33px;
+	}
+
+	&__header-label {
+		position: relative;
+		width: 100%;
+
+		&--expandable {
+			cursor: pointer;
+		}
+	}
+
+	&__indicator {
+		position: relative;
+		bottom: 2px;
+		.icon-size-small {
+
+		}
+		&--collapse {
+			display: none;
+			#notes_detail:checked ~ .b_notes__header-label & {
+				display: inline;
+			}
+		}
+		#notes_detail:checked ~ .b_notes__header-label &--expand {
+			display: none;
+		}
+	}
+
+	a {
+		text-decoration: underline;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+

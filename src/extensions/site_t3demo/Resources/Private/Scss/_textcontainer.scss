@@ -1,0 +1,30 @@
+[class*="contentcontainer"] {
+	$self: &;
+	margin: 0 15px;
+}
+
+@mixin contentcontainer-md {
+	[class*="contentcontainer"] {
+		margin: 0 auto;
+		max-width: 708px;
+	}
+}
+
+@mixin contentcontainer-lg {
+	[class*="contentcontainer"] {
+		max-width: 944px;
+	}
+	[class*="contentcontainer--text"] {
+		max-width: 780px;
+	}
+	.test { color: red;}
+}
+
+@mixin contentcontainer-xl {
+	[class*="contentcontainer"] {
+		max-width: 1180px;
+	}
+	[class*="contentcontainer--text"] {
+		max-width: 780px;
+	}
+}

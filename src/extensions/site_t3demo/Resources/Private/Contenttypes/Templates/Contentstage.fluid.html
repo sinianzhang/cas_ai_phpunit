@@ -1,0 +1,34 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:i="http://typo3.org/ns/B13/Picture/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<f:if condition="{images}">
+	<i:image src="{images.0.uid}" treatIdAsReference="1" width="384"
+					 class="b_contentstage__image" pictureClass="b_contentstage__picture"
+					 sources="{lg: {width: '780'},
+								md: {width: '708'},
+								sm-md: {width: '737'},
+								sm: {width: '538'}}"
+	/>
+</f:if>
+
+<f:if condition="{data.header}">
+	<h3>{data.header}</h3>
+</f:if>
+
+<f:if condition="{data.link}">
+	<f:switch expression="{data.linkconfig}">
+		<f:case value="secondary">
+			<f:variable name="cta-class" value="b_button--secondary" />
+		</f:case>
+	</f:switch>
+	<p>
+		<f:link.typolink parameter="{data.link}" class="b_button {cta-class}">
+			{data.linklabel}
+		</f:link.typolink>
+	</p>
+</f:if>
+
+</html>

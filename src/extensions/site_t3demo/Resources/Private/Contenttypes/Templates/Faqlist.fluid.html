@@ -1,0 +1,49 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:ac="http://typo3.org/ns/B13/Assetcollector/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+
+	<ac:css file="EXT:site_t3demo/Resources/Public/Css/faqlist.css" />
+
+	<f:if condition="{data.bodytext}">
+		<f:format.html>{data.bodytext}</f:format.html>
+	</f:if>
+
+	<div class="b_faq">
+		<f:for each="{faqs}" as="faq">
+			<input type="checkbox" id="faq-{faq.data.uid}" class="b_pseudo b_pseudo--faq" name="faq-{faq.data.uid}" />
+			<label class="b_faq__header" for="faq-{faq.data.uid}">{faq.data.question}
+				<span class="b_faq__trigger">
+					<span></span><span></span>
+				</span>
+			</label>
+			<div class="b_faq__answercontainer">
+				{faq.data.answer -> f:format.html()}
+			</div>
+		</f:for>
+	</div>
+
+	<schema:type.fAQPage>
+		<f:for each="{faqs}" as="faq">
+
+			<schema:type.question
+				-as="mainEntity"
+				name="{faq.data.question}"
+			>
+				<schema:type.answer
+					-as="acceptedAnswer"
+					text="{faq.data.answer -> f:format.stripTags()}"
+				/>
+			</schema:type.question>
+		</f:for>
+	</schema:type.fAQPage>
+
+</f:section>
+
+</html>

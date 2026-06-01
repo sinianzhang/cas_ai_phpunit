@@ -1,0 +1,28 @@
+.b_footer {
+	margin-top: auto;
+	padding-top: $content-spacing-l;
+	&__top {
+		position: relative;
+	}
+	&__bottom {
+		margin-top: -($content-spacing-xl + 48px + $content-spacing-m);
+		background: $color-primary;
+		position: relative;
+		padding-top: ($content-spacing-xl + 48px + $content-spacing-s);
+		padding-bottom: $content-spacing-s;
+	}
+}
+
+@mixin footer-lg {
+	.b_footer {
+		padding-top: $content-spacing-xl;
+		&__top {
+			max-width: 480px;
+			margin-inline-start: auto;
+			margin-inline-end: 150px;
+		}
+		&__bottom {
+			padding-top: $content-spacing-s;
+		}
+	}
+}

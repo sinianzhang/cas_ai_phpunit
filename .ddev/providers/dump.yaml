@@ -1,0 +1,9 @@
+db_pull_command:
+  command: |
+    cp ./.ddev/typo3-demo-data/dump/dump.sql.gz  ./.ddev/.downloads/db.sql.gz
+  service: web
+
+files_pull_command:
+  command: |
+    rsync -avz ./.ddev/typo3-demo-data/dump/fileadmin/* ./.ddev/.downloads/files/
+  service: web

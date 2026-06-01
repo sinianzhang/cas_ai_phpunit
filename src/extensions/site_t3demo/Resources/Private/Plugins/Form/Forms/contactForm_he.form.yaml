@@ -1,0 +1,77 @@
+
+renderingOptions:
+  submitButtonLabel: שלח
+type: Form
+identifier: contactForm_he
+label: טופס יצירת קשר
+prototypeName: standard
+finishers:
+  -
+    options:
+      pageUid: '98'
+      additionalParameters: ''
+    identifier: Redirect
+renderables:
+  -
+    renderingOptions:
+      previousButtonLabel: חזרה
+      nextButtonLabel: הַבָּא
+    type: Page
+    identifier: page-1
+    label: טופס יצירת קשר
+    renderables:
+      -
+        type: GridRow
+        identifier: gridrow-1
+        label: 'Grid: Zeile'
+        renderables:
+          -
+            defaultValue: ''
+            type: Text
+            identifier: text-1
+            label: שם פרטי
+            properties:
+              elementDescription: ''
+          -
+            defaultValue: ''
+            type: Text
+            identifier: text-2
+            label: שם משפחה
+            properties:
+              elementDescription: ''
+      -
+        defaultValue: ''
+        type: Email
+        identifier: email-1
+        label: אימייל
+        validators:
+          -
+            identifier: EmailAddress
+      -
+        defaultValue: ''
+        type: Textarea
+        identifier: textarea-1
+        label: 'ההודעה'
+      -
+        type: Checkbox
+        identifier: checkbox-1
+        label: 'אני מודע שטופס ליצירת קשר זה הינו דמו.'
+        properties:
+          fluidAdditionalAttributes:
+            required: required
+          validationErrorMessages:
+            -
+              code: 1221560910
+              message: 'You know we won''t contact you back, do you?'
+            -
+              code: 1221560718
+              message: 'You know we won''t contact you back, do you?'
+            -
+              code: 1347992400
+              message: 'You know we won''t contact you back, do you?'
+            -
+              code: 1347992453
+              message: 'You know we won''t contact you back, do you?'
+        validators:
+          -
+            identifier: NotEmpty

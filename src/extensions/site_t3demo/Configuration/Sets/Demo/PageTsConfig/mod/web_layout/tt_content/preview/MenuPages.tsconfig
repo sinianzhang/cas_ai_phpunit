@@ -1,0 +1,1 @@
+mod.web_layout.tt_content.preview.menu_pages = EXT:site_t3demo/Resources/Private/Contenttypes/Backend/MenuPages.html

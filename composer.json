@@ -1,0 +1,77 @@
+{
+	"config": {
+		"bin-dir": "bin",
+		"sort-packages": true,
+		"platform": {
+			"php": "8.3.14"
+		},
+		"allow-plugins": {
+			"helhum/dotenv-connector": true,
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
+		}
+	},
+	"prefer-stable": true,
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "path",
+			"url": "src/extensions/*"
+		}
+	],
+	"description" : "TYPO3 Demo Project",
+	"extra": {
+		"typo3/cms": {
+			"web-dir": "web",
+			"cms-package-dir": "{$vendor-dir}/typo3/cms"
+		},
+		"helhum/typo3-console": {
+			"install-extension-dummy": false
+		}
+	},
+	"require": {
+		"php": "^8.3",
+		"b13/assetcollector": "^4.0.1",
+		"b13/backendpreviews": "^1.5.1",
+		"b13/content-sync": "^3.0.0",
+		"b13/cta": "^2.2.0",
+		"b13/demologin": "*",
+		"b13/doktypemapper": "^3.0.0",
+		"b13/faq-t3demo": "@dev",
+		"b13/menus": "^2.0.1",
+		"b13/picture": "^4.0.0",
+		"b13/site-t3demo": "*",
+		"brotkrueml/schema": "^4.2.1",
+		"helhum/dotenv-connector": "^3.2.0",
+		"helhum/typo3-console": "^8.3.1",
+		"typo3/cms-backend": "^14.3",
+		"typo3/cms-belog": "^14.3",
+		"typo3/cms-beuser": "^14.3",
+		"typo3/cms-core": "^14.3",
+		"typo3/cms-dashboard": "^14.3",
+		"typo3/cms-extbase": "^14.3",
+		"typo3/cms-extensionmanager": "^14.3",
+		"typo3/cms-felogin": "^14.3",
+		"typo3/cms-filelist": "^14.3",
+		"typo3/cms-filemetadata": "^14.3",
+		"typo3/cms-fluid": "^14.3",
+		"typo3/cms-fluid-styled-content": "^14.3",
+		"typo3/cms-form": "^14.3",
+		"typo3/cms-frontend": "^14.3",
+		"typo3/cms-info": "^14.3",
+		"typo3/cms-install": "^14.3",
+		"typo3/cms-lowlevel": "^14.3",
+		"typo3/cms-recordlist": "^14.3",
+		"typo3/cms-redirects": "^14.3",
+		"typo3/cms-reports": "^14.3",
+		"typo3/cms-rte-ckeditor": "^14.3",
+		"typo3/cms-scheduler": "^14.3",
+		"typo3/cms-seo": "^14.3",
+		"typo3/cms-setup": "^14.3",
+		"typo3/cms-tstemplate": "^14.3",
+		"typo3/cms-viewpage": "^14.3"
+	},
+	"require-dev": {
+		"saschaegerer/phpstan-typo3": "^3.0.1"
+	}
+}

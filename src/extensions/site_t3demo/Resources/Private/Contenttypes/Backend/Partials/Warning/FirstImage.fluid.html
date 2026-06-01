@@ -1,0 +1,9 @@
+<html
+    data-namespace-typo3-fluid="true"
+>
+
+<f:if condition="{images -> f:count()} > 1  && !{hidden}">
+    <f:render partial="Warning/Message" arguments="{type: 'warning', key: 'pageLayoutView.onlyFirstImageInUse'}" />
+</f:if>
+
+</html>

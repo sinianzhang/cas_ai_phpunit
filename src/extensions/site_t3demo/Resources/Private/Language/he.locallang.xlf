@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file>
+		<header>
+			<description>Language Labels for EXT:site_t3demo frontend templates</description>
+			<authorName>Matthias Stegmann</authorName>
+			<authorEmail>typo3@b13.com</authorEmail>
+		</header>
+		<body>
+			<trans-unit id="login.login" resname="login.login">
+				<source>Log In</source>
+				<target>התחברות</target>
+			</trans-unit>
+			<trans-unit id="login.logout" resname="login.logout">
+				<source>Log Out</source>
+				<target>התנתקות</target>
+			</trans-unit>
+			<trans-unit id="mobile-menu-back" resname="mobile-menu-back">
+				<source>Back</source>
+				<target>חזרה</target>
+			</trans-unit>
+			<trans-unit id="resetbanner.text" resname="resetbanner.text">
+				<source>Next Server Reset</source>
+				<target>איפוס המערכת הבא</target>
+			</trans-unit>
+			<trans-unit id="resetbanner.timeunit" resname="resetbanner.timeunit">
+				<source>min.</source>
+				<target>דקות</target>
+			</trans-unit>
+			<trans-unit id="username" resname="username">
+				<source>Username</source>
+				<target>שם משתמש</target>
+			</trans-unit>
+			<trans-unit id="password" resname="password">
+				<source>Password</source>
+				<target>סיסמה</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

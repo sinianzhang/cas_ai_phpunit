@@ -1,0 +1,146 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:ac="http://typo3.org/ns/B13/Assetcollector/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<div class="b_typo3universe">
+	<div class="b_typo3universe__contentcontainer">
+		<typo3-universe active="demo">
+			<div style="display: block; height: 44px; background-color: #fff;"></div>
+		</typo3-universe>
+	</div>
+</div>
+
+<header class="b_header">
+	<div class="b_header__contentcontainer">
+
+		<input type="checkbox" class="b_pseudo" id="navtrigger" />
+
+		<label for="navtrigger" class="b_navtrigger">
+			<span></span>
+			<span></span>
+			<span></span>
+		</label>
+		<span class="b_header__logolinkwrapper">
+			<a href="{startpage.0.link}" class="b_header__logolink" aria-label="{startpage.0.title}">
+				<ac:svg name="logo" class="b_header__logo" additionalAttributes="{aria-hidden: 'true'}"/>
+			</a>
+		</span>
+		<input type="radio" name="mainnavi" checked class="b_pseudo" id="submenu-0"/>
+		<ul class="b_navi">
+			<f:for each="{mainMenu}" as="item">
+				<li class="b_navi__item {f:if(condition: item.subpages, then: 'b_navi__item--hassub')}">
+					<f:if condition="{item.subpages}">
+						<input type="radio" name="mainnavi" class="b_pseudo" id="submenu-{item.uid}" />
+						<label for="submenu-{item.uid}" class="b_navi__link b_navi__link--label {f:if(condition: item.isInRootLine, then: 'b_navi__link--active')}">
+							<span>{item.nav_title}</span>
+							<ac:svg name="arrow-right" class="b_navi__icon b_navi__icon--after" />
+						</label>
+					</f:if>
+					<f:link.typolink parameter="{item.uid}" class="b_navi__link {f:if(condition: item.isInRootLine, then: 'b_navi__link--active')}">
+						<span>{item.nav_title}</span>
+						<f:if condition="{item.subpages}">
+							<ac:svg name="arrow-down" class="b_navi__icon b_navi__icon--after b_navi__icon--closed" />
+							<ac:svg name="arrow-up" class="b_navi__icon b_navi__icon--after b_navi__icon--opened" />
+						</f:if>
+					</f:link.typolink>
+					<f:if condition="{item.subpages}">
+						<div class="b_navi__submenu">
+							<ul class="b_navi__sublist b_navi__sublist--contentcontainer">
+								<li class="b_navi__subitem b_navi__subitem--back">
+									<label for="submenu-0" class="b_navi__link b_navi__link--level-2">
+										<ac:svg name="arrow-left" class="b_navi__icon b_navi__icon--before" />
+										{f:translate(key: 'mobile-menu-back', extensionName: 'site_t3demo')}
+									</label>
+								</li>
+								<li class="b_navi__subitem b_navi__subitem--parentpage">
+									<f:link.typolink parameter="{item.uid}" class="b_navi__link b_navi__link--level-2 {f:if(condition: item.isCurrentPage, then: 'b_navi__link--active')}">
+										<span>{item.nav_title}</span>
+									</f:link.typolink>
+								</li>
+								<f:for each="{item.subpages}" as="item">
+									<li class="b_navi__subitem">
+										<f:link.typolink parameter="{item.uid}" class="b_navi__link b_navi__link--level-2 {f:if(condition: item.isInRootLine, then: 'b_navi__link--active')}">
+											<span>{item.nav_title}</span>
+										</f:link.typolink>
+									</li>
+								</f:for>
+							</ul>
+						</div>
+					</f:if>
+				</li>
+			</f:for>
+		</ul>
+		<div class="b_header__meta b_header__meta--contentcontainer">
+			<f:if condition="{languageMenu}">
+                <div class="b_langswitch__trigger">
+                    <f:for each="{languageMenu}" as="item">
+                        <f:if condition="{item.active}">
+                            <span class="b_langswitch__label">{item.navigationTitle}</span>
+                            <ac:svg name="arrow-down" class="b_navi__icon b_navi__icon--after b_navi__icon--closed" />
+                            <ac:svg name="arrow-up" class="b_navi__icon b_navi__icon--after b_navi__icon--opened" />
+                        </f:if>
+                    </f:for>
+                    <ul class="b_langswitch">
+                        <f:for each="{languageMenu}" as="item">
+                            <li class="b_langswitch__item" dir="{item.direction}">
+                                <f:if condition="{item.available}">
+                                    <f:then>
+                                        <a href="{item.link}" class="b_langswitch__link {f:if(condition: item.active, then: 'b_langswitch__link--active')}"><span class="b_langswitch__linktitle">{item.title}</span> <span class="b_langswitch__linkabbr">{item.navigationTitle}</span></a>
+                                    </f:then>
+                                    <f:else>
+                                        <f:link.typolink
+                                            parameter="{startpage.0.data.uid}"
+                                            class="b_langswitch__link {f:if(condition: item.active, then: 'b_langswitch__link--active')}"
+                                            language="{item.languageId}"
+                                        ><span class="b_langswitch__linktitle">{item.title}</span> <span class="b_langswitch__linkabbr">{item.navigationTitle}</span></f:link.typolink>
+                                    </f:else>
+                                </f:if>
+                            </li>
+                        </f:for>
+                    </ul>
+                </div>
+			</f:if>
+
+			<div class="b_header__login">
+				<f:if condition="{settings.userIsLoggedIn}">
+					<f:then>
+						<f:if condition="!{currentpage.0.data.fe_group}">
+							<f:then>
+								<f:link.page additionalParams="{logintype: 'logout'}" class="b_button b_button--secondary"
+                                             additionalAttributes="{data-umami-event: 'Frontend Logout'}">
+									<f:translate key="login.logout" extensionName="site_t3demo" />
+								</f:link.page>
+							</f:then>
+							<f:else if="{f:uri.typolink(parameter: settings.login)}">
+								<f:link.page pageUid="{settings.login}" additionalParams="{logintype: 'logout'}" class="b_button b_button--secondary"
+                                             additionalAttributes="{data-umami-event: 'Frontend Logout'}">
+									<f:translate key="login.logout" extensionName="site_t3demo" />
+								</f:link.page>
+							</f:else>
+							<f:else>
+								<f:link.page pageUid="{settings.startpage}" additionalParams="{logintype: 'logout'}" class="b_button b_button--secondary"
+                                             additionalAttributes="{data-umami-event: 'Frontend Logout'}">
+									<f:translate key="login.logout" extensionName="site_t3demo" />
+								</f:link.page>
+							</f:else>
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{f:uri.typolink(parameter: settings.login)}">
+							<f:link.typolink parameter="{settings.login}" class="b_button"
+                                             additionalAttributes="{data-umami-event: 'Frontend Login'}">
+								<f:translate key="login.login" extensionName="site_t3demo" />
+							</f:link.typolink>
+						</f:if>
+					</f:else>
+				</f:if>
+			</div>
+		</div>
+
+	</div>
+
+</header>
+
+</html>

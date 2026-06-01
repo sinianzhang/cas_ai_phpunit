@@ -1,0 +1,20 @@
+lib.parseFunc_RTE {
+  externalBlocks {
+    table {
+      stdWrap {
+        HTMLparser {
+          tags.table.fixAttrib.class {
+            default = b_table
+            list = b_table
+          }
+        }
+      }
+    }
+  }
+}
+
+lib.parseFunc_RTE--lead < lib.parseFunc_RTE
+lib.parseFunc_RTE--lead.nonTypoTagStdWrap.encapsLines.addAttributes.P.class = b_lead
+
+lib.parseFunc_RTE--resetbanner < lib.parseFunc_RTE
+lib.parseFunc_RTE--resetbanner.nonTypoTagStdWrap.encapsLines.addAttributes.P.class = b_resetbanner__p

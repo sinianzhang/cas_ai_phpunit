@@ -1,0 +1,50 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  B13\SiteT3demo\:
+    resource: '../Classes/*'
+
+  B13\SiteT3demo\Command\StartSyncCommand:
+    tags:
+      - name: 'console.command'
+        command: 'typo3demo:checkSync'
+        schedulable: true
+
+  dashboard.widget.site_t3demo.t3demoGitlab:
+    class: 'TYPO3\CMS\Dashboard\Widgets\CtaWidget'
+    arguments:
+      $buttonProvider: '@dashboard.buttons.site_t3demo.t3demoGitlab'
+      $options:
+        text: 'LLL:EXT:site_t3demo/Resources/Private/Language/locallang.xlf:widgets.t3demoGitlab.text'
+    tags:
+      - name: dashboard.widget
+        identifier: 't3demoGitlab'
+        groupNames: 'general'
+        title: 'LLL:EXT:site_t3demo/Resources/Private/Language/locallang.xlf:widgets.t3demoGitlab.title'
+        description: 'LLL:EXT:site_t3demo/Resources/Private/Language/locallang.xlf:widgets.t3demoGitlab.description'
+
+  dashboard.buttons.site_t3demo.t3demoGitlab:
+    class: 'TYPO3\CMS\Dashboard\Widgets\Provider\ButtonProvider'
+    arguments:
+      $title: 'LLL:EXT:site_t3demo/Resources/Private/Language/locallang.xlf:widgets.t3demoGitlab.cta'
+      $link: 'https://git.typo3.org/'
+      $target: '_blank'
+
+  dashboard.widget.site_t3demo.serverResetExplanation:
+    class: 'B13\SiteT3demo\Widgets\ServerResetExplanationWidget'
+    arguments:
+      $options:
+        text: 'LLL:EXT:site_t3demo/Resources/Private/Language/locallang.xlf:widgets.serverResetExplanation.text'
+        header: 'LLL:EXT:site_t3demo/Resources/Private/Language/locallang.xlf:widgets.serverResetExplanation.header'
+    tags:
+      - name: dashboard.widget
+        identifier: 'serverResetExplanation'
+        groupNames: 'general'
+        title: 'LLL:EXT:site_t3demo/Resources/Private/Language/locallang.xlf:widgets.serverResetExplanation.title'
+        description: 'LLL:EXT:site_t3demo/Resources/Private/Language/locallang.xlf:widgets.serverResetExplanation.description'
+        iconIdentifier: 'content-widget-text'
+        height: 'small'
+        width: 'small'

@@ -1,0 +1,12 @@
+seo:
+  sitemap:
+    pages:
+      # Exclude 404 page from sitemap
+      excludePagesRecursive: '4'
+      excludedDoktypes: '254'
+styles:
+  templates:
+    # To override the default templates, place your fluid files with the same filenames in the defined directories
+    templateRootPath: 'EXT:site_t3demo/Resources/Private/Contenttypes/Templates'
+    partialRootPath: 'EXT:site_t3demo/Resources/Private/Contenttypes/Partials'
+    layoutRootPath: 'EXT:site_t3demo/Resources/Private/Contenttypes/Layouts'

@@ -1,0 +1,157 @@
+.b_resetbanner {
+	$self: &;
+	display: none;
+	position: fixed;
+	bottom:  0;
+	background: $color-white;
+	max-height: 33%;
+	overflow: scroll;
+	&--open {
+		@include disableScrolling();
+	}
+	#resetbanner:checked ~ & {
+		display: block;
+	}
+	&__close {
+		position: sticky;
+		text-align: end;
+		padding-inline-end: 15px;
+		top: 15px;
+		cursor: pointer;
+		display: block;
+	}
+	&__icon {
+		width: 24px;
+		height: 24px;
+	}
+	&__timer {
+		font-family: $font-regular;
+		border: 1px dotted $color-primary;
+		padding: 10px 15px;
+		margin-bottom: 36px;
+		margin-top: 12px;
+		opacity: 0;
+		transition: opacity 2s linear;
+		display: none;
+		&--visible {
+			display: inline-block;
+			opacity: 1;
+		}
+	}
+	&__placeholder {
+		display: none;
+		opacity: 0;
+		transition: opacity 2s linear;
+		&--visible {
+			display: block;
+			opacity: 1;
+		}
+	}
+	&__placeholder-image {
+		height: auto;
+	}
+	&__timewrapper {
+		font-size: 48px;
+	}
+	&__innerwrap {
+		padding: 36px 15px 15px;
+		text-align: center;
+	}
+	&__textblock {
+		text-align: start;
+		& > *:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	&__trigger {
+		position: fixed;
+		bottom: 5px;
+		width: 40px;
+		height: 40px;
+        right: 5px;
+
+		[dir="rtl"] & {
+			left: 5px;
+            right: auto;
+		}
+		#resetbanner:checked ~ & {
+			display: none;
+		}
+	}
+
+	&__infoicon {
+		width: 40px;
+		height: 40px;
+		fill: $color-primary;
+		cursor: pointer;
+		&:hover {
+			fill: $color-primary-dark;
+		}
+	}
+
+	&__overlay {
+		display: none;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: rgba($color-black, .5);
+		#{$self}--open & {
+			display: block;
+		}
+	}
+}
+
+@mixin resetbanner-md-down {
+	.b_resetbanner {
+		&__placeholder {
+			margin-bottom: 16px;
+			margin-top: -32px;
+		}
+		&__placeholder-image {
+			max-width: 100%;
+		}
+	}
+}
+
+@mixin resetbanner-md {
+	.b_resetbanner {
+		&__placeholder-image {
+			width: 100%;
+		}
+		max-height: 50%;
+		#resetbanner:checked ~ & {
+			width: 100%;
+		}
+		&__innerwrap {
+			display: grid;
+			grid-template-columns: 225px 32px 1fr;
+			padding: 0 0 36px 0;
+		}
+		&__timer {
+			grid-column: 1/1;
+			border: none;
+			font-size: 24px;
+			padding: 0;
+			margin: 0;
+			align-self: center;
+		}
+		&__time {
+			font-size: 80px;
+		}
+		&__textblock {
+			grid-column: 3/3;
+		}
+	}
+}
+
+@mixin resetbanner-lg {
+	.b_resetbanner {
+		max-height: none;
+		&__innerwrap {
+			grid-template-columns: 225px 98px 1fr;
+		}
+	}
+}

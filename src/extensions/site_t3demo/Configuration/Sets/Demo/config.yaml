@@ -1,0 +1,13 @@
+name: site-t3demo/demo
+label: TYPO3 Demo set
+
+# Load TypoScript, TSconfig and settings from dependencies
+dependencies:
+  - typo3/fluid-styled-content
+  - typo3/seo-sitemap
+  - typo3/felogin
+  - typo3/form
+  - typo3/redirects
+  - b13/picture
+  - b13/cta
+  - b13/backendpreviews

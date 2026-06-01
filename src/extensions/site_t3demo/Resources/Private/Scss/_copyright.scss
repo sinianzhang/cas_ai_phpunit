@@ -1,0 +1,25 @@
+.b_copyright {
+	color: $color-white;
+	font-size: 12px;
+	margin: $content-spacing-s 0;
+	text-align: center;
+	&__link {
+		color: $color-white;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+@mixin copyright-md {
+	.b_copyright {
+		margin: $content-spacing-m 0;
+	}
+}
+
+@mixin copyright-lg {
+	.b_copyright {
+		margin-inline-start: 100px;
+		text-align: start;
+	}
+}

@@ -1,0 +1,78 @@
+/**
+	Colors
+ */
+$color-white:           #FFFFFF;
+$color-black:           #2F292C;
+$color-primary:         #B11030;
+$color-secondary:       #FEB45E;
+$color-alt-2:           #A0E692;
+
+$color-gray-light:      #CDCDCD;
+$color-gray:            #828282;
+$color-gray-dark:       #595959;
+$color-primary-dark:    #870C25;
+$color-secondary-dark:  #CC9144;
+$color-alt-dark:        #7EB982;
+
+$color-bg-warm:         #FCFAF2;
+$color-bg-cold:         #F8FAFC;
+$color-bg-default:      #F2F2F2;
+
+$color-error:			$color-primary;
+
+$typo3universe-background: #313131;
+$typo3universe-button-background: $color-gray-light;
+$typo3universe-hover-background: $color-gray-dark;
+
+/**
+	Breakpoints in use:
+	xs: small phones (old ones > 375px)
+	sm: smartphones
+	md: tablets (portrait)
+	lg: tablets landscape
+	xl: desktop 1280px and up
+ */
+$breakpoints: (
+	xs: 376px,
+	sm: 415px,
+	md: 768px,
+	lg: 1024px,
+	xl: 1280px
+);
+
+/**
+	Typography
+ */
+$font-light:   'LatoWebLight', sans-serif;
+$font-regular: 'LatoWebRegular', sans-serif;
+$font-bold:    'SourceSerifPro', serif;
+
+$paragraph-margin-sm: 16px;
+$paragraph-margin-md: 18px;
+
+/**
+	images
+ */
+$border-radius: 16px;
+$caption-font-size: 12px;
+
+/**
+	Grids/Widths/Spacings
+ */
+$grid-gap-xs: 21px; // 15 | [45|21|45]X6 | 15
+$grid-gap-md: 20px;
+
+$content-spacing-xs:   8px;
+$content-spacing-s:   16px;
+$content-spacing-m:   32px;
+$content-spacing-l:   64px;
+$content-spacing-xl: 128px;
+
+$line-height-meta-menu: 68px;
+
+
+/**
+	Various
+ */
+
+$transition: .3s ease-out;

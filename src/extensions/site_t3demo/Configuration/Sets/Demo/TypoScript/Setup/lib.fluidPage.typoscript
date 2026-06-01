@@ -1,0 +1,71 @@
+lib.fluidPage {
+
+  settings {
+    startpage = {$pages.startpage}
+    privacy = {$pages.privacy}
+    login = {$pages.login}
+  }
+
+  dataProcessing {
+    1604762719854 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+    1604762719854 {
+      special = list
+      special.value = {$pages.startpage}
+      levels = 1
+      as = startpage
+    }
+
+    1658313442 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+    1658313442 {
+      special = list
+      special.value = {$pages.search}
+      levels = 1
+      includeNotInMenu = 1
+      as = searchpage
+    }
+
+    1601835042279 = B13\Menus\DataProcessing\TreeMenu
+    1601835042279 {
+      depth = 2
+      as = mainMenu
+    }
+
+    1601842566974 = B13\Menus\DataProcessing\TreeMenu
+    1601842566974 {
+      entryPoints = {$pages.profileLinks}
+      as = profileLinks
+    }
+
+    1601843243215 = B13\Menus\DataProcessing\TreeMenu
+    1601843243215 {
+      entryPoints = {$pages.footerMenu}
+      as = footerMenu
+    }
+
+    1601893587203 = TYPO3\CMS\Frontend\DataProcessing\LanguageMenuProcessor
+    1601893587203 {
+      languages = auto
+      addQueryString = 0
+      as = languageMenu
+    }
+  }
+
+}
+
+[frontend.user.isLoggedIn]
+  lib.fluidPage.settings.userIsLoggedIn = true
+
+  lib.fluidPage.dataProcessing {
+    1611147990940 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+    1611147990940 {
+      special = list
+      special.value.field = uid
+      levels = 1
+      as = currentpage
+    }
+  }
+[end]
+
+[siteLanguage("typo3Language") == 'he']
+  lib.fluidPage.settings.hideSearch = 1
+[end]

@@ -1,0 +1,12 @@
+plugin {
+  tx_felogin_login {
+    view {
+      templateRootPaths.0 = EXT:felogin/Resources/Private/Templates/
+      templateRootPaths.10 = EXT:site_t3demo/Resources/Private/Plugins/Felogin/Templates/
+      partialRootPaths.0 = EXT:felogin/Resources/Private/Partials/
+      partialRootPaths.10 = EXT:site_t3demo/Resources/Private/Plugins/Felogin/Partials/
+      layoutRootPaths.0 = EXT:felogin/Resources/Private/Layouts/
+      layoutRootPaths.10 = EXT:site_t3demo/Resources/Private/Plugins/Felogin/Layouts/
+    }
+  }
+}

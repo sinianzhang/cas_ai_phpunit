@@ -1,0 +1,12 @@
+<html
+    data-namespace-typo3-fluid="true"
+>
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:render partial="Text" arguments="{text: record.bodytext}" />
+    <f:render partial="Link" arguments="{link: record.tx_cta_link, linklabel: record.tx_cta_linklabel}" />
+</f:section>
+
+</html>

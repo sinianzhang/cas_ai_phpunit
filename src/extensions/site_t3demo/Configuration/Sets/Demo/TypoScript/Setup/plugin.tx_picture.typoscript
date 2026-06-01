@@ -1,0 +1,14 @@
+@import 'EXT:picture/Configuration/TypoScript/setup.typoscript'
+
+plugin.tx_picture {
+  addWebp = 1
+  useRetina = 1
+
+  breakpoints {
+    sm = 415
+    sm-md = 569
+    md = 768
+    lg = 1024
+    xl = 1280
+  }
+}

@@ -1,0 +1,22 @@
+imports:
+  - { resource: "EXT:site_t3demo/Configuration/RTE/Imports/Base.yaml" }
+
+editor:
+  config:
+
+    toolbarGroups:
+      - { name: basicstyles, groups: [ basicstyles ] }
+      - { name: paragraph,   groups: [ list ] }
+      - { name: links }
+      - { name: clipboard, groups: [ clipboard, cleanup, undo ] }
+      - { name: editing, groups: [ spellchecker ] }
+      - { name: insert, groups: [ insert ] }
+      - { name: tools, groups: [ specialchar ] }
+      - { name: document, groups: [ mode ] }
+
+    removeButtons:
+      - Anchor
+      - Image
+      - HorizontalRule
+      - Italic
+      - Subscript

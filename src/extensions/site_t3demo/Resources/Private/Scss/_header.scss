@@ -1,0 +1,155 @@
+.b_header {
+    $self: &;
+    background: $color-white;
+    height: 56px;
+    position: sticky;
+    top: 0;
+
+    &__contentcontainer {
+        display: grid;
+        grid-template-columns: 45px 1fr 45px;
+    }
+
+    &__logolinkwrapper {
+        text-align: center;
+        height: 48px;
+    }
+
+    &__logolink {
+        margin-top: 12px;
+        display: inline-block;
+        height: 48px;
+        width: 48px;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    &__logo {
+        height: 32px;
+        width: 32px;
+        fill: $color-black;
+
+        #{$self}__logolink:hover & {
+            fill: $color-primary;
+        }
+    }
+
+    &__meta {
+        display: none;
+    }
+
+    &__logolinkwrapper,
+    &__searchlinkwrapper {
+        text-align: center;
+        height: 48px;
+    }
+
+    &__logolink,
+    &__searchlink {
+        margin-top: 12px;
+        display: inline-block;
+        height: 48px;
+        width: 48px;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    &__logo,
+    &__searchlink-logo {
+        height: 32px;
+        width: 32px;
+        fill: $color-black;
+        transition: fill $transition;
+
+        #{$self}__logolink:hover &,
+        #{$self}__searchlink:hover & {
+            fill: $color-primary;
+        }
+    }
+
+    &__meta {
+        display: none;
+    }
+}
+
+@mixin header-lg-down {
+    .b_header {
+        .b_navi--open & {
+            position: initial;
+        }
+
+        &__meta {
+            position: fixed;
+            height: 68px;
+            border-top: 1px solid $color-gray-light;
+            margin-top: calc(100vh - 68px);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: $color-white;
+
+            #navtrigger:checked ~ & {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+        &__login {
+            margin-inline-end: 15px;
+            line-height: $line-height-meta-menu;
+        }
+    }
+}
+
+@mixin header-lg {
+    .b_header {
+        height: 80px;
+
+        &__contentcontainer {
+            display: flex;
+        }
+
+        &__logolink {
+            text-align: start;
+            margin-top: 20px;
+            color: $color-black;
+            transition: color $transition;
+
+            &:hover {
+                color: $color-primary;
+            }
+        }
+
+        &__logo {
+            height: 40px;
+            width: 40px;
+        }
+
+        &__meta {
+            display: block;
+            white-space: nowrap;
+            margin-top: 16px;
+            margin-inline-start: $content-spacing-s;
+
+            &--contentcontainer {
+                margin-top: 24px;
+            }
+        }
+
+        &__login {
+            display: inline-block;
+        }
+
+        &__login {
+            display: inline;
+        }
+
+        &__searchlinkwrapper {
+            display: none;
+        }
+    }
+}

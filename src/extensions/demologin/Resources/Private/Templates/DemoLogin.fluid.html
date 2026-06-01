@@ -1,0 +1,47 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<f:layout name="Login" />
+
+<f:section name="loginFormFields">
+	<div class="form-group t3js-login-username-section" id="t3-login-username-section">
+		<div class="form-control-wrap">
+			<label for="t3-username"><f:translate key="login.username.label" extensionName="demologin"/></label>
+			<div class="form-control-holder">
+				<input type="text" id="t3-username" name="username" value="{presetUsername}" aria-label="{f:translate(key: 'login.username', extensionName: 'demologin')}" placeholder="{f:translate(key: 'login.username', extensionName: 'demologin')}" class="form-control input-login t3js-clearable t3js-login-username-field" autofocus="autofocus" required="required" />
+			</div>
+		</div>
+	</div>
+	<div class="form-group" id="st3-login-username-section">
+		<div class="form-control-wrap">
+			<div class="form-control-holder">
+				<select name="userGroup" class="form-control input-login" id="demo-login-dropdown">
+					<f:for each="{userGroups}" as="userGroup">
+						<option value="{userGroup.uid}">{userGroup.title}</option>
+					</f:for>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<script async defer data-website-id="5092964f-4f3e-4bbc-9717-26b4bfb68ca4" src="https://p.demo.typo3.org/script.js"></script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", (event) => {
+			let loginButton = document.getElementById('t3-login-submit');
+			loginButton.onclick = () => registerBackendLogin();
+
+			function registerBackendLogin(){
+				let usergroup = document.getElementById('demo-login-dropdown');
+				let usergroupText = usergroup.options[usergroup.selectedIndex];
+				let eventLabel = 'Backend Login - ' + usergroupText.text;
+                umami.track( eventLabel );
+			}
+		});
+	</script>
+
+</f:section>
+
+</html>

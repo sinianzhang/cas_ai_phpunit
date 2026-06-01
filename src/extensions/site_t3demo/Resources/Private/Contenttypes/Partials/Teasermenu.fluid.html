@@ -1,0 +1,51 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:i="http://typo3.org/ns/B13/Picture/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<f:if condition="{menu}">
+	<f:if condition="!{limit}">
+		<f:variable name="limit" value="99" />
+	</f:if>
+	<ul class="b_teasermenu">
+		<f:for each="{menu}" as="page" iteration="i">
+			<f:if condition="{i.index} < {limit}">
+				<li class="b_teasermenu__item">
+					<a href="{page.link}"{f:if(condition: page.target, then: ' target="{page.target}"')}
+						title="{page.title}" class="b_teaser__link">
+						<f:if condition="{page.files}">
+							<div class="b_teaser__picture-container">
+								<i:image src="{page.files.0.uid}" treatIdAsReference="1" width="185c" height="123c"
+												 class="b_teaser__image" pictureClass="b_teaser__picture"
+												 loading="{settings.media.lazyLoading}"
+												 sources="{xl: {width: '280c', height: '187c'},
+															lg: {width: '221c', height: '147c'},
+															md: {width: '344c', height: '229'},
+															sm-md: {width: '358c', height: '239c'}}"
+								/>
+							</div>
+						</f:if>
+						<header class="b_teaser__header">{page.title}</header>
+						<p class="b_teaser__text">{page.data.abstract -> f:format.nl2br()}</p>
+					</a>
+				</li>
+			</f:if>
+		</f:for>
+	</ul>
+
+	<f:if condition="{data.link}">
+		<f:switch expression="{data.linkconfig}">
+			<f:case value="secondary">
+				<f:variable name="cta-class" value="b_button--secondary" />
+			</f:case>
+		</f:switch>
+		<p class="b_teasermenu__cta">
+			<f:link.typolink parameter="{data.link}" class="b_button {cta-class} b_button--centered">
+				{data.linklabel}
+			</f:link.typolink>
+		</p>
+	</f:if>
+</f:if>
+
+</html>

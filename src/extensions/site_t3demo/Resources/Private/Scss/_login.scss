@@ -1,0 +1,56 @@
+.b_login {
+	&__legend {
+		display: none;
+	}
+
+	&__fieldset {
+		border: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	&__row {
+		margin: 16px 0;
+
+		&--submit {
+			margin-top: 32px;
+			text-align: end;
+		}
+
+	}
+
+	&__label {
+		display: block;
+		width: 100%;
+		margin-bottom: 5px;
+	}
+
+	&__input {
+		width: 100%;
+		border: 1px solid $color-gray-light;
+		border-radius: 10px;
+		font-size: 18px;
+		background: #fff;
+		max-width: 100%;
+		box-sizing: border-box;
+		padding: 12px;
+
+		height: 48px;
+		line-height: 48px;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	@at-root {
+		.b_button--login-submit {
+			appearance: none;
+			white-space: normal;
+			font-size: inherit;
+			cursor: pointer;
+			font-family: inherit;
+		}
+	}
+
+}

@@ -1,0 +1,23 @@
+.b_navtrigger {
+	width: 16px;
+	height: 16px;
+	padding: 4px;
+	display: block;
+	cursor: pointer;
+	margin-top: 16px;
+	span {
+		width: 16px;
+		background: $color-black;
+		height: 1px;
+		display: block;
+		+ span {
+			margin-top: 5px;
+		}
+	}
+}
+
+@mixin navtrigger-lg {
+	.b_navtrigger {
+		display: none;
+	}
+}

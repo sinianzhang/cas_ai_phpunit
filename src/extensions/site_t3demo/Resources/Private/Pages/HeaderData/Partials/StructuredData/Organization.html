@@ -1,0 +1,39 @@
+<html
+	data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+>
+
+<schema:type.organization
+	-as="publisher"
+	name="TYPO3 Association"
+	url="https://typo3.org/"
+	email="info@typo3.org"
+>
+	<schema:type.imageObject
+		-as="logo"
+		url="{f:uri.image(src: 'EXT:site_t3demo/Resources/Public/Assets/Images/typo3-logo.png', absolute: 1)}"
+		width="1200"
+		height="509"
+	/>
+	<schema:type.postalAddress
+		-as="address"
+		streetAddress="Sihlbruggstrasse 105"
+		postalCode="6340"
+		addressLocality="Baar"
+		addressCountry="CH"
+	/>
+	<schema:type.contactPoint
+		-as="contactPoint"
+		telephone="+41-41-511-00-35"
+		contactType="customer service"
+		email="info@typo3.org"
+	>
+		<schema:property value="English" -as="availableLanguage" />
+		<schema:property value="German" -as="availableLanguage" />
+	</schema:type.contactPoint>
+	<f:for each="{sameas}" as="link">
+		<schema:property value="{f:uri.typolink(parameter: link.link, absolute: 1)}" -as="sameAs" />
+	</f:for>
+</schema:type.organization>
+
+</html>
