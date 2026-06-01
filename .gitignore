@@ -23,8 +23,12 @@ node_modules/
 /.env
 
 # Exclude web, but allow TYPO3-specific files
-/web/*
+/web/_assets/
+/web/_assets_install/
+/web/typo3temp/*
+/web/fileadmin/_processed_/*
 !/web/favicon.*
+
 # Exclude everything in typo3conf/ except typo3conf itself
 /web/typo3conf/*
 !/web/typo3conf
