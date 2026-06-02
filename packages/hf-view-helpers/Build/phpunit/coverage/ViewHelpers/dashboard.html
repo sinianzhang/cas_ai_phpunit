@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /var/www/html/packages/hf-view-helpers/Classes/ViewHelpers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../_css/bootstrap.min.css?v=14.1.8" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css?v=14.1.8" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">/var/www/html/packages/hf-view-helpers/Classes</a></li>
+         <li class="breadcrumb-item"><a href="index.html">ViewHelpers</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row dashboard-row">
+    <div class="col-md-6">
+     <h3>Classes</h3>
+     <p class="text-muted small">Bubble size = executable lines. Hover for details, click to navigate.</p>
+     <div class="file-coverage-chart">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
+ <style>
+  .bubble-success { fill: var(--phpunit-success-bar); opacity: 0.7; }
+  .bubble-warning { fill: var(--phpunit-warning-bar); opacity: 0.7; }
+  .bubble-danger { fill: var(--phpunit-danger-bar); opacity: 0.7; }
+  .bubble-success:hover, .bubble-warning:hover, .bubble-danger:hover { opacity: 1; stroke: var(--bs-emphasis-color); stroke-width: 1.5; }
+  .chart-grid { stroke: var(--bs-border-color); stroke-width: 0.5; stroke-dasharray: 4,4; opacity: 0.5; }
+  .chart-axis { stroke: var(--bs-border-color); stroke-width: 1; }
+  .chart-label { fill: var(--bs-body-color); font-size: 11px; font-family: var(--bs-font-sans-serif, sans-serif); }
+  .chart-title { fill: var(--bs-body-color); font-size: 12px; font-family: var(--bs-font-sans-serif, sans-serif); }
+ </style>
+ <line x1="60.0" y1="20" x2="60.0" y2="350" class="chart-grid"/>
+ <text x="60.0" y="368" text-anchor="middle" class="chart-label">0%</text>
+ <line x1="204.0" y1="20" x2="204.0" y2="350" class="chart-grid"/>
+ <text x="204.0" y="368" text-anchor="middle" class="chart-label">20%</text>
+ <line x1="348.0" y1="20" x2="348.0" y2="350" class="chart-grid"/>
+ <text x="348.0" y="368" text-anchor="middle" class="chart-label">40%</text>
+ <line x1="492.0" y1="20" x2="492.0" y2="350" class="chart-grid"/>
+ <text x="492.0" y="368" text-anchor="middle" class="chart-label">60%</text>
+ <line x1="636.0" y1="20" x2="636.0" y2="350" class="chart-grid"/>
+ <text x="636.0" y="368" text-anchor="middle" class="chart-label">80%</text>
+ <line x1="780.0" y1="20" x2="780.0" y2="350" class="chart-grid"/>
+ <text x="780.0" y="368" text-anchor="middle" class="chart-label">100%</text>
+ <line x1="60" y1="350.0" x2="780" y2="350.0" class="chart-grid"/>
+ <text x="52" y="350.0" text-anchor="end" dominant-baseline="middle" class="chart-label">0</text>
+ <line x1="60" y1="267.5" x2="780" y2="267.5" class="chart-grid"/>
+ <text x="52" y="267.5" text-anchor="end" dominant-baseline="middle" class="chart-label">20</text>
+ <line x1="60" y1="185.0" x2="780" y2="185.0" class="chart-grid"/>
+ <text x="52" y="185.0" text-anchor="end" dominant-baseline="middle" class="chart-label">40</text>
+ <line x1="60" y1="102.5" x2="780" y2="102.5" class="chart-grid"/>
+ <text x="52" y="102.5" text-anchor="end" dominant-baseline="middle" class="chart-label">60</text>
+ <line x1="60" y1="20.0" x2="780" y2="20.0" class="chart-grid"/>
+ <text x="52" y="20.0" text-anchor="end" dominant-baseline="middle" class="chart-label">80</text>
+ <line x1="60" y1="20" x2="60" y2="350" class="chart-axis"/>
+ <line x1="60" y1="350" x2="780" y2="350" class="chart-axis"/>
+ <text x="420.0" y="395" text-anchor="middle" class="chart-title">Line Coverage (%)</text>
+ <text x="15" y="185.0" text-anchor="middle" transform="rotate(-90, 15, 185.0)" class="chart-title">Cyclomatic Complexity</text>
+ <a href="Form/SelectViewHelper.php.html#30"><circle cx="60.0" cy="102.5" r="20.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper — Coverage: 0.0% | Lines: 128 | Complexity: 60</title></circle></a>
+ <a href="Widget/PaginateAlphabeticalViewHelper.php.html#47"><circle cx="393.0" cy="292.2" r="15.8" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Widget\PaginateAlphabeticalViewHelper — Coverage: 46.2% | Lines: 80 | Complexity: 14</title></circle></a>
+ <a href="Asset/StylesheetViewHelper.php.html#25"><circle cx="60.0" cy="267.5" r="15.6" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper — Coverage: 0.0% | Lines: 78 | Complexity: 20</title></circle></a>
+ <a href="Asset/ScriptViewHelper.php.html#22"><circle cx="60.0" cy="267.5" r="15.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper — Coverage: 0.0% | Lines: 74 | Complexity: 20</title></circle></a>
+ <a href="Format/NumberViewHelper.php.html#33"><circle cx="563.0" cy="267.5" r="15.1" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\NumberViewHelper — Coverage: 69.9% | Lines: 73 | Complexity: 20</title></circle></a>
+ <a href="Variable/UpdateViewHelper.php.html#35"><circle cx="367.1" cy="251.0" r="14.6" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper — Coverage: 42.6% | Lines: 68 | Complexity: 24</title></circle></a>
+ <a href="Form/UploadViewHelper.php.html#31"><circle cx="60.0" cy="246.9" r="14.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper — Coverage: 0.0% | Lines: 66 | Complexity: 25</title></circle></a>
+ <a href="Format/RoundViewHelper.php.html#33"><circle cx="499.0" cy="284.0" r="11.3" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\RoundViewHelper — Coverage: 61.0% | Lines: 41 | Complexity: 16</title></circle></a>
+ <a href="Meta/TitleTagViewHelper.php.html#37"><circle cx="276.0" cy="312.9" r="11.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Meta\TitleTagViewHelper — Coverage: 30.0% | Lines: 40 | Complexity: 9</title></circle></a>
+ <a href="ArgViewHelper.php.html#20"><circle cx="488.1" cy="263.4" r="10.8" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\ArgViewHelper — Coverage: 59.5% | Lines: 37 | Complexity: 21</title></circle></a>
+ <a href="Debug/DurationViewHelper.php.html#32"><circle cx="60.0" cy="329.4" r="10.8" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\DurationViewHelper — Coverage: 0.0% | Lines: 37 | Complexity: 5</title></circle></a>
+ <a href="Be/Form/TcaFormFieldViewHelper.php.html#31"><circle cx="60.0" cy="308.8" r="10.3" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper — Coverage: 0.0% | Lines: 34 | Complexity: 10</title></circle></a>
+ <a href="Format/JsonEncodeViewHelper.php.html#29"><circle cx="271.8" cy="325.2" r="10.3" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\JsonEncodeViewHelper — Coverage: 29.4% | Lines: 34 | Complexity: 6</title></circle></a>
+ <a href="Uri/FileViewHelper.php.html#64"><circle cx="352.5" cy="275.8" r="10.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper — Coverage: 40.6% | Lines: 32 | Complexity: 18</title></circle></a>
+ <a href="Debug/ViewHelpersViewHelper.php.html#35"><circle cx="60.0" cy="321.1" r="9.8" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\ViewHelpersViewHelper — Coverage: 0.0% | Lines: 31 | Complexity: 7</title></circle></a>
+ <a href="CalcViewHelper.php.html#33"><circle cx="708.0" cy="300.5" r="9.7" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\CalcViewHelper — Coverage: 90.0% | Lines: 30 | Complexity: 12</title></circle></a>
+ <a href="Meta/TagViewHelper.php.html#38"><circle cx="60.0" cy="288.1" r="9.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Meta\TagViewHelper — Coverage: 0.0% | Lines: 30 | Complexity: 15</title></circle></a>
+ <a href="Be/Security/IfTableAccessViewHelper.php.html#36"><circle cx="60.0" cy="304.6" r="8.5" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfTableAccessViewHelper — Coverage: 0.0% | Lines: 23 | Complexity: 11</title></circle></a>
+ <a href="ContainsViewHelper.php.html#35"><circle cx="467.0" cy="312.9" r="8.5" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\ContainsViewHelper — Coverage: 56.5% | Lines: 23 | Complexity: 9</title></circle></a>
+ <a href="Get/ContentValueViewHelper.php.html#24"><circle cx="60.0" cy="333.5" r="8.5" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Get\ContentValueViewHelper — Coverage: 0.0% | Lines: 23 | Complexity: 4</title></circle></a>
+ <a href="ForViewHelper.php.html#32"><circle cx="616.4" cy="337.6" r="8.3" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\ForViewHelper — Coverage: 77.3% | Lines: 22 | Complexity: 3</title></circle></a>
+ <a href="String/ExplodeViewHelper.php.html#32"><circle cx="437.1" cy="333.5" r="8.1" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\String\ExplodeViewHelper — Coverage: 52.4% | Lines: 21 | Complexity: 4</title></circle></a>
+ <a href="Format/JsonDecodeViewHelper.php.html#37"><circle cx="401.1" cy="329.4" r="7.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\JsonDecodeViewHelper — Coverage: 47.4% | Lines: 19 | Complexity: 5</title></circle></a>
+ <a href="Format/DateViewHelper.php.html#31"><circle cx="465.0" cy="321.1" r="7.1" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\DateViewHelper — Coverage: 56.2% | Lines: 16 | Complexity: 7</title></circle></a>
+ <a href="Get/TsfeViewHelper.php.html#33"><circle cx="60.0" cy="337.6" r="6.8" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Get\TsfeViewHelper — Coverage: 0.0% | Lines: 15 | Complexity: 3</title></circle></a>
+ <a href="File/ExistsViewHelper.php.html#36"><circle cx="60.0" cy="317.0" r="6.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\File\ExistsViewHelper — Coverage: 0.0% | Lines: 12 | Complexity: 8</title></circle></a>
+ <a href="SortObjectStorageViewHelper.php.html#27"><circle cx="452.7" cy="341.8" r="5.9" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\SortObjectStorageViewHelper — Coverage: 54.5% | Lines: 11 | Complexity: 2</title></circle></a>
+ <a href="Format/CaseViewHelper.php.html#30"><circle cx="564.0" cy="333.5" r="5.6" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\CaseViewHelper — Coverage: 70.0% | Lines: 10 | Complexity: 4</title></circle></a>
+ <a href="Format/FlexFormToArrayViewHelper.php.html#27"><circle cx="60.0" cy="333.5" r="5.6" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\FlexFormToArrayViewHelper — Coverage: 0.0% | Lines: 10 | Complexity: 4</title></circle></a>
+ <a href="Cache/AddCacheTagViewHelper.php.html#30"><circle cx="60.0" cy="333.5" r="5.3" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagViewHelper — Coverage: 0.0% | Lines: 9 | Complexity: 4</title></circle></a>
+ <a href="GetViewHelper.php.html#32"><circle cx="510.0" cy="341.8" r="5.0" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\GetViewHelper — Coverage: 62.5% | Lines: 8 | Complexity: 2</title></circle></a>
+ <a href="Variable/RemoveViewHelper.php.html#31"><circle cx="690.0" cy="333.5" r="5.0" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\RemoveViewHelper — Coverage: 87.5% | Lines: 8 | Complexity: 4</title></circle></a>
+ <a href="Format/WhitespaceViewHelper.php.html#31"><circle cx="574.3" cy="333.5" r="4.7" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\WhitespaceViewHelper — Coverage: 71.4% | Lines: 7 | Complexity: 4</title></circle></a>
+ <a href="Traits/WithCacheTagService.php.html#27"><circle cx="60.0" cy="329.4" r="4.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Traits\WithCacheTagService — Coverage: 0.0% | Lines: 7 | Complexity: 5</title></circle></a>
+ <a href="Be/Security/IfIsAdminViewHelper.php.html#35"><circle cx="60.0" cy="333.5" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfIsAdminViewHelper — Coverage: 0.0% | Lines: 5 | Complexity: 4</title></circle></a>
+ <a href="Debug/CacheTagsViewHelper.php.html#27"><circle cx="60.0" cy="345.9" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\CacheTagsViewHelper — Coverage: 0.0% | Lines: 5 | Complexity: 1</title></circle></a>
+ <a href="Debug/StopViewHelper.php.html#28"><circle cx="60.0" cy="337.6" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\StopViewHelper — Coverage: 0.0% | Lines: 5 | Complexity: 3</title></circle></a>
+ <a href="Format/StripSlashesViewHelper.php.html#29"><circle cx="492.0" cy="337.6" r="4.0" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\StripSlashesViewHelper — Coverage: 60.0% | Lines: 5 | Complexity: 3</title></circle></a>
+ <a href="Cache/AddCacheTagByNameViewHelper.php.html#27"><circle cx="60.0" cy="341.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagByNameViewHelper — Coverage: 0.0% | Lines: 4 | Complexity: 2</title></circle></a>
+ <a href="Format/CleanHtmlViewHelper.php.html#25"><circle cx="540.0" cy="341.8" r="4.0" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\CleanHtmlViewHelper — Coverage: 66.7% | Lines: 3 | Complexity: 2</title></circle></a>
+ <a href="Meta/SysLanguageUidViewHelper.php.html#27"><circle cx="780.0" cy="341.8" r="4.0" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\Meta\SysLanguageUidViewHelper — Coverage: 100.0% | Lines: 2 | Complexity: 2</title></circle></a>
+</svg>
+     </div>
+    </div>
+    <div class="col-md-6 dashboard-column">
+     <h3>&nbsp;</h3>
+     <p class="text-muted small">Sorted by descending CRAP (Change Risk Anti-Patterns) index.</p>
+     <div class="scrollbox">
+<table class="table">
+ <thead>
+  <tr>
+   <th>Class</th>
+   <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+   <th class="text-right">Coverage</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr><td><a href="Form/SelectViewHelper.php.html#30">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper</a></td><td class="text-right">3660</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/UploadViewHelper.php.html#31">Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper</a></td><td class="text-right">650</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/ScriptViewHelper.php.html#22">Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper</a></td><td class="text-right">420</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/StylesheetViewHelper.php.html#25">Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper</a></td><td class="text-right">420</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Meta/TagViewHelper.php.html#38">Hausformat\ViewHelpers\ViewHelpers\Meta\TagViewHelper</a></td><td class="text-right">240</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Variable/UpdateViewHelper.php.html#35">Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper</a></td><td class="text-right">132.66</td><td class="text-right">42.6%</td></tr>
+  <tr><td><a href="Be/Security/IfTableAccessViewHelper.php.html#36">Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfTableAccessViewHelper</a></td><td class="text-right">132</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Form/TcaFormFieldViewHelper.php.html#31">Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper</a></td><td class="text-right">110</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Uri/FileViewHelper.php.html#64">Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper</a></td><td class="text-right">85.82</td><td class="text-right">40.6%</td></tr>
+  <tr><td><a href="File/ExistsViewHelper.php.html#36">Hausformat\ViewHelpers\ViewHelpers\File\ExistsViewHelper</a></td><td class="text-right">72</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Debug/ViewHelpersViewHelper.php.html#35">Hausformat\ViewHelpers\ViewHelpers\Debug\ViewHelpersViewHelper</a></td><td class="text-right">56</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="ArgViewHelper.php.html#20">Hausformat\ViewHelpers\ViewHelpers\ArgViewHelper</a></td><td class="text-right">50.38</td><td class="text-right">59.5%</td></tr>
+  <tr><td><a href="Widget/PaginateAlphabeticalViewHelper.php.html#47">Hausformat\ViewHelpers\ViewHelpers\Widget\PaginateAlphabeticalViewHelper</a></td><td class="text-right">44.44</td><td class="text-right">46.2%</td></tr>
+  <tr><td><a href="Meta/TitleTagViewHelper.php.html#37">Hausformat\ViewHelpers\ViewHelpers\Meta\TitleTagViewHelper</a></td><td class="text-right">36.78</td><td class="text-right">30.0%</td></tr>
+  <tr><td><a href="Format/RoundViewHelper.php.html#33">Hausformat\ViewHelpers\ViewHelpers\Format\RoundViewHelper</a></td><td class="text-right">31.21</td><td class="text-right">61.0%</td></tr>
+  <tr><td><a href="Format/NumberViewHelper.php.html#33">Hausformat\ViewHelpers\ViewHelpers\Format\NumberViewHelper</a></td><td class="text-right">30.95</td><td class="text-right">69.9%</td></tr>
+  <tr><td><a href="Debug/DurationViewHelper.php.html#32">Hausformat\ViewHelpers\ViewHelpers\Debug\DurationViewHelper</a></td><td class="text-right">30</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Traits/WithCacheTagService.php.html#27">Hausformat\ViewHelpers\ViewHelpers\Traits\WithCacheTagService</a></td><td class="text-right">30</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Security/IfIsAdminViewHelper.php.html#35">Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfIsAdminViewHelper</a></td><td class="text-right">20</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Cache/AddCacheTagViewHelper.php.html#30">Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagViewHelper</a></td><td class="text-right">20</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/FlexFormToArrayViewHelper.php.html#27">Hausformat\ViewHelpers\ViewHelpers\Format\FlexFormToArrayViewHelper</a></td><td class="text-right">20</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Get/ContentValueViewHelper.php.html#24">Hausformat\ViewHelpers\ViewHelpers\Get\ContentValueViewHelper</a></td><td class="text-right">20</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/JsonEncodeViewHelper.php.html#29">Hausformat\ViewHelpers\ViewHelpers\Format\JsonEncodeViewHelper</a></td><td class="text-right">18.66</td><td class="text-right">29.4%</td></tr>
+  <tr><td><a href="ContainsViewHelper.php.html#35">Hausformat\ViewHelpers\ViewHelpers\ContainsViewHelper</a></td><td class="text-right">15.66</td><td class="text-right">56.5%</td></tr>
+  <tr><td><a href="CalcViewHelper.php.html#33">Hausformat\ViewHelpers\ViewHelpers\CalcViewHelper</a></td><td class="text-right">12.14</td><td class="text-right">90.0%</td></tr>
+  <tr><td><a href="Debug/StopViewHelper.php.html#28">Hausformat\ViewHelpers\ViewHelpers\Debug\StopViewHelper</a></td><td class="text-right">12</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Get/TsfeViewHelper.php.html#33">Hausformat\ViewHelpers\ViewHelpers\Get\TsfeViewHelper</a></td><td class="text-right">12</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/DateViewHelper.php.html#31">Hausformat\ViewHelpers\ViewHelpers\Format\DateViewHelper</a></td><td class="text-right">11.10</td><td class="text-right">56.2%</td></tr>
+  <tr><td><a href="Format/JsonDecodeViewHelper.php.html#37">Hausformat\ViewHelpers\ViewHelpers\Format\JsonDecodeViewHelper</a></td><td class="text-right">8.64</td><td class="text-right">47.4%</td></tr>
+  <tr><td><a href="Cache/AddCacheTagByNameViewHelper.php.html#27">Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagByNameViewHelper</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="String/ExplodeViewHelper.php.html#32">Hausformat\ViewHelpers\ViewHelpers\String\ExplodeViewHelper</a></td><td class="text-right">5.73</td><td class="text-right">52.4%</td></tr>
+  <tr><td><a href="Format/CaseViewHelper.php.html#30">Hausformat\ViewHelpers\ViewHelpers\Format\CaseViewHelper</a></td><td class="text-right">4.43</td><td class="text-right">70.0%</td></tr>
+  <tr><td><a href="Format/WhitespaceViewHelper.php.html#31">Hausformat\ViewHelpers\ViewHelpers\Format\WhitespaceViewHelper</a></td><td class="text-right">4.37</td><td class="text-right">71.4%</td></tr>
+  <tr><td><a href="Variable/RemoveViewHelper.php.html#31">Hausformat\ViewHelpers\ViewHelpers\Variable\RemoveViewHelper</a></td><td class="text-right">4.03</td><td class="text-right">87.5%</td></tr>
+  <tr><td><a href="Format/StripSlashesViewHelper.php.html#29">Hausformat\ViewHelpers\ViewHelpers\Format\StripSlashesViewHelper</a></td><td class="text-right">3.58</td><td class="text-right">60.0%</td></tr>
+  <tr><td><a href="ForViewHelper.php.html#32">Hausformat\ViewHelpers\ViewHelpers\ForViewHelper</a></td><td class="text-right">3.11</td><td class="text-right">77.3%</td></tr>
+  <tr><td><a href="SortObjectStorageViewHelper.php.html#27">Hausformat\ViewHelpers\ViewHelpers\SortObjectStorageViewHelper</a></td><td class="text-right">2.38</td><td class="text-right">54.5%</td></tr>
+  <tr><td><a href="GetViewHelper.php.html#32">Hausformat\ViewHelpers\ViewHelpers\GetViewHelper</a></td><td class="text-right">2.21</td><td class="text-right">62.5%</td></tr>
+  <tr><td><a href="Format/CleanHtmlViewHelper.php.html#25">Hausformat\ViewHelpers\ViewHelpers\Format\CleanHtmlViewHelper</a></td><td class="text-right">2.15</td><td class="text-right">66.7%</td></tr>
+  <tr><td><a href="Debug/CacheTagsViewHelper.php.html#27">Hausformat\ViewHelpers\ViewHelpers\Debug\CacheTagsViewHelper</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Meta/SysLanguageUidViewHelper.php.html#27">Hausformat\ViewHelpers\ViewHelpers\Meta\SysLanguageUidViewHelper</a></td><td class="text-right">2</td><td class="text-right">100.0%</td></tr>
+ </tbody>
+</table>
+     </div>
+    </div>
+   </div>
+   <div class="row dashboard-row">
+    <div class="col-md-6">
+     <h3>Methods</h3>
+     <p class="text-muted small">Bubble size = executable lines. Hover for details, click to navigate.</p>
+     <div class="file-coverage-chart">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
+ <style>
+  .bubble-success { fill: var(--phpunit-success-bar); opacity: 0.7; }
+  .bubble-warning { fill: var(--phpunit-warning-bar); opacity: 0.7; }
+  .bubble-danger { fill: var(--phpunit-danger-bar); opacity: 0.7; }
+  .bubble-success:hover, .bubble-warning:hover, .bubble-danger:hover { opacity: 1; stroke: var(--bs-emphasis-color); stroke-width: 1.5; }
+  .chart-grid { stroke: var(--bs-border-color); stroke-width: 0.5; stroke-dasharray: 4,4; opacity: 0.5; }
+  .chart-axis { stroke: var(--bs-border-color); stroke-width: 1; }
+  .chart-label { fill: var(--bs-body-color); font-size: 11px; font-family: var(--bs-font-sans-serif, sans-serif); }
+  .chart-title { fill: var(--bs-body-color); font-size: 12px; font-family: var(--bs-font-sans-serif, sans-serif); }
+ </style>
+ <line x1="60.0" y1="20" x2="60.0" y2="350" class="chart-grid"/>
+ <text x="60.0" y="368" text-anchor="middle" class="chart-label">0%</text>
+ <line x1="204.0" y1="20" x2="204.0" y2="350" class="chart-grid"/>
+ <text x="204.0" y="368" text-anchor="middle" class="chart-label">20%</text>
+ <line x1="348.0" y1="20" x2="348.0" y2="350" class="chart-grid"/>
+ <text x="348.0" y="368" text-anchor="middle" class="chart-label">40%</text>
+ <line x1="492.0" y1="20" x2="492.0" y2="350" class="chart-grid"/>
+ <text x="492.0" y="368" text-anchor="middle" class="chart-label">60%</text>
+ <line x1="636.0" y1="20" x2="636.0" y2="350" class="chart-grid"/>
+ <text x="636.0" y="368" text-anchor="middle" class="chart-label">80%</text>
+ <line x1="780.0" y1="20" x2="780.0" y2="350" class="chart-grid"/>
+ <text x="780.0" y="368" text-anchor="middle" class="chart-label">100%</text>
+ <line x1="60" y1="350.0" x2="780" y2="350.0" class="chart-grid"/>
+ <text x="52" y="350.0" text-anchor="end" dominant-baseline="middle" class="chart-label">0</text>
+ <line x1="60" y1="284.0" x2="780" y2="284.0" class="chart-grid"/>
+ <text x="52" y="284.0" text-anchor="end" dominant-baseline="middle" class="chart-label">5</text>
+ <line x1="60" y1="218.0" x2="780" y2="218.0" class="chart-grid"/>
+ <text x="52" y="218.0" text-anchor="end" dominant-baseline="middle" class="chart-label">10</text>
+ <line x1="60" y1="152.0" x2="780" y2="152.0" class="chart-grid"/>
+ <text x="52" y="152.0" text-anchor="end" dominant-baseline="middle" class="chart-label">15</text>
+ <line x1="60" y1="86.0" x2="780" y2="86.0" class="chart-grid"/>
+ <text x="52" y="86.0" text-anchor="end" dominant-baseline="middle" class="chart-label">20</text>
+ <line x1="60" y1="20.0" x2="780" y2="20.0" class="chart-grid"/>
+ <text x="52" y="20.0" text-anchor="end" dominant-baseline="middle" class="chart-label">25</text>
+ <line x1="60" y1="20" x2="60" y2="350" class="chart-axis"/>
+ <line x1="60" y1="350" x2="780" y2="350" class="chart-axis"/>
+ <text x="420.0" y="395" text-anchor="middle" class="chart-title">Line Coverage (%)</text>
+ <text x="15" y="185.0" text-anchor="middle" transform="rotate(-90, 15, 185.0)" class="chart-title">Cyclomatic Complexity</text>
+ <a href="Format/NumberViewHelper.php.html#38"><circle cx="652.3" cy="99.2" r="20.0" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\NumberViewHelper::render — Coverage: 82.3% | Lines: 62 | Complexity: 19</title></circle></a>
+ <a href="Widget/PaginateAlphabeticalViewHelper.php.html#100"><circle cx="562.6" cy="191.6" r="18.5" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Widget\PaginateAlphabeticalViewHelper::buildPagination — Coverage: 69.8% | Lines: 53 | Complexity: 12</title></circle></a>
+ <a href="Format/RoundViewHelper.php.html#38"><circle cx="605.5" cy="152.0" r="14.6" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\RoundViewHelper::render — Coverage: 75.8% | Lines: 33 | Complexity: 15</title></circle></a>
+ <a href="ArgViewHelper.php.html#39"><circle cx="555.0" cy="86.0" r="14.4" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\ArgViewHelper::render — Coverage: 68.8% | Lines: 32 | Complexity: 20</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#227"><circle cx="60.0" cy="86.0" r="14.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::getOptions — Coverage: 0.0% | Lines: 32 | Complexity: 20</title></circle></a>
+ <a href="Asset/StylesheetViewHelper.php.html#50"><circle cx="60.0" cy="336.8" r="13.9" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::initializeArguments — Coverage: 0.0% | Lines: 30 | Complexity: 1</title></circle></a>
+ <a href="CalcViewHelper.php.html#51"><circle cx="754.3" cy="204.8" r="13.4" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\CalcViewHelper::render — Coverage: 96.4% | Lines: 28 | Complexity: 11</title></circle></a>
+ <a href="Debug/ViewHelpersViewHelper.php.html#51"><circle cx="60.0" cy="297.2" r="13.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\ViewHelpersViewHelper::render — Coverage: 0.0% | Lines: 28 | Complexity: 4</title></circle></a>
+ <a href="Asset/ScriptViewHelper.php.html#70"><circle cx="60.0" cy="336.8" r="12.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::initializeArguments — Coverage: 0.0% | Lines: 25 | Complexity: 1</title></circle></a>
+ <a href="Asset/ScriptViewHelper.php.html#100"><circle cx="60.0" cy="218.0" r="12.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::render — Coverage: 0.0% | Lines: 24 | Complexity: 10</title></circle></a>
+ <a href="Debug/DurationViewHelper.php.html#34"><circle cx="60.0" cy="336.8" r="12.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\DurationViewHelper::initializeArguments — Coverage: 0.0% | Lines: 24 | Complexity: 1</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#83"><circle cx="60.0" cy="218.0" r="12.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::render — Coverage: 0.0% | Lines: 23 | Complexity: 10</title></circle></a>
+ <a href="Variable/UpdateViewHelper.php.html#46"><circle cx="748.7" cy="257.6" r="12.2" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::render — Coverage: 95.7% | Lines: 23 | Complexity: 7</title></circle></a>
+ <a href="Format/JsonEncodeViewHelper.php.html#61"><circle cx="60.0" cy="336.8" r="11.9" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\JsonEncodeViewHelper::initializeArguments — Coverage: 0.0% | Lines: 22 | Complexity: 1</title></circle></a>
+ <a href="Meta/TagViewHelper.php.html#68"><circle cx="60.0" cy="165.2" r="11.9" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Meta\TagViewHelper::render — Coverage: 0.0% | Lines: 22 | Complexity: 14</title></circle></a>
+ <a href="Form/UploadViewHelper.php.html#176"><circle cx="60.0" cy="297.2" r="11.6" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::renderFileReference — Coverage: 0.0% | Lines: 21 | Complexity: 4</title></circle></a>
+ <a href="Be/Security/IfTableAccessViewHelper.php.html#53"><circle cx="60.0" cy="218.0" r="11.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfTableAccessViewHelper::render — Coverage: 0.0% | Lines: 20 | Complexity: 10</title></circle></a>
+ <a href="ContainsViewHelper.php.html#40"><circle cx="552.6" cy="244.4" r="11.1" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\ContainsViewHelper::render — Coverage: 68.4% | Lines: 19 | Complexity: 8</title></circle></a>
+ <a href="Get/ContentValueViewHelper.php.html#34"><circle cx="60.0" cy="310.4" r="11.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Get\ContentValueViewHelper::render — Coverage: 0.0% | Lines: 19 | Complexity: 3</title></circle></a>
+ <a href="Uri/FileViewHelper.php.html#92"><circle cx="514.7" cy="218.0" r="11.1" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper::render — Coverage: 63.2% | Lines: 19 | Complexity: 10</title></circle></a>
+ <a href="Widget/PaginateAlphabeticalViewHelper.php.html#63"><circle cx="60.0" cy="336.8" r="11.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Widget\PaginateAlphabeticalViewHelper::render — Coverage: 0.0% | Lines: 19 | Complexity: 1</title></circle></a>
+ <a href="Be/Form/TcaFormFieldViewHelper.php.html#94"><circle cx="60.0" cy="270.8" r="10.8" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper::render — Coverage: 0.0% | Lines: 18 | Complexity: 6</title></circle></a>
+ <a href="Asset/ScriptViewHelper.php.html#152"><circle cx="60.0" cy="270.8" r="10.5" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::getPublicFilePath — Coverage: 0.0% | Lines: 17 | Complexity: 6</title></circle></a>
+ <a href="Asset/StylesheetViewHelper.php.html#115"><circle cx="60.0" cy="270.8" r="10.5" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::getPublicFilePath — Coverage: 0.0% | Lines: 17 | Complexity: 6</title></circle></a>
+ <a href="ForViewHelper.php.html#39"><circle cx="780.0" cy="323.6" r="10.5" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\ForViewHelper::render — Coverage: 100.0% | Lines: 17 | Complexity: 2</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#48"><circle cx="60.0" cy="336.8" r="10.5" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::initializeArguments — Coverage: 0.0% | Lines: 17 | Complexity: 1</title></circle></a>
+ <a href="String/ExplodeViewHelper.php.html#37"><circle cx="525.9" cy="310.4" r="10.5" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\String\ExplodeViewHelper::render — Coverage: 64.7% | Lines: 17 | Complexity: 3</title></circle></a>
+ <a href="Asset/StylesheetViewHelper.php.html#149"><circle cx="60.0" cy="284.0" r="9.8" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::renderCSS — Coverage: 0.0% | Lines: 15 | Complexity: 5</title></circle></a>
+ <a href="Meta/TitleTagViewHelper.php.html#109"><circle cx="60.0" cy="336.8" r="9.8" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Meta\TitleTagViewHelper::initializeArguments — Coverage: 0.0% | Lines: 15 | Complexity: 1</title></circle></a>
+ <a href="Form/UploadViewHelper.php.html#127"><circle cx="60.0" cy="257.6" r="9.5" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::getUploadedResource — Coverage: 0.0% | Lines: 14 | Complexity: 7</title></circle></a>
+ <a href="Get/TsfeViewHelper.php.html#38"><circle cx="60.0" cy="323.6" r="9.5" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Get\TsfeViewHelper::render — Coverage: 0.0% | Lines: 14 | Complexity: 2</title></circle></a>
+ <a href="Be/Form/TcaFormFieldViewHelper.php.html#60"><circle cx="60.0" cy="336.8" r="9.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper::initializeArguments — Coverage: 0.0% | Lines: 13 | Complexity: 1</title></circle></a>
+ <a href="Debug/DurationViewHelper.php.html#67"><circle cx="60.0" cy="297.2" r="9.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\DurationViewHelper::render — Coverage: 0.0% | Lines: 13 | Complexity: 4</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#183"><circle cx="60.0" cy="218.0" r="9.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::isSelected — Coverage: 0.0% | Lines: 13 | Complexity: 10</title></circle></a>
+ <a href="Format/DateViewHelper.php.html#37"><circle cx="558.5" cy="270.8" r="9.2" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\DateViewHelper::render — Coverage: 69.2% | Lines: 13 | Complexity: 6</title></circle></a>
+ <a href="Meta/TitleTagViewHelper.php.html#57"><circle cx="60.0" cy="323.6" r="9.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Meta\TitleTagViewHelper::render — Coverage: 0.0% | Lines: 13 | Complexity: 2</title></circle></a>
+ <a href="Format/JsonEncodeViewHelper.php.html#37"><circle cx="660.0" cy="284.0" r="8.8" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\JsonEncodeViewHelper::render — Coverage: 83.3% | Lines: 12 | Complexity: 5</title></circle></a>
+ <a href="Meta/TitleTagViewHelper.php.html#86"><circle cx="780.0" cy="270.8" r="8.8" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\Meta\TitleTagViewHelper::getTitle — Coverage: 100.0% | Lines: 12 | Complexity: 6</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#150"><circle cx="60.0" cy="310.4" r="8.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::getValueFromOption — Coverage: 0.0% | Lines: 11 | Complexity: 3</title></circle></a>
+ <a href="Format/NumberViewHelper.php.html#147"><circle cx="60.0" cy="336.8" r="8.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\NumberViewHelper::initializeArguments — Coverage: 0.0% | Lines: 11 | Complexity: 1</title></circle></a>
+ <a href="Variable/UpdateViewHelper.php.html#145"><circle cx="60.0" cy="284.0" r="8.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::setValueInObject — Coverage: 0.0% | Lines: 11 | Complexity: 5</title></circle></a>
+ <a href="Form/UploadViewHelper.php.html#102"><circle cx="60.0" cy="310.4" r="8.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::parentRender — Coverage: 0.0% | Lines: 10 | Complexity: 3</title></circle></a>
+ <a href="Format/JsonDecodeViewHelper.php.html#43"><circle cx="708.0" cy="297.2" r="8.0" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\Format\JsonDecodeViewHelper::render — Coverage: 90.0% | Lines: 10 | Complexity: 4</title></circle></a>
+ <a href="File/ExistsViewHelper.php.html#46"><circle cx="60.0" cy="257.6" r="7.6" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\File\ExistsViewHelper::verdict — Coverage: 0.0% | Lines: 9 | Complexity: 7</title></circle></a>
+ <a href="Form/UploadViewHelper.php.html#81"><circle cx="60.0" cy="270.8" r="7.6" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::render — Coverage: 0.0% | Lines: 9 | Complexity: 6</title></circle></a>
+ <a href="Format/JsonDecodeViewHelper.php.html#65"><circle cx="60.0" cy="336.8" r="7.6" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\JsonDecodeViewHelper::initializeArguments — Coverage: 0.0% | Lines: 9 | Complexity: 1</title></circle></a>
+ <a href="Variable/UpdateViewHelper.php.html#212"><circle cx="60.0" cy="323.6" r="7.6" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::setPropertyInObject — Coverage: 0.0% | Lines: 9 | Complexity: 2</title></circle></a>
+ <a href="Asset/StylesheetViewHelper.php.html#184"><circle cx="60.0" cy="310.4" r="7.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::renderSCSS — Coverage: 0.0% | Lines: 8 | Complexity: 3</title></circle></a>
+ <a href="Cache/AddCacheTagViewHelper.php.html#37"><circle cx="60.0" cy="310.4" r="7.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagViewHelper::render — Coverage: 0.0% | Lines: 8 | Complexity: 3</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#284"><circle cx="60.0" cy="297.2" r="7.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::getSelectedValue — Coverage: 0.0% | Lines: 8 | Complexity: 4</title></circle></a>
+ <a href="Format/CaseViewHelper.php.html#41"><circle cx="690.0" cy="310.4" r="7.2" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\CaseViewHelper::render — Coverage: 87.5% | Lines: 8 | Complexity: 3</title></circle></a>
+ <a href="Format/FlexFormToArrayViewHelper.php.html#32"><circle cx="60.0" cy="310.4" r="7.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\FlexFormToArrayViewHelper::render — Coverage: 0.0% | Lines: 8 | Complexity: 3</title></circle></a>
+ <a href="Format/RoundViewHelper.php.html#91"><circle cx="60.0" cy="336.8" r="7.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\RoundViewHelper::initializeArguments — Coverage: 0.0% | Lines: 8 | Complexity: 1</title></circle></a>
+ <a href="Meta/TagViewHelper.php.html#51"><circle cx="60.0" cy="336.8" r="7.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Meta\TagViewHelper::initializeArguments — Coverage: 0.0% | Lines: 8 | Complexity: 1</title></circle></a>
+ <a href="Variable/UpdateViewHelper.php.html#97"><circle cx="330.0" cy="310.4" r="7.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::setOnDottedPath — Coverage: 37.5% | Lines: 8 | Complexity: 3</title></circle></a>
+ <a href="Widget/PaginateAlphabeticalViewHelper.php.html#51"><circle cx="60.0" cy="336.8" r="7.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Widget\PaginateAlphabeticalViewHelper::initializeArguments — Coverage: 0.0% | Lines: 8 | Complexity: 1</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#304"><circle cx="60.0" cy="297.2" r="6.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::getOptionValueScalar — Coverage: 0.0% | Lines: 7 | Complexity: 4</title></circle></a>
+ <a href="Variable/RemoveViewHelper.php.html#36"><circle cx="780.0" cy="310.4" r="6.7" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\RemoveViewHelper::render — Coverage: 100.0% | Lines: 7 | Complexity: 3</title></circle></a>
+ <a href="Asset/ScriptViewHelper.php.html#56"><circle cx="60.0" cy="336.8" r="6.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::initialize — Coverage: 0.0% | Lines: 6 | Complexity: 1</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#131"><circle cx="60.0" cy="310.4" r="6.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::getValue — Coverage: 0.0% | Lines: 6 | Complexity: 3</title></circle></a>
+ <a href="Form/UploadViewHelper.php.html#64"><circle cx="60.0" cy="336.8" r="6.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::initializeArguments — Coverage: 0.0% | Lines: 6 | Complexity: 1</title></circle></a>
+ <a href="SortObjectStorageViewHelper.php.html#32"><circle cx="780.0" cy="336.8" r="6.2" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\SortObjectStorageViewHelper::render — Coverage: 100.0% | Lines: 6 | Complexity: 1</title></circle></a>
+ <a href="Variable/UpdateViewHelper.php.html#190"><circle cx="60.0" cy="323.6" r="6.2" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::setPropertyInEntity — Coverage: 0.0% | Lines: 6 | Complexity: 2</title></circle></a>
+ <a href="ArgViewHelper.php.html#27"><circle cx="60.0" cy="336.8" r="5.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\ArgViewHelper::initializeArguments — Coverage: 0.0% | Lines: 5 | Complexity: 1</title></circle></a>
+ <a href="Asset/StylesheetViewHelper.php.html#92"><circle cx="60.0" cy="323.6" r="5.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::render — Coverage: 0.0% | Lines: 5 | Complexity: 2</title></circle></a>
+ <a href="Debug/CacheTagsViewHelper.php.html#33"><circle cx="60.0" cy="336.8" r="5.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\CacheTagsViewHelper::render — Coverage: 0.0% | Lines: 5 | Complexity: 1</title></circle></a>
+ <a href="ForViewHelper.php.html#68"><circle cx="60.0" cy="336.8" r="5.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\ForViewHelper::initializeArguments — Coverage: 0.0% | Lines: 5 | Complexity: 1</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#212"><circle cx="60.0" cy="323.6" r="5.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::renderOptionTags — Coverage: 0.0% | Lines: 5 | Complexity: 2</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#327"><circle cx="60.0" cy="323.6" r="5.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::renderOptionTag — Coverage: 0.0% | Lines: 5 | Complexity: 2</title></circle></a>
+ <a href="Format/WhitespaceViewHelper.php.html#46"><circle cx="780.0" cy="310.4" r="5.7" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\Format\WhitespaceViewHelper::render — Coverage: 100.0% | Lines: 5 | Complexity: 3</title></circle></a>
+ <a href="GetViewHelper.php.html#37"><circle cx="780.0" cy="336.8" r="5.7" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\GetViewHelper::render — Coverage: 100.0% | Lines: 5 | Complexity: 1</title></circle></a>
+ <a href="SortObjectStorageViewHelper.php.html#42"><circle cx="60.0" cy="336.8" r="5.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\SortObjectStorageViewHelper::initializeArguments — Coverage: 0.0% | Lines: 5 | Complexity: 1</title></circle></a>
+ <a href="Uri/FileViewHelper.php.html#145"><circle cx="60.0" cy="284.0" r="5.7" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper::combineUrls — Coverage: 0.0% | Lines: 5 | Complexity: 5</title></circle></a>
+ <a href="Variable/UpdateViewHelper.php.html#124"><circle cx="636.0" cy="310.4" r="5.7" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::setValueOnKey — Coverage: 80.0% | Lines: 5 | Complexity: 3</title></circle></a>
+ <a href="ContainsViewHelper.php.html#78"><circle cx="60.0" cy="336.8" r="5.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\ContainsViewHelper::initializeArguments — Coverage: 0.0% | Lines: 4 | Complexity: 1</title></circle></a>
+ <a href="Debug/StopViewHelper.php.html#41"><circle cx="60.0" cy="323.6" r="5.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\StopViewHelper::render — Coverage: 0.0% | Lines: 4 | Complexity: 2</title></circle></a>
+ <a href="Form/UploadViewHelper.php.html#159"><circle cx="60.0" cy="323.6" r="5.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::renderObjectStorage — Coverage: 0.0% | Lines: 4 | Complexity: 2</title></circle></a>
+ <a href="Format/StripSlashesViewHelper.php.html#40"><circle cx="600.0" cy="323.6" r="5.1" class="bubble-warning"><title>Hausformat\ViewHelpers\ViewHelpers\Format\StripSlashesViewHelper::render — Coverage: 75.0% | Lines: 4 | Complexity: 2</title></circle></a>
+ <a href="Get/ContentValueViewHelper.php.html#26"><circle cx="60.0" cy="336.8" r="5.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Get\ContentValueViewHelper::initializeArguments — Coverage: 0.0% | Lines: 4 | Complexity: 1</title></circle></a>
+ <a href="String/ExplodeViewHelper.php.html#69"><circle cx="60.0" cy="336.8" r="5.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\String\ExplodeViewHelper::initializeArguments — Coverage: 0.0% | Lines: 4 | Complexity: 1</title></circle></a>
+ <a href="Uri/FileViewHelper.php.html#78"><circle cx="60.0" cy="336.8" r="5.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper::initializeArguments — Coverage: 0.0% | Lines: 4 | Complexity: 1</title></circle></a>
+ <a href="Variable/UpdateViewHelper.php.html#234"><circle cx="60.0" cy="336.8" r="5.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::initializeArguments — Coverage: 0.0% | Lines: 4 | Complexity: 1</title></circle></a>
+ <a href="Traits/WithCacheTagService.php.html#34"><circle cx="60.0" cy="323.6" r="5.1" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Traits\WithCacheTagService::getCacheTagService — Coverage: 0.0% | Lines: 4 | Complexity: 2</title></circle></a>
+ <a href="Be/Security/IfIsAdminViewHelper.php.html#40"><circle cx="60.0" cy="323.6" r="4.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfIsAdminViewHelper::render — Coverage: 0.0% | Lines: 3 | Complexity: 2</title></circle></a>
+ <a href="Be/Security/IfTableAccessViewHelper.php.html#39"><circle cx="60.0" cy="336.8" r="4.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfTableAccessViewHelper::initializeArguments — Coverage: 0.0% | Lines: 3 | Complexity: 1</title></circle></a>
+ <a href="Cache/AddCacheTagByNameViewHelper.php.html#34"><circle cx="60.0" cy="336.8" r="4.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagByNameViewHelper::render — Coverage: 0.0% | Lines: 3 | Complexity: 1</title></circle></a>
+ <a href="Debug/ViewHelpersViewHelper.php.html#98"><circle cx="60.0" cy="310.4" r="4.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\ViewHelpersViewHelper::setChildNodes — Coverage: 0.0% | Lines: 3 | Complexity: 3</title></circle></a>
+ <a href="File/ExistsViewHelper.php.html#72"><circle cx="60.0" cy="336.8" r="4.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\File\ExistsViewHelper::initializeArguments — Coverage: 0.0% | Lines: 3 | Complexity: 1</title></circle></a>
+ <a href="Format/DateViewHelper.php.html#66"><circle cx="60.0" cy="336.8" r="4.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\DateViewHelper::initializeArguments — Coverage: 0.0% | Lines: 3 | Complexity: 1</title></circle></a>
+ <a href="GetViewHelper.php.html#51"><circle cx="60.0" cy="336.8" r="4.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\GetViewHelper::initializeArguments — Coverage: 0.0% | Lines: 3 | Complexity: 1</title></circle></a>
+ <a href="Uri/FileViewHelper.php.html#132"><circle cx="60.0" cy="336.8" r="4.4" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper::getBaseURL — Coverage: 0.0% | Lines: 3 | Complexity: 1</title></circle></a>
+ <a href="Be/Security/IfIsAdminViewHelper.php.html#56"><circle cx="60.0" cy="323.6" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfIsAdminViewHelper::verdict — Coverage: 0.0% | Lines: 2 | Complexity: 2</title></circle></a>
+ <a href="CalcViewHelper.php.html#96"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\CalcViewHelper::initializeArguments — Coverage: 0.0% | Lines: 2 | Complexity: 1</title></circle></a>
+ <a href="Format/CaseViewHelper.php.html#58"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\CaseViewHelper::initializeArguments — Coverage: 0.0% | Lines: 2 | Complexity: 1</title></circle></a>
+ <a href="Format/CleanHtmlViewHelper.php.html#34"><circle cx="780.0" cy="336.8" r="4.0" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\Format\CleanHtmlViewHelper::render — Coverage: 100.0% | Lines: 2 | Complexity: 1</title></circle></a>
+ <a href="Format/FlexFormToArrayViewHelper.php.html#51"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\FlexFormToArrayViewHelper::initializeArguments — Coverage: 0.0% | Lines: 2 | Complexity: 1</title></circle></a>
+ <a href="Format/WhitespaceViewHelper.php.html#59"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\WhitespaceViewHelper::initializeArguments — Coverage: 0.0% | Lines: 2 | Complexity: 1</title></circle></a>
+ <a href="Variable/UpdateViewHelper.php.html#176"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::attachToObjectStorage — Coverage: 0.0% | Lines: 2 | Complexity: 1</title></circle></a>
+ <a href="Asset/ScriptViewHelper.php.html#44"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::injectAssetCollector — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Asset/ScriptViewHelper.php.html#51"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::injectCacheManager — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Asset/StylesheetViewHelper.php.html#33"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::injectAssetCollector — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Asset/StylesheetViewHelper.php.html#38"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::injectScssService — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Asset/StylesheetViewHelper.php.html#45"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::injectCacheManager — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Be/Form/TcaFormFieldViewHelper.php.html#77"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper::injectBackendFieldRendererService — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Be/Form/TcaFormFieldViewHelper.php.html#82"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper::injectGlobalsService — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Be/Form/TcaFormFieldViewHelper.php.html#127"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper::getLanguageService — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Cache/AddCacheTagByNameViewHelper.php.html#41"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagByNameViewHelper::initializeArguments — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Cache/AddCacheTagViewHelper.php.html#54"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagViewHelper::initializeArguments — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Debug/StopViewHelper.php.html#33"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Debug\StopViewHelper::initializeArguments — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Form/SelectViewHelper.php.html#72"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::injectLanguageService — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Form/UploadViewHelper.php.html#48"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::injectHashService — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Form/UploadViewHelper.php.html#56"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::injectPropertyMapper — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Format/CleanHtmlViewHelper.php.html#43"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\CleanHtmlViewHelper::initializeArguments — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Format/StripSlashesViewHelper.php.html#51"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Format\StripSlashesViewHelper::initializeArguments — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Get/TsfeViewHelper.php.html#59"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Get\TsfeViewHelper::initializeArguments — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Meta/SysLanguageUidViewHelper.php.html#39"><circle cx="780.0" cy="336.8" r="4.0" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\Meta\SysLanguageUidViewHelper::injectContext — Coverage: 100.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Meta/SysLanguageUidViewHelper.php.html#47"><circle cx="780.0" cy="336.8" r="4.0" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\Meta\SysLanguageUidViewHelper::render — Coverage: 100.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Uri/FileViewHelper.php.html#74"><circle cx="780.0" cy="336.8" r="4.0" class="bubble-success"><title>Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper::injectImageService — Coverage: 100.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Variable/RemoveViewHelper.php.html#57"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Variable\RemoveViewHelper::initializeArguments — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Traits/WithCacheTagService.php.html#48"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Traits\WithCacheTagService::getVariableName — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Traits/WithCacheTagService.php.html#56"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Traits\WithCacheTagService::removeCacheTagService — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+ <a href="Traits/WithCacheTagService.php.html#65"><circle cx="60.0" cy="336.8" r="4.0" class="bubble-danger"><title>Hausformat\ViewHelpers\ViewHelpers\Traits\WithCacheTagService::setCacheTagService — Coverage: 0.0% | Lines: 1 | Complexity: 1</title></circle></a>
+</svg>
+     </div>
+    </div>
+    <div class="col-md-6 dashboard-column">
+     <h3>&nbsp;</h3>
+     <p class="text-muted small">Sorted by descending CRAP (Change Risk Anti-Patterns) index.</p>
+     <div class="scrollbox">
+<table class="table">
+ <thead>
+  <tr>
+   <th>Method</th>
+   <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+   <th class="text-right">Coverage</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr><td><a href="Form/SelectViewHelper.php.html#227">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::getOptions</a></td><td class="text-right">420</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Meta/TagViewHelper.php.html#68">Hausformat\ViewHelpers\ViewHelpers\Meta\TagViewHelper::render</a></td><td class="text-right">210</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/ScriptViewHelper.php.html#100">Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::render</a></td><td class="text-right">110</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Security/IfTableAccessViewHelper.php.html#53">Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfTableAccessViewHelper::render</a></td><td class="text-right">110</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/SelectViewHelper.php.html#83">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::render</a></td><td class="text-right">110</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/SelectViewHelper.php.html#183">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::isSelected</a></td><td class="text-right">110</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="File/ExistsViewHelper.php.html#46">Hausformat\ViewHelpers\ViewHelpers\File\ExistsViewHelper::verdict</a></td><td class="text-right">56</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/UploadViewHelper.php.html#127">Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::getUploadedResource</a></td><td class="text-right">56</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/ScriptViewHelper.php.html#152">Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::getPublicFilePath</a></td><td class="text-right">42</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/StylesheetViewHelper.php.html#115">Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::getPublicFilePath</a></td><td class="text-right">42</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Form/TcaFormFieldViewHelper.php.html#94">Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper::render</a></td><td class="text-right">42</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/UploadViewHelper.php.html#81">Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::render</a></td><td class="text-right">42</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="ArgViewHelper.php.html#39">Hausformat\ViewHelpers\ViewHelpers\ArgViewHelper::render</a></td><td class="text-right">32.21</td><td class="text-right">68.8%</td></tr>
+  <tr><td><a href="Asset/StylesheetViewHelper.php.html#149">Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::renderCSS</a></td><td class="text-right">30</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Uri/FileViewHelper.php.html#145">Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper::combineUrls</a></td><td class="text-right">30</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Variable/UpdateViewHelper.php.html#145">Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::setValueInObject</a></td><td class="text-right">30</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/NumberViewHelper.php.html#38">Hausformat\ViewHelpers\ViewHelpers\Format\NumberViewHelper::render</a></td><td class="text-right">21.02</td><td class="text-right">82.3%</td></tr>
+  <tr><td><a href="Debug/DurationViewHelper.php.html#67">Hausformat\ViewHelpers\ViewHelpers\Debug\DurationViewHelper::render</a></td><td class="text-right">20</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Debug/ViewHelpersViewHelper.php.html#51">Hausformat\ViewHelpers\ViewHelpers\Debug\ViewHelpersViewHelper::render</a></td><td class="text-right">20</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/SelectViewHelper.php.html#284">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::getSelectedValue</a></td><td class="text-right">20</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/SelectViewHelper.php.html#304">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::getOptionValueScalar</a></td><td class="text-right">20</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/UploadViewHelper.php.html#176">Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::renderFileReference</a></td><td class="text-right">20</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/RoundViewHelper.php.html#38">Hausformat\ViewHelpers\ViewHelpers\Format\RoundViewHelper::render</a></td><td class="text-right">18.21</td><td class="text-right">75.8%</td></tr>
+  <tr><td><a href="Widget/PaginateAlphabeticalViewHelper.php.html#100">Hausformat\ViewHelpers\ViewHelpers\Widget\PaginateAlphabeticalViewHelper::buildPagination</a></td><td class="text-right">15.96</td><td class="text-right">69.8%</td></tr>
+  <tr><td><a href="Uri/FileViewHelper.php.html#92">Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper::render</a></td><td class="text-right">15.00</td><td class="text-right">63.2%</td></tr>
+  <tr><td><a href="Asset/StylesheetViewHelper.php.html#184">Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::renderSCSS</a></td><td class="text-right">12</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Cache/AddCacheTagViewHelper.php.html#37">Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagViewHelper::render</a></td><td class="text-right">12</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Debug/ViewHelpersViewHelper.php.html#98">Hausformat\ViewHelpers\ViewHelpers\Debug\ViewHelpersViewHelper::setChildNodes</a></td><td class="text-right">12</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/SelectViewHelper.php.html#131">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::getValue</a></td><td class="text-right">12</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/SelectViewHelper.php.html#150">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::getValueFromOption</a></td><td class="text-right">12</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/UploadViewHelper.php.html#102">Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::parentRender</a></td><td class="text-right">12</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/FlexFormToArrayViewHelper.php.html#32">Hausformat\ViewHelpers\ViewHelpers\Format\FlexFormToArrayViewHelper::render</a></td><td class="text-right">12</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Get/ContentValueViewHelper.php.html#34">Hausformat\ViewHelpers\ViewHelpers\Get\ContentValueViewHelper::render</a></td><td class="text-right">12</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="CalcViewHelper.php.html#51">Hausformat\ViewHelpers\ViewHelpers\CalcViewHelper::render</a></td><td class="text-right">11</td><td class="text-right">96.4%</td></tr>
+  <tr><td><a href="ContainsViewHelper.php.html#40">Hausformat\ViewHelpers\ViewHelpers\ContainsViewHelper::render</a></td><td class="text-right">10.02</td><td class="text-right">68.4%</td></tr>
+  <tr><td><a href="Format/DateViewHelper.php.html#37">Hausformat\ViewHelpers\ViewHelpers\Format\DateViewHelper::render</a></td><td class="text-right">7.05</td><td class="text-right">69.2%</td></tr>
+  <tr><td><a href="Variable/UpdateViewHelper.php.html#46">Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::render</a></td><td class="text-right">7</td><td class="text-right">95.7%</td></tr>
+  <tr><td><a href="Asset/StylesheetViewHelper.php.html#92">Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::render</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Security/IfIsAdminViewHelper.php.html#40">Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfIsAdminViewHelper::render</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Security/IfIsAdminViewHelper.php.html#56">Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfIsAdminViewHelper::verdict</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Debug/StopViewHelper.php.html#41">Hausformat\ViewHelpers\ViewHelpers\Debug\StopViewHelper::render</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/SelectViewHelper.php.html#212">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::renderOptionTags</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/SelectViewHelper.php.html#327">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::renderOptionTag</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/UploadViewHelper.php.html#159">Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::renderObjectStorage</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Get/TsfeViewHelper.php.html#38">Hausformat\ViewHelpers\ViewHelpers\Get\TsfeViewHelper::render</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Meta/TitleTagViewHelper.php.html#57">Hausformat\ViewHelpers\ViewHelpers\Meta\TitleTagViewHelper::render</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Meta/TitleTagViewHelper.php.html#86">Hausformat\ViewHelpers\ViewHelpers\Meta\TitleTagViewHelper::getTitle</a></td><td class="text-right">6</td><td class="text-right">100.0%</td></tr>
+  <tr><td><a href="Variable/UpdateViewHelper.php.html#190">Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::setPropertyInEntity</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Variable/UpdateViewHelper.php.html#212">Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::setPropertyInObject</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Traits/WithCacheTagService.php.html#34">Hausformat\ViewHelpers\ViewHelpers\Traits\WithCacheTagService::getCacheTagService</a></td><td class="text-right">6</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Variable/UpdateViewHelper.php.html#97">Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::setOnDottedPath</a></td><td class="text-right">5.20</td><td class="text-right">37.5%</td></tr>
+  <tr><td><a href="Format/JsonEncodeViewHelper.php.html#37">Hausformat\ViewHelpers\ViewHelpers\Format\JsonEncodeViewHelper::render</a></td><td class="text-right">5.12</td><td class="text-right">83.3%</td></tr>
+  <tr><td><a href="Format/JsonDecodeViewHelper.php.html#43">Hausformat\ViewHelpers\ViewHelpers\Format\JsonDecodeViewHelper::render</a></td><td class="text-right">4.02</td><td class="text-right">90.0%</td></tr>
+  <tr><td><a href="String/ExplodeViewHelper.php.html#37">Hausformat\ViewHelpers\ViewHelpers\String\ExplodeViewHelper::render</a></td><td class="text-right">3.40</td><td class="text-right">64.7%</td></tr>
+  <tr><td><a href="Variable/UpdateViewHelper.php.html#124">Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::setValueOnKey</a></td><td class="text-right">3.07</td><td class="text-right">80.0%</td></tr>
+  <tr><td><a href="Format/CaseViewHelper.php.html#41">Hausformat\ViewHelpers\ViewHelpers\Format\CaseViewHelper::render</a></td><td class="text-right">3.02</td><td class="text-right">87.5%</td></tr>
+  <tr><td><a href="Format/WhitespaceViewHelper.php.html#46">Hausformat\ViewHelpers\ViewHelpers\Format\WhitespaceViewHelper::render</a></td><td class="text-right">3</td><td class="text-right">100.0%</td></tr>
+  <tr><td><a href="Variable/RemoveViewHelper.php.html#36">Hausformat\ViewHelpers\ViewHelpers\Variable\RemoveViewHelper::render</a></td><td class="text-right">3</td><td class="text-right">100.0%</td></tr>
+  <tr><td><a href="Format/StripSlashesViewHelper.php.html#40">Hausformat\ViewHelpers\ViewHelpers\Format\StripSlashesViewHelper::render</a></td><td class="text-right">2.06</td><td class="text-right">75.0%</td></tr>
+  <tr><td><a href="ArgViewHelper.php.html#27">Hausformat\ViewHelpers\ViewHelpers\ArgViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/ScriptViewHelper.php.html#44">Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::injectAssetCollector</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/ScriptViewHelper.php.html#51">Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::injectCacheManager</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/ScriptViewHelper.php.html#56">Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::initialize</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/ScriptViewHelper.php.html#70">Hausformat\ViewHelpers\ViewHelpers\Asset\ScriptViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/StylesheetViewHelper.php.html#33">Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::injectAssetCollector</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/StylesheetViewHelper.php.html#38">Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::injectScssService</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/StylesheetViewHelper.php.html#45">Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::injectCacheManager</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Asset/StylesheetViewHelper.php.html#50">Hausformat\ViewHelpers\ViewHelpers\Asset\StylesheetViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Form/TcaFormFieldViewHelper.php.html#60">Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Form/TcaFormFieldViewHelper.php.html#77">Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper::injectBackendFieldRendererService</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Form/TcaFormFieldViewHelper.php.html#82">Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper::injectGlobalsService</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Form/TcaFormFieldViewHelper.php.html#127">Hausformat\ViewHelpers\ViewHelpers\Be\Form\TcaFormFieldViewHelper::getLanguageService</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Be/Security/IfTableAccessViewHelper.php.html#39">Hausformat\ViewHelpers\ViewHelpers\Be\Security\IfTableAccessViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Cache/AddCacheTagByNameViewHelper.php.html#34">Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagByNameViewHelper::render</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Cache/AddCacheTagByNameViewHelper.php.html#41">Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagByNameViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Cache/AddCacheTagViewHelper.php.html#54">Hausformat\ViewHelpers\ViewHelpers\Cache\AddCacheTagViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="CalcViewHelper.php.html#96">Hausformat\ViewHelpers\ViewHelpers\CalcViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="ContainsViewHelper.php.html#78">Hausformat\ViewHelpers\ViewHelpers\ContainsViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Debug/CacheTagsViewHelper.php.html#33">Hausformat\ViewHelpers\ViewHelpers\Debug\CacheTagsViewHelper::render</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Debug/DurationViewHelper.php.html#34">Hausformat\ViewHelpers\ViewHelpers\Debug\DurationViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Debug/StopViewHelper.php.html#33">Hausformat\ViewHelpers\ViewHelpers\Debug\StopViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="File/ExistsViewHelper.php.html#72">Hausformat\ViewHelpers\ViewHelpers\File\ExistsViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="ForViewHelper.php.html#39">Hausformat\ViewHelpers\ViewHelpers\ForViewHelper::render</a></td><td class="text-right">2</td><td class="text-right">100.0%</td></tr>
+  <tr><td><a href="ForViewHelper.php.html#68">Hausformat\ViewHelpers\ViewHelpers\ForViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/SelectViewHelper.php.html#48">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/SelectViewHelper.php.html#72">Hausformat\ViewHelpers\ViewHelpers\Form\SelectViewHelper::injectLanguageService</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/UploadViewHelper.php.html#48">Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::injectHashService</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/UploadViewHelper.php.html#56">Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::injectPropertyMapper</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Form/UploadViewHelper.php.html#64">Hausformat\ViewHelpers\ViewHelpers\Form\UploadViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/CaseViewHelper.php.html#58">Hausformat\ViewHelpers\ViewHelpers\Format\CaseViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/CleanHtmlViewHelper.php.html#43">Hausformat\ViewHelpers\ViewHelpers\Format\CleanHtmlViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/DateViewHelper.php.html#66">Hausformat\ViewHelpers\ViewHelpers\Format\DateViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/FlexFormToArrayViewHelper.php.html#51">Hausformat\ViewHelpers\ViewHelpers\Format\FlexFormToArrayViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/JsonDecodeViewHelper.php.html#65">Hausformat\ViewHelpers\ViewHelpers\Format\JsonDecodeViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/JsonEncodeViewHelper.php.html#61">Hausformat\ViewHelpers\ViewHelpers\Format\JsonEncodeViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/NumberViewHelper.php.html#147">Hausformat\ViewHelpers\ViewHelpers\Format\NumberViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/RoundViewHelper.php.html#91">Hausformat\ViewHelpers\ViewHelpers\Format\RoundViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/StripSlashesViewHelper.php.html#51">Hausformat\ViewHelpers\ViewHelpers\Format\StripSlashesViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/WhitespaceViewHelper.php.html#59">Hausformat\ViewHelpers\ViewHelpers\Format\WhitespaceViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Get/ContentValueViewHelper.php.html#26">Hausformat\ViewHelpers\ViewHelpers\Get\ContentValueViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Get/TsfeViewHelper.php.html#59">Hausformat\ViewHelpers\ViewHelpers\Get\TsfeViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="GetViewHelper.php.html#51">Hausformat\ViewHelpers\ViewHelpers\GetViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Meta/TagViewHelper.php.html#51">Hausformat\ViewHelpers\ViewHelpers\Meta\TagViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Meta/TitleTagViewHelper.php.html#109">Hausformat\ViewHelpers\ViewHelpers\Meta\TitleTagViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="SortObjectStorageViewHelper.php.html#42">Hausformat\ViewHelpers\ViewHelpers\SortObjectStorageViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="String/ExplodeViewHelper.php.html#69">Hausformat\ViewHelpers\ViewHelpers\String\ExplodeViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Uri/FileViewHelper.php.html#78">Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Uri/FileViewHelper.php.html#132">Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper::getBaseURL</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Variable/RemoveViewHelper.php.html#57">Hausformat\ViewHelpers\ViewHelpers\Variable\RemoveViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Variable/UpdateViewHelper.php.html#176">Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::attachToObjectStorage</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Variable/UpdateViewHelper.php.html#234">Hausformat\ViewHelpers\ViewHelpers\Variable\UpdateViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Widget/PaginateAlphabeticalViewHelper.php.html#51">Hausformat\ViewHelpers\ViewHelpers\Widget\PaginateAlphabeticalViewHelper::initializeArguments</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Widget/PaginateAlphabeticalViewHelper.php.html#63">Hausformat\ViewHelpers\ViewHelpers\Widget\PaginateAlphabeticalViewHelper::render</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Traits/WithCacheTagService.php.html#48">Hausformat\ViewHelpers\ViewHelpers\Traits\WithCacheTagService::getVariableName</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Traits/WithCacheTagService.php.html#56">Hausformat\ViewHelpers\ViewHelpers\Traits\WithCacheTagService::removeCacheTagService</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Traits/WithCacheTagService.php.html#65">Hausformat\ViewHelpers\ViewHelpers\Traits\WithCacheTagService::setCacheTagService</a></td><td class="text-right">2</td><td class="text-right">0.0%</td></tr>
+  <tr><td><a href="Format/CleanHtmlViewHelper.php.html#34">Hausformat\ViewHelpers\ViewHelpers\Format\CleanHtmlViewHelper::render</a></td><td class="text-right">1</td><td class="text-right">100.0%</td></tr>
+  <tr><td><a href="GetViewHelper.php.html#37">Hausformat\ViewHelpers\ViewHelpers\GetViewHelper::render</a></td><td class="text-right">1</td><td class="text-right">100.0%</td></tr>
+  <tr><td><a href="Meta/SysLanguageUidViewHelper.php.html#39">Hausformat\ViewHelpers\ViewHelpers\Meta\SysLanguageUidViewHelper::injectContext</a></td><td class="text-right">1</td><td class="text-right">100.0%</td></tr>
+  <tr><td><a href="Meta/SysLanguageUidViewHelper.php.html#47">Hausformat\ViewHelpers\ViewHelpers\Meta\SysLanguageUidViewHelper::render</a></td><td class="text-right">1</td><td class="text-right">100.0%</td></tr>
+  <tr><td><a href="SortObjectStorageViewHelper.php.html#32">Hausformat\ViewHelpers\ViewHelpers\SortObjectStorageViewHelper::render</a></td><td class="text-right">1</td><td class="text-right">100.0%</td></tr>
+  <tr><td><a href="Uri/FileViewHelper.php.html#74">Hausformat\ViewHelpers\ViewHelpers\Uri\FileViewHelper::injectImageService</a></td><td class="text-right">1</td><td class="text-right">100.0%</td></tr>
+ </tbody>
+</table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 14.1.8</a> using <a href="https://www.php.net/" target="_top">PHP 8.4.18</a> and <a href="https://phpunit.de/">PHPUnit 13.1.9</a> at Tue May 26 11:22:50 CEST 2026.</small>
+    </p>
+   </footer>
+  </div>
+ </body>
+</html>
