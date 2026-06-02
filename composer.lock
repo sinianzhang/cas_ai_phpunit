@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d01a786dc64892669ab786089b0384c",
+    "content-hash": "fe4f4f1ae24396a9a506156eb3c6b2d2",
     "packages": [
         {
             "name": "b13/assetcollector",
@@ -202,7 +202,7 @@
             "version": "dev-feature/claude_ext_viewhelpers",
             "dist": {
                 "type": "path",
-                "url": "src/extensions/demologin",
+                "url": "packages/demologin",
                 "reference": "beece4a0d2d15071fbab6d468f426117c9a9e156"
             },
             "require": {
@@ -282,7 +282,7 @@
             "version": "dev-feature/claude_ext_viewhelpers",
             "dist": {
                 "type": "path",
-                "url": "src/extensions/faq_t3demo",
+                "url": "packages/faq_t3demo",
                 "reference": "06bd4a0157d938deaa95bb223bdce7dd6ea4554e"
             },
             "type": "typo3-cms-extension",
@@ -416,7 +416,7 @@
             "version": "dev-feature/claude_ext_viewhelpers",
             "dist": {
                 "type": "path",
-                "url": "src/extensions/site_t3demo",
+                "url": "packages/site_t3demo",
                 "reference": "f9f1b6c60c19a90123fc1ef611cdeb4814871a87"
             },
             "type": "typo3-cms-extension",

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="580" height="440" viewBox="0 0 580 440">
+  <rect width="580" height="440" fill="#ffffff" rx="12" stroke="#e0e0e0" stroke-width="1"/>
+
+  <!-- Title -->
+  <text x="290" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="600" fill="#1a1a2e">Test Audit &#x2014; hf-view-helpers</text>
+  <text x="290" y="54" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#999">47 classes analyzed</text>
+
+  <!-- Donut segments (cx=165 cy=175 r_o=118 r_i=64, start=-90°, clockwise) -->
+
+  <!-- Z1 Unit: 3/47, -90° → -67.02° -->
+  <path d="M 165,57 A 118,118 0 0,1 211.11,66.38 L 190.01,116.09 A 64,64 0 0,0 165,111 Z"
+        fill="#A5D6A7" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- Z2 Unit: 1/47, -67.02° → -59.36° -->
+  <path d="M 211.11,66.38 A 118,118 0 0,1 225.26,73.54 L 197.68,119.97 A 64,64 0 0,0 190.01,116.09 Z"
+        fill="#66BB6A" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- Edge Z1: 17/47, -59.36° → 70.85° -->
+  <path d="M 225.26,73.54 A 118,118 0 0,1 203.78,286.44 L 186.03,235.44 A 64,64 0 0,0 197.68,119.97 Z"
+        fill="#FFE082" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- Edge Z2: 1/47, 70.85° → 78.51° -->
+  <path d="M 203.78,286.44 A 118,118 0 0,1 188.36,290.67 L 177.67,237.73 A 64,64 0 0,0 186.03,235.44 Z"
+        fill="#FFB74D" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- Functional: 22/47, 78.51° → 247.02° -->
+  <path d="M 188.36,290.67 A 118,118 0 0,1 118.89,66.38 L 139.99,116.09 A 64,64 0 0,0 177.67,237.73 Z"
+        fill="#2196F3" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- Not testable: 3/47, 247.02° → 270° -->
+  <path d="M 118.89,66.38 A 118,118 0 0,1 165,57 L 165,111 A 64,64 0 0,0 139.99,116.09 Z"
+        fill="#9E9E9E" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- Center labels -->
+  <text x="165" y="180" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="700" fill="#1a1a2e">47</text>
+  <text x="165" y="200" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#aaa">classes</text>
+
+  <!-- Legend — rect_y=74, step=46 -->
+
+  <!-- Z1 Unit: 3, 6% -->
+  <rect x="318" y="74" width="13" height="13" fill="#A5D6A7" rx="3"/>
+  <text x="339" y="85" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#333">Z1 Unit</text>
+  <text x="339" y="101" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#888">3 &#xB7; 6%</text>
+  <rect x="339" y="107" width="150" height="4" fill="#eeeeee" rx="2"/>
+  <rect x="339" y="107" width="10" height="4" fill="#A5D6A7" rx="2"/>
+
+  <!-- Z2 Unit: 1, 2% -->
+  <rect x="318" y="120" width="13" height="13" fill="#66BB6A" rx="3"/>
+  <text x="339" y="131" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#333">Z2 Unit</text>
+  <text x="339" y="147" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#888">1 &#xB7; 2%</text>
+  <rect x="339" y="153" width="150" height="4" fill="#eeeeee" rx="2"/>
+  <rect x="339" y="153" width="3" height="4" fill="#66BB6A" rx="2"/>
+
+  <!-- Edge Z1: 17, 36% -->
+  <rect x="318" y="166" width="13" height="13" fill="#FFE082" rx="3"/>
+  <text x="339" y="177" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#333">Edge Z1</text>
+  <text x="339" y="193" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#888">17 &#xB7; 36%</text>
+  <rect x="339" y="199" width="150" height="4" fill="#eeeeee" rx="2"/>
+  <rect x="339" y="199" width="54" height="4" fill="#FFE082" rx="2"/>
+
+  <!-- Edge Z2: 1, 2% -->
+  <rect x="318" y="212" width="13" height="13" fill="#FFB74D" rx="3"/>
+  <text x="339" y="223" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#333">Edge Z2</text>
+  <text x="339" y="239" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#888">1 &#xB7; 2%</text>
+  <rect x="339" y="245" width="150" height="4" fill="#eeeeee" rx="2"/>
+  <rect x="339" y="245" width="3" height="4" fill="#FFB74D" rx="2"/>
+
+  <!-- Functional Test: 22, 47% -->
+  <rect x="318" y="258" width="13" height="13" fill="#2196F3" rx="3"/>
+  <text x="339" y="269" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#333">Functional Test</text>
+  <text x="339" y="285" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#888">22 &#xB7; 47%</text>
+  <rect x="339" y="291" width="150" height="4" fill="#eeeeee" rx="2"/>
+  <rect x="339" y="291" width="70" height="4" fill="#2196F3" rx="2"/>
+
+  <!-- Not testable: 3, 6% -->
+  <rect x="318" y="304" width="13" height="13" fill="#9E9E9E" rx="3"/>
+  <text x="339" y="315" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#333">Not testable</text>
+  <text x="339" y="331" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#888">3 &#xB7; 6%</text>
+  <rect x="339" y="337" width="150" height="4" fill="#eeeeee" rx="2"/>
+  <rect x="339" y="337" width="10" height="4" fill="#9E9E9E" rx="2"/>
+
+  <!-- Footer -->
+  <line x1="20" y1="390" x2="560" y2="390" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="20"  y="407" font-family="system-ui,-apple-system,sans-serif" font-size="10" font-weight="600" fill="#555">Z1</text>
+  <text x="32"  y="407" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#888">= testable without stubs/mocks (pure unit)</text>
+  <text x="310" y="407" font-family="system-ui,-apple-system,sans-serif" font-size="10" font-weight="600" fill="#555">Z2</text>
+  <text x="322" y="407" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#888">= requires stubs or mocks (isolated unit)</text>
+</svg>

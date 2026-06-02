@@ -1,0 +1,32 @@
+# Test Audit – hf-view-helpers
+# Generated: 2026-06-02 22:43:46
+
+[Unit Z1 – 3]
+Classes/Dummy/Email.php
+Classes/Dummy/ErrorHandler.php
+Classes/Dummy/Greeter.php
+
+[Unit Z2 – 1]
+Classes/Dummy/Service.php
+
+[Edge Z1 – 17]
+Classes/ViewHelpers/CalcViewHelper.php
+Classes/ViewHelpers/ContainsViewHelper.php
+Classes/ViewHelpers/Debug/DurationViewHelper.php
+Classes/ViewHelpers/File/ExistsViewHelper.php
+Classes/ViewHelpers/Format/CaseViewHelper.php
+Classes/ViewHelpers/Format/CleanHtmlViewHelper.php
+Classes/ViewHelpers/Format/DateViewHelper.php
+Classes/ViewHelpers/Format/JsonDecodeViewHelper.php
+Classes/ViewHelpers/Format/JsonEncodeViewHelper.php
+Classes/ViewHelpers/Format/NumberViewHelper.php
+Classes/ViewHelpers/Format/RoundViewHelper.php
+Classes/ViewHelpers/Format/WhitespaceViewHelper.php
+Classes/ViewHelpers/ForViewHelper.php
+Classes/ViewHelpers/GetViewHelper.php
+Classes/ViewHelpers/SortObjectStorageViewHelper.php
+Classes/ViewHelpers/String/ExplodeViewHelper.php
+Classes/ViewHelpers/Uri/FileViewHelper.php
+
+[Edge Z2 – 1]
+Classes/ViewHelpers/Widget/PaginateAlphabeticalViewHelper.php
