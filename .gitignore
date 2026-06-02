@@ -29,6 +29,8 @@ node_modules/
 /web/fileadmin/_processed_/*
 !/web/favicon.*
 
+packages/autoload/
+
 # Exclude everything in typo3conf/ except typo3conf itself
 /web/typo3conf/*
 !/web/typo3conf

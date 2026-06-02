@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe4f4f1ae24396a9a506156eb3c6b2d2",
+    "content-hash": "5046ace8b521a344e25369dc26041292",
     "packages": [
         {
             "name": "b13/assetcollector",
@@ -1577,6 +1577,202 @@
             "time": "2026-06-02T12:30:48+00:00"
         },
         {
+            "name": "hausformat/hf-lib",
+            "version": "2.0.1",
+            "dist": {
+                "type": "path",
+                "url": "packages/hf-lib",
+                "reference": "186b16ed98626170f9d047855df7ce5bcc0437c2"
+            },
+            "require": {
+                "typo3/cms-core": "^13 || ^14",
+                "typo3/cms-extbase": "*",
+                "typo3/cms-frontend": "*"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2",
+                "typo3/coding-standards": "^0.8.0",
+                "typo3/testing-framework": "^8"
+            },
+            "type": "typo3-cms-extension",
+            "extra": {
+                "typo3/cms": {
+                    "extension-key": "hf_lib",
+                    "web-dir": ".Build/Web"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hausformat\\Lib\\": "Classes"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Hausformat\\Lib\\Tests\\": "Tests"
+                }
+            },
+            "scripts": {
+                "docs": [
+                    "@docs:build",
+                    "@docs:open"
+                ],
+                "docs:build": [
+                    "bash ./Build/Scripts/runTests.sh -s docsGenerate"
+                ],
+                "docs:open": [
+                    "open .Build/docs/index.html"
+                ],
+                "test:functional": [
+                    "bash ./Build/Scripts/runTests.sh -s functional"
+                ],
+                "phpstan": [
+                    ".Build/bin/phpstan analyse -c ./phpstan.neon --memory-limit 10G"
+                ],
+                "ci:tests:functional": [
+                    "/bin/bash ./Build/Scripts/runTests.sh -s functional -- --log-junit phpunit-report.xml"
+                ],
+                "ci:phpstan": [
+                    ".Build/bin/phpstan analyse --error-format=gitlab --no-progress -c ./phpstan.neon > gl-code-quality-report.json"
+                ]
+            },
+            "license": [
+                "All Rights Reserved"
+            ],
+            "description": "Hausformat Library with TYPO3 helpers",
+            "keywords": [
+                "TYPO3 CMS"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "hausformat/hf-view-helpers",
+            "version": "2.0.4",
+            "dist": {
+                "type": "path",
+                "url": "packages/hf-view-helpers",
+                "reference": "2db934c001b822a3262c3fd4e45010d8b7d1fa51"
+            },
+            "require": {
+                "ext-dom": "*",
+                "hausformat/hf-lib": "^2.0",
+                "hausformat/scss": "^3.0",
+                "typo3/cms-core": "^14"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2",
+                "phpunit/phpunit": "^11.2.5 || ^12.1.2 || ^13.0.2",
+                "typo3/coding-standards": "^0.8.0",
+                "typo3/testing-framework": "^9"
+            },
+            "type": "typo3-cms-extension",
+            "extra": {
+                "typo3/cms": {
+                    "extension-key": "hf_view_helpers",
+                    "web-dir": ".Build/Web"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hausformat\\ViewHelpers\\": "Classes/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Hausformat\\ViewHelpers\\Tests\\": "Tests"
+                }
+            },
+            "scripts": {
+                "docs": [
+                    "@docs:build",
+                    "@docs:open"
+                ],
+                "docs:build": [
+                    "bash ./Build/Scripts/runTests.sh -s docsGenerate"
+                ],
+                "docs:open": [
+                    "open .Build/docs/index.html"
+                ],
+                "test:functional": [
+                    "bash ./Build/Scripts/runTests.sh -s functional"
+                ],
+                "phpstan": [
+                    ".Build/bin/phpstan analyse -c ./phpstan.neon --memory-limit 10G"
+                ],
+                "ci:phpstan": [
+                    ".Build/bin/phpstan analyse --error-format=gitlab --no-progress -c ./phpstan.neon > gl-code-quality-report.json"
+                ],
+                "ci:test": [
+                    "@ci:test:functional",
+                    "@ci:test:phpunit"
+                ],
+                "ci:test:functional": [
+                    "/bin/bash Build/Scripts/runTests.sh -s functional -- --log-junit functional-report.xml"
+                ],
+                "ci:test:phpunit": [
+                    ".Build/bin/phpunit -c Build/phpunit/UnitTests.xml --log-junit phpunit-report.xml"
+                ]
+            },
+            "license": [
+                "All Rights Reserved"
+            ],
+            "description": "Hausformat View Helper Collection",
+            "homepage": "https://hausformat.com",
+            "keywords": [
+                "TYPO3 CMS"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "hausformat/scss",
+            "version": "3.1.1",
+            "dist": {
+                "type": "path",
+                "url": "packages/scss",
+                "reference": "5dc450affc172db507b854b5ef7615d14165f5e5"
+            },
+            "require": {
+                "scssphp/scssphp": "^1",
+                "typo3/cms-core": "^13 || ^14",
+                "typo3/cms-extbase": "*",
+                "typo3/cms-frontend": "*"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2",
+                "typo3/coding-standards": "^0.8.0"
+            },
+            "type": "typo3-cms-extension",
+            "extra": {
+                "typo3/cms": {
+                    "extension-key": "scss",
+                    "web-dir": ".Build/Web"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hausformat\\Scss\\": "Classes/"
+                }
+            },
+            "scripts": {
+                "phpstan": [
+                    ".Build/bin/phpstan analyse -c ./phpstan.neon"
+                ],
+                "ci:phpstan": [
+                    ".Build/bin/phpstan analyse --error-format=gitlab --no-progress -c ./phpstan.neon > gl-code-quality-report.json"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "SASS compiler for TYPO3",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "helhum/config-loader",
             "version": "v0.12.6",
             "source": {
@@ -2846,6 +3042,86 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "scssphp/scssphp",
+            "version": "v1.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scssphp/scssphp.git",
+                "reference": "63d1157457e5554edf00b0c1fabab4c1511d2520"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/63d1157457e5554edf00b0c1fabab4c1511d2520",
+                "reference": "63d1157457e5554edf00b0c1fabab4c1511d2520",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-json": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4",
+                "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.3 || ^9.4",
+                "sass/sass-spec": "*",
+                "squizlabs/php_codesniffer": "~3.5",
+                "symfony/phpunit-bridge": "^5.1",
+                "thoughtbot/bourbon": "^7.0",
+                "twbs/bootstrap": "~5.0",
+                "twbs/bootstrap4": "4.6.1",
+                "zurb/foundation": "~6.7.0"
+            },
+            "suggest": {
+                "ext-iconv": "Can be used as fallback when ext-mbstring is not available",
+                "ext-mbstring": "For best performance, mbstring should be installed as it is faster than ext-iconv"
+            },
+            "bin": [
+                "bin/pscss"
+            ],
+            "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": false,
+                    "forward-command": false
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ScssPhp\\ScssPhp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anthon Pang",
+                    "email": "apang@softwaredevelopment.ca",
+                    "homepage": "https://github.com/robocoder"
+                },
+                {
+                    "name": "Cédric Morin",
+                    "email": "cedric@yterium.com",
+                    "homepage": "https://github.com/Cerdic"
+                }
+            ],
+            "description": "scssphp is a compiler for SCSS written in PHP.",
+            "homepage": "http://scssphp.github.io/scssphp/",
+            "keywords": [
+                "css",
+                "less",
+                "sass",
+                "scss",
+                "stylesheet"
+            ],
+            "support": {
+                "issues": "https://github.com/scssphp/scssphp/issues",
+                "source": "https://github.com/scssphp/scssphp/tree/v1.13.0"
+            },
+            "time": "2024-08-17T21:02:11+00:00"
         },
         {
             "name": "symfony/cache",
@@ -11846,7 +12122,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "b13/faq-t3demo": 20
+        "b13/faq-t3demo": 20,
+        "hausformat/hf-view-helpers": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

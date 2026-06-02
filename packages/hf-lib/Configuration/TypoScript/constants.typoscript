@@ -1,0 +1,19 @@
+plugin.tx_hflib {
+    // view settings
+    view {
+        # cat=plugin.tx_hflib/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:hf_lib/Resources/Private/Templates
+        # cat=plugin.tx_hflib/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:hf_lib/Resources/Private/Partials
+        # cat=plugin.tx_hflib/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:hf_lib/Resources/Private/Layouts
+    }
+
+    // persistence settings
+    persistence {
+        # cat=plugin.tx_hflib//a; type=int+; label=Default storage PID
+        storagePid =
+        # cat=plugin.tx_hflib//a; type=boolean; label=enable automatic cache clearing
+        enableAutomaticCacheClearing = 0
+    }
+}

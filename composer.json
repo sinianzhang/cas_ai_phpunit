@@ -1,6 +1,6 @@
 {
 	"config": {
-		"bin-dir": "bin",
+		"bin-dir": "vendor/bin",
 		"sort-packages": true,
 		"platform": {
 			"php": "8.3.14"
@@ -69,7 +69,8 @@
 		"typo3/cms-seo": "^14.3",
 		"typo3/cms-setup": "^14.3",
 		"typo3/cms-tstemplate": "^14.3",
-		"typo3/cms-viewpage": "^14.3"
+		"typo3/cms-viewpage": "^14.3",
+		"hausformat/hf-view-helpers": "@dev"
 	},
 	"require-dev": {
 		"typo3/coding-standards": "^0.8.0",

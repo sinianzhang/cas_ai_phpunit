@@ -1,0 +1,36 @@
+# Test Audit – hf-lib
+# Generated: 2026-06-01
+
+[Unit Z1 – 16]
+Classes/Domain/Exception/GenericException.php
+Classes/Domain/Type/Orientation.php
+Classes/Routing/Aspect/PassthroughValueMapper.php
+Classes/Service/Cache/CacheTagNamingService.php
+Classes/UserFunctions/ShowLayoutDisplayCondition.php
+Classes/Utility/CaseTransformationUtility.php
+Classes/Utility/DateUtility.php
+Classes/Utility/DivUtility.php
+Classes/Utility/Resource/DownloadUtility.php
+Classes/Utility/Resource/OrientationUtility.php
+Classes/Utility/StringUtility.php
+Classes/Utility/Tca/EnableFieldsTcaUtility.php
+Classes/Utility/Tca/GeneralTcaUtility.php
+Classes/Utility/Tca/LanguageTcaUtility.php
+Classes/Utility/TcaUtility.php
+Classes/Utility/XmlToArrayUtility.php
+
+[Unit Z2 – 1]
+Classes/Utility/ObjectStorageUtility.php
+
+[Edge Z1 – 3]
+Classes/Domain/Model/FrontendUser.php
+Classes/Domain/Model/FrontendUserGroup.php
+Classes/Domain/Model/Pages.php
+
+[Edge Z2 – 6]
+Classes/Context/Context.php
+Classes/Domain/Model/Content.php
+Classes/Domain/Validator/HfbaseObjectValidator.php
+Classes/Pagination/AlphabeticalPaginator.php
+Classes/Service/TreeableService.php
+Classes/Utility/Resource/FolderUtility.php
