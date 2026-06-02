@@ -30,6 +30,7 @@ node_modules/
 !/web/favicon.*
 
 packages/autoload/
+packages/*/Tests/
 
 # Exclude everything in typo3conf/ except typo3conf itself
 /web/typo3conf/*
