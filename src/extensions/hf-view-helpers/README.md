@@ -5,7 +5,7 @@
 - ddev exec php vendor/bin/phpunit -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml packages/hf-view-helpers/Tests/Unit/Dummy/EmailTest.php --filter xxxx
 
 ### phpStan
-- ddev php vendor/bin/phpstan analyse -c packages/hf-view-helpers/phpstan.tests.neon <--generate-baseline packages/hf-view-helpers/phpstan-baseline.neon> -vvv
+- ddev php vendor/bin/phpstan analyse -c packages/hf-view-helpers/phpstan.tests.neon [--generate-baseline packages/hf-view-helpers/phpstan-baseline.neon] -vvv
 
 ### run coverage
 - ddev xdebug on
