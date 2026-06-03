@@ -1,7 +1,7 @@
 ---
 name: generate-unit-tests
-description: Reads the test-audit-*.txt report for a TYPO3 extension, asks the user whether to generate Z1, Z2, or both, then processes all classes of the chosen group across both Unit and Edge sections. If a test file already exists it analyses its comments and fills in missing test cases (AAA pattern). If no test file exists it generates a new test class with 2–3 test cases per public method. Use when the user asks to "generate unit tests", "write unit tests for Z1", "create tests for Z2 classes", "generate PHPUnit tests from audit report".
-argument-hint: <extension-path-or-name>
+description: Reads the test-audit-*.txt report for a TYPO3 extension and processes every class of the chosen group (Z1, Z2, or Both) across both Unit and Edge sections — no class is skipped. Optional second argument selects the group; defaults to Both. If a test file already exists it only checks for hint comments (TODO, markTestIncomplete, etc.) and adds the missing test cases if any are found; otherwise it leaves the file untouched. If no test file exists it generates a new test class with 2–3 test cases per public method. Use when the user asks to "generate unit tests", "write unit tests for Z1", "create tests for Z2 classes", "generate PHPUnit tests from audit report".
+argument-hint: <extension-path-or-name> [Z1|Z2]
 ---
 
 # Generate PHPUnit Unit Tests for Z1 / Z2 Classes
@@ -35,17 +35,17 @@ find "$ext_root/Build/phpunit" "$ext_root" -maxdepth 2 \( -name "UnitTests.xml" 
 
 ---
 
-## Step 2 – Ask which group
+## Step 2 – Determine group
 
-`AskUserQuestion`: **Both** (Z1 + Z2) / **Z1** (no mocks) / **Z2** (mocks required)
-
-Default: **Both** — if the user does not respond within 10 seconds, proceed automatically with **Both**.
+Read the second argument (case-insensitive): `Z1` → process Z1 only · `Z2` → process Z2 only · omitted or anything else → **Both** (Z1 + Z2). Never ask the user.
 
 ---
 
 ## Step 3 – Parse report and check files
 
 TXT sections: `[Unit Z1]`, `[Unit Z2]`, `[Edge Z1]`, `[Edge Z2]`. Include sections matching `selected_group`. Deduplicate → `target_files[]`.
+
+**Every entry in `target_files[]` must be processed — none may be skipped or omitted.**
 
 Pre-check existence in one bash block:
 
@@ -62,11 +62,10 @@ done
 
 `Classes/Utility/StringHelper.php` → `Tests/Unit/Utility/StringHelperTest.php`
 
-### EXISTS → Extend
-1. Read test file; find incomplete methods (`// TODO`, `markTestIncomplete`, `markTestSkipped`, empty `// Arrange/Act/Assert`, empty `{}`).
-2. Read source; match methods; fill AAA bodies.
-3. Append missing boundary/alternative cases for under-tested methods.
-4. Write. Status: `✏️ extended (N completed)`.
+### EXISTS → Extend only if hints are present
+1. Read test file; search for hint comments only: `// TODO`, `markTestIncomplete`, `markTestSkipped`, empty `// Arrange`, empty `// Act`, empty `// Assert`, empty method body `{}`.
+2. **If no hints found → do nothing.** Status: `⏭️ skipped (no hints)`. Do not analyse coverage, do not add boundary cases, do not modify the file.
+3. **If hints found →** read source class; for each hint, write the missing test case body (AAA pattern). Do not touch any other part of the file. Status: `✏️ extended (N completed)`.
 
 ### MISSING → Create
 1. Read source: namespace, class name, constructor, all `public function` (skip trivial getters/setters).
@@ -186,7 +185,7 @@ Assertions: `assertSame` (scalar) · `assertStringContainsString` (substring) ·
 ## Generated Unit Tests — Group {selected_group}
 | Source class | Test file | Status | Notes |
 |---|---|---|---|
-| ... | ... | ✅ created / ✏️ extended (N) | |
+| ... | ... | ✅ created / ✏️ extended (N) / ⏭️ skipped (no hints) | |
 
 PHP: {version} · PHPUnit: {major}.x · TYPO3: {version} · testing-framework: {version}
 ```
@@ -201,6 +200,6 @@ PHP: {version} · PHPUnit: {major}.x · TYPO3: {version} · testing-framework: {
 - No `@covers`, no magic numbers, no `ConnectionPool`/`QueryBuilder` in unit tests
 - **Z1:** No mocks — flag as "Z2 misclassified" and skip if a stub is needed
 - **"Does not throw" tests:** Never use `assertTrue(true)` as a no-op assertion. Use `$this->expectNotToPerformAssertions()` at the top of the method (before Arrange) and omit all Arrange/Act/Assert comments — PHPUnit then counts the test as intentionally assertion-free.
-- **Tautological assertions:** Never assert on a value whose type PHPStan already knows statically. `assertInstanceOf(Foo::class, $x)` when `$x: Foo` is always true — assert on the actual value instead (e.g. `assertSame($expected, $x->getValue())`). `assertIsString($s)` when `$s: string` is always true — use `assertStringContainsString(...)`, `assertNotEmpty(...)`, or `assertSame(...)`. `assertTrue(true)` is never a valid assertion.
+- **Tautological assertions:** Never assert on a value whose type PHPStan already knows statically. `assertInstanceOf(Foo::class, $x)` when `$x: Foo` is always true — assert on the actual value instead (e.g. `assertSame($expected, $x->getValue())`). `assertIsString($s)` when `$s: string` is always true — use `assertStringContainsString(...)`, `assertSame(...)`, or `assertNotEmpty(...)`; if a stronger assertion already follows on the same variable, remove `assertIsString` entirely. `assertTrue(true)` is never a valid assertion.
 - **TYPO3 `DebuggerUtility::var_dump()`:** Returns `''` when `inline=false` (output goes to page buffer). Tests asserting on the returned string **must** pass `inline: true`. Tests only checking `assertIsString()` may use `inline: false`.
 - **Z2:** Final classes → `new`, never `createMock()`/`createStub()` on final; `willReturn()` must match declared return type; never `->with()` on a stub without `expects()` (PHPUnit 14 deprecation); use `&MockObject` if any test calls `expects()`, else `&Stub`; when the property is `&MockObject` but a specific test does not call `expects()`, add `#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]` on that test method; `GeneralUtility::purgeInstances()` in `tearDown()` when `addInstance()` used; never mock the class under test
