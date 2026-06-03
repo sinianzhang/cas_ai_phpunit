@@ -31,6 +31,7 @@ node_modules/
 
 packages/autoload/
 packages/*/Tests/
+packages/*/test-audit-*
 
 # Exclude everything in typo3conf/ except typo3conf itself
 /web/typo3conf/*
