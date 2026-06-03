@@ -144,6 +144,19 @@ protected function setUp(): void { ...; GeneralUtility::addInstance(SomeService:
 protected function tearDown(): void { GeneralUtility::purgeInstances(); parent::tearDown(); }
 ```
 
+### Helper method signatures
+
+When generating a `createSubject()` factory helper, always add a PHPDoc `@param` with the value type and keep the native hint as `array`:
+
+```php
+/** @param array<string, mixed> $arguments */
+private function createSubject(array $arguments): {ClassName}
+```
+
+`array<string, mixed>` is not valid PHP syntax in a native type hint — it belongs only in the PHPDoc. PHPStan (rule `missingType.iterableValue`) reads the PHPDoc and accepts this pattern. This applies regardless of whether the parameter has a default value (`array $arguments = []`) or additional parameters (`array $arguments, \Closure $fn = null`).
+
+---
+
 ### Test method format
 
 ```php
@@ -187,5 +200,7 @@ PHP: {version} · PHPUnit: {major}.x · TYPO3: {version} · testing-framework: {
 - `parent::setUp()` first in `setUp()`; `parent::tearDown()` last in `tearDown()`
 - No `@covers`, no magic numbers, no `ConnectionPool`/`QueryBuilder` in unit tests
 - **Z1:** No mocks — flag as "Z2 misclassified" and skip if a stub is needed
+- **"Does not throw" tests:** Never use `assertTrue(true)` as a no-op assertion. Use `$this->expectNotToPerformAssertions()` at the top of the method (before Arrange) and omit all Arrange/Act/Assert comments — PHPUnit then counts the test as intentionally assertion-free.
+- **Tautological assertions:** Never assert on a value whose type PHPStan already knows statically. `assertInstanceOf(Foo::class, $x)` when `$x: Foo` is always true — assert on the actual value instead (e.g. `assertSame($expected, $x->getValue())`). `assertIsString($s)` when `$s: string` is always true — use `assertStringContainsString(...)`, `assertNotEmpty(...)`, or `assertSame(...)`. `assertTrue(true)` is never a valid assertion.
 - **TYPO3 `DebuggerUtility::var_dump()`:** Returns `''` when `inline=false` (output goes to page buffer). Tests asserting on the returned string **must** pass `inline: true`. Tests only checking `assertIsString()` may use `inline: false`.
 - **Z2:** Final classes → `new`, never `createMock()`/`createStub()` on final; `willReturn()` must match declared return type; never `->with()` on a stub without `expects()` (PHPUnit 14 deprecation); use `&MockObject` if any test calls `expects()`, else `&Stub`; when the property is `&MockObject` but a specific test does not call `expects()`, add `#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]` on that test method; `GeneralUtility::purgeInstances()` in `tearDown()` when `addInstance()` used; never mock the class under test
