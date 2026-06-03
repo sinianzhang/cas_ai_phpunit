@@ -1,0 +1,32 @@
+// THIS FILE CONTAINS SOME DEFAULT SETTINGS YOU CAN USE IN YOUR OWN EXTENSION
+plugin.tx_hflib = USER
+plugin.tx_hflib {
+    settings {
+        FeUserRepository = Hausformat\Lib\Domain\Repository\FrontendUserRepository
+    }
+
+    persistence {
+        enableAutomaticCacheClearing = {$plugin.tx_hflib.persistence.enableAutomaticCacheClearing}
+        storagePid = {$plugin.tx_hflib.persistence.storagePid}
+    }
+
+    view {
+        templateRootPaths.0 = EXT:hf_lib/Resources/Private/Templates
+        partialRootPaths.0 = EXT:hf_lib/Resources/Private/Partials
+        layoutRootPaths.0 = EXT:hf_lib/Resources/Private/Layouts
+
+        templateRootPaths.1 = {$plugin.tx_hflib.view.templateRootPath}
+        partialRootPaths.1 = {$plugin.tx_hflib.view.partialRootPath}
+        layoutRootPaths.1 = {$plugin.tx_hflib.view.layoutRootPath}
+    }
+}
+
+module.tx_hflib < plugin.tx_hflib
+
+
+config.pageTitleProviders {
+    hf_lib {
+        provider = Hausformat\Lib\Seo\PageTitleViewHelperProvider
+        before = news,altPageTitle,record,seo
+    }
+}

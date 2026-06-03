@@ -1,0 +1,10 @@
+.Build/
+.idea/
+.vscode/
+.phpunit.result.cache
+Build/testing-docker/.env
+composer.lock
+phpunit-report.xml
+phpstan-report.json
+.cache
+.phpdoc

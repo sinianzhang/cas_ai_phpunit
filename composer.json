@@ -1,6 +1,6 @@
 {
 	"config": {
-		"bin-dir": "bin",
+		"bin-dir": "vendor/bin",
 		"sort-packages": true,
 		"platform": {
 			"php": "8.3.14"
@@ -16,7 +16,7 @@
 	"repositories": [
 		{
 			"type": "path",
-			"url": "src/extensions/*"
+			"url": "packages/*"
 		}
 	],
 	"description" : "TYPO3 Demo Project",
@@ -69,9 +69,15 @@
 		"typo3/cms-seo": "^14.3",
 		"typo3/cms-setup": "^14.3",
 		"typo3/cms-tstemplate": "^14.3",
-		"typo3/cms-viewpage": "^14.3"
+		"typo3/cms-viewpage": "^14.3",
+		"hausformat/hf-view-helpers": "@dev"
 	},
 	"require-dev": {
-		"saschaegerer/phpstan-typo3": "^3.0.1"
+		"typo3/coding-standards": "^0.8.0",
+		"typo3/testing-framework": "^9",
+        "phpunit/phpunit": "^11.2.5 || ^12.1.2 || ^13.0.2",
+        "phpstan/phpstan": "^2",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "saschaegerer/phpstan-typo3": "^3.0.1"
 	}
 }

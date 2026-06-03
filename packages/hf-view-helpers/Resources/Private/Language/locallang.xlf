@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext"
+          original="EXT:hf_view_helpers/Resources/Private/Language/locallang.xlf" date="2025-01-23T15:28:00Z"
+          product-name="hf_view_helpers">
+        <header/>
+        <body>
+            <trans-unit id="show.all" resname="show.all">
+                <source>Show all</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
