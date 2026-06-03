@@ -20,7 +20,7 @@ find "$classes_dir" -name "*.php" | sort
 grep -rn "^abstract class \|^class \|^interface \|^trait \|extends \|implements " \
      "$classes_dir" --include="*.php"
 
-grep -rn "ConnectionPool\|QueryBuilder\|makeInstance\|GlobalsService\|GLOBALS\[.TSFE\|BackendUser\|AbstractViewHelper\|AbstractConditionViewHelper\|CacheManager\|PersistenceManager\|RepositoryInterface" \
+grep -rn "ConnectionPool\|QueryBuilder\|makeInstance\|GlobalsService\|GLOBALS\[.TSFE\|BackendUser\|AbstractViewHelper\|AbstractConditionViewHelper\|AbstractTagBasedViewHelper\|AbstractFormFieldViewHelper\|CacheManager\|PersistenceManager\|RepositoryInterface" \
      "$classes_dir" --include="*.php"
 
 grep -rn "public function __construct\|#\[Inject\]\|@inject\|LocalizationUtility\|Environment::" \
@@ -40,7 +40,7 @@ Map each file's signals from these outputs — do not open individual files.
 
 | Signal present | → Category |
 |---|---|
-| `AbstractViewHelper` / `AbstractConditionViewHelper` | Functional (or Edge if non-trivial render logic) |
+| `AbstractViewHelper` / `AbstractConditionViewHelper` / `AbstractTagBasedViewHelper` / `AbstractFormFieldViewHelper` | Functional (or Edge if non-trivial render logic) |
 | `ConnectionPool` / `QueryBuilder` | Functional |
 | `makeInstance` for repository/persistence/TYPO3 subsystem | Functional |
 | `GlobalsService` / `BackendUser` / `$GLOBALS['TSFE']` | Functional |
@@ -50,13 +50,15 @@ Map each file's signals from these outputs — do not open individual files.
 
 **Also qualify as Unit:** Extbase Validators · PSR-14 Events/Listeners · TypeConverters (no DB) · TCA hooks · `Environment::*`-only · `GeneralUtility` string/array helpers · `LocalizationUtility::translate()`.
 
+**Trait propagation:** If a class `use`s a trait that contains `makeInstance` for a TYPO3 subsystem (e.g. `PagesCacheTagService`, `CacheManager`), treat the **using class** as Functional — it inherits the subsystem dependency even though the signal appears only in the trait file.
+
 **Exclude from Unit (glue code):** Extbase controller actions · model getters/setters only · framework wiring.
 
 ### Z1 / Z2 sub-classification (Unit and Edge only)
 
 | | Z1 | Z2 |
 |---|---|---|
-| Constructor params | none or primitives only | injected interface/abstract |
+| Constructor params | none, primitives only, or concrete class that is directly instantiable (no TYPO3 subsystem) | injected interface/abstract; OR concrete class where mock interaction verification (`->expects()`) is needed |
 | `makeInstance` | none | mockable target |
 | ViewHelper renderingContext | `getVariableProvider()` only | `getAttribute()` → PSR-7 chain |
 | ViewHelper inject methods | none | has `inject*()` |
@@ -64,6 +66,8 @@ Map each file's signals from these outputs — do not open individual files.
 | Mock interaction verification needed | no | yes |
 
 > **CRITICAL:** Every Unit and Edge class MUST have a Z1/Z2 assignment.
+
+> **IMPORTANT — static calls are NOT Z2 triggers:** `Environment::getPublicPath()` and other `Environment::*` statics are Unit-qualifying (listed above) and do **not** push a class to Z2. `LocalizationUtility::translate()` is a static mockable call — also **not** a Z2 trigger. Only the six rows in the table above can force Z2.
 
 ---
 
