@@ -8,212 +8,146 @@ argument-hint: <extension-path-or-name>
 
 ## Step 1 – Resolve extension root
 
-Resolve `ext_root` (contains `Classes/`, `composer.json`) and `classes_dir` = `$ext_root/Classes`.
+Resolve `ext_root` (contains `Classes/`, `composer.json`) and `classes_dir` = `$ext_root/Classes`. Search order: absolute → `packages/<arg>` → `packages-dev/<arg>` → `vendor/<vendor>/<arg>`. No argument → ask.
 
-Search order: absolute path → `packages/<arg>` → `packages-dev/<arg>` → `vendor/<vendor>/<arg>`.
+---
 
-If no argument, ask the user.
-
-## Step 2+3 – Discover and analyse via batch grep
-
-Run all four commands; do **not** read individual files.
+## Step 2 – Batch grep (do NOT open individual files)
 
 ```bash
-# 1. All PHP files (sorted)
 find "$classes_dir" -name "*.php" | sort
 
-# 2. Class declarations + inheritance
 grep -rn "^abstract class \|^class \|^interface \|^trait \|extends \|implements " \
      "$classes_dir" --include="*.php"
 
-# 3. TYPO3 integration signals
 grep -rn "ConnectionPool\|QueryBuilder\|makeInstance\|GlobalsService\|GLOBALS\[.TSFE\|BackendUser\|AbstractViewHelper\|AbstractConditionViewHelper\|CacheManager\|PersistenceManager\|RepositoryInterface" \
      "$classes_dir" --include="*.php"
 
-# 4. Constructor / injection (for Z1/Z2)
 grep -rn "public function __construct\|#\[Inject\]\|@inject\|LocalizationUtility\|Environment::" \
+     "$classes_dir" --include="*.php"
+
+grep -rn "renderingContext->getAttribute\|public function inject[A-Z]\|[^a-z]exit;\|childViewHelperNodes" \
      "$classes_dir" --include="*.php"
 ```
 
-Map each file's signals from these four outputs — **do not** open individual files.
-
-## Step 4 – Classification
-
-### Not directly testable
-Interface, Trait, Abstract class → skip.
+Map each file's signals from these outputs — do not open individual files.
 
 ---
 
-### Unit Test — qualify when ALL true
-- No `AbstractViewHelper` / `AbstractConditionViewHelper` parent
-- No `ConnectionPool` / `QueryBuilder`
-- No `makeInstance` for repository / service / TYPO3 subsystem (plain PHP helpers: OK)
-- No `GlobalsService`, `$GLOBALS['TSFE']`, `BackendUser`
-- All dependencies plain PHP or constructor-injectable
+## Step 3 – Classification
 
-**Also qualify:** Extbase Validators, PSR-14 Events/Listeners (pure data), TypeConverters (no DB), TCA hooks, `Environment::*`-only statics, `GeneralUtility` string/array helpers, `LocalizationUtility::translate()` (static, mockable).
+**Skip (not directly testable):** Interface · Trait · Abstract class
 
-**Exclude (glue code):** Extbase controller actions, model getters/setters only, framework wiring.
+| Signal present | → Category |
+|---|---|
+| `AbstractViewHelper` / `AbstractConditionViewHelper` | Functional (or Edge if non-trivial render logic) |
+| `ConnectionPool` / `QueryBuilder` | Functional |
+| `makeInstance` for repository/persistence/TYPO3 subsystem | Functional |
+| `GlobalsService` / `BackendUser` / `$GLOBALS['TSFE']` | Functional |
+| TYPO3 caching / Extbase Persistence / Extbase controller | Functional |
+| None of the above | Unit |
+| ViewHelper with sorting/formatting/branching · Service with `LocalizationUtility` but own logic · `makeInstance` for plain PHP helper only | Edge (both viable) |
 
----
+**Also qualify as Unit:** Extbase Validators · PSR-14 Events/Listeners · TypeConverters (no DB) · TCA hooks · `Environment::*`-only · `GeneralUtility` string/array helpers · `LocalizationUtility::translate()`.
 
-### Functional Test — any one signal present
-`AbstractViewHelper` / `AbstractConditionViewHelper` parent · `ConnectionPool` / `QueryBuilder` · `makeInstance` for repository/persistence/TYPO3 subsystem · `GlobalsService` / `BackendUser` / `$GLOBALS['TSFE']` · TYPO3 caching infrastructure · Extbase Persistence/Repository · Extbase controller.
+**Exclude from Unit (glue code):** Extbase controller actions · model getters/setters only · framework wiring.
 
----
+### Z1 / Z2 sub-classification (Unit and Edge only)
 
-### Edge case — both viable
-ViewHelper with non-trivial render logic (sorting, formatting, branching) · Service/Utility with `LocalizationUtility` but significant own logic · `makeInstance` for plain PHP helper only.
-
----
-
-### Z1 / Z2 sub-classification (Unit and Edge)
-
-**Z1** — no constructor params (or primitives only), no `makeInstance`, no injected interface/abstract.
-
-**Z2** — any: constructor-injected interface/abstract · needs mock interaction verification · `makeInstance` for mockable target.
+| | Z1 | Z2 |
+|---|---|---|
+| Constructor params | none or primitives only | injected interface/abstract |
+| `makeInstance` | none | mockable target |
+| ViewHelper renderingContext | `getVariableProvider()` only | `getAttribute()` → PSR-7 chain |
+| ViewHelper inject methods | none | has `inject*()` |
+| ViewHelper `exit` / `childViewHelperNodes` | none | present → Z2 |
+| Mock interaction verification needed | no | yes |
 
 > **CRITICAL:** Every Unit and Edge class MUST have a Z1/Z2 assignment.
 
 ---
 
-## Step 5 – Output the balance report
+## Step 4 – Output the balance report
 
-Do **not** scan `Tests/` directories. No coverage information.
+Do **not** scan `Tests/`. No coverage information.
 
----
-
-# Test Audit: `<extension-name>`
-
-*Generated: YYYY-MM-DD · HH:MM:SS*
+```
+# Test Audit: <extension-name>
+# Generated: YYYY-MM-DD · HH:MM:SS
 
 ## Summary
+| Category                       | Count |
+|-------------------------------|-------|
+| PHP files total               | N     |
+| Suitable for Unit Tests       | N     |
+| — Z1 (no stub/mock)           | N     |
+| — Z2 (stub/mock needed)       | N     |
+| Edge case (both possible)     | N     |
+| — Z1                          | N     |
+| — Z2                          | N     |
+| Suitable for Functional Tests | N     |
+| Not directly testable         | N     |
 
-| Category                          | Count |
-|----------------------------------|-------|
-| PHP files total                  | N     |
-| Suitable for Unit Tests          | N     |
-| — Z1 (no stub/mock)              | N     |
-| — Z2 (stub/mock needed)          | N     |
-| Edge case (both possible)        | N     |
-| — Z1 (no stub/mock)              | N     |
-| — Z2 (stub/mock needed)          | N     |
-| Suitable for Functional Tests    | N     |
-| Not directly testable            | N     |
+## Suitable for Unit Tests (N)
+#### Z1 (N)
+**`ClassName`** (Classes/Path/ClassName.php) — reason
 
----
+#### Z2 (N)
+**`ClassName`** (Classes/Path/ClassName.php) — reason
 
-## Suitable for Unit Tests (N classes)
+## Edge case (N)
+#### Z1 (N) / Z2 (N)
+**`ClassName`** (Classes/Path/ClassName.php) — reason
 
-#### Z1 — No stub/mock needed (N)
+## Suitable for Functional Tests (N)
+**`ClassName`** (Classes/Path/ClassName.php) — reason
 
-**`ClassName`** ([Classes/Path/To/Class.php](Classes/Path/To/Class.php))
-> Reason why Z1.
-
-#### Z2 — Stub or mock required (N)
-
-**`ClassName`** ([Classes/Path/To/Class.php](Classes/Path/To/Class.php))
-> Reason why Z2.
-
----
-
-## Edge case – both Unit and Functional viable (N classes)
-
-#### Z1 — No stub/mock needed (N)
-
-**`ClassName`** ([Classes/Path/To/Class.php](Classes/Path/To/Class.php))
-> Reason why Z1 and why Edge case.
-
-#### Z2 — Stub or mock required (N)
-
-**`ClassName`** ([Classes/Path/To/Class.php](Classes/Path/To/Class.php))
-> Reason why Z2 and why Edge case.
-
----
-
-## Suitable for Functional Tests (N classes)
-
-**`ClassName`** ([Classes/Path/To/Class.php](Classes/Path/To/Class.php))
-> Reason.
-
----
-
-## Not directly testable (N classes)
-
-**`ClassName`** ([Classes/Path/To/Class.php](Classes/Path/To/Class.php))
-> Reason.
-
----
+## Not directly testable (N)
+**`ClassName`** (Classes/Path/ClassName.php) — reason
 
 ## Priority recommendation
-
-1. Z1/Z2 Unit classes with complex data-munging logic → highest ROI
-2. Edge cases → unit test the algorithm first, functional test the integration
-3. Functional: ViewHelpers/repositories touching DB → end-to-end scenarios
+1. Z1/Z2 Unit classes with complex logic → highest ROI
+2. Edge cases → unit-test algorithm first, functional-test integration
+3. Functional: ViewHelpers/repositories touching DB
 4. De-prioritize: glue code, controller pass-throughs, model getters/setters
+```
 
 ---
 
-## Step 6 – Save output files
+## Step 5 – Save output files
 
 ```bash
 date +"%Y-%m-%d %H:%M:%S"
 ```
 
-### 6a – Write MD
-
-`$ext_root/test-audit-<extension-name>.md` — overwrite silently.
-
-```markdown
+**MD** → `$ext_root/test-audit-<extension-name>.md` (overwrite silently):
+```
 ---
 title: "Test Audit – <extension-name>"
-date: <YYYY-MM-DD>
-time: "<HH:MM:SS>"
-extension: <extension-name>
-classes_total: <N>
-unit: <N>
-unit_z1: <N>
-unit_z2: <N>
-edge: <N>
-edge_z1: <N>
-edge_z2: <N>
-functional: <N>
-not_testable: <N>
+date: <YYYY-MM-DD>  time: "<HH:MM:SS>"  extension: <extension-name>
+classes_total: <N>  unit: <N>  unit_z1: <N>  unit_z2: <N>
+edge: <N>  edge_z1: <N>  edge_z2: <N>  functional: <N>  not_testable: <N>
 ---
-
-(full Step 5 report)
+(full Step 4 report)
 ```
 
-### 6b – Write TXT
-
-`$ext_root/test-audit-<extension-name>.txt` — overwrite silently.
-
+**TXT** → `$ext_root/test-audit-<extension-name>.txt` (overwrite silently):
 ```
 # Test Audit – <extension-name>
 # Generated: <YYYY-MM-DD> <HH:MM:SS>
 
 [Unit Z1 – N]
-Classes/Path/To/ClassName.php
+Classes/Path/ClassName.php
 ...
 
 [Unit Z2 – N]
-Classes/Path/To/ClassName.php
-...
-
 [Edge Z1 – N]
-Classes/Path/To/ClassName.php
-...
-
 [Edge Z2 – N]
-Classes/Path/To/ClassName.php
-...
 ```
-
 Paths relative to `ext_root`, sorted alphabetically per group, omit empty groups.
 
-### 6c – Confirm
-
+**Confirm:**
 ```
-✔ MD   → <absolute path>
-✔ TXT  → <absolute path>
+✔ MD  → <absolute path>
+✔ TXT → <absolute path>
 ```

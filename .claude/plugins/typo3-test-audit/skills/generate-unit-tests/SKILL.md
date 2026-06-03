@@ -6,13 +6,9 @@ argument-hint: <extension-path-or-name> [Z1|Z2]
 
 # Generate PHPUnit Unit Tests for Z1 / Z2 Classes
 
----
+## Step 1 – Resolve paths & environment
 
-## Step 1 – Resolve paths and collect environment
-
-Resolve `ext_root` (dir containing `Classes/`, `Tests/`, `composer.json`): absolute path → `packages/<arg>` → `packages-dev/<arg>` → `vendor/<vendor>/<arg>`. If no argument, ask. Store `project_root` (dir containing `vendor/`).
-
-Run in one bash block:
+Resolve `ext_root` (dir with `Classes/`, `Tests/`, `composer.json`): absolute → `packages/<arg>` → `packages-dev/<arg>` → `vendor/<vendor>/<arg>`. No argument → ask. Store `project_root` (dir with `vendor/`).
 
 ```bash
 find "$ext_root" -maxdepth 1 -name "test-audit-*.txt" | sort
@@ -23,8 +19,7 @@ grep '"version"' "$project_root/vendor/typo3/testing-framework/composer.json" 2>
 find "$ext_root/Build/phpunit" "$ext_root" -maxdepth 2 \( -name "UnitTests.xml" -o -name "phpunit.xml" -o -name "phpunit.xml.dist" \) 2>/dev/null | head -1
 ```
 
-- No report → suggest `test-audit-text` first, stop.
-- Multiple reports → ask user (default: last alphabetically).
+No report → suggest `test-audit-text` first, stop. Multiple reports → ask (default: last alphabetically).
 
 | Condition | Rule |
 |-----------|------|
@@ -37,17 +32,13 @@ find "$ext_root/Build/phpunit" "$ext_root" -maxdepth 2 \( -name "UnitTests.xml" 
 
 ## Step 2 – Determine group
 
-Read the second argument (case-insensitive): `Z1` → process Z1 only · `Z2` → process Z2 only · omitted or anything else → **Both** (Z1 + Z2). Never ask the user.
+Second argument (case-insensitive): `Z1` → Z1 only · `Z2` → Z2 only · omitted → **Both**. Never ask.
 
 ---
 
-## Step 3 – Parse report and check files
+## Step 3 – Collect & check targets
 
-TXT sections: `[Unit Z1]`, `[Unit Z2]`, `[Edge Z1]`, `[Edge Z2]`. Include sections matching `selected_group`. Deduplicate → `target_files[]`.
-
-**Every entry in `target_files[]` must be processed — none may be skipped or omitted.**
-
-Pre-check existence in one bash block:
+Parse TXT sections `[Unit Z1]`, `[Unit Z2]`, `[Edge Z1]`, `[Edge Z2]` for the selected group. Deduplicate → `target_files[]`. **Every entry must be processed — none may be skipped.**
 
 ```bash
 for f in "${target_files[@]}"; do
@@ -60,41 +51,24 @@ done
 
 ## Step 4 – Process each class
 
-`Classes/Utility/StringHelper.php` → `Tests/Unit/Utility/StringHelperTest.php`
+Path mapping: `Classes/Utility/Foo.php` → `Tests/Unit/Utility/FooTest.php`
 
-### EXISTS → Extend only if hints are present
-1. Read test file; search for hint comments only: `// TODO`, `markTestIncomplete`, `markTestSkipped`, empty `// Arrange`, empty `// Act`, empty `// Assert`, empty method body `{}`.
-2. **If no hints found → do nothing.** Status: `⏭️ skipped (no hints)`. Do not analyse coverage, do not add boundary cases, do not modify the file.
-3. **If hints found →** read source class; for each hint, write the missing test case body (AAA pattern). Do not touch any other part of the file. Status: `✏️ extended (N completed)`.
+### EXISTS → extend only if hints found
 
-### MISSING → Create
+1. Read test file; search for: `// TODO`, `markTestIncomplete`, `markTestSkipped`, empty `// Arrange` / `// Act` / `// Assert`, empty method body `{}`.
+2. **No hints → do nothing.** Status: `⏭️ skipped (no hints)`.
+3. **Hints found →** read source class; write missing test case body (AAA) for each hint. Touch nothing else. Status: `✏️ extended (N completed)`.
+
+### MISSING → create
+
 1. Read source: namespace, class name, constructor, all `public function` (skip trivial getters/setters).
-2. **Z2 only** — mock dependencies:
+2. Plan **2–3 tests per public method**: happy path · boundary (null/empty/zero/max) · alternative branch.
+3. `mkdir -p` if needed. Note `.php_`/`.php.bak`/`.php.disabled` variants in summary.
+4. Write using the skeleton below. Status: `✅ created`.
 
-| Signal | Strategy |
-|--------|----------|
-| Constructor-injected typed param | `createMock(Type::class)` as property, injected in `setUp()` |
-| `renderingContext->getVariableProvider()` | Stub both; see ViewHelper pattern below |
-| `GeneralUtility::makeInstance(X::class)` | `GeneralUtility::addInstance(X::class, $mock)` in `setUp()` |
-
-3. Plan **2–3 tests per public method**: happy path · boundary (null/empty/zero/max) · alternative branch.
-4. `mkdir -p` if needed. Note any `.php_`/`.php.bak`/`.php.disabled` variants in summary.
-5. Write. Status: `✅ created`.
-
----
-
-## Step 5 – File content
-
-### Namespace
-`Vendor\Extension\Utility` → test namespace `Vendor\Extension\Tests\Unit\Utility`
-
-### Z1 skeleton
-
+**Z1 skeleton:**
 ```php
-<?php
-
-declare(strict_types=1);
-
+<?php declare(strict_types=1);
 namespace {test_namespace};
 
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -113,12 +87,11 @@ final class {ClassName}Test extends UnitTestCase
 }
 ```
 
-### Z2 additions
-- Add `use PHPUnit\Framework\MockObject\MockObject;`
-- Per dependency: `private DependencyType&MockObject $mockDep;` + `$this->mockDep = $this->createMock(DependencyType::class);` in `setUp()`.
+**Z2 additions** — add per dependency:
+- `private DependencyType&MockObject $mockDep;`
+- `$this->mockDep = $this->createMock(DependencyType::class);` in `setUp()`
 
 **ViewHelper pattern:**
-
 ```php
 private RenderingContextInterface&Stub $renderingContext;
 private VariableProviderInterface&Stub $variableProvider;
@@ -133,31 +106,22 @@ protected function setUp(): void
     $this->subject->setRenderingContext($this->renderingContext);
     $this->subject->initializeArguments();
 }
-// Tests: $this->subject->setArguments([...]); $result = $this->subject->render();
+// Tests call: $this->subject->setArguments([...]); $result = $this->subject->render();
 ```
 
 **GeneralUtility pattern:**
-
 ```php
 protected function setUp(): void { ...; GeneralUtility::addInstance(SomeService::class, $this->mockService); }
 protected function tearDown(): void { GeneralUtility::purgeInstances(); parent::tearDown(); }
 ```
 
-### Helper method signatures
-
-When generating a `createSubject()` factory helper, always add a PHPDoc `@param` with the value type and keep the native hint as `array`:
-
+**`createSubject()` helper:**
 ```php
 /** @param array<string, mixed> $arguments */
-private function createSubject(array $arguments): {ClassName}
+private function createSubject(array $arguments): {ClassName} { ... }
 ```
 
-`array<string, mixed>` is not valid PHP syntax in a native type hint — it belongs only in the PHPDoc. PHPStan (rule `missingType.iterableValue`) reads the PHPDoc and accepts this pattern. This applies regardless of whether the parameter has a default value (`array $arguments = []`) or additional parameters (`array $arguments, \Closure $fn = null`).
-
----
-
-### Test method format
-
+**Test method format:**
 ```php
 #[Test]
 public function {camelCaseSentence}(): void
@@ -171,13 +135,9 @@ public function {camelCaseSentence}(): void
 }
 ```
 
-Naming: `returnsEmptyStringForEmptyInput`, `throwsExceptionForNegativeValue` — never `test1`, `works`.
-
-Assertions: `assertSame` (scalar) · `assertStringContainsString` (substring) · `assertTrue/False` · `assertNull` · `expectException` · `assertCount` · `assertInstanceOf` · `expects()->method()->with()` (verified call).
-
 ---
 
-## Step 6 – Summary
+## Step 5 – Summary
 
 **Always output in English.**
 
@@ -194,12 +154,16 @@ PHP: {version} · PHPUnit: {major}.x · TYPO3: {version} · testing-framework: {
 
 ## Quality rules
 
-- `declare(strict_types=1)` · `final class` · all test methods `public function (): void`
-- Arrange/Act/Assert comments mandatory (omit Arrange only if empty)
-- `parent::setUp()` first in `setUp()`; `parent::tearDown()` last in `tearDown()`
-- No `@covers`, no magic numbers, no `ConnectionPool`/`QueryBuilder` in unit tests
-- **Z1:** No mocks — flag as "Z2 misclassified" and skip if a stub is needed
-- **"Does not throw" tests:** Never use `assertTrue(true)` as a no-op assertion. Use `$this->expectNotToPerformAssertions()` at the top of the method (before Arrange) and omit all Arrange/Act/Assert comments — PHPUnit then counts the test as intentionally assertion-free.
-- **Tautological assertions:** Never assert on a value whose type PHPStan already knows statically. `assertInstanceOf(Foo::class, $x)` when `$x: Foo` is always true — assert on the actual value instead (e.g. `assertSame($expected, $x->getValue())`). `assertIsString($s)` when `$s: string` is always true — use `assertStringContainsString(...)`, `assertSame(...)`, or `assertNotEmpty(...)`; if a stronger assertion already follows on the same variable, remove `assertIsString` entirely. `assertTrue(true)` is never a valid assertion.
-- **TYPO3 `DebuggerUtility::var_dump()`:** Returns `''` when `inline=false` (output goes to page buffer). Tests asserting on the returned string **must** pass `inline: true`. Tests only checking `assertIsString()` may use `inline: false`.
-- **Z2:** Final classes → `new`, never `createMock()`/`createStub()` on final; `willReturn()` must match declared return type; never `->with()` on a stub without `expects()` (PHPUnit 14 deprecation); use `&MockObject` if any test calls `expects()`, else `&Stub`; when the property is `&MockObject` but a specific test does not call `expects()`, add `#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]` on that test method; `GeneralUtility::purgeInstances()` in `tearDown()` when `addInstance()` used; never mock the class under test
+| # | Rule |
+|---|------|
+| 1 | `declare(strict_types=1)` · `final class` · all test methods `public function (): void` |
+| 2 | AAA comments mandatory; omit `// Arrange` only if empty |
+| 3 | `parent::setUp()` first; `parent::tearDown()` last |
+| 4 | No `@covers`, no magic numbers, no `ConnectionPool`/`QueryBuilder` in unit tests |
+| 5 | **Z1:** no mocks — flag "Z2 misclassified" and skip if a stub is needed |
+| 6 | **"Does not throw":** `$this->expectNotToPerformAssertions()` at top, no `assertTrue(true)` |
+| 7 | **Tautological assertions:** never assert a statically-known type. `assertInstanceOf(Foo::class, $x)` when `$x: Foo` → assert the value. `assertIsString($s)` when `$s: string` → use `assertStringContainsString`/`assertSame`; remove if a stronger assertion follows. |
+| 8 | **`DebuggerUtility::var_dump()`:** returns `''` when `inline=false`. Tests asserting the returned string must pass `inline: true`. |
+| 9 | **Z2:** final classes → `new`, never mock/stub final; `willReturn()` must match return type; no `->with()` on stub without `expects()`; use `&MockObject` if `expects()` used, else `&Stub`; add `#[AllowMockObjectsWithoutExpectations]` on methods where `&MockObject` property has no `expects()`; `purgeInstances()` in `tearDown()` when `addInstance()` used; never mock the class under test |
+| 10 | **Naming:** `returnsEmptyStringForEmptyInput`, `throwsExceptionForNegativeValue` — never `test1`, `works` |
+| 11 | **Assertions:** `assertSame` (scalar) · `assertStringContainsString` · `assertTrue/False` · `assertNull` · `expectException` · `assertCount` · `assertInstanceOf` · `expects()->method()->with()` |
