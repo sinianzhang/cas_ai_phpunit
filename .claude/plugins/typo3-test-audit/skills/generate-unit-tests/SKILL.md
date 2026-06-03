@@ -37,7 +37,9 @@ find "$ext_root/Build/phpunit" "$ext_root" -maxdepth 2 \( -name "UnitTests.xml" 
 
 ## Step 2 – Ask which group
 
-`AskUserQuestion`: **Z1** (no mocks) / **Z2** (mocks required) / **Both**
+`AskUserQuestion`: **Both** (Z1 + Z2) / **Z1** (no mocks) / **Z2** (mocks required)
+
+Default: **Both** — if the user does not respond within 10 seconds, proceed automatically with **Both**.
 
 ---
 
