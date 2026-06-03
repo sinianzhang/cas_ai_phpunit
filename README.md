@@ -10,11 +10,11 @@ The project was originally from TYPO3 Demo Project https://git.typo3.org/service
 
 ### Plugin with 3 Claude Kills (!!! Skills must be run one after the other !!!)
 
-### (1) test-audit-text: creates a md-file as audit report for the given extension, and creats a txt-file listing all classes, which are suitable for PhpUnitTest
+(1) test-audit-text: creates a md-file as audit report for the given extension, and creats a txt-file listing all classes, which are suitable for PhpUnitTest
 
-### (2) test-audit-chart (optional): creates a svg-file with a pie chart/diagram
+(2) test-audit-chart (optional): creates a svg-file with a pie chart/diagram
 
-### (3) generate-unit-tests: creates missing PhpUnitTest files or extends existing PhpUnitTest files according to given comments as hints
+(3) generate-unit-tests: creates missing PhpUnitTest files or extends existing PhpUnitTest files according to given comments as hints
 
 ## Local Development
 
