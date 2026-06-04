@@ -32,6 +32,8 @@ node_modules/
 packages/autoload/
 packages/*/Tests/
 packages/*/test-audit-*
+packages/*/Build/phpunit/coverage
+packages/*/Build/phpunit/testbox
 
 # Exclude everything in typo3conf/ except typo3conf itself
 /web/typo3conf/*
