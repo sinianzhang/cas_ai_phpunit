@@ -12,7 +12,7 @@ argument-hint: <extension-path-or-name>
 
 **2. Find report** — `find "$ext_root" -maxdepth 1 -name "test-audit-*.md" | sort`. None → stop; one → use; multiple → ask.
 
-**3. Read frontmatter** — extract: `extension`, `classes_total`→`total`, `unit_z1`, `unit_z2`, `edge_z1`, `edge_z2`, `functional`, `not_testable`.
+**3. Read frontmatter** — extract: `extension`, `classes_total`→`total`, `unit`, `edge`, `functional`, `not_testable`.
 
 **4. Generate SVG** — write `$ext_root/test-audit-{extension}.svg`.
 
@@ -24,7 +24,7 @@ argument-hint: <extension-path-or-name>
 
 ## SVG Spec
 
-**Constraints (hard):** No Z1/Z2 labels, ✅/❌, or parentheses in the SVG · No single merged Unit/Edge segment · No `filter` attribute · No HTML wrapper · Skip any segment where count = 0.
+**Constraints (hard):** No single merged segment · No `filter` attribute · No HTML wrapper · Skip any segment where count = 0.
 
 Font shorthand (use everywhere): `font-family="system-ui,-apple-system,sans-serif"`
 
@@ -49,10 +49,8 @@ Segments in order:
 
 | Label | Field | Color |
 |---|---|---|
-| Z1 Unit | `unit_z1` | `#A5D6A7` |
-| Z2 Unit | `unit_z2` | `#66BB6A` |
-| Edge Z1 | `edge_z1` | `#FFE082` |
-| Edge Z2 | `edge_z2` | `#FFB74D` |
+| Unit | `unit` | `#66BB6A` |
+| Edge | `edge` | `#FFB74D` |
 | Functional Test | `functional` | `#2196F3` |
 | Not testable | `not_testable` | `#9E9E9E` |
 
@@ -74,8 +72,8 @@ Segments in order:
 **Footer — exactly these 5 elements:**
 ```xml
 <line x1="20" y1="390" x2="560" y2="390" stroke="#e0e0e0" stroke-width="1"/>
-<text x="20"  y="407" [font] font-size="10" font-weight="600" fill="#555">Z1</text>
-<text x="32"  y="407" [font] font-size="10" fill="#888">= testable without stubs/mocks (pure unit)</text>
-<text x="310" y="407" [font] font-size="10" font-weight="600" fill="#555">Z2</text>
-<text x="322" y="407" [font] font-size="10" fill="#888">= requires stubs or mocks (isolated unit)</text>
+<text x="20"  y="407" [font] font-size="10" font-weight="600" fill="#555">Unit</text>
+<text x="44"  y="407" [font] font-size="10" fill="#888">= suitable for unit tests &#xB7; </text>
+<text x="212" y="407" [font] font-size="10" font-weight="600" fill="#555">Edge</text>
+<text x="236" y="407" [font] font-size="10" fill="#888">= both unit and functional viable</text>
 ```

@@ -1,10 +1,10 @@
 ---
 name: generate-unit-tests
-description: Reads the test-audit-*.txt report for a TYPO3 extension and processes every class of the chosen group (Z1, Z2, or Both) across both Unit and Edge sections — no class is skipped. Optional second argument selects the group; defaults to Both. If a test file already exists it only checks for hint comments (TODO, markTestIncomplete, etc.) and adds the missing test cases if any are found; otherwise it leaves the file untouched. If no test file exists it generates a new test class with 2–3 test cases per public method. Use when the user asks to "generate unit tests", "write unit tests for Z1", "create tests for Z2 classes", "generate PHPUnit tests from audit report".
-argument-hint: <extension-path-or-name> [Z1|Z2]
+description: Reads the test-audit-*.txt report for a TYPO3 extension and processes every class in the Unit and Edge sections — no class is skipped. If a test file already exists it only checks for hint comments (TODO, markTestIncomplete, etc.) and adds the missing test cases if any are found; otherwise it leaves the file untouched. If no test file exists it generates a new test class with 2–3 test cases per public method. Use when the user asks to "generate unit tests", "write unit tests", "create tests from audit report".
+argument-hint: <extension-path-or-name>
 ---
 
-# Generate PHPUnit Unit Tests for Z1 / Z2 Classes
+# Generate PHPUnit Unit Tests
 
 ## Step 1 – Resolve paths & environment
 
@@ -30,15 +30,9 @@ No report → suggest `test-audit-text` first, stop. Multiple reports → ask (d
 
 ---
 
-## Step 2 – Determine group
+## Step 2 – Collect & check targets
 
-Second argument (case-insensitive): `Z1` → Z1 only · `Z2` → Z2 only · omitted → **Both**. Never ask.
-
----
-
-## Step 3 – Collect & check targets
-
-Parse TXT sections `[Unit Z1]`, `[Unit Z2]`, `[Edge Z1]`, `[Edge Z2]` for the selected group. Deduplicate → `target_files[]`. **Every entry must be processed — none may be skipped.**
+Parse TXT sections `[Unit]` and `[Edge]` for all classes. Deduplicate → `target_files[]`. **Every entry must be processed — none may be skipped.**
 
 ```bash
 for f in "${target_files[@]}"; do
@@ -49,7 +43,7 @@ done
 
 ---
 
-## Step 4 – Process each class
+## Step 3 – Process each class
 
 Path mapping: `Classes/Utility/Foo.php` → `Tests/Unit/Utility/FooTest.php`
 
@@ -66,7 +60,7 @@ Path mapping: `Classes/Utility/Foo.php` → `Tests/Unit/Utility/FooTest.php`
 3. `mkdir -p` if needed. Note `.php_`/`.php.bak`/`.php.disabled` variants in summary.
 4. Write using the skeleton below. Status: `✅ created`.
 
-**Z1 skeleton:**
+**Skeleton (no dependencies):**
 ```php
 <?php declare(strict_types=1);
 namespace {test_namespace};
@@ -87,7 +81,7 @@ final class {ClassName}Test extends UnitTestCase
 }
 ```
 
-**Z2 additions** — add per dependency:
+**With dependencies** — add per dependency:
 - `private DependencyType&MockObject $mockDep;`
 - `$this->mockDep = $this->createMock(DependencyType::class);` in `setUp()`
 
@@ -137,12 +131,12 @@ public function {camelCaseSentence}(): void
 
 ---
 
-## Step 5 – Summary
+## Step 4 – Summary
 
 **Always output in English.**
 
 ```
-## Generated Unit Tests — Group {selected_group}
+## Generated Unit Tests
 | Source class | Test file | Status | Notes |
 |---|---|---|---|
 | ... | ... | ✅ created / ✏️ extended (N) / ⏭️ skipped (no hints) | |
@@ -160,10 +154,9 @@ PHP: {version} · PHPUnit: {major}.x · TYPO3: {version} · testing-framework: {
 | 2 | AAA comments mandatory; omit `// Arrange` only if empty |
 | 3 | `parent::setUp()` first; `parent::tearDown()` last |
 | 4 | No `@covers`, no magic numbers, no `ConnectionPool`/`QueryBuilder` in unit tests |
-| 5 | **Z1:** no mocks — flag "Z2 misclassified" and skip if a stub is needed |
-| 6 | **"Does not throw":** `$this->expectNotToPerformAssertions()` at top, no `assertTrue(true)` |
-| 7 | **Tautological assertions:** never assert a statically-known type. `assertInstanceOf(Foo::class, $x)` when `$x: Foo` → assert the value. `assertIsString($s)` when `$s: string` → use `assertStringContainsString`/`assertSame`; remove if a stronger assertion follows. |
-| 8 | **`DebuggerUtility::var_dump()`:** returns `''` when `inline=false`. Tests asserting the returned string must pass `inline: true`. |
-| 9 | **Z2:** final classes → `new`, never mock/stub final; `willReturn()` must match return type; no `->with()` on stub without `expects()`; use `&MockObject` if `expects()` used, else `&Stub`; add `#[AllowMockObjectsWithoutExpectations]` on methods where `&MockObject` property has no `expects()`; `purgeInstances()` in `tearDown()` when `addInstance()` used; never mock the class under test |
-| 10 | **Naming:** `returnsEmptyStringForEmptyInput`, `throwsExceptionForNegativeValue` — never `test1`, `works` |
-| 11 | **Assertions:** `assertSame` (scalar) · `assertStringContainsString` · `assertTrue/False` · `assertNull` · `expectException` · `assertCount` · `assertInstanceOf` · `expects()->method()->with()` |
+| 5 | **"Does not throw":** `$this->expectNotToPerformAssertions()` at top, no `assertTrue(true)` |
+| 6 | **Tautological assertions:** never assert a statically-known type. `assertInstanceOf(Foo::class, $x)` when `$x: Foo` → assert the value. `assertIsString($s)` when `$s: string` → use `assertNotEmpty`/`assertSame`/`assertStringContainsString`. `assertIsCallable($c)` when `$c: Closure` → remove or replace with `assertNotEmpty`/`assertSame`. Remove any assertion PHPStan flags as `staticMethod.alreadyNarrowedType`. |
+| 7 | **`DebuggerUtility::var_dump()`:** returns `''` when `inline=false`. Tests asserting the returned string must pass `inline: true`. |
+| 8 | Final classes → `new`, never mock/stub final; `willReturn()` must match return type; no `->with()` on stub without `expects()`; use `&MockObject` if `expects()` used, else `&Stub`; add `#[AllowMockObjectsWithoutExpectations]` on methods where `&MockObject` property has no `expects()`; `purgeInstances()` in `tearDown()` when `addInstance()` used; never mock the class under test |
+| 9 | **Naming:** `returnsEmptyStringForEmptyInput`, `throwsExceptionForNegativeValue` — never `test1`, `works` |
+| 10 | **Assertions:** `assertSame` (scalar) · `assertStringContainsString` · `assertTrue/False` · `assertNull` · `expectException` · `assertCount` · `assertInstanceOf` · `expects()->method()->with()` |
