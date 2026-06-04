@@ -17,17 +17,14 @@ Resolve `ext_root` (contains `Classes/`, `composer.json`) and `classes_dir` = `$
 ```bash
 find "$classes_dir" -name "*.php" | sort
 
-grep -rn "^abstract class \|^class \|^interface \|^trait \|extends \|implements " \
-     "$classes_dir" --include="*.php"
-
-grep -rn "ConnectionPool\|QueryBuilder\|makeInstance\|GlobalsService\|GLOBALS\[.TSFE\|BackendUser\|AbstractViewHelper\|AbstractConditionViewHelper\|AbstractTagBasedViewHelper\|AbstractFormFieldViewHelper\|CacheManager\|PersistenceManager\|RepositoryInterface" \
-     "$classes_dir" --include="*.php"
-
-grep -rn "public function __construct\|#\[Inject\]\|@inject\|LocalizationUtility\|Environment::" \
-     "$classes_dir" --include="*.php"
-
-grep -rn "renderingContext->getAttribute\|public function inject[A-Z]\|[^a-z]exit;\|childViewHelperNodes" \
-     "$classes_dir" --include="*.php"
+grep -rEn \
+  "^abstract class |^class |^interface |^trait |extends |implements |\
+ConnectionPool|QueryBuilder|makeInstance|GlobalsService|GLOBALS\[.TSFE|\
+BackendUser|AbstractViewHelper|AbstractConditionViewHelper|AbstractTagBasedViewHelper|\
+AbstractFormFieldViewHelper|CacheManager|PersistenceManager|RepositoryInterface|\
+public function __construct|#\[Inject\]|@inject|LocalizationUtility|Environment::|\
+renderingContext->getAttribute|public function inject[A-Z]|[^a-z]exit;|childViewHelperNodes" \
+  "$classes_dir" --include="*.php"
 ```
 
 Map each file's signals from these outputs — do not open individual files.
@@ -54,21 +51,6 @@ Map each file's signals from these outputs — do not open individual files.
 
 **Exclude from Unit (glue code):** Extbase controller actions · model getters/setters only · framework wiring.
 
-### Z1 / Z2 sub-classification (Unit and Edge only)
-
-| | Z1 | Z2 |
-|---|---|---|
-| Constructor params | none, primitives only, or concrete class that is directly instantiable (no TYPO3 subsystem) | injected interface/abstract; OR concrete class where mock interaction verification (`->expects()`) is needed |
-| `makeInstance` | none | mockable target |
-| ViewHelper renderingContext | `getVariableProvider()` only | `getAttribute()` → PSR-7 chain |
-| ViewHelper inject methods | none | has `inject*()` |
-| ViewHelper `exit` / `childViewHelperNodes` | none | present → Z2 |
-| Mock interaction verification needed | no | yes |
-
-> **CRITICAL:** Every Unit and Edge class MUST have a Z1/Z2 assignment.
-
-> **IMPORTANT — static calls are NOT Z2 triggers:** `Environment::getPublicPath()` and other `Environment::*` statics are Unit-qualifying (listed above) and do **not** push a class to Z2. `LocalizationUtility::translate()` is a static mockable call — also **not** a Z2 trigger. Only the six rows in the table above can force Z2.
-
 ---
 
 ## Step 4 – Output the balance report
@@ -84,23 +66,14 @@ Do **not** scan `Tests/`. No coverage information.
 |-------------------------------|-------|
 | PHP files total               | N     |
 | Suitable for Unit Tests       | N     |
-| — Z1 (no stub/mock)           | N     |
-| — Z2 (stub/mock needed)       | N     |
 | Edge case (both possible)     | N     |
-| — Z1                          | N     |
-| — Z2                          | N     |
 | Suitable for Functional Tests | N     |
 | Not directly testable         | N     |
 
 ## Suitable for Unit Tests (N)
-#### Z1 (N)
-**`ClassName`** (Classes/Path/ClassName.php) — reason
-
-#### Z2 (N)
 **`ClassName`** (Classes/Path/ClassName.php) — reason
 
 ## Edge case (N)
-#### Z1 (N) / Z2 (N)
 **`ClassName`** (Classes/Path/ClassName.php) — reason
 
 ## Suitable for Functional Tests (N)
@@ -110,7 +83,7 @@ Do **not** scan `Tests/`. No coverage information.
 **`ClassName`** (Classes/Path/ClassName.php) — reason
 
 ## Priority recommendation
-1. Z1/Z2 Unit classes with complex logic → highest ROI
+1. Unit classes with complex logic → highest ROI
 2. Edge cases → unit-test algorithm first, functional-test integration
 3. Functional: ViewHelpers/repositories touching DB
 4. De-prioritize: glue code, controller pass-throughs, model getters/setters
@@ -128,9 +101,14 @@ date +"%Y-%m-%d %H:%M:%S"
 ```
 ---
 title: "Test Audit – <extension-name>"
-date: <YYYY-MM-DD>  time: "<HH:MM:SS>"  extension: <extension-name>
-classes_total: <N>  unit: <N>  unit_z1: <N>  unit_z2: <N>
-edge: <N>  edge_z1: <N>  edge_z2: <N>  functional: <N>  not_testable: <N>
+date: <YYYY-MM-DD>
+time: "<HH:MM:SS>"
+extension: <extension-name>
+classes_total: <N>
+unit: <N>
+edge: <N>
+functional: <N>
+not_testable: <N>
 ---
 (full Step 4 report)
 ```
@@ -140,13 +118,17 @@ edge: <N>  edge_z1: <N>  edge_z2: <N>  functional: <N>  not_testable: <N>
 # Test Audit – <extension-name>
 # Generated: <YYYY-MM-DD> <HH:MM:SS>
 
-[Unit Z1 – N]
+[Unit – N]
 Classes/Path/ClassName.php
 ...
 
-[Unit Z2 – N]
-[Edge Z1 – N]
-[Edge Z2 – N]
+[Edge – N]
+Classes/Path/ClassName.php
+...
+
+[Not testable – N]
+Classes/Path/ClassName.php
+...
 ```
 Paths relative to `ext_root`, sorted alphabetically per group, omit empty groups.
 
