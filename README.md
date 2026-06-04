@@ -67,20 +67,20 @@ Load claude plugin 'typo3-test-audit'
 * `claude --plugin-dir .claude/plugins/typo3-test-audit`
 
 (1) test-audit-text
-* `/typo3-test-audit:test-audit-text [extension name, e.g. hf-view-helpers]`
+* `/typo3-test-audit:test-audit-text [extension name, e.g. faq_t3demo]`
 
 (2) test-audit-chart (optional)
-* `/typo3-test-audit:test-audit-chart [extension name, e.g. hf-view-helpers]` 
+* `/typo3-test-audit:test-audit-chart [extension name, e.g. faq_t3demo]` 
 
 (3) generate-unit-tests
-* `/typo3-test-audit:generate-unit-tests [extension name, e.g. hf-view-helpers]`
+* `/typo3-test-audit:generate-unit-tests [extension name, e.g. faq_t3demo]`
 
 ## PhpUnitTest and PhpStan
 Run PhpUnitTest
-* e.g. using the config file `ddev exec php vendor/bin/phpunit -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml`
+* e.g. using a config file `ddev exec php vendor/bin/phpunit -c packages/faq_t3demo/Build/phpunit/UnitTests.xml`
 
 Run PhpStan
-* e.g. using the config file `ddev php vendor/bin/phpstan analyse -c packages/hf-view-helpers/Build/phpstan/phpstan.tests.neon`
+* e.g. using a config file `ddev php vendor/bin/phpstan analyse -c packages/faq_t3demo/Build/phpstan/phpstan.tests.neon`
 
 
 
