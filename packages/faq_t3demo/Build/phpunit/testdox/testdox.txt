@@ -1,0 +1,6 @@
+Email (Hausformat\ViewHelpers\Tests\Unit\Dummy\Email)
+ [x] Can be created from valid email
+ [x] Cannot be created from invalid email
+ [x] Variable a
+ [x] Variable b
+
