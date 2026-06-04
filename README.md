@@ -80,7 +80,7 @@ Run PhpUnitTest
 * e.g. using the config file `ddev exec php vendor/bin/phpunit -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml`
 
 Run PhpStan
-* e.g. using the config file `ddev php vendor/bin/phpstan analyse -c packages/hf-view-helpers/phpstan.tests.neon`
+* e.g. using the config file `ddev php vendor/bin/phpstan analyse -c packages/hf-view-helpers/Build/phpstan/phpstan.tests.neon`
 
 
 
