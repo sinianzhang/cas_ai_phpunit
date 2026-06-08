@@ -4,14 +4,26 @@
 ### Run a specific test
 - ddev exec php vendor/bin/phpunit -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml packages/hf-view-helpers/Tests/Unit/Dummy/EmailTest.php --filter xxxx
 
-### phpStan
-- ddev php vendor/bin/phpstan analyse -c packages/hf-view-helpers/Build/phpstan/phpstan.tests.neon [--generate-baseline packages/hf-view-helpers/Build/phpstan/phpstan-baseline.neon] -vvv
+### phpStan for all unit test files in the extension "hf-viewh-helpers" (loading config file)
+- ddev php vendor/bin/phpstan analyse -c packages/hf-view-helpers/Build/phpstan/phpstan.tests.neon [--generate-baseline packages/hf-view-helpers/Build/phpstan/phpstan-baseline.neon]
 
-### run coverage
+### phpStan for one unit test file in the extension "hf-viewh-helpers" (loading config file)
+- ddev php vendor/bin/phpstan analyse -c packages/hf-view-helpers/Build/phpstan/phpstan.tests.neon \
+  packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/CaseViewHelperTest.php
+
+### coverage for the extension "hf-viewh-helpers" (output format: text or html)
 - ddev xdebug on
-- ddev exec php vendor/bin/phpunit \
+- ddev exec XDEBUG_MODE=coverage php vendor/bin/phpunit \
   -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
-  --coverage-html packages/hf-view-helpers/Build/phpunit/coverage
+  [--coverage-text|--coverage-html packages/hf-view-helpers/Build/phpunit/coverage]
+- ddev xdebug off
+
+### coverage for one class in the extension "hf-viewh-helpers" (z.B. Klasse: CaseViewHelper)
+- ddev xdebug on
+- ddev exec XDEBUG_MODE=coverage php vendor/bin/phpunit \
+  -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
+  --coverage-text \
+  --filter CaseViewHelper
 - ddev xdebug off
 
 # HF View Helpers
