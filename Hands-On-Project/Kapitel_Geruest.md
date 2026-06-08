@@ -56,7 +56,7 @@ Die vorliegende Arbeit entsteht im Rahmen der beruflichen Tätigkeit des Autors 
 
 #### Projektkontext und Demo-Extension
 
-Als technische Basis dient das interne TYPO3-Projekt `biber` (`typo3-projects/biber`), das lokal mit DDEV (Docker-basierte Entwicklungsumgebung) betrieben wird. Innerhalb dieses Projekts wird die Extension `hf-view-helpers` (`packages/hf-view-helpers`) als Testgegenstand verwendet. Diese Extension bündelt über 40 TYPO3 Fluid-ViewHelper-Klassen, die im Produktivbetrieb eingesetzt werden. Ein vorgängig durchgeführter Test-Audit (mittels des Claude-Code-CLI-Plugins `typo3-test-audit`) hat ergeben, dass von 47 PHP-Klassen lediglich 10 über bestehende Unit-Tests verfügen. Für 25 weitere Klassen wären Unit- oder Edge-Tests technisch möglich — genau diese Lücke adressiert der KI-Testgenerator.
+Als technische Basis dient das TYPO3-Demoprojekt `cas_ai_phpunit` (`typo3-projects/cas_ai_phpunit`), das lokal mit DDEV (Docker-basierte Entwicklungsumgebung) betrieben wird. Innerhalb dieses Projekts wird die Extension `hf-view-helpers` (`packages/hf-view-helpers`) als Testgegenstand verwendet. Diese Extension bündelt über 40 TYPO3 Fluid-ViewHelper-Klassen, die im Produktivbetrieb eingesetzt werden. Ein vorgängig durchgeführter Test-Audit (mittels des Claude-Code-CLI-Plugins `typo3-test-audit`) hat ergeben, dass von 47 PHP-Klassen lediglich 10 über bestehende Unit-Tests verfügen. Für 25 weitere Klassen wären Unit- oder Edge-Tests technisch möglich — genau diese Lücke adressiert der KI-Testgenerator.
 
 #### Systemlandschaft
 
@@ -74,8 +74,8 @@ Als technische Basis dient das interne TYPO3-Projekt `biber` (`typo3-projects/bi
                                                │ ausführen
 ┌─────────────────────────────────┐            ▼
 │  DDEV / Docker                  │  ┌─────────────────────┐
-│  ┌─────────────────────────┐    │  │  PHPUnit 11         │
-│  │  TYPO3 14 / PHP 8.4     │    │  │  TYPO3 Testing-     │
+│  ┌─────────────────────────┐    │  │  PHPUnit 12         │
+│  │  TYPO3 14 / PHP 8.3     │    │  │  TYPO3 Testing-     │
 │  │  hf-view-helpers        │    │  │  Framework          │
 │  │  (47 Klassen)           │    │  │  Xdebug / Coverage  │
 │  └─────────────────────────┘    │  └─────────────────────┘
@@ -90,7 +90,7 @@ Diese Arbeit ist bewusst eingegrenzt, um innerhalb des CAS-Rahmens klare und mes
 | Thema | Im Scope | Ausserhalb Scope |
 |---|---|---|
 | Test-Typ | PHPUnit Unit-Tests | Functional-, Integration- und E2E-Tests |
-| Technologie | PHP 8.4, TYPO3 14, PHPUnit 11 | Andere Frameworks oder Sprachen |
+| Technologie | PHP 8.3, TYPO3 14, PHPUnit 12 | Andere Frameworks oder Sprachen |
 | Testfälle | 5 ausgewählte Klassen aus `hf-view-helpers` | Gesamte Extension oder andere Projekte |
 | LLM | Claude API (Anthropic) | Andere LLMs (GPT, Gemini, Llama) |
 | CI/CD | Manuelles Ausführen via DDEV | Vollautomatische Pipeline-Integration |
@@ -121,9 +121,9 @@ Z1 und Z2 sind das Minimum der Arbeit. Z3 und Z4 werden nur umgesetzt, wenn nach
 ### 1.5 Kontextanalyse
 
 **Technischer Stack:**
-- TYPO3 14.3, PHP 8.4, MariaDB 10.11
+- TYPO3 14.3, PHP 8.3, MariaDB 10.11
 - DDEV (Docker-basierte Entwicklungsumgebung)
-- PHPUnit 11 + TYPO3 TestingFramework
+- PHPUnit 12 + TYPO3 TestingFramework
 - Claude API (Anthropic) als LLM
 
 **Referenzen:**
@@ -228,20 +228,20 @@ Frühere Fehlererkennung
 
 ### 2.3 Hypothesen und erwartete Benefits
 
-| Metrik | Status Quo (Manuell) | Hypothese (KI) | Zielwert |
+| Metrik | Status Quo (Manuell) | Hypothese (KI) | Erwarteter Messwert |
 |---|---|---|---|
 | Erstellungszeit (Generierung + Review + Korrekturen) | ~15 Min/Klasse | sehr niedrig | < 1 Min/Klasse |
 | Testabdeckung (Line Coverage %) | 0% (keine Tests vorhanden) | deutlich höher | > 65% |
 | Validität (sofort ausführbar, GREEN) | 100% (da manuell) | evtl. fehlerhaft | > 75% GREEN ohne Korrekturen |
-| Mocking-Korrektheit (TYPO3-Dependencies) | 100% | KI unsicherer | > 50% korrekt ohne Nacharbeit |
-| Edge-Case-Abdeckung: Variante A vs. B | 100% (manuell als Referenz) | A < B | Variante B ≥ +20% gegenüber A |
+| Mocking-Korrektheit (TYPO3-Dependencies) | 100% | KI unsicherer | < 50% korrekt ohne Nacharbeit (Grenze der KI) |
+| Assertions-Qualität: Variante B vs. A (Skala 1–5) | 5 (manuell als Referenz) | B besser als A | Variante B ≥ +1 Punkt gegenüber A |
 
 **Hypothesen im Klartext:**
 - **H1:** KI reduziert die Erstellungszeit von ~15 Min auf < 1 Min pro Klasse.
 - **H2:** KI erreicht > 65% Line Coverage bei reiner Logik (Format-ViewHelper).
 - **H3:** > 75% der generierten Tests laufen ohne manuelle Korrekturen durch.
-- **H4:** Bei Glue-Code mit TYPO3-Dependencies ist Mocking-Korrektheit < 50% (Grenze der KI).
-- **H5:** Variante B (Code + PHPDoc) erzielt ≥ 20% mehr Edge-Cases als Variante A (Code only).
+- **H4:** Bei Glue-Code mit TYPO3-Dependencies erreicht die KI weniger als 50% Mocking-Korrektheit ohne Nacharbeit — dies zeigt die Grenzen der automatischen Generierung.
+- **H5:** Variante B (Code + PHPDoc) erzielt auf der Assertions-Qualitätsskala (1–5) mindestens 1 Punkt mehr als Variante A (Code only).
 
 ### 2.4 Vorgehen zur Einführung und Validierung
 
@@ -286,8 +286,8 @@ Diese Arbeit liefert:
 |---|---|---|
 | DDEV | Lokale TYPO3-Entwicklungsumgebung (Docker) | 1.x |
 | TYPO3 | CMS-Framework | 14.3 |
-| PHP | Laufzeit | 8.4 |
-| PHPUnit | Test-Framework | 11 |
+| PHP | Laufzeit | 8.3 |
+| PHPUnit | Test-Framework | 12 |
 | TYPO3 TestingFramework | TYPO3-spezifische Test-Utilities (erweitert PHPUnit um TYPO3-Helpers) | aktuell |
 | Claude API | LLM für Testgenerierung | claude-sonnet-4-6 |
 | Xdebug / php-code-coverage | Code Coverage Messung | aktuell |
@@ -309,14 +309,17 @@ Für jede der 5 Klassen wird dokumentiert:
 **Prompt-Template:**
 ```
 System: Du bist ein erfahrener TYPO3-Entwickler und PHPUnit-Experte.
-        Erstelle Tests für PHP 8.4, PHPUnit 11, TYPO3 TestingFramework.
+        Erstelle Tests für PHP 8.3, PHPUnit 12, TYPO3 TestingFramework.
 
 User: Analysiere folgende PHP-Klasse und generiere PHPUnit Unit-Tests.
       Anforderungen:
-      - Mindestens 3 Testmethoden pro public Methode
-      - DataProvider für verschiedene Szenarien
-      - Korrekte Namespaces (Hausformat\HfViewHelpers\Tests\Unit\...)
+      - declare(strict_types=1), final class, Methoden public function(): void
+      - Mindestens 3 Testmethoden pro public Methode (Happy-Path, Grenzwert, Fehlerfall)
+      - #[DataProvider]-Attribut für parametrisierte Szenarien (PHPUnit 12)
+      - Korrekte Namespaces (Hausformat\ViewHelpers\Tests\Unit\...)
       - Extend von TYPO3\TestingFramework\Core\Unit\UnitTestCase
+      - #[Test]-Attribut statt @test-Docblock (PHPUnit 12)
+      - AAA-Struktur: // Arrange, // Act, // Assert
       
       [PHP-Quellcode hier]
 ```
@@ -332,9 +335,15 @@ User: Analysiere folgende PHP-Klasse und generiere PHPUnit Unit-Tests.
 
 ### 3.4 Pilotnutzung
 
-Pilotprojekt: `packages/hf-view-helpers` im biber-TYPO3-Projekt
-- 3 Klassen ohne Tests (1–3) → KI generiert → PHPUnit ausführen → Messung
-- Ergebnisse fliessen in Kapitel 4 (Diskussion)
+Pilotprojekt: `packages/hf-view-helpers` im TYPO3-Projekt `cas_ai_phpunit`
+
+Für alle 5 ausgewählten Klassen wird der vollständige Messzyklus durchgeführt:
+1. Manuelle Tests schreiben (Referenz, Ergebnis: Manuell-Baseline)
+2. KI Variante A generieren (Code only), PHPUnit ausführen, Ergebnis messen
+3. KI Variante B generieren (Code + Kontext), PHPUnit ausführen, Ergebnis messen
+4. Messprotokoll pro Klasse ausfüllen (siehe 3.5)
+
+Ergebnisse fliessen vollständig in Kapitel 4 (Diskussion).
 
 ### 3.5 Messung und Beobachtung der Benefits und Effekte
 
@@ -343,25 +352,40 @@ Pilotprojekt: `packages/hf-view-helpers` im biber-TYPO3-Projekt
 Für jede der 5 Klassen wird das Messprotokoll dreimal ausgefüllt: einmal für die manuelle Referenz, einmal für Variante A (Code only) und einmal für Variante B (Code + Kontext). Die ausgefüllten Protokolle finden sich vollständig im Anhang D.
 
 Die Messung folgt diesen Regeln:
-- **Erstellungszeit:** Stoppuhr startet beim ersten Tastendruck (Prompt-Vorbereitung oder Tipp-Beginn) und endet, wenn PHPUnit erstmals GREEN zeigt. Korrekturen sind inbegriffen.
-- **Coverage:** Gemessen mit `XDEBUG_MODE=coverage` + `--coverage-text`, gefiltert auf die Zielklasse via `grep`. Ausgewertet wird ausschliesslich die Line Coverage der Zielklasse:
+
+- **Erstellungszeit:**
+  - *Manuell:* Stoppuhr startet beim ersten Tastendruck (erster Buchstabe des Testcodes) und endet, wenn PHPUnit erstmals GREEN zeigt. Korrekturen sind inbegriffen.
+  - *KI (Variante A und B):* Stoppuhr startet beim Eingeben des Plugin-Befehls (`/generate-unit-tests`) in Claude Code CLI. Endet wenn PHPUnit GREEN zeigt — inklusive Wartezeit auf die LLM-Generierung und allfälliger manueller Korrekturen.
+
+- **Anzahl manueller Korrekturen:** Eine Korrektur = eine gespeicherte Dateiänderung (ein Speichervorgang), nach der PHPUnit neu ausgeführt wird. Mehrere Zeilen in einem Speichervorgang zählen als 1 Korrektur. Manuell = immer 0 (Referenz).
+
+- **Coverage:** Gemessen mit `XDEBUG_MODE=coverage` + `--coverage-text`, gefiltert auf die Zielklasse via `grep`. Ausgewertet wird ausschliesslich die Line Coverage der Zielklasse. **Gleicher Befehl für alle drei Varianten (Manuell, KI-A, KI-B):**
   ```bash
+  ddev xdebug on
   ddev exec XDEBUG_MODE=coverage php vendor/bin/phpunit \
       -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
       --coverage-text \
       packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/[Klasse]Test.php \
-      2>&1 | grep -A2 "[Klasse]"
+      2>&1 | grep -A3 "Format\\\\[Klasse]"
+  ddev xdebug off
   ```
-- **PHPStan Errors:** Statische Analyse des generierten Testcodes mit Level 6 und PHPUnit-Extension. Zählt Typfehler, falsche Mock-Verwendung und andere statische Probleme, die PHPUnit nicht sieht:
+  Für Klassen ausserhalb `Format/` den Namespace anpassen, z.B.:
+  ```bash
+  # Service (Dummy\Service):
+  2>&1 | grep -A3 "Dummy\\\\Service"
+  ```
+
+- **PHPStan Errors:** Statische Analyse mit Level 6 und PHPUnit-Extension. Zählt Typfehler, falsche Mock-Verwendung und andere statische Probleme, die PHPUnit nicht sieht. **Gleicher Befehl für alle drei Varianten — Manuell dient als Baseline (Ziel: 0 Errors):**
   ```bash
   ddev xdebug off
   ddev php vendor/bin/phpstan analyse \
       -c packages/hf-view-helpers/Build/phpstan/phpstan.tests.neon \
       packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/[Klasse]Test.php
   ```
-  Zielwert: 0 Errors. PHPStan-Fehler trotz grünem PHPUnit sind ein Qualitätsmerkmal, das nur statische Analyse aufdeckt.
-- **GREEN ohne Korrekturen:** PHPUnit-Lauf direkt nach der Generierung, ohne manuellen Eingriff. Ergebnis: ja / nein / teilweise (mind. 50% Green).
-- **Mocking korrekt:** Beurteilung durch den Autor anhand von drei Kriterien: korrekter Typ (`createMock` vs. Stub), korrekte Methode gemockt, kein unnötiges Mocking. Skala: ja / teilweise / nein.
+  PHPStan-Fehler trotz grünem PHPUnit sind ein Qualitätsmerkmal, das nur statische Analyse aufdeckt.
+
+- **Mocking korrekt:** Beurteilung durch den Autor anhand von drei Kriterien: korrekter Typ (`createMock` vs. `createStub`), korrekte Methode gemockt, kein unnötiges Mocking. Skala: ja / teilweise / nein.
+
 - **Bewertungsskala Assertions (1–5):**
 
 | Wert | Bedeutung |
@@ -374,6 +398,17 @@ Die Messung folgt diesen Regeln:
 
 ---
 
+#### Unterschied Prompt Variante A vs. Variante B
+
+| Variante | LLM-Input | Was wird weggelassen |
+|---|---|---|
+| **A – Code only** | PHP-Quellcode (Methodenkörper und Signaturen) | PHPDoc-Blöcke (`/** ... */`) und Inline-Kommentare (`//`) werden entfernt |
+| **B – Code + Kontext** | PHP-Quellcode vollständig, inklusive PHPDoc und allen Kommentaren | — |
+
+Der Quellcode für Variante A wird vor dem Prompt manuell um alle Kommentarblöcke bereinigt. Variante B verwendet den Originalcode unverändert.
+
+---
+
 #### Messprotokoll — quantitative Metriken *(pro Klasse, Vorlage)*
 
 | Kriterium | Manuell | KI Variante A | KI Variante B |
@@ -382,13 +417,12 @@ Die Messung folgt diesen Regeln:
 | Code Coverage Line (%) | [messen] | [messen] | [messen] |
 | Anzahl PHPUnit-Failures beim ersten Lauf | 0 | [zählen] | [zählen] |
 | Anzahl manueller Korrekturen bis GREEN | 0 | [zählen] | [zählen] |
-| PHPStan Errors (Level 6) | 0 | [zählen] | [zählen] |
+| PHPStan Errors (Level 6) | [messen] | [zählen] | [zählen] |
 
 #### Messprotokoll — qualitative Bewertung *(pro Klasse, Vorlage)*
 
 | Kriterium | Manuell | KI Variante A | KI Variante B |
 |---|---|---|---|
-| GREEN ohne Korrekturen? | Ja | [ja/teilw./nein] | [ja/teilw./nein] |
 | Mocking korrekt? (TYPO3-Dependencies) | Ja | [ja/teilw./nein] | [ja/teilw./nein] |
 | Edge-Cases abgedeckt? (Grenzwerte, Sonderfälle) | Ja | [ja/teilw./nein] | [ja/teilw./nein] |
 | Assertions sinnvoll? (Skala 1–5) | 5 | [1–5] | [1–5] |
@@ -397,14 +431,16 @@ Die Messung folgt diesen Regeln:
 
 #### Aggregationstabelle — Übersicht alle 5 Klassen *(wird nach Umsetzung ausgefüllt)*
 
-| Klasse | Typ | Zeit Manuell | Zeit KI A | Zeit KI B | Coverage A | Coverage B | GREEN A | GREEN B | PHPStan A | PHPStan B | Assertions A | Assertions B |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| JsonDecodeViewHelper | Reine Logik | | | | | | | | | | | |
-| CleanHtmlViewHelper | Reine Logik (Regex) | | | | | | | | | | | |
-| RoundViewHelper | Reine Logik (Mathe) | | | | | | | | | | | |
-| Service | Glue-Code leicht | | | | | | | | | | | |
-| DateViewHelper | Glue-Code mittel | | | | | | | | | | | |
-| **Ø / Gesamt** | | | | | | | | | | | | |
+| Klasse | Typ | Zeit Man. (Min.) | Zeit KI A (Min.) | Zeit KI B (Min.) | Coverage Man. (%) | Coverage A (%) | Coverage B (%) | Korrekt. A | Korrekt. B | PHPStan Man. | PHPStan A | PHPStan B | Assert. A (1–5) | Assert. B (1–5) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| JsonDecodeViewHelper | Reine Logik | | | | | | | | | | | | | |
+| CleanHtmlViewHelper | Reine Logik (Regex) | | | | | | | | | | | | | |
+| RoundViewHelper | Reine Logik (Mathe) | | | | | | | | | | | | | |
+| Service | Glue-Code leicht | | | | | | | | | | | | | |
+| DateViewHelper | Glue-Code mittel | | | | | | | | | | | | | |
+| **Ø / Gesamt** | | | | | | | | | | | | | | |
+
+*Korrekt. = Anzahl manueller Korrekturen bis GREEN. Assert. = Assertions-Qualitätsskala 1–5.*
 
 #### Bezug zu den Hypothesen
 
@@ -412,9 +448,9 @@ Die Messung folgt diesen Regeln:
 |---|---|---|---|
 | H1: Zeitersparnis | Erstellungszeit (Min.) | < 1 Min. (KI) vs. ~15 Min. (manuell) | [nach Umsetzung] |
 | H2: Coverage | Line Coverage (%) | > 65% | [nach Umsetzung] |
-| H3: Validität | GREEN ohne Korrekturen | > 75% der Testmethoden | [nach Umsetzung] |
+| H3: Validität | Anzahl Korrekturen bis GREEN | > 75% der Tests beim ersten Lauf GREEN | [nach Umsetzung] |
 | H4: Mocking-Grenzen | Mocking korrekt (Glue-Code) | < 50% korrekt ohne Nacharbeit | [nach Umsetzung] |
-| H5: Kontextvorteil | Edge-Cases Var. B vs. A | Var. B ≥ +20% gegenüber A | [nach Umsetzung] |
+| H5: Kontextvorteil | Assertions-Skala Var. B vs. A | Var. B ≥ +1 Punkt auf Skala 1–5 gegenüber A | [nach Umsetzung] |
 
 ---
 
@@ -465,12 +501,8 @@ _[Wird in Kapitel 3.2 definiert und hier vollständig abgedruckt]_
 ### C: PHPUnit-Ausgaben und Coverage-Reports
 _[Screenshots / Textausgaben der PHPUnit-Läufe]_
 
-### D: Zeitaufwand-Protokoll
-| Klasse | Manuell (Min.) | KI Var. A (Min.) | KI Var. B (Min.) |
-|---|---|---|---|
-| JsonDecodeViewHelper | | | |
-| CleanHtmlViewHelper | | | |
-| RoundViewHelper | | | |
-| Service | | | |
-| DateViewHelper | | | |
-| **Gesamt** | | | |
+### D: Ausgefüllte Messprotokolle (pro Klasse)
+
+Die vollständig ausgefüllten Messprotokolle (quantitativ + qualitativ) für alle 5 Klassen finden sich hier nach Abschluss der Messungen. Die Aggregation aller Werte ist in der Aggregationstabelle in Kapitel 3.5 zusammengefasst.
+
+_[Wird nach Umsetzung ausgefüllt — je ein Protokollblock pro Klasse (Manuell / KI-A / KI-B)]_
