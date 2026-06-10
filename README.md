@@ -75,12 +75,15 @@ Load claude plugin 'typo3-test-audit'
 (3) generate-unit-tests
 * `/typo3-test-audit:generate-unit-tests [extension name, e.g. faq_t3demo]`
 
-## PhpUnitTest and PhpStan
+## PhpUnitTest, PhpStan and MutationTest
 Run PhpUnitTest
 * e.g. using a config file `ddev exec php vendor/bin/phpunit -c packages/faq_t3demo/Build/phpunit/UnitTests.xml`
 
 Run PhpStan
 * e.g. using a config file `ddev php vendor/bin/phpstan analyse -c packages/faq_t3demo/Build/phpstan/phpstan.tests.neon`
+
+Mutation Test
+* e.g. using a config json file `ddev exec php vendor/bin/infection run --configuration=packages/faq_t3demo/Build/infection/infection.json5  --threads=4`
 
 
 ## Erster einfacher Test mit PhpUnitTest
