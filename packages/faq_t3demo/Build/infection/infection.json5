@@ -1,0 +1,20 @@
+ {
+     "$schema": "../../vendor/infection/infection/resources/schema.json",
+     "source": {
+         "directories": ["../../Classes"]
+     },
+     "phpUnit": {
+         "configDir": "../phpunit",
+         "customPath": "../../../../vendor/bin/phpunit"
+     },
+     "logs": {
+         "text": "infection-report.txt",
+         "html": "infection-report.html",
+         "summary": "infection-summary.txt"
+     },
+     "mutators": {
+         "@default": true
+     },
+     "minMsi": 70,
+     "minCoveredMsi": 80
+ }

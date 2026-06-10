@@ -36,6 +36,8 @@ packages/*/test-audit-*
 !packages/faq_t3demo/test-audit-*  
 packages/*/Build/phpunit/coverage
 packages/*/Build/phpunit/testbox
+packages/*/Build/infection/infection-report*
+packages/*/Build/infection/infection-summary*
 
 # Exclude everything in typo3conf/ except typo3conf itself
 /web/typo3conf/*
