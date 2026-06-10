@@ -56,7 +56,7 @@ Test BE and FE
 * Frontend: https://demo.typo3.org.ddev.site
 
 Backend User
-* Username: `admin`
+* Username: `Admin`
 * Password: `Password.1`
 
 Install

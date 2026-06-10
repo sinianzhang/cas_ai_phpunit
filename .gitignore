@@ -31,7 +31,9 @@ node_modules/
 
 packages/autoload/
 packages/*/Tests/
+!packages/faq_t3demo/Tests/
 packages/*/test-audit-*
+!packages/faq_t3demo/test-audit-*  
 packages/*/Build/phpunit/coverage
 packages/*/Build/phpunit/testbox
 

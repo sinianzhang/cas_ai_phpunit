@@ -1,0 +1,12 @@
+# Test Audit – faq_t3demo
+# Generated: 2026-06-04 12:41:15
+
+[Unit – 2]
+Classes/Dummy/Greeter.php
+Classes/Hooks/DataHandlerCacheHook.php
+
+[Functional – 1]
+Classes/RecordList/DatabaseRecordList.php
+
+[Not testable – 1]
+Classes/Controller/FaqController.php

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="580" height="440">
+  <rect width="580" height="440" fill="#ffffff" rx="12" stroke="#e0e0e0" stroke-width="1"/>
+
+  <!-- Title -->
+  <text x="290" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="600" fill="#1a1a2e">Test Audit &#x2014; faq_t3demo</text>
+  <text x="290" y="54" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#999">4 classes analyzed</text>
+
+  <!-- Donut segments (cx=165 cy=175 r_o=118 r_i=64, start=-90deg clockwise) -->
+  <!-- Unit: 2/4=180deg, start=-90deg(top), end=90deg(bottom), large_arc=1 -->
+  <path d="M 165,57 A 118,118 0 1,1 165,293 L 165,239 A 64,64 0 1,0 165,111 Z" fill="#66BB6A" stroke="#ffffff" stroke-width="2"/>
+  <!-- Functional Test: 1/4=90deg, start=90deg(bottom), end=180deg(left), large_arc=0 -->
+  <path d="M 165,293 A 118,118 0 0,1 47,175 L 101,175 A 64,64 0 0,0 165,239 Z" fill="#2196F3" stroke="#ffffff" stroke-width="2"/>
+  <!-- Not testable: 1/4=90deg, start=180deg(left), end=270deg(top), large_arc=0 -->
+  <path d="M 47,175 A 118,118 0 0,1 165,57 L 165,111 A 64,64 0 0,0 101,175 Z" fill="#9E9E9E" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- Center labels -->
+  <text x="165" y="180" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="700" fill="#1a1a2e">4</text>
+  <text x="165" y="200" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#aaa">classes</text>
+
+  <!-- Legend: Unit (rect_y=74, count=2, 50%) -->
+  <rect x="318" y="74" width="13" height="13" fill="#66BB6A" rx="3"/>
+  <text x="339" y="85" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#333">Unit</text>
+  <text x="339" y="101" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#888">2 &#xB7; 50%</text>
+  <rect x="339" y="107" width="150" height="4" fill="#eeeeee" rx="2"/>
+  <rect x="339" y="107" width="75" height="4" fill="#66BB6A" rx="2"/>
+
+  <!-- Legend: Functional Test (rect_y=120, count=1, 25%) -->
+  <rect x="318" y="120" width="13" height="13" fill="#2196F3" rx="3"/>
+  <text x="339" y="131" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#333">Functional Test</text>
+  <text x="339" y="147" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#888">1 &#xB7; 25%</text>
+  <rect x="339" y="153" width="150" height="4" fill="#eeeeee" rx="2"/>
+  <rect x="339" y="153" width="38" height="4" fill="#2196F3" rx="2"/>
+
+  <!-- Legend: Not testable (rect_y=166, count=1, 25%) -->
+  <rect x="318" y="166" width="13" height="13" fill="#9E9E9E" rx="3"/>
+  <text x="339" y="177" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#333">Not testable</text>
+  <text x="339" y="193" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#888">1 &#xB7; 25%</text>
+  <rect x="339" y="199" width="150" height="4" fill="#eeeeee" rx="2"/>
+  <rect x="339" y="199" width="38" height="4" fill="#9E9E9E" rx="2"/>
+
+  <!-- Footer -->
+  <line x1="20" y1="390" x2="560" y2="390" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="20"  y="407" font-family="system-ui,-apple-system,sans-serif" font-size="10" font-weight="600" fill="#555">Unit</text>
+  <text x="44"  y="407" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#888">= suitable for unit tests &#xB7; </text>
+  <text x="212" y="407" font-family="system-ui,-apple-system,sans-serif" font-size="10" font-weight="600" fill="#555">Edge</text>
+  <text x="236" y="407" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#888">= both unit and functional viable</text>
+</svg>
