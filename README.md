@@ -83,4 +83,7 @@ Run PhpStan
 * e.g. using a config file `ddev php vendor/bin/phpstan analyse -c packages/faq_t3demo/Build/phpstan/phpstan.tests.neon`
 
 
-
+## Erster einfacher Test mit PhpUnitTest
+* (optional) packages/faq_t3demo/Tests/Unit/Dummy/GreeterTest.php löschen
+* plugin laden: `claude --plugin-dir .claude/plugins/typo3-test-audit`
+* generate-unit-tests starten: `/typo3-test-audit:generate-unit-tests fag_t3demo
