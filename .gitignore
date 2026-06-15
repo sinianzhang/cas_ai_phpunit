@@ -38,6 +38,7 @@ packages/*/Build/phpunit/coverage
 packages/*/Build/phpunit/testbox
 packages/*/Build/infection/infection-report*
 packages/*/Build/infection/infection-summary*
+packages/*/Build/phpstan/phpstan-*.txt
 
 # Exclude everything in typo3conf/ except typo3conf itself
 /web/typo3conf/*

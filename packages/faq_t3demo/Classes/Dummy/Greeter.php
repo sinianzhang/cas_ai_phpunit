@@ -13,11 +13,11 @@ final class Greeter
 
     public function greetWithTimeOfDay(string $name, int $hour): string
     {
-        if ($hour < 12) {
+        if ($hour <= 12) {
             return 'Good morning, ' . $name . '!';
         }
 
-        if ($hour < 18) {
+        if ($hour <= 18) {
             return 'Good afternoon, ' . $name . '!';
         }
 
