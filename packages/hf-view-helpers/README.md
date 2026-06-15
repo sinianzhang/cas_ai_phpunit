@@ -23,7 +23,7 @@
 - ddev exec XDEBUG_MODE=coverage php vendor/bin/phpunit \
   -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
   --coverage-text \
-  --filter CaseViewHelper
+  packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/CaseViewHelperTest.php
 - ddev xdebug off
 
 ### mutation test for one class in the extension "hf-viewh-helpers" (z.B. Klasse: CaseViewHelper)

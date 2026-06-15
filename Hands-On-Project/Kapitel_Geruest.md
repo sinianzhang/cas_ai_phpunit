@@ -390,11 +390,11 @@ Die Messung folgt diesen Regeln:
 
 | Wert | Bedeutung |
 |---|---|
-| 5 | Alle Assertions sinnvoll, Edge-Cases und Grenzwerte abgedeckt, keine Tautologien |
-| 4 | Kleinere Lücken (z.B. ein Grenzwert fehlt), aber grundsätzlich korrekt |
-| 3 | Assertions vorhanden, aber oberflächlich — Happy-Path-lastig |
-| 2 | Mehrere tautologische oder triviale Assertions (z.B. `assertInstanceOf`) |
-| 1 | Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften |
+| 5 | Alle Assertions sinnvoll, Edge-Cases und Grenzwerte abgedeckt, keine Tautologien; Mutationstests bestätigen hohe Erkennungsrate (MSI ≥ 90 %) |
+| 4 | Kleinere Lücken (z.B. ein Grenzwert oder eine Nebenmethode fehlt), aber grundsätzlich korrekt; Mutationstests mehrheitlich bestanden (MSI 70–89 %) |
+| 3 | Assertions vorhanden, aber mit strukturellen Schwächen: Testwerte unterscheiden ähnliche Implementierungen nicht (z.B. `ceil` vs. `round` liefern denselben Wert), und/oder ganze Methoden oder Argument-Defaults sind vollständig ungeprüft; MSI < 70 % |
+| 2 | Mehrere tautologische oder triviale Assertions (z.B. `assertInstanceOf`, `assertNotNull`); Kernlogik wird nicht wirklich verifiziert |
+| 1 | Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften; jede Implementierung würde die Tests bestehen |
 
 ---
 
@@ -431,13 +431,13 @@ Der Quellcode für Variante A wird vor dem Prompt manuell um alle Kommentarblöc
 
 #### Aggregationstabelle — Übersicht alle 5 Klassen *(wird nach Umsetzung ausgefüllt)*
 
-| Klasse | Typ | Zeit Man. (Min.) | Zeit KI A (Min.) | Zeit KI B (Min.) | Coverage Man. (%) | Coverage A (%) | Coverage B (%) | Korrekt. A | Korrekt. B | PHPStan Man. | PHPStan A | PHPStan B | Assert. A (1–5) | Assert. B (1–5) |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Klasse | Typ | Zeit Man. | Zeit KI |  Coverage Man. (Methods) | Coverage KI (Methods) | Mutationstest Man. (of Covered) | Mutationstest KI vor und nach dem Fix (of Covered) | PHPStan Man. | PHPStan KI | Assert. KI vor und nach dem Fix (1–5) |
+|---|---|---|---|---|---|---|---|---|---|---|
 | JsonDecodeViewHelper | Reine Logik | | | | | | | | | | | | | |
-| CleanHtmlViewHelper | Reine Logik (Regex) | | | | | | | | | | | | | |
-| RoundViewHelper | Reine Logik (Mathe) | | | | | | | | | | | | | |
-| Service | Glue-Code leicht | | | | | | | | | | | | | |
-| DateViewHelper | Glue-Code mittel | | | | | | | | | | | | | |
+| ForViewHelper | Mock/Stub benötigt | | | | | | | | | | | | | |
+| RoundViewHelper | Reine Logik (Mathe) |(1) | 2.5 Min. |(3) | 100% |(5) | 82% -> 100% |(7) | (100%) | 3 -> 5 | | | | |
+| Greeter | Glue-Code leicht | 30 Min. | < 1 Min. | 100% | 100% | 100% | 100% | 100% | 100% | 5 | | | | |
+| DateViewHelper | Glue-Code mittel | > 30 Min. | 2.5 Min. | 50% | 100% | 48% | 57% -> 100% | 100% | 100% | 4 -> 5 | | | | |
 | **Ø / Gesamt** | | | | | | | | | | | | | | |
 
 *Korrekt. = Anzahl manueller Korrekturen bis GREEN. Assert. = Assertions-Qualitätsskala 1–5.*

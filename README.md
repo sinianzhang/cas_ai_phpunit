@@ -89,7 +89,6 @@ Mutation Test
 
 
 ## Erster einfacher Test
-* (optional) packages/faq_t3demo/Tests/Unit/Dummy/GreeterTest.php löschen
 * plugin laden: `claude --plugin-dir .claude/plugins/typo3-test-audit`
 * generate-unit-tests starten: `/typo3-test-audit:generate-unit-tests faq_t3demo`
 * run mutation test `ddev exec php vendor/bin/infection run --configuration=packages/faq_t3demo/Build/infection/infection.json5  --threads=4  --filter=Greeter.php`
