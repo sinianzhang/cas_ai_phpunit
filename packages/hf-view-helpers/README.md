@@ -26,6 +26,13 @@
   --filter CaseViewHelper
 - ddev xdebug off
 
+### mutation test for one class in the extension "hf-viewh-helpers" (z.B. Klasse: CaseViewHelper)
+- ddev xdebug on
+- ddev exec php vendor/bin/infection run \
+  --configuration=packages/hf-view-helpers/Build/infection/infection.json5  --threads=4 \
+  --filter CaseViewHelper
+- ddev xdebug off
+
 # HF View Helpers
 
 A collection of TYPO3 ViewHelpers.

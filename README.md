@@ -8,13 +8,15 @@ The project was originally from TYPO3 Demo Project https://git.typo3.org/service
 
 ## About the Demo Project and Plugin mit 3 skills
 
-Plugin with 3 Claude Kills
+Plugin with 4 Claude Kills
 
 (1) test-audit-text: creates a md-file as audit report for the given extension, and creats a txt-file listing all classes, which are suitable for PhpUnitTest
 
 (2) test-audit-chart (optional): creates a svg-file with a pie chart/diagram
 
 (3) generate-unit-tests: creates missing PhpUnitTest files or extends existing PhpUnitTest files according to given comments as hints
+
+(4) fix-unit-tests: fix or add PhpUnitTest cases according to mutation test result (infection-report.txt)
 
 ## Local Development
 
@@ -83,10 +85,12 @@ Run PhpStan
 * e.g. using a config file `ddev php vendor/bin/phpstan analyse -c packages/faq_t3demo/Build/phpstan/phpstan.tests.neon`
 
 Mutation Test
-* e.g. using a config json file `ddev exec php vendor/bin/infection run --configuration=packages/faq_t3demo/Build/infection/infection.json5  --threads=4 --filter=Greeter.php`
+* e.g. using a config json file `ddev exec php vendor/bin/infection run --configuration=packages/faq_t3demo/Build/infection/infection.json5  --threads=4`
 
 
-## Erster einfacher Test mit PhpUnitTest
+## Erster einfacher Test
 * (optional) packages/faq_t3demo/Tests/Unit/Dummy/GreeterTest.php löschen
 * plugin laden: `claude --plugin-dir .claude/plugins/typo3-test-audit`
-* generate-unit-tests starten: `/typo3-test-audit:generate-unit-tests faq_t3demo
+* generate-unit-tests starten: `/typo3-test-audit:generate-unit-tests faq_t3demo`
+* run mutation test `ddev exec php vendor/bin/infection run --configuration=packages/faq_t3demo/Build/infection/infection.json5  --threads=4  --filter=Greeter.php`
+* run `/typo3-test-audit:fix-unit-tests faq_t3demo`
