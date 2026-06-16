@@ -1,6 +1,6 @@
 ---
 name: fix-unit-tests
-description: Reads the test-audit-<ext>.txt and infection-report.txt for a TYPO3 extension, then adds targeted PHPUnit test cases for every escaped mutant that belongs to a class listed under [Unit] in the audit file. Use when the user asks to "fix unit tests", "kill escaped mutants", "fix mutation test", or "improve tests from infection report".
+description: Reads the infection-report.txt for a TYPO3 extension and adds targeted PHPUnit test cases for every escaped mutant found in it (classes listed under [Not testable] in the audit file are skipped if the audit file is present). Use when the user asks to "fix unit tests", "kill escaped mutants", "fix mutation test", or "improve tests from infection report".
 argument-hint: <extension-path-or-name>
 ---
 
@@ -16,16 +16,17 @@ Resolve `ext_root` (dir with `Classes/`, `composer.json`): absolute → `package
 
 ```bash
 ext_root="<resolved>" extension_name=$(basename "$ext_root")
+project_root="$(git -C "$ext_root" rev-parse --show-toplevel 2>/dev/null || echo "$ext_root")"
 audit_file="$ext_root/test-audit-${extension_name}.txt"
 report="$ext_root/Build/infection/infection-report.txt"
-{ test -f "$audit_file" && echo "FOUND:$audit_file"; } || echo "MISSING:$audit_file"
 { test -f "$report"     && echo "FOUND:$report"; }      || echo "MISSING:$report"
-grep '"version"' "$project_root/vendor/phpunit/phpunit/composer.json" 2>/dev/null | head -1
+{ test -f "$audit_file" && echo "FOUND:$audit_file"; }  || echo "WARNING:$audit_file not found — [Not testable] filter skipped"
+ddev exec php vendor/bin/phpunit --version 2>/dev/null | head -1
 find "$ext_root/Build/phpunit" "$ext_root" -maxdepth 2 \
   \( -name "UnitTests.xml" -o -name "phpunit.xml" -o -name "phpunit.xml.dist" \) 2>/dev/null | head -1
 ```
 
-**Either file missing → print which is missing and stop.**
+**`$report` missing → print and stop. `$audit_file` missing → warn and continue without [Not testable] filter.**
 
 | Condition | Rule |
 |---|---|
@@ -36,13 +37,13 @@ find "$ext_root/Build/phpunit" "$ext_root" -maxdepth 2 \
 
 ---
 
-## Step 2 – Extract allowed classes & filter escaped mutants
+## Step 2 – Extract escaped mutants from infection report
 
-**2a.** Parse `$audit_file`: collect file paths under the `[Unit – N]` section header (until next `[…]` or EOF) → `unit_classes[]` (ext_root-relative, e.g. `Classes/Dummy/Greeter.php`).
+**2a.** From `$report`, read only between `Escaped mutants:` and the next section header or EOF. Per entry extract: `source_file` (strip `/var/www/html/` then `<ext_root_rel>/`, e.g. `Classes/ViewHelpers/ForViewHelper.php`), `line_number`, `mutation_type`, diff block. Keep all entries.
 
-**2b.** From `$report`, read only between `Escaped mutants:` and the next section header or EOF. Per entry extract: `source_file` (strip `/var/www/html/` then `<ext_root_rel>/`), `line_number`, `mutation_type`, diff block. Keep only entries whose `source_file` exactly matches `unit_classes[]`.
+**2b.** If `$audit_file` is present: collect file paths under the `[Not testable – N]` section header (until next `[…]` or EOF) → `not_testable_classes[]`. Discard any entry from 2a whose `source_file` exactly matches `not_testable_classes[]`.
 
-**0 survivors → print "No escaped mutants in Unit classes — nothing to fix." and stop.**
+**0 survivors → print "No escaped mutants found — nothing to fix." and stop.**
 
 Group survivors by `source_file`.
 
@@ -58,6 +59,11 @@ Group survivors by `source_file`.
 | `TrueValue` / `FalseValue` | Test both `true` and `false` paths |
 | `Concat` | Assert all concatenated parts present in output |
 | `Return_` / `Null` | Assert correct return for that branch |
+| `DecrementInteger` / `IncrementInteger` | Assert the exact integer value (e.g. default, threshold) |
+| `MethodCallRemoval` on `registerArgument()` | Call `$subject->prepareArguments()` and assert the key exists with the correct `getDefaultValue()` / `isRequired()` — see note below |
+| `Assignment` / `PlusEqual` | Assert the final state or return value after the full operation |
+
+> **`MethodCallRemoval` on `initializeArguments()` / `registerArgument()` calls**: these cannot be killed by `render()` tests that explicitly set all arguments via `setArguments()`. Instead, call `prepareArguments()` on a bare `new ClassName()` and assert the argument definition: `assertArrayHasKey`, `isRequired()`, `getDefaultValue()`. (TYPO3Fluid: `prepareArguments()` is public and returns `ArgumentDefinition[]`.)
 
 ---
 

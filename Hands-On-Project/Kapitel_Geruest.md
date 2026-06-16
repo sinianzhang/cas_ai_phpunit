@@ -396,6 +396,8 @@ Die Messung folgt diesen Regeln:
 | 2 | Mehrere tautologische oder triviale Assertions (z.B. `assertInstanceOf`, `assertNotNull`); Kernlogik wird nicht wirklich verifiziert |
 | 1 | Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften; jede Implementierung würde die Tests bestehen |
 
+> **Abgrenzung:** PHPStan-Fehler (z.B. fehlende Typ-Annotationen, redundante Aufrufe) sind **nicht** Bestandteil dieser Skala — sie werden separat in der Spalte *PHPStan KI (Errors vor/nach Fix)* der Aggregationstabelle erfasst. Ein Test kann PHPStan-Fehler aufweisen und trotzdem eine hohe Assertions-Qualität besitzen (und umgekehrt).
+
 ---
 
 #### Unterschied Prompt Variante A vs. Variante B
@@ -431,14 +433,14 @@ Der Quellcode für Variante A wird vor dem Prompt manuell um alle Kommentarblöc
 
 #### Aggregationstabelle — Übersicht alle 5 Klassen *(wird nach Umsetzung ausgefüllt)*
 
-| Klasse | Typ | Zeit Man. | Zeit KI |  Coverage Man. (Methods) | Coverage KI (Methods) | Mutationstest Man. (of Covered) | Mutationstest KI vor und nach dem Fix (of Covered) | PHPStan Man. | PHPStan KI (Error vor und nach dem Fix) | Assert. KI vor und nach dem Fix (1–5) |
+| Klasse | Typ | Zeit Man. | Coverage Man. (Methods) | Mutationstest Man. (of Covered) | PHPStan Man. | Zeit KI | Coverage KI (Methods) | Mutationstest KI vor und nach dem Fix (of Covered) | PHPStan KI (Error vor und nach dem Fix) | Assert. KI vor und nach dem Fix (1–5) |
 |---|---|---|---|---|---|---|---|---|---|---|
-| JsonDecodeViewHelper | Reine Logik | | | | | | | | | | | | | |
-| ForViewHelper | Mock/Stub benötigt | | | | | | | | | | | | | |
-| RoundViewHelper | Reine Logik (Mathe) |(1) | 2.5 Min. |(3) | 100% |(5) | 82% -> 100% |(7) | 1 -> 0 | 3 -> 5 | | | | |
-| Greeter | Glue-Code leicht | 30 Min. | < 1 Min. | 100% | 100% | 100% | 100% | 100% | 0 | 5 | | | | |
-| DateViewHelper | Glue-Code mittel | > 30 Min. | 2.5 Min. | 50% | 100% | 48% | 57% -> 100% | 100% | 2 -> 0 | 4 -> 5 | | | | |
-| **Ø / Gesamt** | | | | | | | | | | | | | | |
+| JsonDecodeViewHelper | Reine Logik | | | | | | | | | |
+| ForViewHelper | Mock/Stub benötigt | 30 Min. | 100% | 53% | 0 | 3 Min. | 100% | 61% -> 100% | 6 -> 0 | 3 -> 5 |
+| RoundViewHelper | Reine Logik (Menge von mathematischen Berechnungen) | > 60 Min. | (?) | (?) | (?) | 2.5 Min. | 100% | 82% -> 100% | 1 -> 0 | 3 -> 5 |
+| Greeter | Glue-Code leicht | 30 Min. | 100% | 100% | 100% | < 1 Min. | 100% | 100% | 0 | 5 |
+| DateViewHelper | Glue-Code mittel | > 30 Min. | 50% | 48% | 100% | 2.5 Min. | 100% | 57% -> 100% | 2 -> 0 | 4 -> 5 |
+| **Ø / Gesamt** | | | | | | | | | | |
 
 *Korrekt. = Anzahl manueller Korrekturen bis GREEN. Assert. = Assertions-Qualitätsskala 1–5.*
 
