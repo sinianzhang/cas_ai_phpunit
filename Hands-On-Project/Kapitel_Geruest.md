@@ -431,13 +431,13 @@ Der Quellcode für Variante A wird vor dem Prompt manuell um alle Kommentarblöc
 
 #### Aggregationstabelle — Übersicht alle 5 Klassen *(wird nach Umsetzung ausgefüllt)*
 
-| Klasse | Typ | Zeit Man. | Zeit KI |  Coverage Man. (Methods) | Coverage KI (Methods) | Mutationstest Man. (of Covered) | Mutationstest KI vor und nach dem Fix (of Covered) | PHPStan Man. | PHPStan KI | Assert. KI vor und nach dem Fix (1–5) |
+| Klasse | Typ | Zeit Man. | Zeit KI |  Coverage Man. (Methods) | Coverage KI (Methods) | Mutationstest Man. (of Covered) | Mutationstest KI vor und nach dem Fix (of Covered) | PHPStan Man. | PHPStan KI (Error vor und nach dem Fix) | Assert. KI vor und nach dem Fix (1–5) |
 |---|---|---|---|---|---|---|---|---|---|---|
 | JsonDecodeViewHelper | Reine Logik | | | | | | | | | | | | | |
 | ForViewHelper | Mock/Stub benötigt | | | | | | | | | | | | | |
-| RoundViewHelper | Reine Logik (Mathe) |(1) | 2.5 Min. |(3) | 100% |(5) | 82% -> 100% |(7) | 100% | 3 -> 5 | | | | |
-| Greeter | Glue-Code leicht | 30 Min. | < 1 Min. | 100% | 100% | 100% | 100% | 100% | 100% | 5 | | | | |
-| DateViewHelper | Glue-Code mittel | > 30 Min. | 2.5 Min. | 50% | 100% | 48% | 57% -> 100% | 100% | 100% | 4 -> 5 | | | | |
+| RoundViewHelper | Reine Logik (Mathe) |(1) | 2.5 Min. |(3) | 100% |(5) | 82% -> 100% |(7) | 1 -> 0 | 3 -> 5 | | | | |
+| Greeter | Glue-Code leicht | 30 Min. | < 1 Min. | 100% | 100% | 100% | 100% | 100% | 0 | 5 | | | | |
+| DateViewHelper | Glue-Code mittel | > 30 Min. | 2.5 Min. | 50% | 100% | 48% | 57% -> 100% | 100% | 2 -> 0 | 4 -> 5 | | | | |
 | **Ø / Gesamt** | | | | | | | | | | | | | | |
 
 *Korrekt. = Anzahl manueller Korrekturen bis GREEN. Assert. = Assertions-Qualitätsskala 1–5.*

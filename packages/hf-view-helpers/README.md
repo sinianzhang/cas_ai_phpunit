@@ -30,7 +30,7 @@
 - ddev xdebug on
 - ddev exec php vendor/bin/infection run \
   --configuration=packages/hf-view-helpers/Build/infection/infection.json5  --threads=4 \
-  --filter CaseViewHelper
+  --filter packages/hf-view-helpers/Classes/ViewHelpers/Format/CaseViewHelper.php
 - ddev xdebug off
 
 # HF View Helpers
