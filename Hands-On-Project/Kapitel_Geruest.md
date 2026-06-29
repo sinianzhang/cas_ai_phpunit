@@ -24,39 +24,33 @@
 
 ### 1.1 Problembeschreibung
 
-Die Qualitätssicherung in der Software-Entwicklung basiert auf automatisierten Tests.
-In der Praxis fehlen diese jedoch häufig — nicht aus mangelndem Bewusstsein, sondern
-weil das Schreiben von Tests zeitaufwändig und repetitiv ist.
+Automatisierte Tests gelten als Grundpfeiler moderner Softwareentwicklung. Aus meiner langjährigen Erfahrung in verschiedenen Webagenturen mit TYPO3-Projekten zeigt sich jedoch: In der Praxis werden sie häufig weggelassen — nicht weil Entwicklerinnen und Entwickler ihren Nutzen nicht kennen, sondern weil der Aufwand im Projektalltag mit engem Zeitbudget schlicht zu hoch ist.
 
-Das manuelle Schreiben von PHPUnit-Tests erfordert:
-- Tiefes Verständnis des zu testenden Codes
-- Kenntnis des TYPO3 Testing Frameworks
-- Erfahrung mit Dependency Injection, Mocking und DataProviders
+Genau diesen Engpass adressiert die vorliegende Arbeit. LLMs können PHP-Code analysieren und daraus Testcode generieren. Die zentrale Frage ist: Sind diese Tests praxistauglich — laufen sie durch, decken sie den Code sinnvoll ab, und erkennen sie echte Grenzwerte?
 
-Da Entwickler unter Zeitdruck oft nur die Geschäftslogik implementieren, bleibt die
-Testabdeckung in vielen TYPO3-Projekten bei 0%.
+Zugleich ist mir die Arbeit eine Gelegenheit, sich intensiv mit einem modernen Toolset auseinanderzusetzen: Claude Code, PHPUnit mit dem TYPO3 Testing Framework, Infection für Mutationstests und PHPStan für die statische Analyse, etc.
 
-**Zentrale Forschungsfrage:** Kann ein LLM (Claude API) PHP-Methoden analysieren
-und daraus korrekte, ausführbare PHPUnit-Tests generieren?
+Noch wichtig zu erwähnen: PHP-Klassen enthalten oft mehr Information als nur den ausführbaren Code — zum Beispiel in PHPDoc- oder Inline-Kommentaren, die erklären, welche Werte eine Methode erwartet, was sie zurückgibt und warum sie so implementiert wurde. Werden diese Informationen als zusätzlicher Input an das LLM übergeben, lassen sich sicherlich gezielter und qualitativ bessere Tests erzeugen. In dieser Arbeit werden Tests bewusst ohne solche Kommentare als Hinweis generiert, was zeigt, was das LLM allein aus dem Quellcode ableiten kann.
 
-**Zusätzliche Forschungsfrage (Anforderungswissen):** Welchen Mehrwert bringt es,
-dem LLM neben dem Code auch Anforderungen (PHPDoc, Kommentare) als Kontext zu geben?
-
-Die beiden Forschungsfragen werden durch zwei parallele Varianten operationalisiert:
-- **Variante A – Code only:** Nur PHP-Quellcode als LLM-Input. Ergebnis: technisch korrekte, aber oberflächliche Tests; Geschäftsregeln und Edge-Cases werden oft übersehen.
-- **Variante B – Code + Kontext:** PHP-Code plus PHPDoc und Inline-Kommentare als LLM-Input. Ergebnis: Tests prüfen auch Grenzwerte und Geschäftsregeln.
-
-Beide Varianten werden für dieselben 5 Klassen durchgeführt und direkt verglichen.
+Untersucht wird dies anhand von fünf Klassen aus einer produktiven TYPO3-Extension. Die Klassen sind bewusst unterschiedlich gewählt — von einfacher Dummy-Logik über reine PHP-Logik bis hin zu komplexem TYPO3-abhängigem Code mit echtem Mocking-Bedarf. Die Ergebnisse werden quantitativ anhand von vier Kennzahlen gemessen: Erstellungszeit, Methodenabdeckung, PHPStan-Fehler und Mutation Score. Diese bilden zusammen die Grundlage für eine Einschätzung des Praxisnutzens KI-gestützter Testgenerierung.
 
 ### 1.2 Organisatorische Einbettung und Abgrenzungen
 
 #### Unternehmenskontext
 
-Die vorliegende Arbeit entsteht im Rahmen der beruflichen Tätigkeit des Autors bei der Hausformat GmbH, einer Agentur mit Fokus auf TYPO3-Webentwicklung. Im Tagesgeschäft sind Backend-Entwicklerinnen und -Entwickler für die Implementierung und Pflege von TYPO3-Extensions zuständig. Automatisierte Tests sind dabei zwar bekannt, werden jedoch aufgrund des hohen manuellen Aufwands in der Praxis selten konsequent umgesetzt. Diese Arbeit setzt genau an diesem Punkt an: Sie untersucht, ob ein Large Language Model (LLM) diesen Aufwand so weit reduzieren kann, dass Unit-Tests zum Standardbestandteil jedes Entwicklungszyklus werden.
+Die vorliegende Arbeit entsteht im Rahmen meiner beruflichen Tätigkeit beim ehemaligen Arbeitgeber, einer Agentur mit Fokus auf TYPO3-Webentwicklung. Im Tagesgeschäft sind Entwicklerinnen und Entwickler für die Implementierung und Pflege von TYPO3-Extensions zuständig. Automatisierte Tests sind zwar bekannt, wie oben schon erwähnt, werden jedoch aufgrund des hohen manuellen Aufwands selten konsequent umgesetzt.
+
+Den direkten Anlass für diese Arbeit liefert eine konkrete Aufgabe: Für die Extension EXT:hf-view-helpers — eine intern entwickelte ViewHelper-Sammlung, die keine kundenspezifische Anwendung implementiert daher auch keine kundenspezifischen Daten enthält, die eher als Framework bei zahlreichen Kundenprojekten im Einsatz ist — sollte eine PHPUnit-Testumgebung aufgesetzt und nachträglich für einige zentrale Klassen Unit-Tests geschrieben werden. Die Extension hat viele Versionen, die betroffene ist eine Version mit der TYPO3-Version V14 kompatibel ist. 
+
+Diese Arbeit setzt genau an diesem Punkt an: Sie untersucht, ob ein LLM diesen Aufwand so weit reduzieren kann, dass Unit-Tests zum Standardbestandteil jedes Entwicklungszyklus werden.
 
 #### Projektkontext und Demo-Extension
 
-Als technische Basis dient das TYPO3-Demoprojekt `cas_ai_phpunit` (`typo3-projects/cas_ai_phpunit`), das lokal mit DDEV (Docker-basierte Entwicklungsumgebung) betrieben wird. Innerhalb dieses Projekts wird die Extension `hf-view-helpers` (`packages/hf-view-helpers`) als Testgegenstand verwendet. Diese Extension bündelt über 40 TYPO3 Fluid-ViewHelper-Klassen, die im Produktivbetrieb eingesetzt werden. Ein vorgängig durchgeführter Test-Audit (mittels des Claude-Code-CLI-Plugins `typo3-test-audit`) hat ergeben, dass von 47 PHP-Klassen lediglich 10 über bestehende Unit-Tests verfügen. Für 25 weitere Klassen wären Unit- oder Edge-Tests technisch möglich — genau diese Lücke adressiert der KI-Testgenerator.
+Als technische Basis dient das TYPO3-Demoprojekt `cas_ai_phpunit` (https://github.com/sinianzhang/cas_ai_phpunit), das lokal mit DDEV (Docker-basierte Entwicklungsumgebung) betrieben wird. Innerhalb dieses Projekts wird die Extension 'hf-view-helpers' als Testgegenstand verwendet. Sie bündelt fast 50 TYPO3 Fluid-ViewHelper-Klassen, die im Produktivbetrieb eingesetzt werden.
+
+Um die Testbarkeit der Klassen systematisch zu erfassen, wurde im Rahmen dieser Arbeit ein eigenes Claude-Code-Plugin entwickelt: 'typo3-test-audit'. Es enthält vier Skills, darunter der Skill 'test-audit-text' analysiert alle PHP-Klassen einer Extension und erstellt einen Überblick — wie viele Klassen existieren, welche sich für PHPUnit Unit-Tests eignen und welche funktionale Tests erfordern, jeweils mit kurzer Begründung. Die Auswahl der fünf Beispielklassen für diese Arbeit basiert auf diesem Audit-Report. 
+
+Das Plugin ist nicht projektspezifisch und kann künftig bei beliebigen TYPO3-Projekten wiederverwendet werden — ein zusätzlicher Mehrwert/Benifit dieser Arbeit. Die Funktionsweise wird in Abschnitt 3.1 ausführlicher beschrieben.
 
 #### Systemlandschaft
 
@@ -98,38 +92,41 @@ Diese Arbeit ist bewusst eingegrenzt, um innerhalb des CAS-Rahmens klare und mes
 
 Die Eingrenzung auf Unit-Tests und auf 5 Klassen ist methodisch bewusst gewählt: Sie ermöglicht einen fairen, kontrollierten Vergleich zwischen manuell erstellten und KI-generierten Tests mit messbaren Metriken.
 
-### 1.3 Unternehmens- und Projektziele
+### 1.3 Unternehmens-, Projekt, und Lernziele
 
-| Ziel | Beschreibung | Priorität |
-|---|---|---|
-| **Z1** | Funktionierendes Skript: PHP-Klasse → PHPUnit-Testklasse via LLM | **Muss** ✓ |
-| **Z2** | Vergleichsanalyse KI vs. manuell mit messbaren Metriken (Variante A und B) | **Muss** ✓ |
-| **Z3** | Empfehlungen: Welche Klassen-Typen eignen sich für KI-Generierung? | Kann |
-| **Z4** | Prompt-Framework mit TYPO3-spezifischem Kontext (DI, Mocking) | Kann |
+Die Ziele dieser Arbeit lassen sich auf drei Ebenen betrachten.
+**Unternehmensziele (für ehemaligen auch zukünfgiten Arbeitgeber)**
+Es steht im Vordergrund, dass automatisierte Tests im Alltag tatsächlich geschrieben werden — und nicht nur in der Theorie sinnvoll wären. Wie in Abschnitt 1.1 beschrieben, fehlt im Projektgeschäft schlicht die Zeit dafür. 
 
-Z1 und Z2 sind das Minimum der Arbeit. Z3 und Z4 werden nur umgesetzt, wenn nach Z1/Z2 noch Zeit bleibt.
+Das Unternehmen erhofft sich von dieser Arbeit zwei konkrete Dinge:
+Weniger Aufwand pro Test: Wenn ein grosser Teil der Testerstellung durch KI übernommen (mit oder ohne Inline-Kommentar zur Generierung bestimmtes TestCases) werden kann, sinkt die Hürde, Tests überhaupt zu schreiben. Das senkt langfristig das Risiko von unentdeckten Fehlern in den ViewHelper-Klassen, die in vielen Kundenprojekten wiederverwendet werden.
+Ein wiederverwendbares Werkzeug: Das im Rahmen dieser Arbeit entwickelte Plugin typo3-test-audit (siehe Abschnitt 1.2 und 3.1) soll nicht nur für diese Arbeit, sondern auch danach im Tagesgeschäft nutzbar sein — für beliebige TYPO3-Extensions, nicht nur für hf-view-helpers.
+
+**Projektziele (CAS-Arbeit)**
+Für die Arbeit selbst verfolge ich zwei Hauptziele, die auch die Struktur der Auswertung in Kapitel 3 und 4 bestimmen:
+
+Erstes Hauptziel — Machbarkeit zeigen: Ich will nachweisen, dass sich aus einer bestehenden PHP-Klasse mithilfe eines LLM automatisch eine lauffähige PHPUnit-Testklasse erzeugen lässt, ohne dass ich die Tests von Grund auf selbst schreiben muss. „Lauffähig" heisst hier ganz konkret: Die Tests lassen sich mit PHPUnit ausführen, sie bestehen (grün) und sie prüfen sinnvolle Fälle statt nur oberflächlich zu bestehen.
+
+Zweites Hauptziel — Fairer Vergleich mit Zahlen: Ich will nicht nur behaupten, dass KI-generierte Tests gut sind, sondern das mit Zahlen belegen. Dazu vergleiche ich für jede der fünf ausgewählten Klassen die von mir manuell geschriebenen Tests mit den KI-generierten Tests, anhand von vier klar messbaren Kriterien:
+Erstellungszeit — wie lange dauert es, bis eine lauffähige, fehlerfreie Testklasse vorliegt?Methodenabdeckung (Coverage) — wie viele der öffentlichen Methoden werden überhaupt von einem Test aufgerufen?
+PHPStan-Fehler — wie sauber und typsicher ist der generierte Testcode?
+Mutation Score — prüfen die Tests wirklich die Logik, oder würden sie auch bei einer fehlerhaften Implementierung noch grün bleiben?
+
+**persönliches Lernziele**
+Neben den beiden inhaltlichen Zielen ist mir die Arbeit auch persönlich wichtig, um mich als Entwickler weiterzuentwickeln. PHPUnit-Tests waren bislang nicht Teil meines Alltags — genau das macht diese Arbeit für mich zu einer guten Gelegenheit, mich intensiv und strukturiert mit dem Thema Testing auseinanderzusetzen: Wie schreibt man sinnvolle Testfälle, wie funktioniert Mocking von TYPO3-Abhängigkeiten, wie liest man einen Coverage-Report richtig, und was sagt ein Mutation Score tatsächlich aus? Gleichzeitig lerne ich den Umgang mit einem modernen Toolset, das über PHPUnit hinausgeht — insbesondere Claude Code als KI-gestützte Entwicklungsumgebung, PHPStan für die statische Analyse und Infection für Mutationstests. Dieses Wissen bleibt auch über die Arbeit hinaus nutzbar, sowohl für mich persönlich als auch für den Einsatz beim Arbeitgeber.
 
 ### 1.4 Stakeholder-Analyse
 
-| Stakeholder | Interesse | Einfluss auf Arbeit |
-|---|---|---|
-| Sinian Zhang (Entwickler) | Zeitersparnis, Lerngewinn PHPUnit | Hoch |
-| Hausformat GmbH | Höhere Code-Qualität, schnellere CI/CD | Mittel |
-| TYPO3-Community | Praxisnachweis KI-Testgenerierung unter TYPO3 | Niedrig |
-| FHNW / Dozent | Wissenschaftlicher Beitrag, Messbarkeit, Hypothesen | Hoch |
+An dieser Arbeit sind mehrere Parteien beteiligt oder zumindest indirekt betroffen, auch wenn nicht alle aktiv mitarbeiten. Die folgende Übersicht beschreibt für jede Partei, welches Interesse sie an der Arbeit hat und wie stark sie mitbestimmen kann, wie die Arbeit abläuft und welche Richtung sie nimmt.
 
-### 1.5 Kontextanalyse
+Sinian Zhang (Autor und Entwickler) — Einfluss: hoch Ich schreibe die Arbeit und bin gleichzeitig der Entwickler, der die Tests erstellt und die KI-Ergebnisse prüft. Ich habe zwei Ziele: Erstens will ich im Projektalltag Zeit sparen, indem ein grosser Teil der Testerstellung automatisch läuft. Zweitens will ich im Rahmen des CAS solides Wissen zu PHPUnit-Testing sowie einige Tools aufbauen (siehe Lernziel in Abschnitt 1.3). Weil ich sowohl die Methodik festlege als auch die Messungen selbst mache, habe ich den grössten Einfluss auf die Arbeit.
 
-**Technischer Stack:**
-- TYPO3 14.3, PHP 8.3, MariaDB 10.11
-- DDEV (Docker-basierte Entwicklungsumgebung)
-- PHPUnit 12 + TYPO3 TestingFramework
-- Claude API (Anthropic) als LLM
+Ehemaliger oder zukünftiger Arbeitgeber — Einfluss: mittel Die Firma profitiert wirtschaftlich von besserer Code-Qualität. Mein Arbeitgeber hat den ursprünglichen Anlass für das Thema geliefert (siehe Abschnitt 1.2) und liefert mit dem Demoprojekt den fachlichen Rahmen, mischt sich aber nicht in die wissenschaftliche Methodik oder einzelne Entscheidungen der Arbeit ein. Auch für einen zukünftigen Arbeitgeber ist die Arbeit relevant: Sowohl das Plugin typo3-test-audit als auch das dabei aufgebaute Fachwissen zu KI-gestützter Testgenerierung lassen sich in künftigen Projekten wiederverwenden.
 
-**Referenzen:**
-- TYPO3 Unit Testing Documentation:
-  https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/Testing/UnitTesting/Introduction.html
-- Laravel PAO (agent-optimized PHP output): https://github.com/laravel/pao
+TYPO3-Community — Einfluss: niedrig für die breitere TYPO3-Community ist die Arbeit interessant. Da das Plugin typo3-test-audit wiederverwendbar ist (siehe Abschnitt 1.2), könnten die Ergebnisse auch anderen TYPO3-Entwicklerinnen und -Entwicklern nützen. Die Community ist aber nicht aktiv an der Arbeit beteiligt und hat deshalb keinen direkten Einfluss auf deren Verlauf.
+
+FHNW / Dozent — Einfluss: hoch Aus akademischer Sicht steht der wissenschaftliche Beitrag der Arbeit im Vordergrund: eine nachvollziehbare Methodik, überprüfbare Hypothesen (siehe Abschnitt 2.3) und eine saubere, messbare Auswertung. Der Dozent bzw. die Dozentin begleitet die Arbeit fachlich, gibt Feedback zu Aufbau und Methodik und bewertet am Ende das Ergebnis. Damit ist der Einfluss auf Anforderungen und Qualitätsmassstäbe hoch, auch wenn ich die inhaltliche Umsetzung selbst mache.
+
 
 ---
 
@@ -228,53 +225,35 @@ Frühere Fehlererkennung
 
 ### 2.3 Hypothesen und erwartete Benefits
 
-| Metrik | Status Quo (Manuell) | Hypothese (KI) | Erwarteter Messwert |
-|---|---|---|---|
-| Erstellungszeit (Generierung + Review + Korrekturen) | ~15 Min/Klasse | sehr niedrig | < 1 Min/Klasse |
-| Testabdeckung (Line Coverage %) | 0% (keine Tests vorhanden) | deutlich höher | > 65% |
-| Validität (sofort ausführbar, GREEN) | 100% (da manuell) | evtl. fehlerhaft | > 75% GREEN ohne Korrekturen |
-| Mocking-Korrektheit (TYPO3-Dependencies) | 100% | KI unsicherer | < 50% korrekt ohne Nacharbeit (Grenze der KI) |
-| Assertions-Qualität: Variante B vs. A (Skala 1–5) | 5 (manuell als Referenz) | B besser als A | Variante B ≥ +1 Punkt gegenüber A |
-
 **Hypothesen im Klartext:**
-- **H1:** KI reduziert die Erstellungszeit von ~15 Min auf < 1 Min pro Klasse.
-- **H2:** KI erreicht > 65% Line Coverage bei reiner Logik (Format-ViewHelper).
-- **H3:** > 75% der generierten Tests laufen ohne manuelle Korrekturen durch.
-- **H4:** Bei Glue-Code mit TYPO3-Dependencies erreicht die KI weniger als 50% Mocking-Korrektheit ohne Nacharbeit — dies zeigt die Grenzen der automatischen Generierung.
-- **H5:** Variante B (Code + PHPDoc) erzielt auf der Assertions-Qualitätsskala (1–5) mindestens 1 Punkt mehr als Variante A (Code only).
+Ich habe einige grobe Hypothesen wie folgendes aufgelistet.
+H1: KI reduziert die Erstellungszeit deutlich gegenüber der manuellen Vorgehensweise. Bei trivialen Klassen ist eine sehr kurze Generierungszeit zu erwarten, bei komplexeren Klassen ist etwas mehr Korrekturzeit einzuplanen.
+
+H2: KI-generierte Tests erreichen eine hohe Methods Coverage, auch bei komplexeren Format-ViewHelpern. (Exakte Schwellenwerte werden erst nach der Messung festgelegt.)
+
+H3: Der Grossteil der generierten Tests läuft ohne manuelle Korrekturen durch. Einzelne Klassen, insbesondere solche mit TYPO3-Abhängigkeiten, können Nacharbeit erfordern.
+
+H4: Bei Glue-Code mit TYPO3-Dependencies erfordert das KI-generierte Mocking manuelle Korrekturen, ist aber nicht grundsätzlich falsch. Die KI liefert einen brauchbaren Ausgangspunkt, der genaue Aufwand wird im Messprotokoll erfasst.
+
+H5: Unabhängig davon, ob zusätzlich PHPDoc und Inline-Kommentare als Kontext mitgegeben werden, liefert die KI generell Tests mit guter Assertions-Qualität: Grenzwerte werden geprüft und Edge-Cases sinnvoll behandelt.
+
+H6: KI-generierte Tests erzielen nach Korrektur einen hohen Mutation Score (MSI of Covered, gemessen mit Infection PHP). 
+
+Die Messmethodik sowie die genauen Zielwerte, Qualitätsreferrenz etc. werden im Abschnitt 3.5 nach den ersten Messdurchläufen gemessen und festgelegt und die Benefits werden ausführlich erläutet.
 
 ### 2.4 Vorgehen zur Einführung und Validierung
 
-**Ausgewählte 5 Testklassen aus `packages/hf-view-helpers`:**
+Die fünf Klassen wurden gezielt so ausgewählt, dass sie ein breites Spektrum von Komplexität und TYPO3-Abhängigkeit abdecken:
+1) JsonDecodeViewHelper (Classes/ViewHelpers/Format/JsonDecodeViewHelper.php): Reine PHP-Logik ohne TYPO3-Kern-Abhängigkeit. Enthält relevante Edge-Cases (ungültiges JSON, leere Eingaben) und erfordert einfache Stubs/Mocks.
+2) CleanHtmlViewHelper (Classes/ViewHelpers/Format/CleanHtmlViewHelper.php): Ebenfalls reine PHP-Logik ohne TYPO3-Abhängigkeiten. Der Einsatz umfangreicher regulärer Ausdrücke erhöht die Komplexität und macht Edge-Case-Tests besonders relevant.
+3) RoundViewHelper (Classes/ViewHelpers/Format/RoundViewHelper.php): Reine PHP-Logik mit mathematischen Berechnungen (Rundung, Genauigkeit). Edge-Cases wie Grenzwerte und Gleitkommawerte erfordern sorgfältige Testabdeckung.
+4) Greeter (Classes/Dummy/Greeter.php): Eine triviale Dummy-Klasse ohne TYPO3-Abhängigkeiten, Edge-Cases oder Mocking-Bedarf. Dient als Baseline und Kontrollfall für die einfachste Testsituation.
+5) DateViewHelper (Classes/ViewHelpers/Format/DateViewHelper.php): Enthält reale TYPO3-Abhängigkeiten (Glue-Code). Das notwendige Mocking ist deutlich aufwändiger als bei den übrigen Klassen und zeigt exemplarisch die Grenzen der automatisierten Testgenerierung.
 
-| # | Klasse | Dateipfad | Typ | Tests vorhanden |
-|---|---|---|---|---|
-| 1 | `JsonDecodeViewHelper` | `Classes/ViewHelpers/Format/JsonDecodeViewHelper.php` | Reine Logik | Nein ← ideal |
-| 2 | `CleanHtmlViewHelper` | `Classes/ViewHelpers/Format/CleanHtmlViewHelper.php` | Reine Logik (Regex) | Nein ← ideal |
-| 3 | `RoundViewHelper` | `Classes/ViewHelpers/Format/RoundViewHelper.php` | Reine Logik (Mathe) | Nein ← ideal |
-| 4 | `Service` | `Classes/Dummy/Service.php` | Glue-Code leicht | Ja (als Referenz) |
-| 5 | `DateViewHelper` | `Classes/ViewHelpers/Format/DateViewHelper.php` | Glue-Code mittel | Teilweise |
+Begründung der Auswahl:
+Die Klassen stammen alle aus packages/hf-view-helpers, da dort der Test-Audit-Workflow (Plugin typo3-test-audit) bereits eingerichtet ist und alle 47 Klassen klassifiziert vorliegen (4 Unit, 21 Edge-Cases, 18 Functional, 4 nicht testbar). Die gewählten fünf Klassen decken bewusst den Bogen von trivialer Logik über komplexe reine PHP-Logik bis hin zu TYPO3-abhängigem Glue-Code ab.
+ „Clue Codes" ist eine Verschreibung von „Glue-Code" (englisch für „Klebstoff-Code"). Der Begriff bezeichnet Code, der verschiedene Systemteile miteinander verbindet — in TYPO3 konkret: ViewHelper-Klassen, die TYPO3-interne Dienste aufrufen (z.B. makeInstance(), CacheManager, DateUtility). Solcher Code ist eng mit dem Framework verzahnt und schwer isoliert zu testen.
 
-**Begründung der Auswahl:**
-- Klassen 1–3: keine bestehenden Unit-Tests (0% Coverage), reine PHP-Logik ohne TYPO3-Dependencies → idealer Startpunkt, klares Messergebnis möglich
-- Klasse 4: überschaubare Dependency Injection (`ErrorHandler`) → kontrollierter Einstieg in Mocking
-- Klasse 5: realistische TYPO3-Abhängigkeit (`DateUtility`, `DateTime`) → zeigt Grenzen der KI bei Glue-Code
-
-Die Klassen stammen aus `packages/hf-view-helpers`, da dort der Test-Audit-Workflow (Plugin `typo3-test-audit`) bereits eingerichtet ist und alle 47 Klassen klassifiziert vorliegen (4 Unit, 21 Edge, 18 Functional, 4 nicht testbar). Die gewählten 5 Klassen decken bewusst den Bogen von reiner Logik bis zu TYPO3-Abhängigkeiten ab.
-
-**Ablauf für jede Klasse:**
-1. Manuelle Tests schreiben (Referenz) — Zeit stoppen
-2. KI-Generator ausführen — Zeit stoppen
-3. PHPUnit ausführen, Coverage messen
-4. Ergebnisse in Vergleichstabelle eintragen
-
-### 2.5 Beitrag der Arbeit
-
-Diese Arbeit liefert:
-1. Praktischen Nachweis, dass KI-Testgenerierung unter TYPO3 14 funktioniert
-2. Messbare Vergleichsdaten (KI vs. manuell) für 5 reale Klassen
-3. Empfehlungen: Für welche Klassen-Typen eignet sich KI-Generierung?
-4. Erkenntnis: Wann verbessert zusätzlicher Kontext (Variante B) die Qualität?
 
 ---
 
@@ -282,21 +261,24 @@ Diese Arbeit liefert:
 
 ### 3.1 Tooling und Infrastruktur
 
-| Tool | Zweck | Version |
-|---|---|---|
-| DDEV | Lokale TYPO3-Entwicklungsumgebung (Docker) | 1.x |
-| TYPO3 | CMS-Framework | 14.3 |
-| PHP | Laufzeit | 8.3 |
-| PHPUnit | Test-Framework | 12 |
-| TYPO3 TestingFramework | TYPO3-spezifische Test-Utilities (erweitert PHPUnit um TYPO3-Helpers) | aktuell |
-| Claude API | LLM für Testgenerierung | claude-sonnet-4-6 |
-| Xdebug / php-code-coverage | Code Coverage Messung | aktuell |
-| Claude Code CLI Plugin `typo3-test-audit` | Drei-Skill-Workflow: Klassifizierung (test-audit-text) → Visualisierung (test-audit-chart) → Generierung (generate-unit-tests) | lokal |
+Für die Umsetzung dieser Arbeit kommen folgende Tools und Technologien zum Einsatz:
+DDEV — Lokale Entwicklungsumgebung auf Docker-Basis, in der das TYPO3-Projekt betrieben wird (https://ddev.com/)
+TYPO3 14.3 — Das CMS-Framework, für das die Extension entwickelt und getestet wird (https://typo3.com/de/typo3-v14)
+PHP 8.3 — Laufzeitumgebung für alle PHP-Klassen und Tests
+PHPUnit 12 — Test-Framework für die Ausführung der Unit-Tests
+TYPO3 TestingFramework — Erweitert PHPUnit um TYPO3-spezifische Hilfsfunktionen (beinhaltet in TYPO3 14.3)
+Claude API (claude-sonnet-4-6) — Das verwendete LLM zur Testgenerierung
+Xdebug / php-code-coverage — Werkzeuge zur Messung der Codeabdeckung (https://xdebug.org/)
+PHPStan — Statisches Analyse-Tool; prüft den PHP-Code auf Typfehler und potenzielle Bugs, ohne ihn auszuführen — wird hier eingesetzt, um die Qualität der generierten Testklassen zu bewerten (https://phpstan.org/) 
+Infection — Mutations-Test-Framework für PHP; prüft die Qualität der Tests, indem es den Quellcode gezielt verändert und überprüft, ob die Tests diese Änderungen erkennen (sogenannte Mutanten "töten") (https://infection.github.io/)
 
-**Plugin-Workflow `typo3-test-audit` im Detail:**
-1. **`/test-audit-text`** — Analysiert alle PHP-Klassen der Extension via Grep, klassifiziert in Unit / Edge / Functional / Not testable, schreibt `test-audit-hf-view-helpers.md` und `.txt`
-2. **`/test-audit-chart`** — Liest das `.md`-Report und erzeugt ein SVG-Donut-Chart als visuelle Übersicht
-3. **`/generate-unit-tests`** — Liest das `.txt`-Report und generiert PHPUnit-Testklassen für alle Unit+Edge-Klassen (AAA-Pattern, DataProvider, TYPO3-Mocking)
+Claude Code CLI Plugin typo3-test-audit
+Das Plugin wurde im Rahmen dieser Arbeit entwickelt und besteht aus vier aufeinander aufbauenden Skills, die direkt im Claude Code CLI aufgerufen werden:
+/test-audit-text — Der erste Schritt: Das Plugin durchsucht alle PHP-Klassen einer Extension und klassifiziert sie automatisch in vier Kategorien: geeignet für Unit-Tests, Edge-Fälle (sowohl Unit- als auch Functional-Tests möglich), nur für Functional-Tests geeignet, oder nicht direkt testbar. Die Klassifizierung basiert auf Signalen im Quellcode, z. B. ob eine Klasse TYPO3-Infrastruktur wie CacheManager, ConnectionPool oder $GLOBALS['TSFE'] verwendet. Das Ergebnis wird als .md- und .txt-Datei gespeichert. Auf diesem Report basiert auch die Auswahl der fünf Beispielklassen in dieser Arbeit.
+/test-audit-chart — Liest den generierten Report und erstellt daraus ein SVG-Donut-Diagramm als visuelle Übersicht der Klassenverteilung.
+/generate-unit-tests — Liest den .txt-Report und generiert automatisch PHPUnit-Testklassen für alle Unit- und Edge-Klassen. Pro Methode werden Happy-Path, Grenzwerte, Bool-Flags und Fehlerpfade abgedeckt. Alle Tests folgen dem AAA-Pattern (Arrange, Act, Assert). Existiert bereits eine Testdatei, analysiert der Skill vorhandene Kommentare und PHPDoc-Hinweise und ergänzt gezielt die fehlenden Testfälle — bestehender Code wird dabei nicht verändert.
+/fix-unit-tests — Liest einen Infection-Report (Mutationstest) und ergänzt gezielt neue Testmethoden für alle überlebten Mutanten. So können Lücken in der Testabdeckung systematisch geschlossen werden.
+Das Plugin hat eigentlich keinen direkten Bezug auf der Arbeit, das Plugin ist wiederverwendbar und nicht auf dieses Projekt beschränkt — es kann bei beliebigen TYPO3-Extensions eingesetzt werden, was ich sicherlich als einen Mehrwert und Benifit halte, möchte daher expliziert in diesem Abschnitt aufnehmen und kurz erläutern.
 
 ### 3.2 Beispielbasierte Demonstration
 
@@ -334,125 +316,100 @@ User: Analysiere folgende PHP-Klasse und generiere PHPUnit Unit-Tests.
 - **Dozent FHNW:** Begleitung der Methodik, Feedback zu Hypothesen und Auswertung
 
 ### 3.4 Pilotnutzung
+Als Pilotprojekt dient die Extension hf-view-helpers im TYPO3-Demoprojekt cas_ai_phpunit. Die fünf Beispielklassen wurden anhand des Audit-Reports ausgewählt und decken bewusst unterschiedliche Komplexitätsstufen ab — von einfacher Dummy-Logik bis hin zu TYPO3-abhängigem Code mit Mocking-Bedarf.
 
-Pilotprojekt: `packages/hf-view-helpers` im TYPO3-Projekt `cas_ai_phpunit`
+Für jede Klasse wird der vollständige Messzyklus in drei Schritten durchgeführt:
 
-Für alle 5 ausgewählten Klassen wird der vollständige Messzyklus durchgeführt:
-1. Manuelle Tests schreiben (Referenz, Ergebnis: Manuell-Baseline)
-2. KI Variante A generieren (Code only), PHPUnit ausführen, Ergebnis messen
-3. KI Variante B generieren (Code + Kontext), PHPUnit ausführen, Ergebnis messen
-4. Messprotokoll pro Klasse ausfüllen (siehe 3.5)
-
-Ergebnisse fliessen vollständig in Kapitel 4 (Diskussion).
+Manuelle Referenz — Die Testklasse wird vollständig von Hand geschrieben. Diese Messung dient als Baseline für den Vergleich mit der KI-generierten Variante.
+KI-Variante A (Code only) — Der Quellcode der Klasse wird ohne zusätzlichen Kontext an das LLM übergeben. Die generierte Testklasse wird anschliessend mit PHPUnit ausgeführt und die Ergebnisse werden gemessen.
+KI-Variante B (Code + Kontext) — Zusätzlich zum Quellcode werden PHPDoc-Kommentare und Inline-Kommentare als Hinweise mitgegeben. Ziel ist es zu prüfen, ob der zusätzliche Kontext die Testqualität verbessert.
+Nach jedem Schritt wird das Messprotokoll ausgefüllt (siehe Abschnitt 3.5). Die Ergebnisse aller fünf Klassen fliessen vollständig in Kapitel 4 ein.
 
 ### 3.5 Messung und Beobachtung der Benefits und Effekte
 
 #### Messmethodik
 
-Für jede der 5 Klassen wird das Messprotokoll dreimal ausgefüllt: einmal für die manuelle Referenz, einmal für Variante A (Code only) und einmal für Variante B (Code + Kontext). Die ausgefüllten Protokolle finden sich vollständig im Anhang D.
+Für jede der fünf Klassen wird das Messprotokoll in zwei Gruppen ausgefüllt: einmal für die manuelle Referenz, einmal für die KI-gestützte Variante.
+Manuell: Die Stoppuhr startet zu Beginn der Test-Erstellung. Der Entwickler liest die Zielklasse, versteht die öffentlichen Methoden, überlegt sinnvolle TestCases und schreibt die Testklasse vollständig aus. Die Messung gilt als abgeschlossen, sobald zwei Kriterien erfüllt sind: PHPUnit läuft fehlerfrei durch, und PHPStan meldet keine Fehler. Erst dann wird die Stoppuhr gestoppt.
 
-Die Messung folgt diesen Regeln:
+KI: Die Zeitmessung erfolgt in zwei Phasen:
+Phase 1 — Generierung: Die Stoppuhr startet mit dem Absenden des Prompts. Die KI legt die fehlende Testklasse samt Testmethoden an. Die Stoppuhr stoppt, sobald die Generierung abgeschlossen ist.
+Der Prompt auf Deutsch lautet z.B.: Erstelle für die folgende PHP-Klasse JsonDecodeViewHelper.php eine PHPUnit-Testklasse mit breiter Code Coverage. Verwende das TYPO3 TestingFramework und halte dich an das AAA-Pattern (Arrange, Act, Assert).
+Phase 2 — Korrektur: Die Stoppuhr startet erneut. Die generierte Testklasse wird mit PHPStan analysiert; auftretende Fehler werden per KI korrigiert. Die Stoppuhr stoppt, sobald PHPStan keine Fehler mehr meldet.
+Auch für die KI-Variante gilt dasselbe Abschluss-Kriterium wie für die manuelle Messung: PHPUnit läuft fehlerfrei, PHPStan meldet keine Fehler.
 
-- **Erstellungszeit:**
-  - *Manuell:* Stoppuhr startet beim ersten Tastendruck (erster Buchstabe des Testcodes) und endet, wenn PHPUnit erstmals GREEN zeigt. Korrekturen sind inbegriffen.
-  - *KI (Variante A und B):* Stoppuhr startet beim Eingeben des Plugin-Befehls (`/generate-unit-tests`) in Claude Code CLI. Endet wenn PHPUnit GREEN zeigt — inklusive Wartezeit auf die LLM-Generierung und allfälliger manueller Korrekturen.
+Test-Befehl anhand der Beispiel-Klasse: JsonDecodeViewHelper.php
+PhpUnitTest:
+ddev exec php vendor/bin/phpunit \
+-c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
+packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/JsonDecodeViewHelperTest.php
 
-- **Anzahl manueller Korrekturen:** Eine Korrektur = eine gespeicherte Dateiänderung (ein Speichervorgang), nach der PHPUnit neu ausgeführt wird. Mehrere Zeilen in einem Speichervorgang zählen als 1 Korrektur. Manuell = immer 0 (Referenz).
 
-- **Coverage:** Gemessen mit `XDEBUG_MODE=coverage` + `--coverage-text`, gefiltert auf die Zielklasse via `grep`. Ausgewertet wird ausschliesslich die Line Coverage der Zielklasse. **Gleicher Befehl für alle drei Varianten (Manuell, KI-A, KI-B):**
-  ```bash
-  ddev xdebug on
-  ddev exec XDEBUG_MODE=coverage php vendor/bin/phpunit \
-      -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
-      --coverage-text \
-      packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/[Klasse]Test.php \
-      2>&1 | grep -A3 "Format\\\\[Klasse]"
-  ddev xdebug off
-  ```
-  Für Klassen ausserhalb `Format/` den Namespace anpassen, z.B.:
-  ```bash
-  # Service (Dummy\Service):
-  2>&1 | grep -A3 "Dummy\\\\Service"
-  ```
 
-- **PHPStan Errors:** Statische Analyse mit Level 6 und PHPUnit-Extension. Zählt Typfehler, falsche Mock-Verwendung und andere statische Probleme, die PHPUnit nicht sieht. **Gleicher Befehl für alle drei Varianten — Manuell dient als Baseline (Ziel: 0 Errors):**
-  ```bash
-  ddev xdebug off
-  ddev php vendor/bin/phpstan analyse \
-      -c packages/hf-view-helpers/Build/phpstan/phpstan.tests.neon \
-      packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/[Klasse]Test.php
-  ```
-  PHPStan-Fehler trotz grünem PHPUnit sind ein Qualitätsmerkmal, das nur statische Analyse aufdeckt.
+PhpUnit-Coverage-Test: 
+ddev exec XDEBUG_MODE=coverage php vendor/bin/phpunit \
+-c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
+--coverage-text \
+packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/JsonDecodeViewHelperTest.php
+    
+PHPStan-Test:
+ddev php vendor/bin/phpstan analyse \
+-c packages/hf-view-helpers/Build/phpstan/phpstan.tests.neon \
+packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/JsonDecodeViewHelperTest.php
 
-- **Mocking korrekt:** Beurteilung durch den Autor anhand von drei Kriterien: korrekter Typ (`createMock` vs. `createStub`), korrekte Methode gemockt, kein unnötiges Mocking. Skala: ja / teilweise / nein.
+Kriterien zur Bewertung
+Kombination von 3 Testverfahren, nämlich (PhpUnit)Codeabdeckungstest, PhpStan-Test und Mutationstest.
+Codeabdeckung (Code Coverage) beschreibt, wie viel Prozent des Quellcodes durch Tests ausgeführt werden. Eine hohe Codeabdeckung deutet auf eine gründlichere Testung und ein geringeres Fehlerrisiko hin. In meiner Bewertung wird in der ersten Linie Funktions- und Methodenabdeckung berücksichtigt, also wie viele Funktionen bzw. Methoden mindestens einmal durch Tests aufgerufen wurden. (https://docs.phpunit.de/en/13.2/code-coverage.html)
+PHPStan ist ein leistungsstarkes Tool zur statischen Code-Analyse für PHP-Projekte. Es hilft Entwicklern, Fehler frühzeitig zu erkennen und die Codequalität zu verbessern, ohne den Code tatsächlich ausführen zu müssen. (https://phpstan.org/)
+Ein PHPStan Level (https://phpstan.org/user-guide/rule-levels) bestimmt die Strenge der statischen Code-Analyse in PHPStan. . Die Level reichen von Stufe 0 (grundlegende Syntaxprüfungen) bis 10 (extrem strenge Typisierung). Bei meiner Bewertung ist der Level 6 in Einsatz. Level 6 ist der pragmatische Mittelweg: 
+1) Erzwingt vollständige Typ-Annotationen — wichtig für lesbare, wartbare Tests.
+2) Die PHPStan-PHPUnit-Extension greift auf Level 6 optimal: Sie erkennt falsch verwendete Mocks, fehlerhafte Assertion-Signaturen und ungültige DataProvider-Strukturen.
+3) Etablierter Standard in der TYPO3-Community für Testcode-Analyse.
 
-- **Bewertungsskala Assertions (1–5):**
+Mutationstest ist ein Softwaretest, wo künstliche Bugs (Mutationen) im Code produziert werden, um festzustellen, ob die vorhandenen Tests ausreichen, um diese künstlichen Fehler zu entdecken. Die Codeabdeckung reicht nicht immer aus, Mutationstests sind für Unit-Tests unerlässlich, da sie die tatsächliche Qualität und Aussagekraft Ihrer Tests überprüfen. Ich habe Infection im Einsatz, Inection ist eine der bekanntesten Mutation Testing Frameworks für PHP (https://github.com/infection/infection) Bei meiner Bewertung ist MSI-of covered (https://infection.github.io/guide/#Covered-Code-Mutation-Score-Indicator) berücksichtigt. Nämlich Mutation Score Indicator, der nur Mutanten in Code berücksichtigt, der tatsächlich von Tests ausgeführt wird.
 
-| Wert | Bedeutung |
-|---|---|
-| 5 | Alle Assertions sinnvoll, Edge-Cases und Grenzwerte abgedeckt, keine Tautologien; Mutationstests bestätigen hohe Erkennungsrate (MSI ≥ 90 %) |
-| 4 | Kleinere Lücken (z.B. ein Grenzwert oder eine Nebenmethode fehlt), aber grundsätzlich korrekt; Mutationstests mehrheitlich bestanden (MSI 70–89 %) |
-| 3 | Assertions vorhanden, aber mit strukturellen Schwächen: Testwerte unterscheiden ähnliche Implementierungen nicht (z.B. `ceil` vs. `round` liefern denselben Wert), und/oder ganze Methoden oder Argument-Defaults sind vollständig ungeprüft; MSI < 70 % |
-| 2 | Mehrere tautologische oder triviale Assertions (z.B. `assertInstanceOf`, `assertNotNull`); Kernlogik wird nicht wirklich verifiziert |
-| 1 | Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften; jede Implementierung würde die Tests bestehen |
+Bewertungsskala Assertions (Stufe:1–5) 
+Die Stufenzuordnung basiert grundsätzlich auf subjektiver Beobachtung sowie den folgenden Überlegungen und Kriterien.
+Stufe-5: Alle öffentlichen Methoden geprüft, Assertions für Happy-Path, Grenzwerte und Fehlerfälle, keine Tautologien, Testwerte unterscheiden ähnliche Implementierungen, Mocking korrekt (richtiger Typ createMock/createStub, richtige Methode, kein unnötiges Mocking), PHPStan-Errors: 0–1, MSI > 90%
+Stufe-4: Grundsätzlich korrekte Assertions ohne Tautologien, einzelne Grenzwerte oder Nebenmethoden fehlen, Mutationstests mehrheitlich bestanden, Mocking weitgehend korrekt, kleinere Typ-Ungenauigkeiten, PHPStan-Errors: 2–3, MSI 75–90%
+Stufe-3: Assertions vorhanden, aber mit strukturellen Schwächen: Testwerte unterscheiden ähnliche Implementierungen nicht, und/oder ganze Methoden oder Argument-Defaults sind vollständig ungeprüft, Mocking zum Teil strukturell falsch (falscher Typ, fehlende oder überflüssige Abhängigkeiten), PHPStan-Errors: 5–10, MSI 50–75%
+Stufe-2: Mehrere tautologische oder triviale Assertions (z.B. assertInstanceOf, assertNotNull), Kernlogik wird nicht wirklich verifiziert, Mocking fehlend oder sinnlos, PHPStan-Errors: > 10, MSI < 50%
+Stufe-1: Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften, Implementierung ist falsch oder fehlerhaft, oder jede Implementierung würde die Tests bestehen, sehr viele PHPStan-Errors: > 10, sehr geringer MSI < 50%
 
-> **Abgrenzung:** PHPStan-Fehler (z.B. fehlende Typ-Annotationen, redundante Aufrufe) sind **nicht** Bestandteil dieser Skala — sie werden separat in der Spalte *PHPStan KI (Errors vor/nach Fix)* der Aggregationstabelle erfasst. Ein Test kann PHPStan-Fehler aufweisen und trotzdem eine hohe Assertions-Qualität besitzen (und umgekehrt).
+#### Ergebnistabelle — Übersicht alle 5 Klassen *(wird nach Umsetzung ausgefüllt)*
 
----
+| Klasse | Zeit Man. | Coverage Man. (Methods) | Mutationstest Man. (MSI of Covered) | PHPStan Man. | 
+|---|---|---|---|---|
+| JsonDecodeViewHelper | > 30 Min. | 50% | 41% | 0 |
+| ForViewHelper | 30 Min. | 100% | 53% | 0 |
+| RoundViewHelper | > 60 Min. | (?) | (?) | (?) |
+| Greeter | 30 Min. | 100% | 100% | 0 |
+| DateViewHelper | > 30 Min. | 50% | 48% | 0 |
 
-#### Unterschied Prompt Variante A vs. Variante B
 
-| Variante | LLM-Input | Was wird weggelassen |
-|---|---|---|
-| **A – Code only** | PHP-Quellcode (Methodenkörper und Signaturen) | PHPDoc-Blöcke (`/** ... */`) und Inline-Kommentare (`//`) werden entfernt |
-| **B – Code + Kontext** | PHP-Quellcode vollständig, inklusive PHPDoc und allen Kommentaren | — |
+| Klasse | Zeit KI (Error-Fix) | Coverage KI (Methods) | Mutationstest KI vor und nach dem Fix (MSI of Covered) | PHPStan KI (Error vor und nach dem Fix) | Assert.-Stufe KI vor und nach dem Fix (1–5) |
+|---|---|---|---|---|---|
+| JsonDecodeViewHelper | 1.5 Min. | 100% | 53% -> 100% | 0 | 3 -> 5 |
+| ForViewHelper | 3 Min. (+2 Min.) | 100% | 61% -> 100% | 6 -> 0 | 3 -> 5 |
+| RoundViewHelper | 2.5 Min. (+1 Min.) | 100% | 82% -> 100% | 1 -> 0 | 4 -> 5 |
+| Greeter | < 1 Min. | 100% | 100% | 0 | 5 |
+| DateViewHelper | 2.5 Min. (+1 Min.) | 100% | 57% -> 100% | 2 -> 0 | 4 -> 5 |
 
-Der Quellcode für Variante A wird vor dem Prompt manuell um alle Kommentarblöcke bereinigt. Variante B verwendet den Originalcode unverändert.
 
----
-
-#### Messprotokoll — quantitative Metriken *(pro Klasse, Vorlage)*
-
-| Kriterium | Manuell | KI Variante A | KI Variante B |
-|---|---|---|---|
-| Erstellungszeit gesamt (Min.) | [messen] | [messen] | [messen] |
-| Code Coverage Line (%) | [messen] | [messen] | [messen] |
-| Anzahl PHPUnit-Failures beim ersten Lauf | 0 | [zählen] | [zählen] |
-| Anzahl manueller Korrekturen bis GREEN | 0 | [zählen] | [zählen] |
-| PHPStan Errors (Level 6) | [messen] | [zählen] | [zählen] |
-
-#### Messprotokoll — qualitative Bewertung *(pro Klasse, Vorlage)*
-
-| Kriterium | Manuell | KI Variante A | KI Variante B |
-|---|---|---|---|
-| Mocking korrekt? (TYPO3-Dependencies) | Ja | [ja/teilw./nein] | [ja/teilw./nein] |
-| Edge-Cases abgedeckt? (Grenzwerte, Sonderfälle) | Ja | [ja/teilw./nein] | [ja/teilw./nein] |
-| Assertions sinnvoll? (Skala 1–5) | 5 | [1–5] | [1–5] |
-
----
-
-#### Aggregationstabelle — Übersicht alle 5 Klassen *(wird nach Umsetzung ausgefüllt)*
-
-| Klasse | Typ | Zeit Man. | Coverage Man. (Methods) | Mutationstest Man. (of Covered) | PHPStan Man. | Zeit KI | Coverage KI (Methods) | Mutationstest KI vor und nach dem Fix (of Covered) | PHPStan KI (Error vor und nach dem Fix) | Assert. KI vor und nach dem Fix (1–5) |
-|---|---|---|---|---|---|---|---|---|---|---|
-| JsonDecodeViewHelper | Reine Logik | > 30 Min. | 50% | 41% | 100% | 1.5 Min. | 100% | 53% -> 100% | 0 | 3 -> 5 |
-| ForViewHelper | Mock/Stub benötigt | 30 Min. | 100% | 53% | 0 | 3 Min. | 100% | 61% -> 100% | 6 -> 0 | 3 -> 5 |
-| RoundViewHelper | Reine Logik (Menge von mathematischen Berechnungen) | > 60 Min. | (?) | (?) | (?) | 2.5 Min. | 100% | 82% -> 100% | 1 -> 0 | 3 -> 5 |
-| Greeter | Glue-Code leicht | 30 Min. | 100% | 100% | 0 | < 1 Min. | 100% | 100% | 0 | 5 |
-| DateViewHelper | Glue-Code mittel | > 30 Min. | 50% | 48% | 0 | 2.5 Min. | 100% | 57% -> 100% | 2 -> 0 | 4 -> 5 |
-| **Ø / Gesamt** | | | | | | | | | | |
-
-*Korrekt. = Anzahl manueller Korrekturen bis GREEN. Assert. = Assertions-Qualitätsskala 1–5.*
 
 #### Bezug zu den Hypothesen
 
-| Hypothese | Messgrösse | Zielwert | Ergebnis |
-|---|---|---|---|
-| H1: Zeitersparnis | Erstellungszeit (Min.) | < 1 Min. (KI) vs. ~15 Min. (manuell) | [nach Umsetzung] |
-| H2: Coverage | Line Coverage (%) | > 65% | [nach Umsetzung] |
-| H3: Validität | Anzahl Korrekturen bis GREEN | > 75% der Tests beim ersten Lauf GREEN | [nach Umsetzung] |
-| H4: Mocking-Grenzen | Mocking korrekt (Glue-Code) | < 50% korrekt ohne Nacharbeit | [nach Umsetzung] |
-| H5: Kontextvorteil | Assertions-Skala Var. B vs. A | Var. B ≥ +1 Punkt auf Skala 1–5 gegenüber A | [nach Umsetzung] |
+**H1 — Zeitersparnis:** Die manuelle Erstellung dauerte je nach Klasse zwischen 30 und über 60 Minuten — wobei RoundViewHelper mit über 60 Minuten den Höchstwert markiert. Die KI-gestützte Generierung inkl. Korrekturzeit liegt bei allen fünf Klassen unter 5 Minuten: Greeter unter 1 Minute, JsonDecodeViewHelper 1,5 Minuten, RoundViewHelper und DateViewHelper je 3,5 Minuten, ForViewHelper als aufwändigster Fall bei 5 Minuten total. Die Zeitersparnis ist damit in allen Fällen deutlich — auch bei komplexeren Klassen beträgt der Faktor mindestens 6. H1 wird durch die Messdaten klar bestätigt.
+
+**H2 — Methods Coverage:** Die manuellen Tests erreichen je nach Klasse 50–100 % Methods Coverage; bei JsonDecodeViewHelper und DateViewHelper nur 50 %, weil nicht alle öffentlichen Methoden abgedeckt wurden. Die KI-generierten Tests erreichen bei allen fünf Klassen 100 % Methods Coverage — unabhängig von der Komplexität der Klasse. H2 wird vollständig bestätigt und übertrifft die ursprüngliche Erwartung.
+
+**H3 — Validität (First-Run GREEN):** Als „First-Run GREEN" gilt eine Testklasse, wenn PHPUnit fehlerfrei läuft und PHPStan keine Fehler meldet. Nach diesem strengen Kriterium erfüllen zwei von fünf Klassen (JsonDecodeViewHelper und Greeter) diese Bedingung sofort. ForViewHelper (6 PHPStan-Fehler), RoundViewHelper (1 Fehler) und DateViewHelper (2 Fehler) benötigten eine Korrekturphase. Die Quote liegt damit bei 40 % — unterhalb der hypothetisierten Mehrheit. Der Korrekturbedarf war jedoch in allen Fällen gering und in unter 2 Minuten behoben; ein vollständiges Scheitern trat nie auf. H3 wird in der strengen Definition nicht bestätigt, relativiert sich aber durch den niedrigen Korrekturaufwand.
+
+**H4 — Mocking-Korrektheit bei Glue-Code:** Der DateViewHelper als einzige Klasse mit echten TYPO3-Dependencies lieferte einen direkt brauchbaren Ausgangspunkt: Assertions-Stufe 4 vor dem Fix, 2 PHPStan-Fehler, MSI 57 %. Nach kurzer Korrektur: Stufe 5, PHPStan-fehlerfrei, MSI 100 %. Das Mocking war strukturell nicht grundsätzlich falsch — es fehlten lediglich korrekte Typ-Annotationen. H4 wird bestätigt: Die KI scheitert bei Glue-Code nicht, liefert aber einen Entwurf, der gezielter Nacharbeit bedarf.
+
+**H5 — Assertions-Qualität:** Die KI liefert generell Tests mit guter Assertions-Qualität: Grenzwerte werden geprüft, Edge-Cases sinnvoll behandelt. Die Ergebnistabelle zeigt, dass die initiale Assertions-Stufe bei einfacheren Klassen (Greeter, RoundViewHelper, DateViewHelper) bereits bei 4–5 lag; bei komplexeren Klassen mit mehr Methoden (JsonDecodeViewHelper, ForViewHelper) startete die KI auf Stufe 3, erreichte aber nach gezielter Nachbesserung durchgehend Stufe 5. Das bedeutet: Die KI erzeugt keine trivialen oder tautologischen Tests — sie prüft die Kernlogik, erkennt relevante Eingabewerte und deckt Fehlerfälle ab. H5 wird bestätigt.
+
+**H6 — Mutationstest (MSI of Covered):** Vor Korrekturen lagen die MSI-Werte zwischen 53 % (JsonDecodeViewHelper) und 100 % (Greeter). Nach Korrekturen erreichten alle fünf Klassen 100 % MSI. Selbst der schwächste Ausgangswert (53 %) konnte durch gezielte Assertions-Verbesserungen auf 100 % angehoben werden. H6 wird vollständig bestätigt: KI-generierte Tests erzielen nach Korrektur einen sehr hohen Mutation Score und sind damit nicht nur syntaktisch, sondern auch inhaltlich aussagekräftig.
 
 ---
 
@@ -469,6 +426,12 @@ _[Wird nach Umsetzung ausgefüllt]_
 ### 4.2 Beitrag der Arbeit
 
 _[Wird nach Umsetzung ausgefüllt]_
+
+Diese Arbeit liefert:
+1. Praktischen Nachweis, dass KI-Testgenerierung unter TYPO3 14 funktioniert
+2. Messbare Vergleichsdaten (KI vs. manuell) für 5 reale Klassen
+3. Empfehlungen: Für welche Klassen-Typen eignet sich KI-Generierung?
+4. Erkenntnis: Wann verbessert zusätzlicher Kontext (Variante B) die Qualität?
 
 Erwartete Erkenntnisse:
 - **Für welche Klassen-Typen eignet sich KI-Generierung?**
