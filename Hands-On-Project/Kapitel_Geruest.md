@@ -134,29 +134,27 @@ FHNW / Dozent — Einfluss: hoch Aus akademischer Sicht steht der wissenschaftli
 
 ### 2.1 Wertstromanalyse
 
-**Aktueller Zustand (Ist-Prozess):**
-```
-PHP-Klasse wird geschrieben
-    ↓
-Manuelle Test-Erstellung (optional, oft weggelassen)
-    ↓
-CI/CD ohne Testabdeckung
-    ↓
-Bugs erst in Produktion entdeckt
-```
+Die Wertstromanalyse (Value Stream Mapping, VSM) ist eine aus dem Lean Management stammende Methode, die den gesamten Arbeitsfluss „von der Idee bis in Produktion" visualisiert und dabei Engpässe (Bottlenecks) sowie Wartezeiten zwischen einzelnen Prozessschritten sichtbar macht (dora.dev/guides/value-stream-management/). Im Kontext dieser Arbeit wird der Wertstrom auf den relevanten Ausschnitt eingegrenzt: von der fertig geschriebenen PHP-Klasse bis zur produktiv nutzbaren Testabdeckung.
 
-**Zielzustand (Soll-Prozess mit KI-Unterstützung):**
-```
-PHP-Klasse wird geschrieben
-    ↓
-KI-Generator erzeugt PHPUnit-Tests (< 1 Min)
-    ↓
-PHPUnit ausführen, ggf. manuell nachbessern
-    ↓
-CI/CD mit Testabdeckung
-    ↓
-Frühere Fehlererkennung
-```
+**Ist-Zustand (aktueller Prozess):**
+
+Sobald eine PHP-Klasse fertig geschrieben ist, müsste als nächster Schritt die passende Testklasse manuell erstellt werden. Das dauert pro Klasse je nach komplixität mehr (vgl. Messdaten Abschnitt 3.5). Weil dieser Aufwand im Projektalltag mit engem Zeitbudget kaum aufzubringen ist, wird dieser Schritt in der Praxis sehr häufig ganz übersprungen — also der Bottleneck sitzt hier also innerhalb eines einzelnen Schritts, der manuellen Testerstellung selbst (siehe H1, Abschnitt 2.3). Die Klasse landet dadurch ohne Testabdeckung in der CI/CD-Pipeline.
+
+Dahinter steckt eine Unterscheidung, die auch das DORA-Modell zur Messung von Software-Delivery-Performance trifft: den Normalfall, bei dem eine Funktion ohne Probleme bis in die Produktion läuft, und den Problemfall, bei dem ein Fehler erst in Produktion bemerkt und dort nachträglich behoben werden muss. Fehlende Tests verlangsamen den Normalfall nicht direkt, machen aber den deutlich teureren Problemfall wahrscheinlicher.
+
+![Wertstromanalyse Ist-Zustand](images/wertstrom_ist_zustand.png)
+
+**Soll-Zustand (Prozess mit KI-Unterstützung):**
+
+Sobald die PHP-Klasse fertig geschrieben ist, erzeugt der KI-Generator die passende Testklasse in sehr kurzer Zeit inklusive Korrektur (vgl. Messdaten Abschnitt 3.5). Anschliessend wird die Testklasse mit PHPUnit ausgeführt und bei Bedarf in wenigen Minuten von Hand (ggf. per KI) nachgebessert. Weil dieser Schritt kaum noch Zeit kostet, entfällt er nicht mehr aus Zeitgründen, und die Klasse gelangt mit Testabdeckung in die CI/CD-Pipeline. Fehler werden dadurch früher erkannt, und der aufwändige Recovery-Pfad — also die nachträgliche Fehlerbehebung in Produktion — wird seltener durchlaufen.
+
+CI/CD-Integration ist in der Praxis Standardverfahren, wird in dieser Arbeit jedoch bewusst nicht umgesetzt, sondern nur als Zielpunkt des Wertstroms mitgeführt — um den Aufwand im Rahmen des CAS auf die Testgenerierung selbst zu fokussieren (vgl. Abgrenzung in Abschnitt 1.2).
+
+Bezug zu DORA-Metriken-Theorie: Weil die Testerstellung schneller geht, wird auch die Zeit von der Codeänderung bis zur Auslieferung kürzer — das misst DORA mit der Kennzahl Lead Time for Changes. Ausserdem werden Fehler eher schon vor dem Deployment gefunden statt erst danach, wodurch weniger fehlerhafte Änderungen in Produktion landen — DORA misst das mit der Change Failure Rate. Die Wertstromanalyse zeigt also, warum die Zeitersparnis durch KI (Hypothese H1 in Abschnitt 2.3) für diese Arbeit wichtig ist.
+
+![Wertstromanalyse Soll-Zustand](images/wertstrom_soll_zustand.png)
+
+
 
 ### 2.2 Geplanter KI-Einsatz
 
