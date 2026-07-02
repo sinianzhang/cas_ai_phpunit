@@ -161,65 +161,61 @@ Bezug zu DORA-Metriken-Theorie: Weil die Testerstellung schneller geht, wird auc
 **Vollständiger Ablauf — drei Abschnitte:**
 
 ```
-╔══════════════════════════════════════════════════════╗
-║  ABSCHNITT 1: INPUT & VORBEREITUNG                   ║
-╠══════════════════════════════════════════════════════╣
-║                                                      ║
-║  PHP-Klasse (z.B. JsonDecodeViewHelper.php)          ║
-║       ↓                                              ║
-║  Code-Analyse (typo3-test-audit Plugin)              ║
-║  - public Methoden identifizieren                    ║
-║  - Abhängigkeiten prüfen (DI, GeneralUtility, etc.)  ║
-║  - Klassifizierung: Unit / Edge / Functional         ║
-║       ↓                                              ║
-║  Prompt zusammenbauen                                ║
-║  Variante A: nur PHP-Quellcode                       ║
-║  Variante B: PHP-Code + PHPDoc + Kommentare          ║
-╚══════════════════════════════════════════════════════╝
-       ↓
-╔══════════════════════════════════════════════════════╗
-║  ABSCHNITT 2: AUSFÜHRUNG & VALIDIERUNG               ║
-╠══════════════════════════════════════════════════════╣
-║                                                      ║
-║  LLM (Claude API)                                    ║
-║       ↓                                              ║
-║  Ausgabe: PHP-Testklasse als Text                    ║
-║       ↓                                              ║
-║  Test speichern (Tests/Unit/...Test.php)             ║
-║       ↓                                              ║
-║  PHPUnit ausführen (ddev exec phpunit)               ║
-║       ↓                                              ║
-║  ┌──────────────────────────────┐                   ║
-║  │ GREEN  → sofort nutzbar      │                   ║
-║  │ FAIL   → manuell nachbessern │                   ║
-║  └──────────────────────────────┘                   ║
-║       ↓                                             ║
-║  Effekte messen:                                    ║
-║  - Zeit: Generierung + Review + Korrekturen (Min.)  ║
-║  - Code Coverage (Line %)                           ║
-║  - Anzahl GREEN-Tests ohne Änderung                 ║
-╚══════════════════════════════════════════════════════╝
-       ↓
-╔══════════════════════════════════════════════════════╗
-║  ABSCHNITT 3: BEWERTUNG & ERKENNTNISSE               ║
-╠══════════════════════════════════════════════════════╣
-║                                                      ║
-║  Vergleich: Manuell vs. KI (Var. A) vs. KI (Var. B)║
-║  Kriterien:                                          ║
-║  - Laufen Tests durch? (ja / nein / nach Korrektur) ║
-║  - Code Coverage Line (%)                            ║
-║  - Assertions sinnvoll? (Edge-Cases, Grenzwerte)    ║
-║  - Mocking korrekt? (TYPO3-Dependencies)            ║
-║  - Zeitersparnis gegenüber manuell                  ║
-╚══════════════════════════════════════════════════════╝
+══════════════════════════════════════════════════════
+ABSCHNITT 1: INPUT & VORBEREITUNG
+══════════════════════════════════════════════════════
+Code-Analyse aller PHP-Klasse einer Extension (KI-CLI-Skill:test-audit-text)
+- public Methoden identifizieren
+- Abhängigkeiten prüfen (DI, GeneralUtility, etc.)
+- Klassifizierung: Unit / Edge / Functional
+    ↓  
+(ENTWEDER)
+Generierung von Tests für alle Klasse (KI-CLI-Skill:generate-unit-tests) 
+(ODER)
+Generierung von Tests für eine Klasse   
+- Prompt erstellen, mit AAA-Pattern  (Claude Code)
+- Mit oder ohne PHPDoc/ Inline-Kommentare
+══════════════════════════════════════════════════════
+    ↓
+	↓
+══════════════════════════════════════════════════════
+ABSCHNITT 2: AUSFÜHRUNG & VALIDIERUNG 
+(je nach Komplxität von zu testenden Klassen)
+══════════════════════════════════════════════════════
+LLM (Claude Code) generiert und speichert eine oder alle PHP-Testklassen
+    ↓
+Kontrolle, Fix, Nachverbesserung(manuell oder per KI) einer oder alle PHP-Testklassen
+- PHPUnit ausführen und analysieren
+- Code Coverage 
+- PHPstan (Error-Fix: manuell oder per KI)
+- Mutationstest per infection (Verbesserung: manuell oder per KI-CLI-Skill:fix-unit-tests)
+- Subjektive Analyse und Korrektur
+══════════════════════════════════════════════════════
+	↓
+	↓
+══════════════════════════════════════════════════════
+ABSCHNITT 3: BEWERTUNG & ERKENNTNISSE
+(nur Messmethodik dieser Arbeit — kein Bestandteil des wiederverwendbaren Plugin-Workflows)
+Vergleich: Manuell vs. KI-generiert, Kriterien 
+- Laufen Tests durch? (ja / nein / nach Korrektur)
+- Code Coverage Funktions- und Methodenabdeckung (%)
+- Assertions sinnvoll? (Edge-Cases, Grenzwerte)
+- Mocking korrekt? (TYPO3-Dependencies)
+- PHPstan (Error-Fix per KI) 
+- Mutationstest per infection  
+- Zeitersparnis gegenüber manuell
 ```
 
-**Zwei Varianten für Anforderungswissen:**
+**Bemerkungen**:
+- Die konkrete Anwendung auf genau diese 5 Klassen (inkl. Begründung der Auswahl) ist bereits Inhalt von 2.4 "Vorgehen zur Einführung und Validierung" und wird in 3.2/3.4 mit echten Ergebnissen durchexerziert. 
 
-| Variante | LLM-Input | Erwartetes Ergebnis |
-|---|---|---|
-| **A – Code only** | PHP-Quellcode | Technisch korrekte, aber oberflächliche Tests; fehlende Edge-Cases |
-| **B – Code + Kontext** | PHP-Code + PHPDoc + Kommentare | Tests prüfen auch Geschäftsregeln und Grenzwerte |
+- Die 4 Plugin Skills finden Sie im Abschnitt 3.1 Tooling und Infrastruktur.
+
+- Die Abschnitte 1 und 2 des obigen Ablaufs (Code-Analyse, Prompt, LLM-Aufruf, PHPUnit-Ausführung) bilden den generischen Prozess, den das Plugin typo3-test-audit bei jeder beliebigen Klasse einer TYPO3-Extension durchläuft — unabhängig vom konkreten Projekt.
+
+- Abschnitt 3 dagegen — der Vergleich mit manuell geschriebenen Tests — ist kein Bestandteil dieses wiederverwendbaren Ablaufs, sondern ausschliesslich die Messmethodik, mit der in dieser CAS-Arbeit die Praxistauglichkeit der KI-generierten Tests überprüft wird (siehe Abschnitt 3.5). 
+
+- Für die Bewertung und Erkenntnisse dieser CAS-Arbeit bekommt die KI bei der Testgenerierung bewusst nur den reinen PHP-Code zu sehen — ohne PHPDoc oder Kommentare. Grund: So zeigt sich, was die KI rein aus dem Code selbst herausfinden kann, ohne zusätzliche Hilfestellung. (s. Abschnitt 1.1).
 
 ### 2.3 Hypothesen und erwartete Benefits
 
