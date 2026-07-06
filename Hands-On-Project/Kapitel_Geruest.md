@@ -272,15 +272,32 @@ Xdebug / php-code-coverage — Werkzeuge zur Messung der Codeabdeckung (https://
 PHPStan — Statisches Analyse-Tool; prüft den PHP-Code auf Typfehler und potenzielle Bugs, ohne ihn auszuführen — wird hier eingesetzt, um die Qualität der generierten Testklassen zu bewerten (https://phpstan.org/) 
 Infection — Mutations-Test-Framework für PHP; prüft die Qualität der Tests, indem es den Quellcode gezielt verändert und überprüft, ob die Tests diese Änderungen erkennen (sogenannte Mutanten "töten") (https://infection.github.io/)
 
-Claude Code CLI Plugin typo3-test-audit
+
+### 3.2 Entwickltes Resultat: Claude Code CLI Plugin
 Das Plugin wurde im Rahmen dieser Arbeit entwickelt und besteht aus vier aufeinander aufbauenden Skills, die direkt im Claude Code CLI aufgerufen werden:
+
 /test-audit-text — Der erste Schritt: Das Plugin durchsucht alle PHP-Klassen einer Extension und klassifiziert sie automatisch in vier Kategorien: geeignet für Unit-Tests, Edge-Fälle (sowohl Unit- als auch Functional-Tests möglich), nur für Functional-Tests geeignet, oder nicht direkt testbar. Die Klassifizierung basiert auf Signalen im Quellcode, z. B. ob eine Klasse TYPO3-Infrastruktur wie CacheManager, ConnectionPool oder $GLOBALS['TSFE'] verwendet. Das Ergebnis wird als .md- und .txt-Datei gespeichert. Auf diesem Report basiert auch die Auswahl der fünf Beispielklassen in dieser Arbeit.
+
 /test-audit-chart — Liest den generierten Report und erstellt daraus ein SVG-Donut-Diagramm als visuelle Übersicht der Klassenverteilung.
+
 /generate-unit-tests — Liest den .txt-Report und generiert automatisch PHPUnit-Testklassen für alle Unit- und Edge-Klassen. Pro Methode werden Happy-Path, Grenzwerte, Bool-Flags und Fehlerpfade abgedeckt. Alle Tests folgen dem AAA-Pattern (Arrange, Act, Assert). Existiert bereits eine Testdatei, analysiert der Skill vorhandene Kommentare und PHPDoc-Hinweise und ergänzt gezielt die fehlenden Testfälle — bestehender Code wird dabei nicht verändert.
+
 /fix-unit-tests — Liest einen Infection-Report (Mutationstest) und ergänzt gezielt neue Testmethoden für alle überlebten Mutanten. So können Lücken in der Testabdeckung systematisch geschlossen werden.
 Das Plugin hat eigentlich keinen direkten Bezug auf der Arbeit, das Plugin ist wiederverwendbar und nicht auf dieses Projekt beschränkt — es kann bei beliebigen TYPO3-Extensions eingesetzt werden, was ich sicherlich als einen Mehrwert und Benifit halte, möchte daher expliziert in diesem Abschnitt aufnehmen und kurz erläutern.
 
-### 3.2 Beispielbasierte Demonstration
+### 3.3 Nutzung von Plugin
+Load Plugin
+claude --plugin-dir .claude/plugins/typo3-test-audit
+(mit Screenshot)
+
+Run 4 Skills
+/typo3-test-audit:test-audit-text <extension-path-or-name>
+/typo3-test-audit:test-audit-chart <extension-path-or-name>
+/typo3-test-audit:generate-unit-tests <extension-path-or-name>
+/typo3-test-audit:fix-unit-tests <extension-path-or-name>
+(mit Screenshot)
+
+### 3.4 Beispielbasierte Demonstration
 
 Für jede der 5 Klassen wird dokumentiert:
 
@@ -310,12 +327,7 @@ User: Analysiere folgende PHP-Klasse und generiere PHPUnit Unit-Tests.
 
 **Messung:** PHPUnit-Ausgabe (Green/Red/Failures), Coverage-Report
 
-### 3.3 Einbezug der Stakeholder
-
-- **Hausformat-Team:** Review der generierten Tests auf Praxistauglichkeit
-- **Dozent FHNW:** Begleitung der Methodik, Feedback zu Hypothesen und Auswertung
-
-### 3.4 Pilotnutzung
+### 3.5 Pilotnutzung
 Als Pilotprojekt dient die Extension hf-view-helpers im TYPO3-Demoprojekt cas_ai_phpunit. Die fünf Beispielklassen wurden anhand des Audit-Reports ausgewählt und decken bewusst unterschiedliche Komplexitätsstufen ab — von einfacher Dummy-Logik bis hin zu TYPO3-abhängigem Code mit Mocking-Bedarf.
 
 Für jede Klasse wird der vollständige Messzyklus in drei Schritten durchgeführt:
@@ -325,7 +337,7 @@ KI-Variante A (Code only) — Der Quellcode der Klasse wird ohne zusätzlichen K
 KI-Variante B (Code + Kontext) — Zusätzlich zum Quellcode werden PHPDoc-Kommentare und Inline-Kommentare als Hinweise mitgegeben. Ziel ist es zu prüfen, ob der zusätzliche Kontext die Testqualität verbessert.
 Nach jedem Schritt wird das Messprotokoll ausgefüllt (siehe Abschnitt 3.5). Die Ergebnisse aller fünf Klassen fliessen vollständig in Kapitel 4 ein.
 
-### 3.5 Messung und Beobachtung der Benefits und Effekte
+### 3.6 Messung und Beobachtung der Benefits und Effekte
 
 #### Messmethodik
 
