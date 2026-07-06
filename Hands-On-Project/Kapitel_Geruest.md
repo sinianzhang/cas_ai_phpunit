@@ -92,28 +92,32 @@ Diese Arbeit ist bewusst eingegrenzt, um innerhalb des CAS-Rahmens klare und mes
 
 Die Eingrenzung auf Unit-Tests und auf 5 Klassen ist methodisch bewusst gewählt: Sie ermöglicht einen fairen, kontrollierten Vergleich zwischen manuell erstellten und KI-generierten Tests mit messbaren Metriken.
 
-### 1.3 Unternehmens-, Projekt, und Lernziele
+### 1.3 Unternehmens-, Lern-, und Projektziele
 
 Die Ziele dieser Arbeit lassen sich auf drei Ebenen betrachten.
 **Unternehmensziele (für ehemaligen auch zukünfgiten Arbeitgeber)**
 Es steht im Vordergrund, dass automatisierte Tests im Alltag tatsächlich geschrieben werden — und nicht nur in der Theorie sinnvoll wären. Wie in Abschnitt 1.1 beschrieben, fehlt im Projektgeschäft schlicht die Zeit dafür. 
 
-Das Unternehmen erhofft sich von dieser Arbeit zwei konkrete Dinge:
-Weniger Aufwand pro Test: Wenn ein grosser Teil der Testerstellung durch KI übernommen (mit oder ohne Inline-Kommentar zur Generierung bestimmtes TestCases) werden kann, sinkt die Hürde, Tests überhaupt zu schreiben. Das senkt langfristig das Risiko von unentdeckten Fehlern in den ViewHelper-Klassen, die in vielen Kundenprojekten wiederverwendet werden.
-Ein wiederverwendbares Werkzeug: Das im Rahmen dieser Arbeit entwickelte Plugin typo3-test-audit (siehe Abschnitt 1.2 und 3.1) soll nicht nur für diese Arbeit, sondern auch danach im Tagesgeschäft nutzbar sein — für beliebige TYPO3-Extensions, nicht nur für hf-view-helpers.
+Das Unternehmen erhofft sich von dieser Arbeit zwei konkrete Dinge für die Test-Klassen:
+Weniger Aufwand: Wenn ein grosser Teil der Testerstellung durch KI übernommen (mit oder ohne Inline-Kommentar zur Generierung bestimmtes TestCases) werden kann, sinkt die Hürde, Tests überhaupt zu schreiben. 
+
+Weniger Fehler: Das senkt langfristig das Risiko, dass die UnitTestClass selbst fehlerhaft ist und dadurch ein falsches Sicherheitsgefühl entsteht. Hier wird in erster Linie auf Fehler beschränkt, die statisch erkennbar sind.
+
+**persönliche Lernziele**
+Neben den beiden inhaltlichen Zielen ist mir die Arbeit auch persönlich wichtig, um mich als Entwickler weiterzuentwickeln. PHPUnit-Tests waren bislang nicht Teil meines Alltags — genau das macht diese Arbeit für mich zu einer guten Gelegenheit, mich intensiv und strukturiert mit dem Thema Testing auseinanderzusetzen: Wie schreibt man sinnvolle Testfälle, wie funktioniert Mocking von TYPO3-Abhängigkeiten, wie liest man einen Coverage-Report richtig, und was sagt ein Mutation Score tatsächlich aus? Gleichzeitig lerne ich den Umgang mit einem modernen Toolset, das über PHPUnit hinausgeht — insbesondere Claude Code als KI-gestützte Entwicklungsumgebung, PHPStan für die statische Analyse und Infection für Mutationstests. Dieses Wissen bleibt auch über die Arbeit hinaus nutzbar, sowohl für mich persönlich als auch für den Einsatz beim Arbeitgeber.
 
 **Projektziele (CAS-Arbeit)**
-Für die Arbeit selbst verfolge ich zwei Hauptziele, die auch die Struktur der Auswertung in Kapitel 3 und 4 bestimmen:
+Für die Arbeit selbst verfolge ich drei Hauptziele, die auch die Struktur der Auswertung in Kapitel 3 und 4 bestimmen:
 
-Erstes Hauptziel — Machbarkeit zeigen: Ich will nachweisen, dass sich aus einer bestehenden PHP-Klasse mithilfe eines LLM automatisch eine lauffähige PHPUnit-Testklasse erzeugen lässt, ohne dass ich die Tests von Grund auf selbst schreiben muss. „Lauffähig" heisst hier ganz konkret: Die Tests lassen sich mit PHPUnit ausführen, sie bestehen (grün) und sie prüfen sinnvolle Fälle statt nur oberflächlich zu bestehen.
+Erstes Hauptziel — Ein wiederverwendbares Werkzeug: Das im Rahmen dieser Arbeit entwickelte Plugin typo3-test-audit (siehe Abschnitt 1.2 und 3.1) soll nicht nur für diese Arbeit, sondern auch danach im Tagesgeschäft nutzbar sein — für beliebige TYPO3-Extensions, nicht nur für hf-view-helpers.
 
-Zweites Hauptziel — Fairer Vergleich mit Zahlen: Ich will nicht nur behaupten, dass KI-generierte Tests gut sind, sondern das mit Zahlen belegen. Dazu vergleiche ich für jede der fünf ausgewählten Klassen die von mir manuell geschriebenen Tests mit den KI-generierten Tests, anhand von vier klar messbaren Kriterien:
+Zweites Hauptziel — Machbarkeit zeigen: Ich will nachweisen, dass sich aus einer bestehenden PHP-Klasse mithilfe eines LLM automatisch eine lauffähige PHPUnit-Testklasse erzeugen lässt, ohne dass ich die Tests von Grund auf selbst schreiben muss. „Lauffähig" heisst hier ganz konkret: Die Tests lassen sich mit PHPUnit ausführen, sie bestehen (grün) und sie prüfen sinnvolle Fälle statt nur oberflächlich zu bestehen.
+
+Drittes Hauptziel — Fairer Vergleich mit Zahlen: Ich will nicht nur behaupten, dass KI-generierte Tests gut sind, sondern das mit Zahlen belegen. Dazu vergleiche ich für jede der fünf ausgewählten Klassen die von mir manuell geschriebenen Tests mit den KI-generierten Tests, anhand von vier klar messbaren Kriterien:
 Erstellungszeit — wie lange dauert es, bis eine lauffähige, fehlerfreie Testklasse vorliegt?Methodenabdeckung (Coverage) — wie viele der öffentlichen Methoden werden überhaupt von einem Test aufgerufen?
 PHPStan-Fehler — wie sauber und typsicher ist der generierte Testcode?
 Mutation Score — prüfen die Tests wirklich die Logik, oder würden sie auch bei einer fehlerhaften Implementierung noch grün bleiben?
 
-**persönliches Lernziele**
-Neben den beiden inhaltlichen Zielen ist mir die Arbeit auch persönlich wichtig, um mich als Entwickler weiterzuentwickeln. PHPUnit-Tests waren bislang nicht Teil meines Alltags — genau das macht diese Arbeit für mich zu einer guten Gelegenheit, mich intensiv und strukturiert mit dem Thema Testing auseinanderzusetzen: Wie schreibt man sinnvolle Testfälle, wie funktioniert Mocking von TYPO3-Abhängigkeiten, wie liest man einen Coverage-Report richtig, und was sagt ein Mutation Score tatsächlich aus? Gleichzeitig lerne ich den Umgang mit einem modernen Toolset, das über PHPUnit hinausgeht — insbesondere Claude Code als KI-gestützte Entwicklungsumgebung, PHPStan für die statische Analyse und Infection für Mutationstests. Dieses Wissen bleibt auch über die Arbeit hinaus nutzbar, sowohl für mich persönlich als auch für den Einsatz beim Arbeitgeber.
 
 ### 1.4 Stakeholder-Analyse
 
