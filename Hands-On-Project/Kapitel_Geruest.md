@@ -254,6 +254,7 @@ Begründung der Auswahl:
 Die Klassen stammen alle aus packages/hf-view-helpers, da dort der Test-Audit-Workflow (Plugin typo3-test-audit) bereits eingerichtet ist und alle 47 Klassen klassifiziert vorliegen (4 Unit, 21 Edge-Cases, 18 Functional, 4 nicht testbar). Die gewählten fünf Klassen decken bewusst den Bogen von trivialer Logik über komplexe reine PHP-Logik bis hin zu TYPO3-abhängigem Glue-Code ab.
  „Clue Codes" ist eine Verschreibung von „Glue-Code" (englisch für „Klebstoff-Code"). Der Begriff bezeichnet Code, der verschiedene Systemteile miteinander verbindet — in TYPO3 konkret: ViewHelper-Klassen, die TYPO3-interne Dienste aufrufen (z.B. makeInstance(), CacheManager, DateUtility). Solcher Code ist eng mit dem Framework verzahnt und schwer isoliert zu testen.
 
+### 2.5
 
 ---
 
