@@ -429,15 +429,13 @@ Stufe-1: Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften, Imp
 
 ## 4. Diskussion
 
-### 4.1 Erreichte Ergebnisse
+### 4.1 Erreichte Ergebnisse und Beitrag der Arbeit
 
 _[Wird nach Umsetzung ausgefüllt]_
 
 - Wurden die Hypothesen aus Kapitel 2.3 bestätigt oder widerlegt?
 - Wie verhält sich die KI bei reiner Logik vs. Glue-Code?
 - Wie gross ist der Unterschied zwischen Variante A und Variante B?
-
-### 4.2 Beitrag der Arbeit
 
 _[Wird nach Umsetzung ausgefüllt]_
 
@@ -455,7 +453,31 @@ Erwartete Erkenntnisse:
   - Bei komplexen Geschäftsregeln, die nicht im Code sichtbar sind
   - Empfehlung: PHPDoc konsequent pflegen
 
-### 4.3 Empfohlene nächste Schritte
+### 4.2 Andere Erfahrungen und Arbeiten 
+**Vergleich mit anderen Praxiserfahrungen**
+Praxisberichte oder Referenzen zum Einsatz generativer KI (z. B. GitHub Copilot, JetBrains AI, ChatGPT) im Software-Testing findet man im Internet oder Publikationen, sie  zeigen, zusammengefasst, ein klares und ähnliches Muster aus Vorteilen und Grenzen.
+
+Vorteile: KI spart Zeit bei repetitivem, wiederkehrendem Code und liefert schnell ein brauchbares Testgerüst. Die Code-Coverage steigt dadurch rasch an. Zudem liefert KI auf Nachfrage schnell Ideen für Edge-Cases (z. B. Null-Werte, Extremwerte), die man selbst leicht übersieht.
+
+Nachteile: Der „Echo Chamber“-Effekt, also KI übernimmt Fehler aus dem Code, statt sie zu erkennen — rechnet eine Funktion aus Versehen falsch, bestätigt die KI dieses falsche Ergebnis trotzdem als richtig. KI neigt dazu, Mocks exzessiv zu nutzen anstatt das tatsächliche funktionale Rückgabe-Verhalten einer Komponente zu prüfen eben auch veraltete Test-Methoden (z.B. deprecated PHPUnit-Features) zu nutzen. 
+
+Um dieses Risiko zu senken, braucht es drei Validierungsmassnahmen:
+
+Menschliche Kontrolle: KI-generierter Testcode darf nie ungeprüft übernommen werden — er muss wie der Code eines unerfahrenen Entwicklers auf fachliche Richtigkeit und bezüglich der Geschäftsanforderungen geprüft werden.
+
+Mutationstests (z. B. Infection PHP): Der eigentliche Härtetest. Ein Tool baut gezielt Fehler in den Produktionscode ein — schlägt der Test dabei nicht fehl, ist die Assertion nutzlos und muss überarbeitet werden.
+
+Ergänzende Integrationstests: Da KI Abhängigkeiten (Datenbanken, APIs) meist einfach wegmockt, müssen wichtige Systempfade zusätzlich mit echten Integrationstests abgesichert werden.
+
+**Einordnung in die akademische Forschung**
+Meine Ergebnisse lassen sich in den breiteren Forschungsstand mehr oder weginer einordnen. 
+Durrani et al. (2025) untersuchen mittels eines Zero-Truncated-Poisson-Modells quantitativ, wie sich KI-Einsatz auf Genauigkeit und Effizienz über sechs SE-Phasen hinweg auswirkt. Für die Testing-Phase zeigen sie, dass KI die Test-Accuracy signifikant verbessert (p < 0.0001), der Effizienzgewinn jedoch statistisch nicht signifikant ist (p = 0.1359) — mit dem Hinweis, dass KI-generierte Testsuiten weiterhin manuelle Validierung bzw. "human-in-the-loop"-Aufsicht benötigen.
+ 
+Mein Erkenntnis deckt sich mit den eigenen Messungen: Auch hier war bei 3 von 5 Klassen eine Korrekturphase nötig (H2/H3), und die Zeitersparnis (H1) war zwar sehr deutlich, ersetzte aber keine menschliche Kontrolle. 
+
+Vergleich mit einer Breitenstudie z.B. von Durrani et al., liefert meine Arbeit eher tool- und technologiespezifische Evidenz für einen konkreten LLM-Workflow (Claude API) im TYPO3/PHPUnit-Kontext.
+
+### 4.3 Empfehlung, Innovation, Lernen
 
 - Integration des KI-Generators in CI/CD-Pipeline (Pre-Commit Hook)
 - Erweiterung auf Functional Tests (TYPO3 TestingFramework)
