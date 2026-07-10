@@ -300,43 +300,61 @@ Run 4 Skills
 
 ### 3.4 Beispielbasierte Demonstration
 
-Für jede der 5 Klassen wird dokumentiert:
+Dieser Abschnitt zeigt den kompletten Workflow ausführlich an einem konkreten Beispiel 'Classes/ViewHelpers/Format/JsonDecodeViewHelper.php': reine PHP-Logik ohne TYPO3-Kern-Abhängigkeit, — überschaubar und auch komplex genug, um Edge-Cases sowie einen Mutationstest zu zeigen.
+Schritt 1: Klassifizierung durch den Skill `/test-audit-text`
+Der Skill durchsucht alle Klassen der Extension `hf-view-helpers` und ordnet `JsonDecodeViewHelper` automatisch als unit-testbar ein, mit kurzer Begründung im Report (test-audit-hf-view-helpers.md):
 
-**Input:**
-- PHP-Quellcode der Klasse (Variante A)
-- PHP-Quellcode + PHPDoc + Kommentare (Variante B)
 
-**Prompt-Template:**
-```
-System: Du bist ein erfahrener TYPO3-Entwickler und PHPUnit-Experte.
-        Erstelle Tests für PHP 8.3, PHPUnit 12, TYPO3 TestingFramework.
+Schritt 2: Prompt an die KI (während der Skill '/generate-unit-tests' generiert bzw. passt alle Klassen an)
 
-User: Analysiere folgende PHP-Klasse und generiere PHPUnit Unit-Tests.
-      Anforderungen:
-      - declare(strict_types=1), final class, Methoden public function(): void
-      - Mindestens 3 Testmethoden pro public Methode (Happy-Path, Grenzwert, Fehlerfall)
-      - #[DataProvider]-Attribut für parametrisierte Szenarien (PHPUnit 12)
-      - Korrekte Namespaces (Hausformat\ViewHelpers\Tests\Unit\...)
-      - Extend von TYPO3\TestingFramework\Core\Unit\UnitTestCase
-      - #[Test]-Attribut statt @test-Docblock (PHPUnit 12)
-      - AAA-Struktur: // Arrange, // Act, // Assert
-      
-      [PHP-Quellcode hier]
-```
+Dabei wird eine Klasse automatisch generiert: (Inhalt der Klasse wird hier nicht angezeigt)
+'packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/JsonDecodeViewHelperTest.php'
 
-**Output:** Generierte PHP-Testklasse
+Schritt 3: PHPUnit-Test (mit Coverage) und PHPStan
+PHPUnit
+?> ddev exec php vendor/bin/phpunit \
+  -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
+  packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/JsonDecodeViewHelperTest.php
+ 
 
-**Messung:** PHPUnit-Ausgabe (Green/Red/Failures), Coverage-Report
+PHPUnit - Code Coverage
+?> ddev exec XDEBUG_MODE=coverage php vendor/bin/phpunit \
+  -c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
+  --coverage-text \
+  packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/JsonDecodeViewHelperTest.php
+
+PHPStan
+?> ddev php vendor/bin/phpstan analyse \
+  -c packages/hf-view-helpers/Build/phpstan/phpstan.tests.neon \
+  packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/JsonDecodeViewHelperTest.php
+
+Die Ergebnisse sind alle GRÜN, alle UnitTests sind bestanden, keine statischen Fehler sind findbar, Coverage sind 100% sowohl bei Methods auch bei Lines.
+
+
+Schritt 4: Mutations-Test (per Infection)
+?> ddev exec php vendor/bin/infection run \
+  --configuration=packages/hf-view-helpers/Build/infection/infection.json5  --threads=4 \
+  --filter packages/hf-view-helpers/Classes/ViewHelpers/Format/CaseViewHelper.php
+
+Wie bereits erwähnt, ist der Mutationstest – insbesondere der Wert MSI: Of Covered – ein wichtiger Indikator für die Qualität von Unit-Tests. In diesem Fall 53.33% wäre nicht zufrieden.
+
+Der Befehl generiert Reports in verschiedenen Format, z.B. HTML-Datei mit besserer Darstellung (wie oben) und Text-Datei mit genaueren Angaben zu den Mutationen, also welche Mutationen wurden generiert und survived. Hier wird ein Beispiel gezeigt, also die Definition eines Arguments „depth“ (Typ:int, Obligatorisch:false, Defaultwert:512)
+
+
+Schritt 5: UnitTestCases erweitern bzw. fixen per den Skill '/fix-unit-tests'
+
+Alternativ soll der Fix per Prompt durchaus gleich wirkend sein, da ich bereits den Skill zur Verfügung habe, lasse ich den Skill durchlaufen.
+Der Skill liest den Report, nämlich genau die Fälle, wo Mutationstests survibed sind, und erweitert die TestCases. Zum Beispiel wird ein TestCase dazu angelegt.
+
+Es ist ein klassischer Fall, PHPUnit hat zuvor z.B. den Defaulverhalten nämlich den Defaultwert 512 nicht richtig getestet, also der Mutationstest ändert den Wert 512 zu 511 oder 513 (in der originalen Klasse, Zeile 71), läuft die UnitTests immer mit Erfolg durch mit GRÜN. Durch den neuen TestCase wird der Fall abgedeckt, also nun ändert Mutationstest den Wert zu 511, bei Aufruf der Funktion ohne Argument-'depth', bekommt dann die Funition den Argument mit Wert 511, 511 ist nicht gleich 512, wird der Test dann als killed eingestuft. 
+
+
+Schritt 6:  Kontrolle mit Mutationstest nach dem Fix
+Nach dem Fix zeigt dann der Mutationstest für die betroffene Klasse 100% GRÜN.
+
 
 ### 3.5 Pilotnutzung
-Als Pilotprojekt dient die Extension hf-view-helpers im TYPO3-Demoprojekt cas_ai_phpunit. Die fünf Beispielklassen wurden anhand des Audit-Reports ausgewählt und decken bewusst unterschiedliche Komplexitätsstufen ab — von einfacher Dummy-Logik bis hin zu TYPO3-abhängigem Code mit Mocking-Bedarf.
 
-Für jede Klasse wird der vollständige Messzyklus in drei Schritten durchgeführt:
-
-Manuelle Referenz — Die Testklasse wird vollständig von Hand geschrieben. Diese Messung dient als Baseline für den Vergleich mit der KI-generierten Variante.
-KI-Variante A (Code only) — Der Quellcode der Klasse wird ohne zusätzlichen Kontext an das LLM übergeben. Die generierte Testklasse wird anschliessend mit PHPUnit ausgeführt und die Ergebnisse werden gemessen.
-KI-Variante B (Code + Kontext) — Zusätzlich zum Quellcode werden PHPDoc-Kommentare und Inline-Kommentare als Hinweise mitgegeben. Ziel ist es zu prüfen, ob der zusätzliche Kontext die Testqualität verbessert.
-Nach jedem Schritt wird das Messprotokoll ausgefüllt (siehe Abschnitt 3.5). Die Ergebnisse aller fünf Klassen fliessen vollständig in Kapitel 4 ein.
 
 ### 3.6 Messung und Beobachtung der Benefits und Effekte
 
@@ -445,7 +463,7 @@ Beitrag der Arbeit:
 - Ein wiederverwendbares, projektunabhängiges Werkzeug (Plugin typo3-test-audit), das über diese Arbeit hinaus im Tagesgeschäft einsetzbar ist.
 - Eine differenzierte Empfehlung: KI-Generierung eignet sich besser für reine Logik-Klassen; bei TYPO3-Glue-Code liefert sie einen brauchbaren, aber korrekturbedürftigen Ausgangspunkt.
 
-### 4.2 Andere Erfahrungen und Arbeiten 
+### 4.2 Bezug zu bestehenden Erfahrungen und Studien
 **Vergleich mit anderen Praxiserfahrungen**
 Praxisberichte oder Referenzen zum Einsatz generativer KI (z. B. GitHub Copilot, JetBrains AI, ChatGPT) im Software-Testing findet man im Internet oder Publikationen, sie  zeigen, zusammengefasst, ein klares und ähnliches Muster aus Vorteilen und Grenzen.
 
@@ -471,31 +489,93 @@ Vergleich mit einer Breitenstudie z.B. von Durrani et al., liefert meine Arbeit 
 
 ### 4.3 Empfehlung, Innovation, Lernen
 
-- Integration des KI-Generators in CI/CD-Pipeline (Pre-Commit Hook)
-- Erweiterung auf Functional Tests (TYPO3 TestingFramework)
-- Veröffentlichung als TYPO3 Extension oder CLI-Tool (Packagist / GitHub)
-- Weiterentwicklung des Prompt-Frameworks für TYPO3-spezifische Patterns (DI, Repositories)
-- **Mutationstesting zur objektiven Qualitätsmessung:** In dieser Arbeit wurde die Assertion-Qualität subjektiv mit einer Skala 1–5 bewertet. Als nächster Schritt könnte [Infection](https://infection.github.io/) (PHP Mutation Testing Framework) eingesetzt werden. Infection verändert automatisch den Produktionscode (z.B. `>` → `>=`, `+` → `-`) und prüft, ob die Tests diese Mutationen erkennen. Das Ergebnis ist der **Mutation Score Indicator (MSI)** — eine objektive, automatisch berechnete Kennzahl für Assertion-Qualität. Da PHPUnit kein eingebautes Mutationstesting bietet, ist Infection als separate Abhängigkeit (`infection/infection`) zu installieren. Der erhebliche Laufzeit-Overhead (pro Mutation ein vollständiger PHPUnit-Lauf) war der Grund, dieses Werkzeug aus dem Scope dieser Arbeit auszuschliessen.
+**Empfehlung**
+
+Aus den Messungen in Abschnitt 3.6 und der Diskussion in 4.1/4.2 ergeben sich für den ehemaligen bzw. einen zukünftigen Arbeitgeber die folgenden Empfehlungen:
+
+Reine PHP-Logik-Klassen priorisieren: Für Klassen ohne TYPO3-Abhängigkeiten liefert die KI bereits im ersten Wurf hochwertige Tests, sollte  im Tagesgeschäft eingeführt werden.
+
+PHPDoc und Inline-Kommentare gezielt für die Testgenerierung nutzen: In dieser Arbeit liess ich die KI bewusst nur mit reinem Quellcode ohne Kommentare füttern lassen. Für den produktiven ist der Einsatz empfiehlungswert. — dieser zusätzliche Kontext dürfte die Trefferquote und Assertion-Qualität weiter erhöhen, dagegen erhöhrt sich ggf. der Aufwand. Ich rede von einer guten Balance zwischen Aufwand und Qualität.
+
+Korrekturschritt fest einplanen, nicht überspringen: generierter Testcode darf nie ungeprüft übernommen werden, z.B. Typ-Annotationen und Mock-Konfiguration etc. sollen durch eine erfahrene Person geprüft werden, bevor die Testklasse in die CI/CD-Pipeline gelangt.
+
+Mutationstests als Qualitätsgate etablieren: Da Codeabdeckung allein die Testqualität nicht zuverlässig misst, sollte Infection dauerhaft als zweite Prüfebene neben PHPUnit und PHPStan im Projekt verankert werden.
+
+Test-Driven Development (TDD) mit KI-Unterstützung: TDD ist eine moderne, viel beachtete Methode, bei der zuerst der Test und erst danach der Code entsteht. Da die KI Tests in Minuten liefert, könnte künftig der Mensch den ersten Test schreiben und dann unter anderen die KI Implementierung, Refactoring und Edge-Cases, etc. übernehmen.
+
+**Innovation**
+
+Der Neuheitswert dieser Arbeit liegt weniger im theoretischen Nachweis, dass LLMs Unit-Tests generieren können — das ist in der Literatur bereits breit dokumentiert (siehe Durrani et al. 2025, Abschnitt 4.2) —, sondern in der konkreten, wiederverwendbaren Umsetzung im TYPO3-Ökosystem:
+
+Das Plugin typo3-test-audit (Abschnitt 3.2) ist projektunabhängig konzipiert und kann ab sofort bei beliebigen TYPO3-Extensions eingesetzt werden.
+
+Die systematische Klassifizierung von Testbarkeit (Unit / Edge / Functional / nicht testbar) automatisiert einen Schritt, der bislang rein erfahrungsbasiert und manuell erfolgte. Der Skill test-audit-text macht dieses Wissen für jede beliebige Extension reproduzierbar verfügbar.
+
+Die Kombination aus drei unabhängigen Qualitätskennzahlen — Methods Coverage, PHPStan-Fehlerrate und Mutation Score (MSI of Covered) liefert eine deutlich robustere, objektivere Bewertungsgrundlage für KI-generierten Testcode.
+
+**Lernen**
+
+Die persönlichen Lernziele aus Abschnitt 1.3 habe ich durch die Arbeit an den fünf Klassen erreicht. PHPUnit war vorher nicht Teil meines Alltags. Durch das manuelle Schreiben der Referenz-Tests und das Prüfen der KI-generierten Tests habe ich gelernt, wie ein sinnvoller Testfall aufgebaut ist (Happy-Path, Grenzwerte, Fehlerfälle) und wie man einen Coverage-Report richtig liest, statt nur auf die Prozentzahl zu schauen.
+
+Besonders viel gelernt habe ich beim Mocking von TYPO3-Abhängigkeiten, am Beispiel des DateViewHelper (H5). Erst beim Beheben der Fehler in den KI-generierten Mocks wurde mir klar, welche Typ-Angaben und welche Mock-Konfiguration wirklich nötig sind. Dieses Wissen kann ich auch bei anderen TYPO3-Klassen im Alltag nutzen.
+
+Auch der Begriff Mutation Score war mir vorher unbekannt. Durch den praktischen Einsatz von Infection und das Lesen der MSI-Werte (Abschnitt 3.6) verstehe ich jetzt, warum eine hohe Codeabdeckung allein noch nichts über die Qualität der Tests aussagt.
+
+Zusätzlich habe ich mit Claude Code ein Werkzeug kennengelernt, das mehr kann als nur Code schreiben. Beim Bau eigener Skills (Abschnitt 3.2) habe ich gelernt, wie man ein KI-CLI-Tool gezielt für wiederkehrende Aufgaben einrichtet. Zusammen mit PHPStan ist das ein Werkzeugset, das ich auch nach dieser Arbeit im Berufsalltag weiter nutzen werde.
 
 ---
 
-## Anhang
+### Glossar
 
-### A: Prompt-Template (vollständig)
-_[Wird in Kapitel 3.2 definiert und hier vollständig abgedruckt]_
+AAA-Pattern: Arrange/Act/Assert — Strukturprinzip für Testmethoden.
 
-### B: Generierte Testklassen
-- B1: JsonDecodeViewHelperTest.php (KI-generiert, Variante A + B)
-- B2: CleanHtmlViewHelperTest.php (KI-generiert, Variante A + B)
-- B3: RoundViewHelperTest.php (KI-generiert, Variante A + B)
-- B4: ServiceTest.php (KI-generiert, Variante A + B)
-- B5: DateViewHelperTest.php (KI-generiert, Variante A + B)
+Glue-Code: Code, der verschiedene Systemteile miteinander verbindet — hier: 
+ViewHelper-Klassen, die TYPO3-interne Dienste aufrufen (z. B. `makeInstance()`, `CacheManager`, `DateUtility`).
 
-### C: PHPUnit-Ausgaben und Coverage-Reports
-_[Screenshots / Textausgaben der PHPUnit-Läufe]_
+Methods Coverage: Anteil der öffentlichen Methoden, die mindestens einmal von einem Test aufgerufen werden.
 
-### D: Ausgefüllte Messprotokolle (pro Klasse)
+MSI (of Covered): Mutation Score Indicator, gemessen mit Infection PHP; berücksichtigt nur Mutanten in tatsächlich von Tests ausgeführtem Code.
 
-Die vollständig ausgefüllten Messprotokolle (quantitativ + qualitativ) für alle 5 Klassen finden sich hier nach Abschluss der Messungen. Die Aggregation aller Werte ist in der Aggregationstabelle in Kapitel 3.5 zusammengefasst.
+PHPStan-Level: Stufe der Strenge der statischen Code-Analyse (0 = grundlegend, 10 = extrem streng); in dieser Arbeit Level 6.
 
-_[Wird nach Umsetzung ausgefüllt — je ein Protokollblock pro Klasse (Manuell / KI-A / KI-B)]_
+Mutationstest: Testverfahren, bei dem künstliche Fehler (Mutanten) in den Code eingebaut werden, um zu prüfen, ob bestehende Tests diese erkennen.
+
+### Literaturverzeichnis
+
+- Durrani, U. et al. (2025). *Titel/Quelle ergänzen.*
+- DDEV: https://ddev.com/
+- TYPO3 14.3: https://typo3.com/de/typo3-v14
+- PHPStan: https://phpstan.org/
+- PHPStan Rule Levels: https://phpstan.org/user-guide/rule-levels
+- Infection PHP: https://infection.github.io/
+- Infection — Covered Code Mutation Score Indicator: https://infection.github.io/guide/#Covered-Code-Mutation-Score-Indicator
+- Xdebug: https://xdebug.org/
+- PHPUnit Code Coverage: https://docs.phpunit.de/en/13.2/code-coverage.html
+- DORA — Value Stream Management: https://dora.dev/guides/value-stream-management/
+
+
+### Abkürzungsverzeichnis
+
+| Abkürzung | Bedeutung |
+|---|---|
+| AAA | Arrange, Act, Assert (Struktur-Pattern für Testmethoden) |
+| CAS | Certificate of Advanced Studies |
+| CI/CD | Continuous Integration / Continuous Deployment |
+| CLI | Command Line Interface |
+| CMS | Content Management System |
+| DDEV | Docker-basierte lokale Entwicklungsumgebung |
+| DI | Dependency Injection |
+| DORA | DevOps Research and Assessment |
+| EXT | Extension (TYPO3-Erweiterung) |
+| FHNW | Fachhochschule Nordwestschweiz |
+| GmbH | Gesellschaft mit beschränkter Haftung |
+| GPT | Generative Pre-trained Transformer |
+| JSON | JavaScript Object Notation |
+| KI | Künstliche Intelligenz |
+| LLM | Large Language Model |
+| MSI | Mutation Score Indicator |
+| PHP | PHP: Hypertext Preprocessor |
+| SVG | Scalable Vector Graphics |
+| TDD | Test-Driven Development |
+| TSFE | TYPO3 Frontend Controller (`$GLOBALS['TSFE']`) |
+| VSM | Value Stream Mapping (Wertstromanalyse)
