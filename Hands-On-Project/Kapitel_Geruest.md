@@ -268,7 +268,7 @@ TYPO3 14.3 — Das CMS-Framework, für das die Extension entwickelt und getestet
 PHP 8.3 — Laufzeitumgebung für alle PHP-Klassen und Tests
 PHPUnit 12 — Test-Framework für die Ausführung der Unit-Tests
 TYPO3 TestingFramework — Erweitert PHPUnit um TYPO3-spezifische Hilfsfunktionen (beinhaltet in TYPO3 14.3)
-Claude API (claude-sonnet-4-6) — Das verwendete LLM zur Testgenerierung
+Claude API (claude-sonnet-5) — Das verwendete LLM zur Testgenerierung
 Xdebug / php-code-coverage — Werkzeuge zur Messung der Codeabdeckung (https://xdebug.org/)
 PHPStan — Statisches Analyse-Tool; prüft den PHP-Code auf Typfehler und potenzielle Bugs, ohne ihn auszuführen — wird hier eingesetzt, um die Qualität der generierten Testklassen zu bewerten (https://phpstan.org/) 
 Infection — Mutations-Test-Framework für PHP; prüft die Qualität der Tests, indem es den Quellcode gezielt verändert und überprüft, ob die Tests diese Änderungen erkennen (sogenannte Mutanten "töten") (https://infection.github.io/)
@@ -355,6 +355,19 @@ Nach dem Fix zeigt dann der Mutationstest für die betroffene Klasse 100% GRÜN.
 
 ### 3.5 Pilotnutzung
 
+Abschnitt 3.4 demonstriert den vollstänidigen Workflow aber exemplarisch an einer einzelnen Klasse (JsonDecodeViewHelper), wurde derselbe Ablauf im Rahmen eines Pilotlaufs auf die übrigen vier ausgewählten Klassen angewendet, nämlich ForViewHelper, RoundViewHelper, Greeter und DateViewHelper. Es kammen dieselben Vorgehensweise sowie Skills und Tools (Plugin 'typo3-test-audit', PHPUnit, PHPStan, Infection) zum Einsatz.
+
+Ziel dieses Pilotlaufs war zu prüfen, ob der Workflow auch bei unterschiedlicher Klassenkomplexität und unterschiedlichem TYPO3-Abhängigkeitsgrad reproduzierbar funktioniert, danach geht zur systematischen Auswertung in Abschnitt 3.6.
+
+Qualitative Beobachtungen aus dem Pilotlauf:
+- Greeter, einfachste Dummy-/Testklasse ohne TYPO3-Abhängigkeiten, lief bereits im ersten Anlauf vollständig fehlerfrei durch (First-Run GREEN) — kein Korrekturbedarf.
+- Bei den reinen PHP-Logik-Klassen mit höherer Komplexität, ForViewHelper, RoundViewHelper, traten im ersten Wurf vereinzelt PHPStan-Fehler auf. Diese liessen sich in der Korrekturphase per KI in wenigen Minuten beheben.
+- DateViewHelper als einzige Klasse mit echten TYPO3-Dependencies (Glue-Code) zeigte erwartungsgemäss den grössten Korrekturbedarf.
+
+
+Der Pilotlauf bestätigt damit, dass der in 3.4 gezeigte Einzelfall kein Sonderfall war, sondern sich auf Klassen unterschiedlicher Komplexität und Abhängigkeitstiefe übertragen lässt. Die generierte Testklasse mussten nicht verworfen oder von Grund auf neu geschrieben werden — die KI lieferte in jedem Fall einen sinnvollen, weiterverwendbaren Ausgangspunkt. 
+
+Die vollständigen quantitativen Ergebnisse dieses Pilotlaufs — Erstellungszeit, Methods Coverage, Mutation Score, PHPStan-Fehler und Assertions-Qualität je Klasse — werden in Abschnitt 3.6 tabellarisch dargestellt, die Hypothesen aus Abschnitt 2.3 werden einbezogen.
 
 ### 3.6 Messung und Beobachtung der Benefits und Effekte
 
