@@ -20,7 +20,21 @@
 
 ---
 
+## Kurz- und Zusammenfassung
+
+Automatisierte Tests sind wichtig für gute Software. Im TYPO3-Alltag fehlt dafür aber oft die Zeit. Diese Arbeit prüft, ob eine KI (Claude, Modell Sonnet 5) dieses Problem lösen kann. Die KI soll aus fertigem PHP-Code selbständig gute PHPUnit-Tests schreiben — ohne Hilfe durch Kommentare im Code, damit man sieht, was die KI allein leistet.
+
+Als Beispiel dient die TYPO3-Extension `hf-view-helpers`. Dafür wurde das Plugin `typo3-test-audit` für Claude Code gebaut. Es macht drei Dinge: Es findet heraus, welche Klassen sich für Unit-Tests eignen. Es schreibt die Tests. Und es verbessert die Tests anhand der Mutationstest-Resultate. Fünf Klassen wurden ausgewählt, von einfach bis TYPO3-abhängig. Für jede Klasse wird ein von Hand geschriebener Test mit dem KI-Test verglichen. Gemessen wird mit vier Werten: Zeit, Methods Coverage, PHPStan-Fehler und Mutation Score (mit Infection).
+
+Die KI war immer mindestens 6-mal schneller als von Hand. Nach kurzer Korrektur (unter 2 Minuten pro Klasse) erreichten alle KI-Tests 100 % Methods Coverage, keine PHPStan-Fehler und 100 % Mutation Score. Beim ersten Versuch gab es aber bei drei von fünf Klassen noch Fehler oder Lücken. Am meisten Korrektur brauchte die einzige Klasse mit echten TYPO3-Abhängigkeiten (DateViewHelper). Deshalb darf man KI-Tests nie einfach ungeprüft übernehmen — Kontrolle durch Menschen und Mutationstests bleiben wichtig.
+
+Die Arbeit zeigt: KI-gestützte PHPUnit-Tests funktionieren unter TYPO3 14 und sparen viel Zeit, ohne die Qualität zu senken. Zusätzlich entsteht mit `typo3-test-audit` ein Werkzeug, das auch für andere TYPO3-Extensions nutzbar ist. Empfehlung für den Arbeitgeber: einfache PHP-Klassen zuerst per KI testen lassen, die Korrektur fest einplanen, und Mutationstests dauerhaft neben PHPUnit und PHPStan einsetzen.
+
+---
+
 ## 1. Einleitung
+
+Dieses Kapitel führt in die Arbeit ein. Zuerst wird das Praxisproblem beschrieben, das die Motivation liefert (1.1), danach der Rahmen beim Arbeitgeber und im Demoprojekt (1.2). Anschliessend werden die Ziele auf Unternehmens-, Lern- und Projektebene erklärt (1.3), gefolgt von den beteiligten Stakeholdern und ihrem Einfluss auf die Arbeit (1.4).
 
 ### 1.1 Problembeschreibung
 
@@ -92,10 +106,11 @@ TYPO3-Community — Einfluss: niedrig für die breitere TYPO3-Community ist die 
 
 FHNW / Dozent — Einfluss: hoch Aus akademischer Sicht steht der wissenschaftliche Beitrag der Arbeit im Vordergrund: eine nachvollziehbare Methodik, überprüfbare Hypothesen (siehe Abschnitt 2.3) und eine saubere, messbare Auswertung. Der Dozent bzw. die Dozentin begleitet die Arbeit fachlich, gibt Feedback zu Aufbau und Methodik und bewertet am Ende das Ergebnis. Damit ist der Einfluss auf Anforderungen und Qualitätsmassstäbe hoch, auch wenn ich die inhaltliche Umsetzung selbst mache.
 
-
 ---
 
 ## 2. Planung
+
+Dieses Kapitel zeigt, wie die Arbeit geplant wurde. Zuerst zeigt die Wertstromanalyse den Ist-Zustand ohne KI und den Soll-Zustand mit KI-gestützter Testgenerierung (2.1). Danach wird der geplante KI-Einsatz als konkreter Ablauf beschrieben (2.2), gefolgt von den Hypothesen und erwarteten Benefits (2.3). Zum Schluss wird erläutert, wie die fünf Beispielklassen ausgewählt und der Ansatz eingeführt und validiert wird (2.4).
 
 ### 2.1 Wertstromanalyse
 
@@ -220,6 +235,8 @@ Die Klassen stammen alle aus packages/hf-view-helpers, da dort der Test-Audit-Wo
 ---
 
 ## 3. Umsetzung
+
+Dieses Kapitel zeigt, wie die Planung aus Kapitel 2 umgesetzt wurde. Zuerst werden Tools, Infrastruktur und Systemlandschaft vorgestellt (3.1), danach das entwickelte Plugin `typo3-test-audit` und seine Nutzung (3.2, 3.3). Anschliessend wird der Workflow an einem Beispiel gezeigt (3.4) und dann im Pilotlauf auf die übrigen Klassen angewendet (3.5). Zum Schluss werden die Messergebnisse aller fünf Klassen dargestellt und mit den Hypothesen aus 2.3 verglichen (3.6).
 
 ### 3.1 Tooling, Infrastruktur und Systemlandschaft
 
@@ -434,6 +451,8 @@ Stufe-1: Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften, Imp
 ---
 
 ## 4. Diskussion
+
+Dieses Kapitel bespricht die Ergebnisse aus Kapitel 3. Zuerst werden die Ergebnisse und der Beitrag der Arbeit zusammengefasst (4.1). Danach werden sie mit anderen Praxiserfahrungen und der Forschung verglichen (4.2). Zum Schluss folgen Empfehlungen für den Arbeitgeber sowie eine Reflexion, was neu und was gelernt wurde (4.3).
 
 ### 4.1 Erreichte Ergebnisse und Beitrag der Arbeit
 
