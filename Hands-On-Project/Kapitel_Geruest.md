@@ -34,7 +34,7 @@ Noch wichtig zu erwähnen: PHP-Klassen enthalten oft mehr Information als nur de
 
 Untersucht wird dies anhand von fünf Klassen aus einer produktiven TYPO3-Extension. Die Klassen sind bewusst unterschiedlich gewählt — von einfacher Dummy-Logik über reine PHP-Logik bis hin zu komplexem TYPO3-abhängigem Code mit echtem Mocking-Bedarf. Die Ergebnisse werden quantitativ anhand von vier Kennzahlen gemessen: Erstellungszeit, Methodenabdeckung, PHPStan-Fehler und Mutation Score. Diese bilden zusammen die Grundlage für eine Einschätzung des Praxisnutzens KI-gestützter Testgenerierung.
 
-### 1.2 Organisatorische Einbettung und Abgrenzungen
+### 1.2 Organisatorische Einbettung
 
 #### Unternehmenskontext
 
@@ -52,45 +52,6 @@ Um die Testbarkeit der Klassen systematisch zu erfassen, wurde im Rahmen dieser 
 
 Das Plugin ist nicht projektspezifisch und kann künftig bei beliebigen TYPO3-Projekten wiederverwendet werden — ein zusätzlicher Mehrwert/Benifit dieser Arbeit. Die Funktionsweise wird in Abschnitt 3.1 ausführlicher beschrieben.
 
-#### Systemlandschaft
-
-```
-┌─────────────────────────────────────────────────────────┐
-│  Entwickler (Hausformat GmbH)                           │
-│  Claude Code CLI + Plugin typo3-test-audit              │
-└───────────────────┬─────────────────────────────────────┘
-                    │ generiert Prompt
-                    ▼
-┌───────────────────────────────┐     ┌───────────────────┐
-│  Claude API (Anthropic)       │────▶│  PHPUnit-Test.php │
-│  claude-sonnet-4-6            │     │  (generiert)      │
-└───────────────────────────────┘     └────────┬──────────┘
-                                               │ ausführen
-┌─────────────────────────────────┐            ▼
-│  DDEV / Docker                  │  ┌─────────────────────┐
-│  ┌─────────────────────────┐    │  │  PHPUnit 12         │
-│  │  TYPO3 14 / PHP 8.3     │    │  │  TYPO3 Testing-     │
-│  │  hf-view-helpers        │    │  │  Framework          │
-│  │  (47 Klassen)           │    │  │  Xdebug / Coverage  │
-│  └─────────────────────────┘    │  └─────────────────────┘
-│  MariaDB 10.11                  │
-└─────────────────────────────────┘
-```
-
-#### Abgrenzungen
-
-Diese Arbeit ist bewusst eingegrenzt, um innerhalb des CAS-Rahmens klare und messbare Ergebnisse zu liefern:
-
-| Thema | Im Scope | Ausserhalb Scope |
-|---|---|---|
-| Test-Typ | PHPUnit Unit-Tests | Functional-, Integration- und E2E-Tests |
-| Technologie | PHP 8.3, TYPO3 14, PHPUnit 12 | Andere Frameworks oder Sprachen |
-| Testfälle | 5 ausgewählte Klassen aus `hf-view-helpers` | Gesamte Extension oder andere Projekte |
-| LLM | Claude API (Anthropic) | Andere LLMs (GPT, Gemini, Llama) |
-| CI/CD | Manuelles Ausführen via DDEV | Vollautomatische Pipeline-Integration |
-| Deployment | Lokale Entwicklungsumgebung | Produktivsystem oder Staging |
-
-Die Eingrenzung auf Unit-Tests und auf 5 Klassen ist methodisch bewusst gewählt: Sie ermöglicht einen fairen, kontrollierten Vergleich zwischen manuell erstellten und KI-generierten Tests mit messbaren Metriken.
 
 ### 1.3 Unternehmens-, Lern-, und Projektziele
 
@@ -260,7 +221,7 @@ Die Klassen stammen alle aus packages/hf-view-helpers, da dort der Test-Audit-Wo
 
 ## 3. Umsetzung
 
-### 3.1 Tooling und Infrastruktur
+### 3.1 Tooling, Infrastruktur und Systemlandschaft
 
 Für die Umsetzung dieser Arbeit kommen folgende Tools und Technologien zum Einsatz:
 DDEV — Lokale Entwicklungsumgebung auf Docker-Basis, in der das TYPO3-Projekt betrieben wird (https://ddev.com/)
@@ -272,6 +233,19 @@ Claude API (claude-sonnet-5) — Das verwendete LLM zur Testgenerierung
 Xdebug / php-code-coverage — Werkzeuge zur Messung der Codeabdeckung (https://xdebug.org/)
 PHPStan — Statisches Analyse-Tool; prüft den PHP-Code auf Typfehler und potenzielle Bugs, ohne ihn auszuführen — wird hier eingesetzt, um die Qualität der generierten Testklassen zu bewerten (https://phpstan.org/) 
 Infection — Mutations-Test-Framework für PHP; prüft die Qualität der Tests, indem es den Quellcode gezielt verändert und überprüft, ob die Tests diese Änderungen erkennen (sogenannte Mutanten "töten") (https://infection.github.io/)
+
+#### Abbildung als Systemlandschaft
+
+![Systemlandschaft: KI-gestützte PHPUnit-Testgenerierung](images/systemlandschaft.jpg)
+
+Abbildung zeigt die Systemlandschaft: 
+Claude Code generiert — mithilfe des Plugins `typo3-test-audit` oder direkt per Prompt — aus dem Quellcode der Extension PHPUnit-Testklassen und schreibt sie ins lokale Git-Repository `cas_ai_phpunit` (auf GitHub versioniert). 
+
+Dieses Repository ist zugleich das Projektverzeichnis, das DDEV als Docker-Container auf demselben Rechner einbindet. 
+
+Innerhalb von DDEV laufen die TYPO3-14.x-Instanz mit dem Testobjekt `hf-view-helpers` sowie die Analyse-Tools PHPUnit, PHPStan und Infection, die zusammen mit der gemessenen Erstellungszeit die vier Kennzahlen dieser Arbeit liefern. 
+
+Diese Ergebnisse werden anschliessend von mir als Autor ausgewertet.
 
 
 ### 3.2 Entwickltes Resultat: Claude Code CLI Plugin
