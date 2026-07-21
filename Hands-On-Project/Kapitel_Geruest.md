@@ -535,16 +535,41 @@ Zusätzlich habe ich mit Claude Code ein Werkzeug kennengelernt, das mehr kann a
 
 AAA-Pattern: Arrange/Act/Assert — Strukturprinzip für Testmethoden.
 
-Glue-Code: Code, der verschiedene Systemteile miteinander verbindet — hier: 
-ViewHelper-Klassen, die TYPO3-interne Dienste aufrufen (z. B. `makeInstance()`, `CacheManager`, `DateUtility`).
+Code Coverage: Prozentsatz des Quellcodes, der bei der Testausführung durchlaufen wird. In dieser Arbeit wird primär die Methods Coverage betrachtet (siehe dort).
+
+DORA-Metriken: Kennzahlen zur Messung von Software-Delivery-Performance nach dem DORA-Modell (DevOps Research and Assessment), u. a. Lead Time for Changes (Zeit von der Codeänderung bis zur Auslieferung) und Change Failure Rate (Anteil fehlerhafter Änderungen, die in Produktion landen).
+
+Echo-Chamber-Effekt: Im Software Engineering bezeichnet der Echo-Chamber-Effekt (Echokammer) ein Phänomen, bei dem Teams oder Entwickler ausschliesslich mit Technologien, Methoden und Meinungen in Kontakt kommen, die ihre eigenen Ansichten bestätigen. Dies führt zu Betriebsblindheit, technologischen Fehlentscheidungen und der Ignoranz gegenüber wertvollen Alternativen.
+
+Edge-Case: Testfall an einem Grenz- oder Sonderwert (z. B. leere Eingabe, Null, Maximalwert), der in der normalen Anwendung selten auftritt, aber besonders fehleranfällig ist.
+
+Extbase: PHP-MVC-Framework innerhalb von TYPO3 zur Entwicklung von Extensions.
+
+First-Run GREEN: Eine Testklasse gilt als First-Run GREEN, wenn sie direkt nach der Generierung — ohne Korrekturphase — fehlerfrei durch PHPUnit läuft und PHPStan keine Fehler meldet.
+
+Fluid: Template-Engine von TYPO3, deren Syntax u. a. durch ViewHelper-Klassen erweitert werden kann.
+
+Glue-Code: “Glue Codes” ist eine Verschreibung von ”Glue-Code” (englisch für ”Klebstoff-Code”). Der Begriff bezeichnet Code, der verschiedene Systemteile miteinander verbindet — in TYPO3 konkret: ViewHelper-Klassen, die TYPO3-interne Dienste aufrufen (z.B. makeInstance(), CacheManager, DateUtility). Solcher Code ist eng mit dem Framework verzahnt und schwer isoliert zu testen.
+
+Happy-Path: Der erwartete, fehlerfreie Standardablauf einer Funktion bei gültiger Eingabe.
+
+Human-in-the-loop: Prinzip, wonach ein Mensch KI-generierte Ergebnisse prüft und bei Bedarf korrigiert, statt sie ungeprüft zu übernehmen.
 
 Methods Coverage: Anteil der öffentlichen Methoden, die mindestens einmal von einem Test aufgerufen werden.
 
+Mocking / Mock / Stub: Technik, bei der eine echte Abhängigkeit (z. B. ein TYPO3-Service) durch ein Test-Double ersetzt wird, um eine Klasse isoliert zu testen. PHPUnit stellt dafür u. a. `createMock()` (prüft auch Aufruf-Erwartungen) und `createStub()` (liefert nur Rückgabewerte) bereit.
+
 MSI (of Covered): Mutation Score Indicator, gemessen mit Infection PHP; berücksichtigt nur Mutanten in tatsächlich von Tests ausgeführtem Code.
+
+Mutationstest: Testverfahren, bei dem künstliche Fehler (Mutanten) in den Code eingebaut werden, um zu prüfen, ob bestehende Tests diese erkennen.
 
 PHPStan-Level: Stufe der Strenge der statischen Code-Analyse (0 = grundlegend, 10 = extrem streng); in dieser Arbeit Level 6.
 
-Mutationstest: Testverfahren, bei dem künstliche Fehler (Mutanten) in den Code eingebaut werden, um zu prüfen, ob bestehende Tests diese erkennen.
+Prompt: Die an ein LLM übergebene Anweisung bzw. Eingabetext, aus der die KI eine Antwort (hier: Testcode) generiert.
+
+Tautologische Assertion: Eine Prüfung, die praktisch immer erfüllt ist (z. B. `assertNotNull`, `assertInstanceOf`) und daher keine echte Aussage über die Korrektheit der Implementierung liefert.
+
+Wertstromanalyse (VSM): Aus dem Lean Management stammende Methode zur Visualisierung des gesamten Arbeitsflusses von der Idee bis in Produktion, mit dem Ziel, Engpässe und Wartezeiten sichtbar zu machen.
 
 ### Literaturverzeichnis
 
