@@ -149,52 +149,47 @@ Bezug zu DORA-Metriken-Theorie: Weil die Testerstellung schneller geht, wird auc
 ### 2.2 Geplanter KI-Einsatz
 
 **Vollständiger Ablauf — drei Abschnitte:**
-
-```
-══════════════════════════════════════════════════════
 ABSCHNITT 1: INPUT & VORBEREITUNG
-══════════════════════════════════════════════════════
-Code-Analyse aller PHP-Klasse einer Extension (KI-CLI-Skill:test-audit-text)
+Code-Analyse aller PHP-Klasse einer Extension (CLI-Plugin, Skill:'test-audit-text')
 - public Methoden identifizieren
-- Abhängigkeiten prüfen (DI, GeneralUtility, etc.)
-- Klassifizierung: Unit / Edge / Functional
-    ↓  
+- Abhängigkeiten prüfen (Dependency Injection, GeneralUtility, etc.)
+- Klassifizierung: Unit / Edge / Functional / Nicht Textbar
 (ENTWEDER)
-Generierung von Tests für alle Klasse (KI-CLI-Skill:generate-unit-tests) 
+Generierung von Tests für alle Klasse (CLI-Plugin, Skill:'generate-unit-tests') 
 (ODER)
 Generierung von Tests für eine Klasse   
 - Prompt erstellen, mit AAA-Pattern  (Claude Code)
 - Mit oder ohne PHPDoc/ Inline-Kommentare
-══════════════════════════════════════════════════════
-    ↓
-	↓
-══════════════════════════════════════════════════════
+    ↓↓↓
 ABSCHNITT 2: AUSFÜHRUNG & VALIDIERUNG 
 (je nach Komplxität von zu testenden Klassen)
-══════════════════════════════════════════════════════
 LLM (Claude Code) generiert und speichert eine oder alle PHP-Testklassen
-    ↓
-Kontrolle, Fix, Nachverbesserung(manuell oder per KI) einer oder alle PHP-Testklassen
+Kontrolle, Fix, Nachverbesserung(manuell oder per KI) einer oder aller PHP-Testklassen
 - PHPUnit ausführen und analysieren
 - Code Coverage 
 - PHPstan (Error-Fix: manuell oder per KI)
-- Mutationstest per infection (Verbesserung: manuell oder per KI-CLI-Skill:fix-unit-tests)
-- Subjektive Analyse und Korrektur
-══════════════════════════════════════════════════════
-	↓
-	↓
-══════════════════════════════════════════════════════
+- Mutationstest per infection (Verbesserung: manuell oder per KI-CLI-Skill:'fix-unit-tests')
+- ggf. Sonstige manuelel oder subjektive Analyse und Korrektur
+    ↓↓↓
 ABSCHNITT 3: BEWERTUNG & ERKENNTNISSE
-(nur Messmethodik dieser Arbeit — kein Bestandteil des wiederverwendbaren Plugin-Workflows)
+(5 ausgewälte Klassen, nur Messmethodik dieser Arbeit — kein Bestandteil des wiederverwendbaren CLI-Plugin-Workflows)
 Vergleich: Manuell vs. KI-generiert, Kriterien 
 - Laufen Tests durch? (ja / nein / nach Korrektur)
 - Code Coverage Funktions- und Methodenabdeckung (%)
 - Assertions sinnvoll? (Edge-Cases, Grenzwerte)
 - Mocking korrekt? (TYPO3-Dependencies)
 - PHPstan (Error-Fix per KI) 
-- Mutationstest per infection  
-- Zeitersparnis gegenüber manuell
-```
+- Mutationstest (%) (infection)  
+- Zeitmessung, Assertions-Stufe identifizierung, etc.
+
+
+![Geplanter KI-Einsatz — Übersicht](images/ki_einsatz_uebersicht.png)
+
+![Abschnitt 1 — Input & Vorbereitung](images/ki_einsatz_abschnitt1.png)
+
+![Abschnitt 2 — Ausführung & Validierung](images/ki_einsatz_abschnitt2.png)
+
+![Abschnitt 3 — Bewertung & Erkenntnisse](images/ki_einsatz_abschnitt3.png)
 
 **Bemerkungen**:
 - Die konkrete Anwendung auf genau diese 5 Klassen (inkl. Begründung der Auswahl) ist bereits Inhalt von 2.4 "Vorgehen zur Einführung und Validierung" und wird in 3.2/3.4 mit echten Ergebnissen durchexerziert. 
