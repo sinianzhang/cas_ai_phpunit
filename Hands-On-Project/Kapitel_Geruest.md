@@ -270,9 +270,9 @@ Claude Code generiert — mithilfe des Plugins `typo3-test-audit` oder direkt pe
 
 Dieses Repository ist zugleich das Projektverzeichnis, das DDEV als Docker-Container auf demselben Rechner einbindet. 
 
-Innerhalb von DDEV laufen die TYPO3-14.x-Instanz mit dem Testobjekt `hf-view-helpers` sowie die Analyse-Tools PHPUnit, PHPStan und Infection, die zusammen mit der gemessenen Erstellungszeit die vier Kennzahlen dieser Arbeit liefern. 
-
-Diese Ergebnisse werden anschliessend von mir als Autor ausgewertet.
+Innerhalb von DDEV laufen die TYPO3-Instanz der Version 14 mit der Extension 'hf-view-helpers' als Testobjekt sowie die Analyse-Tools PHPUnit, PHPStan und Infection, die zusammen mit der gemessenen Erstellungszeit die vier Kennzahlen dieser Arbeit liefern.
+ 
+Die Auswertung dieser Ergebnisse erfolgt anhand der vier festgelegten Kennzahlen — Erstellungszeit, Methodenabdeckung, PHPStan-Fehler und Mutation Score —, indem für jede der fünf Beispielklassen die manuell erstellte der KI-generierten Testklasse gegenübergestellt wird.
 
 
 ### 3.2 Entwickltes Resultat: Claude Code CLI Plugin
