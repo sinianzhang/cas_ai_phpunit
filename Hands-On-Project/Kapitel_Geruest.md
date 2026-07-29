@@ -124,7 +124,7 @@ Dieses Kapitel zeigt, wie die Arbeit geplant wurde. Zuerst zeigt die Wertstroman
 
 ### 2.1 Wertstromanalyse
 
-Die Wertstromanalyse (Value Stream Mapping, VSM) ist eine aus dem Lean Management stammende Methode, die den gesamten Arbeitsfluss „von der Idee bis in Produktion" visualisiert und dabei Engpässe (Bottlenecks) sowie Wartezeiten zwischen einzelnen Prozessschritten sichtbar macht (dora.dev/guides/value-stream-management/). Im Kontext dieser Arbeit wird der Wertstrom auf den relevanten Ausschnitt eingegrenzt: von der fertig geschriebenen PHP-Klasse bis zur produktiv nutzbaren Testabdeckung.
+Die Wertstromanalyse (Value Stream Mapping, s. A. Davis & R. Edwards 2024) ist eine aus dem Lean Management stammende Methode, die den gesamten Arbeitsfluss „von der Idee bis in Produktion" visualisiert und dabei Engpässe (Bottlenecks) sowie Wartezeiten zwischen einzelnen Prozessschritten sichtbar macht (dora.dev/guides/value-stream-management/). Im Kontext dieser Arbeit wird der Wertstrom auf den relevanten Ausschnitt eingegrenzt: von der fertig geschriebenen PHP-Klasse bis zur produktiv nutzbaren Testabdeckung.
 
 **Ist-Zustand (aktueller Prozess):**
 
@@ -583,6 +583,7 @@ Wertstromanalyse (VSM): Aus dem Lean Management stammende Methode zur Visualisie
 
 ### Literaturverzeichnis
 - Bath, G., & van Veenendaal, E. (2014). Improving the test process. Rocky Nook: Massachusetts.
+- A. Davis & R. Edwards (2024). How to use value stream mapping to improve software delivery - A guide to value stream mapping. https://dora.dev/guides/value-stream-management/
 - Durrani, U. et al. (2025). Impact of Artificial Intelligence on Software Engineering Phases and Activities (2013–2024): A Quantitative Analysis Using Zero-Truncated Poisson Model
 - Felderer und Ramler (2016). https://link.springer.com/article/10.1007/s11219-015-9289-z
 - Harrold, M. J. (2000). Testing: A roadmap. In Proceedings of the conference on the future of software engineering (pp. 61–72).
@@ -598,7 +599,6 @@ Wertstromanalyse (VSM): Aus dem Lean Management stammende Methode zur Visualisie
 - Infection — Covered Code Mutation Score Indicator: https://infection.github.io/guide/#Covered-Code-Mutation-Score-Indicator
 - Xdebug: https://xdebug.org/
 - PHPUnit Code Coverage: https://docs.phpunit.de/en/13.2/code-coverage.html
-- DORA — Value Stream Management: https://dora.dev/guides/value-stream-management/
 
 
 ### Abkürzungsverzeichnis
