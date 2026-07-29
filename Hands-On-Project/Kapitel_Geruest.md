@@ -172,7 +172,6 @@ Kontrolle, Fix, Nachverbesserung(manuell oder per KI) einer oder aller PHP-Testk
 - ggf. Sonstige manuelel oder subjektive Analyse und Korrektur
     ↓↓↓
 ABSCHNITT 3: BEWERTUNG & ERKENNTNISSE
-(5 ausgewälte Klassen, nur Messmethodik dieser Arbeit — kein Bestandteil des wiederverwendbaren CLI-Plugin-Workflows)
 Vergleich: Manuell vs. KI-generiert, Kriterien 
 - Laufen Tests durch? (ja / nein / nach Korrektur)
 - Code Coverage Funktions- und Methodenabdeckung (%)
