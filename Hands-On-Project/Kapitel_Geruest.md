@@ -69,23 +69,24 @@ Diese Arbeit setzt genau an diesem Punkt an: Sie untersucht, ob ein LLM diesen A
 
 #### Projektkontext und Demo-Extension
 
-Als technische Basis dient das TYPO3-Demoprojekt `cas_ai_phpunit` (https://github.com/sinianzhang/cas_ai_phpunit), das lokal mit DDEV (Docker-basierte Entwicklungsumgebung) betrieben wird. Innerhalb dieses Projekts wird die Extension 'hf-view-helpers' als Testgegenstand verwendet. Sie bündelt fast 50 TYPO3 Fluid-ViewHelper-Klassen, die im Produktivbetrieb eingesetzt werden.
+Als technische Basis dient das TYPO3-Demoprojekt 'cas_ai_phpunit', das lokal mit DDEV (Docker-basierte Entwicklungsumgebung) betrieben wird. Innerhalb dieses Projekts wird die Extension 'hf-view-helpers' als Testgegenstand verwendet. Sie bündelt fast 50 TYPO3 Fluid-ViewHelper-Klassen, die im Produktivbetrieb eingesetzt werden. 
 
-Um die Testbarkeit der Klassen systematisch zu erfassen, wurde im Rahmen dieser Arbeit ein eigenes Claude-Code-Plugin entwickelt: 'typo3-test-audit'. Es enthält vier Skills, darunter der Skill 'test-audit-text' analysiert alle PHP-Klassen einer Extension und erstellt einen Überblick — wie viele Klassen existieren, welche sich für PHPUnit Unit-Tests eignen und welche funktionale Tests erfordern, jeweils mit kurzer Begründung. Die Auswahl der fünf Beispielklassen für diese Arbeit basiert auf diesem Audit-Report. 
+Um die Testbarkeit der Klassen systematisch zu erfassen, wurde im Rahmen dieser Arbeit ein eigenes Claude-Code LCI-Plugin entwickelt: 'typo3-test-audit'. Es enthält vier Skills, darunter der Skill 'test-audit-text' analysiert alle PHP-Klassen einer Extension und erstellt einen Überblick — wie viele Klassen existieren, welche sich für PHPUnit Unit-Tests eignen und welche funktionale Tests erfordern, jeweils mit kurzer Begründung. 
 
-Das Plugin ist nicht projektspezifisch und kann künftig bei beliebigen TYPO3-Projekten wiederverwendet werden — ein zusätzlicher Mehrwert/Benifit dieser Arbeit. Die Funktionsweise wird in Abschnitt 3.1 ausführlicher beschrieben.
+Die Auswahl der fünf Beispielklassen für diese Arbeit basiert auf diesem Audit-Report. Das CLI-Plugin ist nicht projektspezifisch und kann künftig bei beliebigen TYPO3-Projekten wiederverwendet werden — ein zusätzlicher Mehrwert/Benifit dieser Arbeit. Die Funktionsweise des CLI-Plugins wird in Abschnitt 3.1 erläutert.
 
 
 ### 1.3 Unternehmens-, Lern-, und Projektziele
 
 Die Ziele dieser Arbeit lassen sich auf drei Ebenen betrachten.
-**Unternehmensziele (für ehemaligen auch zukünfgiten Arbeitgeber)**
-Es steht im Vordergrund, dass automatisierte Tests im Alltag tatsächlich geschrieben werden — und nicht nur in der Theorie sinnvoll wären. Wie in Abschnitt 1.1 beschrieben, fehlt im Projektgeschäft schlicht die Zeit dafür. 
+**Unternehmensziele (für ehemaligen auch zukünftigen Arbeitgeber)**
+Im Vordergrund steht, dass automatisierte Tests im Alltag tatsächlich geschrieben werden. Wie in Abschnitt 1.1 beschrieben, fehlt im Projektgeschäft schlicht die Zeit dafür. Dass dies kein Einzelproblem meines (ehemaligen) Arbeitgebers ist, sondern ein branchenweit dokumentiertes Muster, zeigt die systematische Literaturübersicht von Wiklund et al. (2017). Das Praxisproblem lässt sich also verallgemeinern, was den Nutzen einer KI-gestützten Lösung über den eigenen Arbeitgeber hinaus relevant macht.
 
-Das Unternehmen erhofft sich von dieser Arbeit zwei konkrete Dinge für die Test-Klassen:
-Weniger Aufwand: Wenn ein grosser Teil der Testerstellung durch KI übernommen (mit oder ohne Inline-Kommentar zur Generierung bestimmtes TestCases) werden kann, sinkt die Hürde, Tests überhaupt zu schreiben. 
+Das Unternehmen erhofft sich von dieser Arbeit zwei konkrete, messbare Verbesserungen für die Test-Erstellung, gemessen anhand der in Abschnitt 2.3/3.5 definierten Kennzahlen:
 
-Weniger Fehler: Das senkt langfristig das Risiko, dass die UnitTestClass selbst fehlerhaft ist und dadurch ein falsches Sicherheitsgefühl entsteht. Hier wird in erster Linie auf Fehler beschränkt, die statisch erkennbar sind.
+Weniger Aufwand — Ist: Für die betrachteten Klassen der Extension 'hf-view-helpers' existieren aktuell keine Unit-Tests, wie genannt, aus z.B. Zeitgründen. Soll: Ein grosser Teil der Testerstellung wird durch KI übernommen (mit oder ohne Inline-Kommentar zur Generierung bestimmter TestCases), sodass die Erstellungszeit pro Klasse deutlich sinkt. Der konkrete Zielwert für die Zeitersparnis wird in Abschnitt 3.5 festgelegt (siehe Hypothese H1).
+
+Weniger Fehler — Ist: Die Qualität von Unit-Tests wird heute nicht systematisch geprüft, es gibt weder statische Analyse noch Mutationstests. Soll: KI-generierte Tests sind statisch fehlerfrei (0 PHPStan-Fehler) und erreichen einen hohen Mutation Score. Die konkreten Schwellenwerte werden in Abschnitt 3.5 festgelegt (siehe Hypothesen H2, H7).
 
 **persönliche Lernziele**
 Neben den beiden inhaltlichen Zielen ist mir die Arbeit auch persönlich wichtig, um mich als Entwickler weiterzuentwickeln. PHPUnit-Tests waren bislang nicht Teil meines Alltags — genau das macht diese Arbeit für mich zu einer guten Gelegenheit, mich intensiv und strukturiert mit dem Thema Testing auseinanderzusetzen: Wie schreibt man sinnvolle Testfälle, wie funktioniert Mocking von TYPO3-Abhängigkeiten, wie liest man einen Coverage-Report richtig, und was sagt ein Mutation Score tatsächlich aus? Gleichzeitig lerne ich den Umgang mit einem modernen Toolset, das über PHPUnit hinausgeht — insbesondere Claude Code als KI-gestützte Entwicklungsumgebung, PHPStan für die statische Analyse und Infection für Mutationstests. Dieses Wissen bleibt auch über die Arbeit hinaus nutzbar, sowohl für mich persönlich als auch für den Einsatz beim Arbeitgeber.
@@ -586,6 +587,7 @@ Wertstromanalyse (VSM): Aus dem Lean Management stammende Methode zur Visualisie
 - Felderer und Ramler (2016). https://link.springer.com/article/10.1007/s11219-015-9289-z
 - Harrold, M. J. (2000). Testing: A roadmap. In Proceedings of the conference on the future of software engineering (pp. 61–72).
 - Martin et al. (2007). https://ieeexplore.ieee.org/document/4222621
+- Wiklund, K. et al. (2017). Impediments for software test automation: A systematic literature review. Software Testing, Verification and Reliability, 27(8). https://onlinelibrary.wiley.com/doi/10.1002/stvr.1639
 
 
 - DDEV: https://ddev.com/
