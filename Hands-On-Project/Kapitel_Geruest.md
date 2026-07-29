@@ -120,7 +120,7 @@ FHNW / Dozent — Einfluss: hoch Aus akademischer Sicht steht der wissenschaftli
 
 ## 2. Planung
 
-Dieses Kapitel zeigt, wie die Arbeit geplant wurde. Zuerst zeigt die Wertstromanalyse den Ist-Zustand ohne KI und den Soll-Zustand mit KI-gestützter Testgenerierung (2.1). Danach wird der geplante KI-Einsatz als konkreter Ablauf vorgestellt (2.2), gefolgt von den Hypothesen und erwarteten Benefits (2.3). Zum Schluss wird erläutert, wie die fünf Beispielklassen ausgewählt und der Ansatz eingeführt und validiert wird (2.4).
+Dieses Kapitel zeigt, wie die Arbeit geplant wurde. Zuerst zeigt die Wertstromanalyse den Ist-Zustand ohne KI und den Soll-Zustand mit KI-gestützter Testgenerierung (2.1). Danach wird der geplante KI-Einsatz als konkreter Ablauf vorgestellt (2.2), gefolgt von den Hypothesen und erwarteten Benefits (2.3) sowie der Auswahl der fünf Beispielklassen und dem Vorgehen zur Einführung und Validierung (2.4). Zum Schluss als Teil der Planung werden bekannte Chancen und Risiken aus Praxis und Forschung betrachtet (2.5).
 
 ### 2.1 Wertstromanalyse
 
@@ -235,7 +235,12 @@ Begründung der Auswahl:
 Die Klassen stammen alle aus packages/hf-view-helpers, da dort der Test-Audit-Workflow (Plugin typo3-test-audit) bereits eingerichtet ist und alle 47 Klassen klassifiziert vorliegen (4 Unit, 21 Edge-Cases, 18 Functional, 4 nicht testbar). Die gewählten fünf Klassen decken bewusst den Bogen von trivialer Logik über komplexe reine PHP-Logik bis hin zu TYPO3-abhängigem Glue-Code ab.
  „Clue Codes" ist eine Verschreibung von „Glue-Code" (englisch für „Klebstoff-Code"). Der Begriff bezeichnet Code, der verschiedene Systemteile miteinander verbindet — in TYPO3 konkret: ViewHelper-Klassen, die TYPO3-interne Dienste aufrufen (z.B. makeInstance(), CacheManager, DateUtility). Solcher Code ist eng mit dem Framework verzahnt und schwer isoliert zu testen.
 
-### 2.5
+### 2.5 Bekannte Chancen und Risiken aus Praxis und Forschung
+Auch der Blick auf bereits bekannte Erfahrungen — sowohl aus der Praxis als auch aus der Forschung — gehört zur Planung dieser Arbeit: Er wurde bewusst vor der Detailfestlegung der eigenen Hypothesen (2.3) und des Validierungsvorgehens (2.4) eingeholt und bildet die Grundlage für die eigenen Annahmen.
+
+Praxiserfahrungen zeigen ein Muster aus Vor- und Nachteilen, das sich in ähnlicher Form auch in dieser Arbeit wiederfindet: Zeitersparnis und schnelle Coverage-Gewinne stehen Risiken wie dem „Echo-Chamber"-Effekt, etc. — verbunden mit entsprechenden Massnahmen zur Risikominderung.
+
+Akademische Forschung bestätigt dieses Bild ebenfalls weitgehend. Anders als eine Breitenstudie, die verschiedenste KI-Techniken über die Literatur hinweg vergleicht, liefert meine vorliegende Arbeit jedoch tool- und technologiespezifische Evidenz für einen konkreten LLM-Workflow (Claude API) im TYPO3/PHPUnit-Kontext.
 
 ---
 
