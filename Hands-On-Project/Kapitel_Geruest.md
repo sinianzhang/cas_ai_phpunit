@@ -40,15 +40,22 @@ Dieses Kapitel führt in die Arbeit ein. Zuerst wird das Praxisproblem beschrieb
 
 ### 1.1 Problembeschreibung
 
-Automatisierte Tests gelten als Grundpfeiler moderner Softwareentwicklung. Aus meiner langjährigen Erfahrung in verschiedenen Webagenturen mit TYPO3-Projekten zeigt sich jedoch: In der Praxis werden sie häufig weggelassen — nicht weil Entwicklerinnen und Entwickler ihren Nutzen nicht kennen, sondern weil der Aufwand im Projektalltag mit engem Zeitbudget schlicht zu hoch ist.
+Automatisierte Tests gelten als Grundpfeiler moderner Softwareentwicklung. Softwaretests zählen zu den teuersten Entwicklungsphasen und können bis zu 50% der gesamten Entwicklungskosten beanspruchen (Harrold 2000, Bath und van Veenendaal 2014). Gerade in kleinen Unternehmen — zu denen auch typische TYPO3-Agenturen zählen — bleibt der Automatisierungsgrad beim Testen deshalb gering, weil Zeit- und Ressourcenknappheit den Testaufwand direkt limitieren (Felderer und Ramler 2016).  
 
-Genau diesen Engpass adressiert die vorliegende Arbeit. LLMs können PHP-Code analysieren und daraus Testcode generieren. Die zentrale Frage ist: Sind diese Tests praxistauglich — laufen sie durch, decken sie den Code sinnvoll ab, und erkennen sie echte Grenzwerte?
+Das Testing an sich via CI/CD-Automatisierung, die verbereitet im Einsatz ist, alleine senkt nicht den Aufwand (Felderer und Ramler 2016). Also CI/CD-Automatisierung setzt voraus, dass Tests bereits existieren, und löst damit nicht das eigentliche Nadelöhr — das Schreiben der Tests selbst. 
 
-Zugleich ist mir die Arbeit eine Gelegenheit, sich intensiv mit einem modernen Toolset auseinanderzusetzen: Claude Code, PHPUnit mit dem TYPO3 Testing Framework, Infection für Mutationstests und PHPStan für die statische Analyse, etc.
+Genau dieses Spannungsfeld zwischen begrenzter Zeit und hohem Testaufwand bildet den Ausgangspunkt der vorliegenden Arbeit. LLMs können PHP-Code analysieren und daraus Testcode generieren. Die zentrale Frage ist: Sind diese Tests praxistauglich — laufen sie durch, decken sie den Code sinnvoll ab, und erkennen sie echte Grenzwerte?
 
-Noch wichtig zu erwähnen: PHP-Klassen enthalten oft mehr Information als nur den ausführbaren Code — zum Beispiel in PHPDoc- oder Inline-Kommentaren, die erklären, welche Werte eine Methode erwartet, was sie zurückgibt und warum sie so implementiert wurde. Werden diese Informationen als zusätzlicher Input an das LLM übergeben, lassen sich sicherlich gezielter und qualitativ bessere Tests erzeugen. In dieser Arbeit werden Tests bewusst ohne solche Kommentare als Hinweis generiert, was zeigt, was das LLM allein aus dem Quellcode ableiten kann.
+Untersucht wird dies anhand von fünf Klassen aus einer produktiven TYPO3-Extension, die in vielen Kundenprojekten benutzt wird. Die Klassen sind bewusst unterschiedlich gewählt — von einfacher Dummy-Logik über reine PHP-Logik bis hin zu komplexem TYPO3-abhängigem Code mit echtem Mocking-Bedarf. Die Ergebnisse werden quantitativ anhand von vier Kennzahlen gemessen: Erstellungszeit, Methodenabdeckung, PHPStan-Fehler und Mutation Score. Diese bilden zusammen die Grundlage für eine Einschätzung des Praxisnutzens KI-gestützter Testgenerierung.
 
-Untersucht wird dies anhand von fünf Klassen aus einer produktiven TYPO3-Extension. Die Klassen sind bewusst unterschiedlich gewählt — von einfacher Dummy-Logik über reine PHP-Logik bis hin zu komplexem TYPO3-abhängigem Code mit echtem Mocking-Bedarf. Die Ergebnisse werden quantitativ anhand von vier Kennzahlen gemessen: Erstellungszeit, Methodenabdeckung, PHPStan-Fehler und Mutation Score. Diese bilden zusammen die Grundlage für eine Einschätzung des Praxisnutzens KI-gestützter Testgenerierung.
+Noch wichtig zu erwähnen: PHP-Klassen enthalten oft mehr Information als nur den ausführbaren Code — zum Beispiel in PHPDoc- oder Inline-Kommentaren, die erklären, welche Werte eine Methode erwartet, was sie zurückgibt und warum sie so implementiert wurde. In dieser Arbeit werden Tests bewusst ohne solche Kommentare als zusätzliche Inputs oder Hinweis generiert, was zeigt, was das LLM allein aus dem Quellcode ableiten kann.
+
+Zugleich ist mir die Arbeit eine Gelegenheit, sich intensiv mit einem modernen Toolset
+auseinanderzusetzen, vor allem: 
+Claude Code — KI-gestützte Coding-Umgebung (Anthropic), hier zur automatisierten Testgenerierung eingesetzt.
+PHPUnit mit dem TYPO3 Testing Framework — Standard-Testframework für PHP, erweitert um TYPO3-spezifische Hilfsfunktionen.
+Infection für Mutationstests — verändert gezielt den Quellcode (Mutanten) und prüft anhand des Coverage-Reports, ob die bestehenden Tests diese Fehler erkennen ("töten"); das Ergebnis wird als Mutation Score ausgedrückt und zeigt so die tatsächliche Aussagekraft der Tests, nicht nur deren Abdeckung.
+PHPStan für die statische Analyse — findet Typ- und Codefehler, ohne den Code auszuführen.
 
 ### 1.2 Organisatorische Einbettung
 
@@ -574,8 +581,13 @@ Tautologische Assertion: Eine Prüfung, die praktisch immer erfüllt ist (z. B. 
 Wertstromanalyse (VSM): Aus dem Lean Management stammende Methode zur Visualisierung des gesamten Arbeitsflusses von der Idee bis in Produktion, mit dem Ziel, Engpässe und Wartezeiten sichtbar zu machen.
 
 ### Literaturverzeichnis
+- Bath, G., & van Veenendaal, E. (2014). Improving the test process. Rocky Nook: Massachusetts.
+- Durrani, U. et al. (2025). Impact of Artificial Intelligence on Software Engineering Phases and Activities (2013–2024): A Quantitative Analysis Using Zero-Truncated Poisson Model
+- Felderer und Ramler (2016). https://link.springer.com/article/10.1007/s11219-015-9289-z
+- Harrold, M. J. (2000). Testing: A roadmap. In Proceedings of the conference on the future of software engineering (pp. 61–72).
+- Martin et al. (2007). https://ieeexplore.ieee.org/document/4222621
 
-- Durrani, U. et al. (2025). *Titel/Quelle ergänzen.*
+
 - DDEV: https://ddev.com/
 - TYPO3 14.3: https://typo3.com/de/typo3-v14
 - PHPStan: https://phpstan.org/
