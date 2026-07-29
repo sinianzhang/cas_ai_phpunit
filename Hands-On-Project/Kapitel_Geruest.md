@@ -120,7 +120,7 @@ FHNW / Dozent — Einfluss: hoch Aus akademischer Sicht steht der wissenschaftli
 
 ## 2. Planung
 
-Dieses Kapitel zeigt, wie die Arbeit geplant wurde. Zuerst zeigt die Wertstromanalyse den Ist-Zustand ohne KI und den Soll-Zustand mit KI-gestützter Testgenerierung (2.1). Danach wird der geplante KI-Einsatz als konkreter Ablauf beschrieben (2.2), gefolgt von den Hypothesen und erwarteten Benefits (2.3). Zum Schluss wird erläutert, wie die fünf Beispielklassen ausgewählt und der Ansatz eingeführt und validiert wird (2.4).
+Dieses Kapitel zeigt, wie die Arbeit geplant wurde. Zuerst zeigt die Wertstromanalyse den Ist-Zustand ohne KI und den Soll-Zustand mit KI-gestützter Testgenerierung (2.1). Danach wird der geplante KI-Einsatz als konkreter Ablauf vorgestellt (2.2), gefolgt von den Hypothesen und erwarteten Benefits (2.3). Zum Schluss wird erläutert, wie die fünf Beispielklassen ausgewählt und der Ansatz eingeführt und validiert wird (2.4).
 
 ### 2.1 Wertstromanalyse
 
@@ -149,6 +149,7 @@ Bezug zu DORA-Metriken-Theorie: Weil die Testerstellung schneller geht, wird auc
 ### 2.2 Geplanter KI-Einsatz
 
 **Vollständiger Ablauf — drei Abschnitte:**
+```
 ABSCHNITT 1: INPUT & VORBEREITUNG
 Code-Analyse aller PHP-Klasse einer Extension (CLI-Plugin, Skill:'test-audit-text')
 - public Methoden identifizieren
@@ -180,7 +181,7 @@ Vergleich: Manuell vs. KI-generiert, Kriterien
 - PHPstan (Error-Fix per KI) 
 - Mutationstest (%) (infection)  
 - Zeitmessung, Assertions-Stufe identifizierung, etc.
-
+```
 
 ![Geplanter KI-Einsatz — Übersicht](images/ki_einsatz_uebersicht.png)
 
