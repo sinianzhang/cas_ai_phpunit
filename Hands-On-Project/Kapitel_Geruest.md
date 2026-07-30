@@ -96,9 +96,9 @@ Für die Arbeit selbst verfolge ich drei Hauptziele, die auch die Struktur der A
 
 Erstes Hauptziel — Ein wiederverwendbares Werkzeug: Das im Rahmen dieser Arbeit entwickelte Plugin typo3-test-audit (siehe Abschnitt 1.2 und 3.1) soll nicht nur für diese Arbeit, sondern auch danach im Tagesgeschäft nutzbar sein — für beliebige TYPO3-Extensions, nicht nur für hf-view-helpers.
 
-Zweites Hauptziel — Machbarkeit zeigen: Ich will nachweisen, dass sich aus einer bestehenden PHP-Klasse mithilfe eines LLM automatisch eine lauffähige PHPUnit-Testklasse erzeugen lässt, ohne dass ich die Tests von Grund auf selbst schreiben muss. „Lauffähig" heisst hier ganz konkret: Die Tests lassen sich mit PHPUnit ausführen, sie bestehen (grün) und sie prüfen sinnvolle Fälle statt nur oberflächlich zu bestehen.
+Zweites Hauptziel — Machbarkeit zeigen: Nachgewiesen werden soll, dass sich aus einer bestehenden PHP-Klasse mithilfe eines LLM automatisch eine lauffähige PHPUnit-Testklasse erzeugen lässt, ohne dass die Tests von Grund auf manuell geschrieben werden müssen. „Lauffähig" heisst hier ganz konkret: Die Tests lassen sich mit PHPUnit ausführen, sie bestehen (grün) und sie prüfen sinnvolle Fälle statt nur oberflächlich zu bestehen.
 
-Drittes Hauptziel — Fairer Vergleich mit Zahlen: Ich will nicht nur behaupten, dass KI-generierte Tests gut sind, sondern das mit Zahlen belegen. Dazu vergleiche ich für jede der fünf ausgewählten Klassen die von mir manuell geschriebenen Tests mit den KI-generierten Tests, anhand von vier klar messbaren Kriterien:
+Drittes Hauptziel — Fairer Vergleich mit Zahlen: Die Behauptung, dass KI-generierte Tests gut sind, soll nicht nur aufgestellt, sondern mit Zahlen belegt werden. Dazu werden für jede der fünf ausgewählten Klassen die manuell geschriebenen Tests den KI-generierten Tests gegenübergestellt, anhand von vier klar messbaren Kriterien:
 Erstellungszeit — wie lange dauert es, bis eine lauffähige, fehlerfreie Testklasse vorliegt?Methodenabdeckung (Coverage) — wie viele der öffentlichen Methoden werden überhaupt von einem Test aufgerufen?
 PHPStan-Fehler — wie sauber und typsicher ist der generierte Testcode?
 Mutation Score — prüfen die Tests wirklich die Logik, oder würden sie auch bei einer fehlerhaften Implementierung noch grün bleiben?
@@ -285,7 +285,7 @@ Das Plugin wurde im Rahmen dieser Arbeit entwickelt und besteht aus vier aufeina
 /generate-unit-tests — Liest den .txt-Report und generiert automatisch PHPUnit-Testklassen für alle Unit- und Edge-Klassen. Pro Methode werden Happy-Path, Grenzwerte, Bool-Flags und Fehlerpfade abgedeckt. Alle Tests folgen dem AAA-Pattern (Arrange, Act, Assert). Existiert bereits eine Testdatei, analysiert der Skill vorhandene Kommentare und PHPDoc-Hinweise und ergänzt gezielt die fehlenden Testfälle — bestehender Code wird dabei nicht verändert.
 
 /fix-unit-tests — Liest einen Infection-Report (Mutationstest) und ergänzt gezielt neue Testmethoden für alle überlebten Mutanten. So können Lücken in der Testabdeckung systematisch geschlossen werden.
-Das Plugin hat eigentlich keinen direkten Bezug auf der Arbeit, das Plugin ist wiederverwendbar und nicht auf dieses Projekt beschränkt — es kann bei beliebigen TYPO3-Extensions eingesetzt werden, was ich sicherlich als einen Mehrwert und Benifit halte, möchte daher expliziert in diesem Abschnitt aufnehmen und kurz erläutern.
+Das Plugin hat eigentlich keinen direkten Bezug zur inhaltlichen Fragestellung der Arbeit: Es ist wiederverwendbar und nicht auf dieses Projekt beschränkt — es kann bei beliebigen TYPO3-Extensions eingesetzt werden. Da dies einen zusätzlichen Mehrwert und Benefit darstellt, wird es hier explizit aufgenommen und kurz erläutert.
 
 ### 3.3 Nutzung von Plugin
 
