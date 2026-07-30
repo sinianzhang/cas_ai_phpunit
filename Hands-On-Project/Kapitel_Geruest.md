@@ -288,16 +288,42 @@ Das Plugin wurde im Rahmen dieser Arbeit entwickelt und besteht aus vier aufeina
 Das Plugin hat eigentlich keinen direkten Bezug auf der Arbeit, das Plugin ist wiederverwendbar und nicht auf dieses Projekt beschränkt — es kann bei beliebigen TYPO3-Extensions eingesetzt werden, was ich sicherlich als einen Mehrwert und Benifit halte, möchte daher expliziert in diesem Abschnitt aufnehmen und kurz erläutern.
 
 ### 3.3 Nutzung von Plugin
+
+Dieser Abschnitt zeigt die minimalen Schritte, um das Plugin auf einer beliebigen TYPO3-Extension lauffähig zu machen; die inhaltliche Funktionsweise der Skills ist bereits in 3.1/3.2 beschrieben.
+
+Systemvoraussetzungen
+- Docker Desktop (Windows/macOS) oder Docker Engine (Linux)
+- DDEV-Umgebung unter Linux (z.B. WSL2 + Ubuntu beim Windows)
+- Git
+- Claude Code
+- composer
+
+Installation und Laden des Projects (mehr dazu s. README.md im Projekt)
+$ git clone git@github.com:sinianzhang/cas_ai_phpunit.git
+$ cd cas_ai_phpunit  && ddev start
+$ ddev composer update
+
 Load Plugin
 claude --plugin-dir .claude/plugins/typo3-test-audit
 (mit Screenshot)
 
-Run 4 Skills
-/typo3-test-audit:test-audit-text <extension-path-or-name>
-/typo3-test-audit:test-audit-chart <extension-path-or-name>
-/typo3-test-audit:generate-unit-tests <extension-path-or-name>
-/typo3-test-audit:fix-unit-tests <extension-path-or-name>
+CLI-Plugin-Skills
+Die Skills bauen aufeinander auf: `test-audit-text` muss zuerst laufen, da es den Report erzeugt, auf dem `test-audit-chart` und `generate-unit-tests` aufbauen; `fix-unit-tests` setzt zusätzlich einen vorherigen Infection-Lauf voraus. Der Platzhalter `<extension-path-or-name>` wird in dieser Arbeit durchgehend mit `hf-view-helpers` ersetzt.
+
 (mit Screenshot)
+
+> /typo3-test-audit:test-audit-text <extension-path-or-name>
+→ erzeugt den Report in zwei Formaten: 'test-audit-<extension>.md' (mit detaillierten Angaben und Begründungen) und 'test-audit-<extension>.txt' (einfache Auflistungen und Klassifikationen)
+
+> /typo3-test-audit:test-audit-chart <extension-path-or-name>
+→ liest den Report und erzeugt ein SVG-Donut-Diagramm 'test-audit-<extension>.svg'
+
+> /typo3-test-audit:generate-unit-tests <extension-path-or-name>
+→ liest den Report und generiert PHPUnit-Testklassen direkt unter 'Tests/Unit/...'
+
+> /typo3-test-audit:fix-unit-tests <extension-path-or-name>
+→ liest einen Infection-Report und ergänzt Testmethoden für überlebte Mutanten, den Infection-Report findet man z.B. 'hf-view-helpers/Build/infection/infection-report.txt'
+
 
 ### 3.4 Beispielbasierte Demonstration
 
