@@ -468,7 +468,7 @@ Stufe-1: Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften, Imp
 
 ## 4. Diskussion
 
-Dieses Kapitel bespricht die Ergebnisse aus Kapitel 3. Zuerst werden die Ergebnisse und der Beitrag der Arbeit zusammengefasst (4.1). Danach werden sie mit anderen Praxiserfahrungen und der Forschung verglichen (4.2). Zum Schluss folgen Empfehlungen für den Arbeitgeber sowie eine Reflexion, was neu und was gelernt wurde (4.3).
+Dieses Kapitel bespricht die Ergebnisse aus Kapitel 3. Zuerst werden die Ergebnisse und der Beitrag der Arbeit zusammengefasst (4.1). Danach werden sie mit anderen Praxiserfahrungen und der Forschung verglichen (4.2), wobei die Einordnung in die akademische Forschung um einige kritische Aspekte erweitert wird. Zum Schluss folgen Empfehlungen für den Arbeitgeber sowie eine Reflexion, was neu und was gelernt wurde (4.3).
 
 ### 4.1 Erreichte Ergebnisse und Beitrag der Arbeit
 
@@ -508,6 +508,15 @@ Durrani et al. (2025) untersuchen mittels eines Zero-Truncated-Poisson-Modells q
 Mein Erkenntnis deckt sich mit den eigenen Messungen: Auch hier war bei 3 von 5 Klassen eine Korrekturphase nötig (H2/H3), und die Zeitersparnis (H1) war zwar sehr deutlich, ersetzte aber keine menschliche Kontrolle. 
 
 Vergleich mit einer Breitenstudie z.B. von Durrani et al., liefert meine Arbeit eher tool- und technologiespezifische Evidenz für einen konkreten LLM-Workflow (Claude API) im TYPO3/PHPUnit-Kontext.
+
+Aber es ist zu betonen: dieser Vergleich mit Durrani et al. wirft einige Aspekte auf, die im Folgenden zur weiteren Diskussion geführt werden.
+
+Grenzen der Vergleichbarkeit: Der Befund ist aber nicht direkt vergleichbar. Die deutlichere Zeitersparnis in dieser Arbeit liegt vermutlich weniger an KI-Phase2 (Fix/Korrektur) selbst, sondern eher am eigens vereinfachten Workflow (CLI-Plugin mit eigenen Skills und Prompts) und die Stichprobengrösse. Fünf Klassen sind zu wenig für allgemeingültige Aussagen, die gemessenen Unterschiede könnten Zufall sein.  Durrani et al. misst Effizienz breit über sechs SE-Phasen und viele Tools, Teams und Sprachen, während diese Arbeit eng und kontrolliert misst (ein Entwickler, ein Modell, ein Framework).
+
+Mögliche weitere Einschränkungen: Die fünf Klassen wurden bewusst ausgewählt, um reine Logik und TYPO3-Glue-Code zu vergleichen (siehe 3.1), also keine Zufallsauswahl, mit möglicher Selection Bias. Ausserdem könnte ein KI-Lerneffekt mitspielen, also die Prompts wurden routinierter, KI wiedererkennt typische PHPStan-Fehlermuster, macht Phase2 (Fix und Korrektur) bei späteren Klassen schneller. Und die manuelle Referenzzeit stammt von nur einem Entwickler,  sie spiegelt dessen Erfahrungsstand wider, nicht den Durchschnitt aller Entwickler. 
+
+
+Regressionstest-Mehrwert: es steht nicht im direkten Zusammenhang mit der Studie von Durrani et al. Die Erstellungszeit dieser Arbeit zeigt nur einen Ausschnitt des UnitTest-Nutzens. Das weitere Nutzen dient später als Regressionstest. Die UnitTests prüfen bei jeder künftigen Codeänderung erneut, ob bereits funktionierender Code weiterhin richtig funktioniert, und tragen so zur Codequalität über den Erstellungszeitpunkt hinaus bei. 
 
 ### 4.3 Empfehlung, Innovation, Lernen
 
@@ -590,7 +599,7 @@ Wertstromanalyse (VSM): Aus dem Lean Management stammende Methode zur Visualisie
 ### Literaturverzeichnis
 - Bath, G., & van Veenendaal, E. (2014). Improving the test process. Rocky Nook: Massachusetts.
 - A. Davis & R. Edwards (2024). How to use value stream mapping to improve software delivery - A guide to value stream mapping. https://dora.dev/guides/value-stream-management/
-- Durrani, U. et al. (2025). Impact of Artificial Intelligence on Software Engineering Phases and Activities (2013–2024): A Quantitative Analysis Using Zero-Truncated Poisson Model
+- Durrani, U. et al. (2025). Impact of Artificial Intelligence on Software Engineering Phases and Activities (2013–2024): A Quantitative Analysis Using Zero-Truncated Poisson Model https://ieeexplore.ieee.org/document/11016671
 - Felderer und Ramler (2016). https://link.springer.com/article/10.1007/s11219-015-9289-z
 - Harrold, M. J. (2000). Testing: A roadmap. In Proceedings of the conference on the future of software engineering (pp. 61–72).
 - Martin et al. (2007). https://ieeexplore.ieee.org/document/4222621
