@@ -403,11 +403,15 @@ Für jede der fünf Klassen wird das Messprotokoll in zwei Gruppen ausgefüllt: 
 
 Manuell: Die Stoppuhr startet zu Beginn der Test-Erstellung. Der Entwickler liest die Zielklasse, versteht die öffentlichen Methoden, überlegt sinnvolle TestCases und schreibt die Testklasse vollständig aus. Die Messung gilt als abgeschlossen, sobald zwei Kriterien erfüllt sind: PHPUnit läuft fehlerfrei durch, und PHPStan meldet keine Fehler. Erst dann wird die Stoppuhr gestoppt.
 
+![Manueller_Workflow](images/Abbildung_Manueller_Workflow.png)
+
 KI: Die Zeitmessung erfolgt in zwei Phasen:
 Phase 1 — Generierung: Die Stoppuhr startet mit dem Absenden des Prompts. Die KI legt die fehlende Testklasse samt Testmethoden an. Die Stoppuhr stoppt, sobald die Generierung abgeschlossen ist.
 Der Prompt auf Deutsch lautet z.B.: Erstelle für die folgende PHP-Klasse JsonDecodeViewHelper.php eine PHPUnit-Testklasse mit breiter Code Coverage. Verwende das TYPO3 TestingFramework und halte dich an das AAA-Pattern (Arrange, Act, Assert).
-Phase 2 — Korrektur: Die Stoppuhr startet erneut. Die generierte Testklasse wird mit PHPStan analysiert; auftretende Fehler werden per KI korrigiert. Die Stoppuhr stoppt, sobald PHPStan keine Fehler mehr meldet.
+Phase 2 — Korrektur: Die Stoppuhr startet erneut. Die generierte Testklasse wird mit PHPStan analysiert; auftretende Fehler werden per KI (CLI-Plugin-Skill 'fix-unit-tests') korrigiert. Die Stoppuhr stoppt, sobald PHPStan keine Fehler mehr meldet.
 Auch für die KI-Variante gilt dasselbe Abschluss-Kriterium wie für die manuelle Messung: PHPUnit läuft fehlerfrei, PHPStan meldet keine Fehler.
+
+![KI_Workflow](images/Abbildung_KI_Workflow.png)
 
 Test-Befehl anhand der Beispiel-Klasse: JsonDecodeViewHelper.php
 PhpUnitTest:
@@ -448,6 +452,9 @@ Stufe-2: Mehrere tautologische oder triviale Assertions (z.B. assertInstanceOf, 
 Stufe-1: Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften, Implementierung ist falsch oder fehlerhaft, oder jede Implementierung würde die Tests bestehen, sehr viele PHPStan-Errors: > 10, sehr geringer MSI < 50%
 
 #### Ergebnistabelle — Übersicht alle 5 Klassen *(wird nach Umsetzung ausgefüllt)*
+Zum Beispiel:
+- (+2 Min.): Zeitangaben für KI-Phase2 nämlich KI-Fix/Korrektur 
+- 53% -> 100%: Angaben nach KI-Phas1 -> Angaben nach KI-Phase2
 
 | Klasse | Zeit Man. | Coverage Man. (Methods) | Mutationstest Man. (MSI of Covered) | PHPStan Man. | 
 |---|---|---|---|---|
