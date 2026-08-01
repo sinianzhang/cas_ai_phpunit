@@ -536,7 +536,7 @@ Test-Driven Development (TDD) mit KI-Unterstützung: TDD ist eine moderne, viel 
 
 **Innovation**
 
-Der Neuheitswert dieser Arbeit liegt weniger im theoretischen Nachweis, dass LLMs Unit-Tests generieren können — das ist in der Literatur bereits breit dokumentiert (siehe Durrani et al. 2025, Abschnitt 4.2) —, sondern in der konkreten, wiederverwendbaren Umsetzung im TYPO3-Ökosystem:
+Der Neuheitswert dieser Arbeit liegt vor allem in der konkreten, wiederverwendbaren Umsetzung im TYPO3-Ökosystem — dass LLMs überhaupt Unit-Tests generieren können, ist in der Literatur bereits breit dokumentiert (s. Durrani et al. 2025, Abschnitt 4.2).
 
 Das Plugin typo3-test-audit (Abschnitt 3.2) ist projektunabhängig konzipiert und kann ab sofort bei beliebigen TYPO3-Extensions eingesetzt werden.
 
