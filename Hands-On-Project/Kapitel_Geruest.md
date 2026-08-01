@@ -63,7 +63,7 @@ PHPStan für die statische Analyse — findet Typ- und Codefehler, ohne den Code
 
 Die vorliegende Arbeit entsteht im Rahmen meiner beruflichen Tätigkeit beim ehemaligen Arbeitgeber, einer Agentur mit Fokus auf TYPO3-Webentwicklung. Im Tagesgeschäft sind Entwicklerinnen und Entwickler für die Implementierung und Pflege von TYPO3-Extensions zuständig. Automatisierte Tests sind zwar bekannt, wie oben schon erwähnt, werden jedoch aufgrund des hohen manuellen Aufwands selten konsequent umgesetzt.
 
-Den direkten Anlass für diese Arbeit liefert eine konkrete Aufgabe: Für die Extension EXT:hf-view-helpers — eine intern entwickelte ViewHelper-Sammlung, die keine kundenspezifische Anwendung implementiert daher auch keine kundenspezifischen Daten enthält, die eher als Framework bei zahlreichen Kundenprojekten im Einsatz ist — sollte eine PHPUnit-Testumgebung aufgesetzt und nachträglich für einige zentrale Klassen Unit-Tests geschrieben werden. Die Extension hat viele Versionen, die betroffene ist eine Version mit der TYPO3-Version V14 kompatibel ist. 
+Den direkten Anlass für diese Arbeit liefert eine konkrete Aufgabe: Für die Extension EXT:hf-view-helpers sollte eine PHPUnit-Testumgebung aufgesetzt und nachträglich für einige zentrale Klassen Unit-Tests geschrieben werden. Die Extension hat viele Versionen, die betroffene ist eine Version mit der TYPO3-Version V14 kompatibel ist. 
 
 Diese Arbeit setzt genau an diesem Punkt an: Sie untersucht, ob ein LLM diesen Aufwand so weit reduzieren kann, dass Unit-Tests zum Standardbestandteil jedes Entwicklungszyklus werden.
 
@@ -232,8 +232,7 @@ Die fünf Klassen wurden gezielt so ausgewählt, dass sie ein breites Spektrum v
 5) DateViewHelper (Classes/ViewHelpers/Format/DateViewHelper.php): Enthält reale TYPO3-Abhängigkeiten (Glue-Code). Das notwendige Mocking ist deutlich aufwändiger als bei den übrigen Klassen und zeigt exemplarisch die Grenzen der automatisierten Testgenerierung.
 
 Begründung der Auswahl:
-Die Klassen stammen alle aus packages/hf-view-helpers, da dort der Test-Audit-Workflow (Plugin typo3-test-audit) bereits eingerichtet ist und alle 47 Klassen klassifiziert vorliegen (4 Unit, 21 Edge-Cases, 18 Functional, 4 nicht testbar). Die gewählten fünf Klassen decken bewusst den Bogen von trivialer Logik über komplexe reine PHP-Logik bis hin zu TYPO3-abhängigem Glue-Code ab.
- „Clue Codes" ist eine Verschreibung von „Glue-Code" (englisch für „Klebstoff-Code"). Der Begriff bezeichnet Code, der verschiedene Systemteile miteinander verbindet — in TYPO3 konkret: ViewHelper-Klassen, die TYPO3-interne Dienste aufrufen (z.B. makeInstance(), CacheManager, DateUtility). Solcher Code ist eng mit dem Framework verzahnt und schwer isoliert zu testen.
+Die Klassen stammen alle aus der Extension „hf-view-helpers“, die im Rahmen der CAS-Arbeit gezielt als Kandidaten für Unit-Tests ausgewählt wurde. Es handelt sich dabei um eine intern entwickelte Sammlung von ViewHelpern, die keine kundenspezifische Anwendungslogik implementiert und daher auch keine kundenspezifischen Daten enthält. Stattdessen dient sie als Framework und wird in zahlreichen Kundenprojekten eingesetzt. Aus diesem Grund ist die Qualität dieser Extension von besonderer Bedeutung: Werden Fehler erst in der Produktion entdeckt, ist der Aufwand für deren Analyse, Behebung und erneute Bereitstellung deutlich höher. Dort ist der Test-Audit-Workflow (CLI-Plugin 'typo3-test-audit') bereits eingerichtet und durchgeführt, alle 47 Klassen klassifiziert vorliegen. Die gewählten fünf Klassen decken bewusst den Bogen von trivialer Logik über komplexe reine PHP-Logik bis hin zu TYPO3-abhängigem Glue-Code ab.
 
 ### 2.5 Bekannte Chancen und Risiken aus Praxis und Forschung
 Auch der Blick auf bereits bekannte Erfahrungen — sowohl aus der Praxis als auch aus der Forschung — gehört zur Planung dieser Arbeit: Er wurde bewusst vor der Detailfestlegung der eigenen Hypothesen (2.3) und des Validierungsvorgehens (2.4) eingeholt und bildet die Grundlage für die eigenen Annahmen.
@@ -382,7 +381,7 @@ Nach dem Fix zeigt dann der Mutationstest für die betroffene Klasse 100% GRÜN.
 
 ### 3.5 Pilotnutzung
 
-Abschnitt 3.4 demonstriert den vollstänidigen Workflow aber exemplarisch an einer einzelnen Klasse (JsonDecodeViewHelper), wurde derselbe Ablauf im Rahmen eines Pilotlaufs auf die übrigen vier ausgewählten Klassen angewendet, nämlich ForViewHelper, RoundViewHelper, Greeter und DateViewHelper. Es kammen dieselben Vorgehensweise sowie Skills und Tools (Plugin 'typo3-test-audit', PHPUnit, PHPStan, Infection) zum Einsatz.
+Abschnitt 3.4 demonstriert den vollstänidigen Workflow aber exemplarisch an einer einzelnen Klasse JsonDecodeViewHelper, wurde derselbe Ablauf im Rahmen eines Pilotlaufs auf die übrigen vier ausgewählten Klassen angewendet, nämlich ForViewHelper, RoundViewHelper, Greeter und DateViewHelper. Die ausführlich Begründungen für Auswahl von diesen 5 Klassen findet man im Abschnitt 2.4. Es kammen dieselben Vorgehensweise sowie Skills und Tools (Plugin 'typo3-test-audit', PHPUnit, PHPStan, Infection) zum Einsatz.
 
 Ziel dieses Pilotlaufs war zu prüfen, ob der Workflow auch bei unterschiedlicher Klassenkomplexität und unterschiedlichem TYPO3-Abhängigkeitsgrad reproduzierbar funktioniert, danach geht zur systematischen Auswertung in Abschnitt 3.6.
 
@@ -400,7 +399,8 @@ Die vollständigen quantitativen Ergebnisse dieses Pilotlaufs — Erstellungszei
 
 #### Messmethodik
 
-Für jede der fünf Klassen wird das Messprotokoll in zwei Gruppen ausgefüllt: einmal für die manuelle Referenz, einmal für die KI-gestützte Variante.
+Für jede der fünf Klassen wird das Messprotokoll in zwei Gruppen ausgefüllt: einmal für die manuelle Referenz, einmal für die KI-gestützte Variante. Die verwendeten Tools und Technologien sowie die Systemlandschaft wurden bereits in Abschnitt 3.1 geschildert. 
+
 Manuell: Die Stoppuhr startet zu Beginn der Test-Erstellung. Der Entwickler liest die Zielklasse, versteht die öffentlichen Methoden, überlegt sinnvolle TestCases und schreibt die Testklasse vollständig aus. Die Messung gilt als abgeschlossen, sobald zwei Kriterien erfüllt sind: PHPUnit läuft fehlerfrei durch, und PHPStan meldet keine Fehler. Erst dann wird die Stoppuhr gestoppt.
 
 KI: Die Zeitmessung erfolgt in zwei Phasen:
