@@ -89,7 +89,7 @@ Weniger Aufwand — Ist: Für die betrachteten Klassen der Extension 'hf-view-he
 Weniger Fehler — Ist: Die Qualität von Unit-Tests wird heute nicht systematisch geprüft, es gibt weder statische Analyse noch Mutationstests. Soll: KI-generierte Tests sind statisch fehlerfrei (0 PHPStan-Fehler) und erreichen einen hohen Mutation Score. Die konkreten Schwellenwerte werden in Abschnitt 3.5 festgelegt (siehe Hypothesen H2, H7).
 
 **persönliche Lernziele**
-Neben den beiden inhaltlichen Zielen ist mir die Arbeit auch persönlich wichtig, um mich als Entwickler weiterzuentwickeln. PHPUnit-Tests waren bislang nicht Teil meines Alltags — genau das macht diese Arbeit für mich zu einer guten Gelegenheit, mich intensiv und strukturiert mit dem Thema Testing auseinanderzusetzen: Wie schreibt man sinnvolle Testfälle, wie funktioniert Mocking von TYPO3-Abhängigkeiten, wie liest man einen Coverage-Report richtig, und was sagt ein Mutation Score tatsächlich aus? Gleichzeitig lerne ich den Umgang mit einem modernen Toolset, das über PHPUnit hinausgeht — insbesondere Claude Code als KI-gestützte Entwicklungsumgebung, PHPStan für die statische Analyse und Infection für Mutationstests. Dieses Wissen bleibt auch über die Arbeit hinaus nutzbar, sowohl für mich persönlich als auch für den Einsatz beim Arbeitgeber.
+Neben den beiden inhaltlichen Zielen ist die Arbeit auch für Entwickler mit wenig Testing-Erfahrung von persönlichem Wert. PHPUnit-Tests sind für viele Entwickler bislang kaum Teil des Alltags — genau das macht diese Arbeit zu einer guten Gelegenheit, sich intensiv und strukturiert mit dem Thema Testing auseinanderzusetzen: Wie schreibt man sinnvolle Testfälle, wie funktioniert Mocking von TYPO3-Abhängigkeiten, wie liest man einen Coverage-Report richtig, und was sagt ein Mutation Score tatsächlich aus? Gleichzeitig lernt man den Umgang mit einem modernen Toolset, das über PHPUnit hinausgeht — insbesondere Claude Code als KI-gestützte Entwicklungsumgebung, PHPStan für die statische Analyse und Infection für Mutationstests. Dieses Wissen bleibt auch über die Arbeit hinaus nutzbar, sowohl persönlich als auch für den Einsatz beim Arbeitgeber.
 
 **Projektziele (CAS-Arbeit)**
 Für die Arbeit selbst verfolge ich drei Hauptziele, die auch die Struktur der Auswertung in Kapitel 3 und 4 bestimmen:
@@ -557,13 +557,13 @@ Die Kombination aus drei unabhängigen Qualitätskennzahlen — Methods Coverage
 
 **Lernen**
 
-Die persönlichen Lernziele aus Abschnitt 1.3 habe ich durch die Arbeit an den fünf Klassen erreicht. PHPUnit war vorher nicht Teil meines Alltags. Durch das manuelle Schreiben der Referenz-Tests und das Prüfen der KI-generierten Tests habe ich gelernt, wie ein sinnvoller Testfall aufgebaut ist (Happy-Path, Grenzwerte, Fehlerfälle) und wie man einen Coverage-Report richtig liest, statt nur auf die Prozentzahl zu schauen.
+Die persönlichen Lernziele aus Abschnitt 1.3 wurden durch die Arbeit erreicht. Für Entwickler mit wenig Testing-Erfahrung ist PHPUnit oft nicht Teil des Alltags. Durch das manuelle Schreiben der Referenz-Tests und das Prüfen der KI-generierten Tests wird deutlich, wie ein sinnvoller Testfall aufgebaut ist (Happy-Path, Grenzwerte, Fehlerfälle) und wie man einen Coverage-Report richtig liest, statt nur auf die Prozentzahl zu schauen.
 
-Besonders viel gelernt habe ich beim Mocking von TYPO3-Abhängigkeiten, am Beispiel des DateViewHelper (H5). Erst beim Beheben der Fehler in den KI-generierten Mocks wurde mir klar, welche Typ-Angaben und welche Mock-Konfiguration wirklich nötig sind. Dieses Wissen kann ich auch bei anderen TYPO3-Klassen im Alltag nutzen.
+Besonders viel Lernpotenzial liegt im Mocking von TYPO3-Abhängigkeiten, am Beispiel des DateViewHelper (H5). Erst beim Beheben der Fehler in den KI-generierten Mocks wird klar, welche Typ-Angaben und welche Mock-Konfiguration wirklich nötig sind. Dieses Wissen lässt sich auch bei anderen TYPO3-Klassen im Alltag nutzen.
 
-Auch der Begriff Mutation Score war mir vorher unbekannt. Durch den praktischen Einsatz von Infection und das Lesen der MSI-Werte (Abschnitt 3.6) verstehe ich jetzt, warum eine hohe Codeabdeckung allein noch nichts über die Qualität der Tests aussagt.
+Auch der Begriff Mutation Score ist vielen Entwicklern ohne Testing-Erfahrung vorher unbekannt. Durch den praktischen Einsatz von Infection und das Lesen der MSI-Werte (Abschnitt 3.6) wird verständlich, warum eine hohe Codeabdeckung allein noch nichts über die Qualität der Tests aussagt.
 
-Zusätzlich habe ich mit Claude Code ein Werkzeug kennengelernt, das mehr kann als nur Code schreiben. Beim Bau eigener Skills (Abschnitt 3.2) habe ich gelernt, wie man ein KI-CLI-Tool gezielt für wiederkehrende Aufgaben einrichtet. Zusammen mit PHPStan ist das ein Werkzeugset, das ich auch nach dieser Arbeit im Berufsalltag weiter nutzen werde.
+Zusätzlich lässt sich mit Claude Code ein Werkzeug kennenlernen, das mehr kann als nur Code schreiben. Beim Bau eigener Skills (Abschnitt 3.2) zeigt sich, wie man ein KI-CLI-Tool gezielt für wiederkehrende Aufgaben einrichtet. Zusammen mit PHPStan entsteht so ein Werkzeugset, das auch nach dieser Arbeit im Berufsalltag weiter genutzt werden kann.
 
 ---
 
