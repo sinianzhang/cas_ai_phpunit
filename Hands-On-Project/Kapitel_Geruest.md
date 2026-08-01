@@ -472,18 +472,18 @@ Dieses Kapitel bespricht die Ergebnisse aus Kapitel 3. Zuerst werden die Ergebni
 
 ### 4.1 Erreichte Ergebnisse und Beitrag der Arbeit
 
-Die Messungen aus Abschnitt 3.6 bestätigen den Kern der Arbeit: KI-gestützte Testgenerierung ist unter TYPO3 14 praktisch einsetzbar und reduziert den Zeitaufwand drastisch, ohne die Testqualität systematisch zu verschlechtern.
+Die Messungen aus Abschnitt 3.6 bestätigen den Kern der Arbeit: KI-gestützte Testgenerierung ist unter TYPO3 Version 14 praktisch einsetzbar, reduziert den Zeitaufwand drastisch, liefert gute Qualität und behebt darüber hinaus auftretende Fehler schnell.
 
-Die meisten Hypothesen wurden bestätigt: u.a. Zeitersparnis, viel breitere Methods-Coverage bzw. nach der Korrektur gegenüber manuelle Referenz, Stube/Mocking bei Glue-Code überwiegend brauchbar, gute Assertion-Qualität, etc. Nicht bzw. nur teilweise bestätigt wurden einen Hypothese, nämlich: die KI produzierte im ersten Wurf mit teils mehr PHPStan-Fehler als die manuelle Referenz, die Korrekturphase kurz aber benötigt.
+Die meisten Hypothesen wurden bestätigt: u.a. Zeitersparnis, viel breitere Methods-Coverage bzw. nach der Korrektur gegenüber manuelle Referenz, Stube/Mocking bei Glue-Code überwiegend brauchbar, gute Assertion-Qualität. Nicht bzw. nur teilweise bestätigt wurden einen Hypothese, nämlich: die KI produzierte im ersten Wurf mit teils mehr PHPStan-Fehler als die manuelle Referenz, die Korrekturphase kurz aber benötigt.
 
 Der zentrale Befund liegt damit nicht in "KI ersetzt den Menschen", sondern "KI unterstützt den Menschen": Die KI übernimmt die zeitintensive Fleissarbeit der Testerstellung praktisch vollständig, während eine kurze, gezielte menschliche (oder KI-gestützte) Korrekturphase notwendig bleibt, bzw. mit Hilfe von Inline-Kommentar als Hinweis zum konkreten TestCase bringt KI theoretisch viel bessere Qualität. Diese wohl benötigte Korrektur kostet wenige Zeit — der Gesamtaufwand bleibt damit trotzdem um ein Vielfaches unter der manuellen Referenz.
 
-Reine Logik vs. Glue-Code: Bei den drei reinen PHP-Logik-Klassen (JsonDecodeViewHelper, RoundViewHelper, etc.) lieferte die KI durchgehend hochwertige, teils sofort fehlerfreie Tests. Beim einzigen Glue-Code-Fall mit echten TYPO3-Abhängigkeiten (DateViewHelper) war das Ergebnis vor Korrektur bereits solide, verbesserte sich aber erst durch gezielte Nachbesserung.
+Reine Logik vs. Glue-Code: Bei den drei reinen PHP-Logik-Klassen (JsonDecodeViewHelper, RoundViewHelper sowie der Dummy Greeter) lieferte die KI durchgehend hochwertige, teils sofort fehlerfreie Tests. Beim einzigen Glue-Code-Fall mit echten TYPO3-Abhängigkeiten (DateViewHelper) war das Ergebnis (100% Coverage, 2 statische Fehler, Stufe 4) vor Korrektur bereits solide, verbesserte sich aber erst durch gezielte Nachbesserung (100% Mutation Score, keine statische Fehler, Stufe 5). Die detaillierten Messungen und Ergebnisse werden bereits in Abschnitt 3.6 dargestellt.
 
-Beitrag der Arbeit:
-- Praktischer Nachweis, dass KI-gestützte PHPUnit-Testgenerierung unter TYPO3 14 funktioniert und unter Umständen produktionsnahe Ergebnisse liefert.
-- Ein wiederverwendbares, projektunabhängiges Werkzeug (Plugin typo3-test-audit), das über diese Arbeit hinaus im Tagesgeschäft einsetzbar ist.
-- Eine differenzierte Empfehlung: KI-Generierung eignet sich besser für reine Logik-Klassen; bei TYPO3-Glue-Code liefert sie einen brauchbaren, aber korrekturbedürftigen Ausgangspunkt.
+Der Beitrag der Arbeit kann wie folgendes zusammengefasst werden.
+- Praktischer Nachweis, dass KI-gestützte PHPUnit-Testgenerierung unter TYPO3 Version 14 funktioniert und unter Umstanden, z.B. bei einfachen Klassen mit wenig Logik oder wenigen Abhängigkeiten, sogar produktionsnahe Ergebnisse liefert. Das zeigen die konkreten Messwerte aus Abschnitt 3.6 zu Zeitaufwand, Coverage, Mutation Score und PHPStan-Konformität je Klasse.
+- Ein wiederverwendbares, projektunabhängiges Werkzeug (CLI-Plugin 'typo3-test-audit'), das über diese Arbeit hinaus im Tagesgeschäft einsetzbar ist. Es bündelt die entwickelten Skills und Prompts für Testgenerierung und Fehler-Fix und lässt sich direkt auf andere TYPO3-Extensions und -Projekte übertragen, ohne dass das Vorgehen jedes Mal neu erarbeitet werden muss.
+- Eine differenzierte Empfehlung: KI-Generierung eignet sich besser für reine Logik-Klassen, bei TYPO3-Glue-Code liefert sie einen brauchbaren, aber korrekturbedürftigen Ausgangsstand. So lässt sich der KI-Einsatz gezielt bei reinen Logik-Klassen priorisieren, wo Zeitersparnis und Testqualität am höchsten erfolgen, anstatt ihn überall blind ohne Kontrolle einzusetzen. Bei Glue-Code bleibt hingegen ein Mensch-in-the-Loop nötig, der die KI-Ergebnisse prüft und gezielt nachbessert.
 
 ### 4.2 Bezug zu bestehenden Erfahrungen und Studien
 **Vergleich mit anderen Praxiserfahrungen**
