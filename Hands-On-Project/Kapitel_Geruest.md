@@ -401,7 +401,7 @@ Die vollständigen quantitativen Ergebnisse dieses Pilotlaufs — Erstellungszei
 
 Für jede der fünf Klassen wird das Messprotokoll in zwei Gruppen ausgefüllt: einmal für die manuelle Referenz, einmal für die KI-gestützte Variante. Die verwendeten Tools und Technologien sowie die Systemlandschaft wurden bereits in Abschnitt 3.1 geschildert. 
 
-Manuell: Die Stoppuhr startet zu Beginn der Test-Erstellung. Der Entwickler liest die Zielklasse, versteht die öffentlichen Methoden, überlegt sinnvolle TestCases und schreibt die Testklasse vollständig aus. Die Messung gilt als abgeschlossen, sobald zwei Kriterien erfüllt sind: PHPUnit läuft fehlerfrei durch, und PHPStan meldet keine Fehler. Erst dann wird die Stoppuhr gestoppt.
+Manuell: Die Stoppuhr startet zu Beginn der Test-Erstellung. Der Entwickler liest die Zielklasse, versteht die öffentlichen Methoden, überlegt sinnvolle TestCases und schreibt die Testklasse vollständig aus. Die Messung gilt als abgeschlossen, sobald zwei Kriterien erfüllt sind: PHPUnit läuft fehlerfrei durch, und PHPStan meldet keine Fehler — erst dann wird die Stoppuhr gestoppt. Im Anschluss an die Zeitmessung erfolgt die inhaltliche Validierung der Testklasse mittels Coverage- und Mutationstest.
 
 ![Manueller_Workflow](images/Abbildung_Manueller_Workflow.png)
 
@@ -409,71 +409,44 @@ KI: Die Zeitmessung erfolgt in zwei Phasen:
 Phase 1 — Generierung: Die Stoppuhr startet mit dem Absenden des Prompts. Die KI legt die fehlende Testklasse samt Testmethoden an. Die Stoppuhr stoppt, sobald die Generierung abgeschlossen ist.
 Der Prompt auf Deutsch lautet z.B.: Erstelle für die folgende PHP-Klasse JsonDecodeViewHelper.php eine PHPUnit-Testklasse mit breiter Code Coverage. Verwende das TYPO3 TestingFramework und halte dich an das AAA-Pattern (Arrange, Act, Assert).
 Phase 2 — Korrektur: Die Stoppuhr startet erneut. Die generierte Testklasse wird mit PHPStan analysiert; auftretende Fehler werden per KI (CLI-Plugin-Skill 'fix-unit-tests') korrigiert. Die Stoppuhr stoppt, sobald PHPStan keine Fehler mehr meldet.
-Auch für die KI-Variante gilt dasselbe Abschluss-Kriterium wie für die manuelle Messung: PHPUnit läuft fehlerfrei, PHPStan meldet keine Fehler.
+Auch für die KI-Variante gilt dasselbe Abschluss-Kriterium wie für die manuelle Messung: PHPUnit läuft fehlerfrei, PHPStan meldet keine Fehler. Nach jeder der beiden Phasen wird zusätzlich dieselbe inhaltliche Validierung wie bei der manuellen Referenz durchgeführt — mittels Coverage- und Mutationstest —, sodass sich der Effekt der Korrektur-Phase auf die Testqualität separat ablesen lässt.
 
 ![KI_Workflow](images/Abbildung_KI_Workflow.png)
 
-Test-Befehl anhand der Beispiel-Klasse: JsonDecodeViewHelper.php
-PhpUnitTest:
-ddev exec php vendor/bin/phpunit \
--c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
-packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/JsonDecodeViewHelperTest.php
-
-
-
-PhpUnit-Coverage-Test: 
-ddev exec XDEBUG_MODE=coverage php vendor/bin/phpunit \
--c packages/hf-view-helpers/Build/phpunit/UnitTests.xml \
---coverage-text \
-packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/JsonDecodeViewHelperTest.php
-    
-PHPStan-Test:
-ddev php vendor/bin/phpstan analyse \
--c packages/hf-view-helpers/Build/phpstan/phpstan.tests.neon \
-packages/hf-view-helpers/Tests/Unit/ViewHelpers/Format/JsonDecodeViewHelperTest.php
-
-Kriterien zur Bewertung
-Kombination von 3 Testverfahren, nämlich (PhpUnit)Codeabdeckungstest, PhpStan-Test und Mutationstest.
-Codeabdeckung (Code Coverage) beschreibt, wie viel Prozent des Quellcodes durch Tests ausgeführt werden. Eine hohe Codeabdeckung deutet auf eine gründlichere Testung und ein geringeres Fehlerrisiko hin. In meiner Bewertung wird in der ersten Linie Funktions- und Methodenabdeckung berücksichtigt, also wie viele Funktionen bzw. Methoden mindestens einmal durch Tests aufgerufen wurden. (https://docs.phpunit.de/en/13.2/code-coverage.html)
-PHPStan ist ein leistungsstarkes Tool zur statischen Code-Analyse für PHP-Projekte. Es hilft Entwicklern, Fehler frühzeitig zu erkennen und die Codequalität zu verbessern, ohne den Code tatsächlich ausführen zu müssen. (https://phpstan.org/)
-Ein PHPStan Level (https://phpstan.org/user-guide/rule-levels) bestimmt die Strenge der statischen Code-Analyse in PHPStan. . Die Level reichen von Stufe 0 (grundlegende Syntaxprüfungen) bis 10 (extrem strenge Typisierung). Bei meiner Bewertung ist der Level 6 in Einsatz. Level 6 ist der pragmatische Mittelweg: 
-1) Erzwingt vollständige Typ-Annotationen — wichtig für lesbare, wartbare Tests.
-2) Die PHPStan-PHPUnit-Extension greift auf Level 6 optimal: Sie erkennt falsch verwendete Mocks, fehlerhafte Assertion-Signaturen und ungültige DataProvider-Strukturen.
-3) Etablierter Standard in der TYPO3-Community für Testcode-Analyse.
-
-Mutationstest ist ein Softwaretest, wo künstliche Bugs (Mutationen) im Code produziert werden, um festzustellen, ob die vorhandenen Tests ausreichen, um diese künstlichen Fehler zu entdecken. Die Codeabdeckung reicht nicht immer aus, Mutationstests sind für Unit-Tests unerlässlich, da sie die tatsächliche Qualität und Aussagekraft Ihrer Tests überprüfen. Ich habe Infection im Einsatz, Inection ist eine der bekanntesten Mutation Testing Frameworks für PHP (https://github.com/infection/infection) Bei meiner Bewertung ist MSI-of covered (https://infection.github.io/guide/#Covered-Code-Mutation-Score-Indicator) berücksichtigt. Nämlich Mutation Score Indicator, der nur Mutanten in Code berücksichtigt, der tatsächlich von Tests ausgeführt wird.
-
-Bewertungsskala Assertions (Stufe:1–5) 
-Die Stufenzuordnung basiert grundsätzlich auf subjektiver Beobachtung sowie den folgenden Überlegungen und Kriterien.
-Stufe-5: Alle öffentlichen Methoden geprüft, Assertions für Happy-Path, Grenzwerte und Fehlerfälle, keine Tautologien, Testwerte unterscheiden ähnliche Implementierungen, Mocking korrekt (richtiger Typ createMock/createStub, richtige Methode, kein unnötiges Mocking), PHPStan-Errors: 0–1, MSI > 90%
-Stufe-4: Grundsätzlich korrekte Assertions ohne Tautologien, einzelne Grenzwerte oder Nebenmethoden fehlen, Mutationstests mehrheitlich bestanden, Mocking weitgehend korrekt, kleinere Typ-Ungenauigkeiten, PHPStan-Errors: 2–3, MSI 75–90%
-Stufe-3: Assertions vorhanden, aber mit strukturellen Schwächen: Testwerte unterscheiden ähnliche Implementierungen nicht, und/oder ganze Methoden oder Argument-Defaults sind vollständig ungeprüft, Mocking zum Teil strukturell falsch (falscher Typ, fehlende oder überflüssige Abhängigkeiten), PHPStan-Errors: 5–10, MSI 50–75%
-Stufe-2: Mehrere tautologische oder triviale Assertions (z.B. assertInstanceOf, assertNotNull), Kernlogik wird nicht wirklich verifiziert, Mocking fehlend oder sinnlos, PHPStan-Errors: > 10, MSI < 50%
-Stufe-1: Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften, Implementierung ist falsch oder fehlerhaft, oder jede Implementierung würde die Tests bestehen, sehr viele PHPStan-Errors: > 10, sehr geringer MSI < 50%
-
 #### Ergebnistabelle — Übersicht alle 5 Klassen *(wird nach Umsetzung ausgefüllt)*
-Zum Beispiel:
+| Klasse | Zeit Man. | PHPStan Man. | Coverage Man. (Methods) | Mutationstest Man. (MSI of Covered) | 
+|---|---|---|---|---|
+| JsonDecodeViewHelper | > 30 Min. | 0 | 50% | 41% |
+| ForViewHelper | 30 Min. | 0 | 100% | 53% |
+| RoundViewHelper | > 60 Min. | 0 | 47% | 34% |
+| Greeter | 30 Min. | 0 | 100% | 100% |
+| DateViewHelper | > 30 Min. | 0 | 50% | 48% |
+
+
+| Klasse | Zeit KI (Error-Fix) | PHPStan KI (Error) | Coverage KI (Methods) | Mutationstest KI (MSI of Covered) | Assert.-Stufe KI (1–5) |
+|---|---|---|---|---|---|
+| JsonDecodeViewHelper | 1.5 Min. | 0 | 100% | 53% -> 100% | 3 -> 5 |
+| ForViewHelper | 3 Min. (+2 Min.) | 6 -> 0 | 100% | 61% -> 100% | 3 -> 5 |
+| RoundViewHelper | 2.5 Min. (+1 Min.) | 1 -> 0 | 100% | 82% -> 100% | 4 -> 5 |
+| Greeter | < 1 Min. | 0 | 100% | 100% | 5 |
+| DateViewHelper | 2.5 Min. (+1 Min.) | 2 -> 0 | 100% | 57% -> 100% | 4 -> 5 |
+
+Kurze Erläuterung:
 - (+2 Min.): Zeitangaben für KI-Phase2 nämlich KI-Fix/Korrektur 
 - 53% -> 100%: Angaben nach KI-Phas1 -> Angaben nach KI-Phase2
 
-| Klasse | Zeit Man. | Coverage Man. (Methods) | Mutationstest Man. (MSI of Covered) | PHPStan Man. | 
-|---|---|---|---|---|
-| JsonDecodeViewHelper | > 30 Min. | 50% | 41% | 0 |
-| ForViewHelper | 30 Min. | 100% | 53% | 0 |
-| RoundViewHelper | > 60 Min. | (?) | (?) | (?) |
-| Greeter | 30 Min. | 100% | 100% | 0 |
-| DateViewHelper | > 30 Min. | 50% | 48% | 0 |
+#### Bewertungsskala Assertions (Stufe:1–5) 
+Die Stufenzuordnung basiert grundsätzlich auf subjektiver Beobachtung sowie den folgenden Überlegungen und Kriterien.
 
+Stufe-5: Alle öffentlichen Methoden geprüft, Assertions für Happy-Path, Grenzwerte und Fehlerfälle, keine Tautologien, Testwerte unterscheiden ähnliche Implementierungen, Mocking korrekt (richtiger Typ createMock/createStub, richtige Methode, kein unnötiges Mocking), PHPStan-Errors: 0–1, MSI > 90%
 
-| Klasse | Zeit KI (Error-Fix) | Coverage KI (Methods) | Mutationstest KI vor und nach dem Fix (MSI of Covered) | PHPStan KI (Error vor und nach dem Fix) | Assert.-Stufe KI vor und nach dem Fix (1–5) |
-|---|---|---|---|---|---|
-| JsonDecodeViewHelper | 1.5 Min. | 100% | 53% -> 100% | 0 | 3 -> 5 |
-| ForViewHelper | 3 Min. (+2 Min.) | 100% | 61% -> 100% | 6 -> 0 | 3 -> 5 |
-| RoundViewHelper | 2.5 Min. (+1 Min.) | 100% | 82% -> 100% | 1 -> 0 | 4 -> 5 |
-| Greeter | < 1 Min. | 100% | 100% | 0 | 5 |
-| DateViewHelper | 2.5 Min. (+1 Min.) | 100% | 57% -> 100% | 2 -> 0 | 4 -> 5 |
+Stufe-4: Grundsätzlich korrekte Assertions ohne Tautologien, einzelne Grenzwerte oder Nebenmethoden fehlen, Mutationstests mehrheitlich bestanden, Mocking weitgehend korrekt, kleinere Typ-Ungenauigkeiten, PHPStan-Errors: 2–3, MSI 75–90%
 
+Stufe-3: Assertions vorhanden, aber mit strukturellen Schwächen: Testwerte unterscheiden ähnliche Implementierungen nicht, und/oder ganze Methoden oder Argument-Defaults sind vollständig ungeprüft, Mocking zum Teil strukturell falsch (falscher Typ, fehlende oder überflüssige Abhängigkeiten), PHPStan-Errors: 5–10, MSI 50–75%
 
+Stufe-2: Mehrere tautologische oder triviale Assertions (z.B. assertInstanceOf, assertNotNull), Kernlogik wird nicht wirklich verifiziert, Mocking fehlend oder sinnlos, PHPStan-Errors: > 10, MSI < 50%
+
+Stufe-1: Tests bestehen formal, prüfen aber keine sinnvollen Eigenschaften, Implementierung ist falsch oder fehlerhaft, oder jede Implementierung würde die Tests bestehen, sehr viele PHPStan-Errors: > 10, sehr geringer MSI < 50%
 
 #### Bezug zu den Hypothesen
 
