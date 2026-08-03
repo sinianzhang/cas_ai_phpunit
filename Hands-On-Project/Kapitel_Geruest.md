@@ -226,7 +226,7 @@ Die Messmethodik sowie die genauen Zielwerte, Qualitätsreferrenz etc. werden im
 
 Die fünf Klassen wurden gezielt so ausgewählt, dass sie ein breites Spektrum von Komplexität und TYPO3-Abhängigkeit abdecken:
 1) JsonDecodeViewHelper (Classes/ViewHelpers/Format/JsonDecodeViewHelper.php): Reine PHP-Logik ohne TYPO3-Kern-Abhängigkeit. Enthält relevante Edge-Cases (ungültiges JSON, leere Eingaben) und erfordert einfache Stubs/Mocks.
-2) CleanHtmlViewHelper (Classes/ViewHelpers/Format/CleanHtmlViewHelper.php): Ebenfalls reine PHP-Logik ohne TYPO3-Abhängigkeiten. Der Einsatz umfangreicher regulärer Ausdrücke erhöht die Komplexität und macht Edge-Case-Tests besonders relevant.
+2) ForViewHelper (Classes/ViewHelpers/ForViewHelper.php): Ebenfalls reine PHP-Logik ohne TYPO3-Abhängigkeiten. Der Einsatz umfangreicher regulärer Ausdrücke erhöht die Komplexität und macht Edge-Case-Tests besonders relevant.
 3) RoundViewHelper (Classes/ViewHelpers/Format/RoundViewHelper.php): Reine PHP-Logik mit mathematischen Berechnungen (Rundung, Genauigkeit). Edge-Cases wie Grenzwerte und Gleitkommawerte erfordern sorgfältige Testabdeckung.
 4) Greeter (Classes/Dummy/Greeter.php): Eine triviale Dummy-Klasse ohne TYPO3-Abhängigkeiten, Edge-Cases oder Mocking-Bedarf. Dient als Baseline und Kontrollfall für die einfachste Testsituation.
 5) DateViewHelper (Classes/ViewHelpers/Format/DateViewHelper.php): Enthält reale TYPO3-Abhängigkeiten (Glue-Code). Das notwendige Mocking ist deutlich aufwändiger als bei den übrigen Klassen und zeigt exemplarisch die Grenzen der automatisierten Testgenerierung.
@@ -492,6 +492,10 @@ Praxisberichte oder Referenzen zum Einsatz generativer KI (z. B. GitHub Copilot,
 Vorteile: KI spart Zeit bei repetitivem, wiederkehrendem Code und liefert schnell ein brauchbares Testgerüst. Die Code-Coverage steigt dadurch rasch an. Zudem liefert KI auf Nachfrage schnell Ideen für Edge-Cases (z. B. Null-Werte, Extremwerte), die man selbst leicht übersieht.
 
 Nachteile: Der „Echo Chamber“-Effekt, also KI übernimmt Fehler aus dem Code, statt sie zu erkennen — rechnet eine Funktion aus Versehen falsch, bestätigt die KI dieses falsche Ergebnis trotzdem als richtig. KI neigt dazu, Mocks exzessiv zu nutzen anstatt das tatsächliche funktionale Rückgabe-Verhalten einer Komponente zu prüfen eben auch veraltete Test-Methoden (z.B. deprecated PHPUnit-Features) zu nutzen. 
+
+![Echo-Chamber-Effekt](images/Echo-Chamber-Effekt.jpg)
+
+Sehr nennenswert war ein Beispiel als „Echo Chamber“-Effekt tatsächlich in der PHPUnitTest-Klasse für ”ForViewHelper” zu finden: abgesehen von der Code-Logik, hat KI den TestCase erkannt und die Methode mit AAA-Pattern gezielt generiert. Trotzdem wurde statt eines echten Assertion-Codes merkwürdigerweise nur ein Kommentar generiert. Der Kommentar '// Assert - implicit via mock expectations configured above' verrät es selbst, nämlich die gesamte Prüfung läuft über PHPUnits Mock-Expectation-Mechanismus. Genau an der Stelle ist der "human-in-the-loop" umso wichtiger und entscheidender. Unter dem Kommentar könnte man einfach 2 Zeilen als Assertion 'self::assertFalse($provider->exists('i')); self::assertFalse($provider->exists('c'));' ergänzen, damit wird das Ziel der Methode erfüllt, nämlich dass 'remove()' korrekt funktioniert hat.
 
 Um dieses Risiko zu senken, braucht es drei Validierungsmassnahmen:
 

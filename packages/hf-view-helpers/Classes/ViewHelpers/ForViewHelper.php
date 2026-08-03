@@ -25,7 +25,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  *     <hf:for limit="10" increment="4" begin="2" variable="value" counter="index">
  *         {index}: {value}
  *     </hf:for>
- *     // == 1: 2, 2: 6, 2: 10
+ *     // == 1: 2, 2: 6, 3: 10
  *
  * @author .hausformat <entwicklung@hausformat.com>
  */
