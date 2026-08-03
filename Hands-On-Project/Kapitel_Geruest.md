@@ -436,7 +436,7 @@ Kurze Erläuterung:
 - 53% -> 100%: Angaben nach KI-Phas1 -> Angaben nach KI-Phase2
 
 #### Bewertungsskala Assertions (Stufe:1–5) 
-Die Stufenzuordnung basiert grundsätzlich auf subjektiver Beobachtung sowie den folgenden Überlegungen und Kriterien.
+Die Stufenzuordnung basiert grundsätzlich auf meiner subjektiven Beobachtung und Analyse an den gelieferten Daten, generierten Quellcodes usw. sowie den folgenden Überlegungen und Kriterien. Die genauen Daten zu PHPStan-Fehlern, Mutationstest-Scores sowie Coverage-Zahlen für alle 5 ausgewählten Klassen werden nicht im Einzelnen dargestellt und gezeigt. Die einzigen präsentativen Daten findet man in Abschnitt 3.4 und 4.2 mit Screenshots und Erläuterungen.
 
 Stufe-5: Alle öffentlichen Methoden geprüft, Assertions für Happy-Path, Grenzwerte und Fehlerfälle, keine Tautologien, Testwerte unterscheiden ähnliche Implementierungen, Mocking korrekt (richtiger Typ createMock/createStub, richtige Methode, kein unnötiges Mocking), PHPStan-Errors: 0–1, MSI > 90%
 
