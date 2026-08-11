@@ -36,7 +36,7 @@ Die Arbeit zeigt: KI-gestützte PHPUnit-Tests funktionieren unter TYPO3(Version 
 
 ## 1. Einleitung
 
-Dieses Kapitel führt in die Arbeit ein. Zuerst wird das Praxisproblem beschrieben, das die Motivation liefert (1.1), danach der Rahmen beim Arbeitgeber und im Demoprojekt (1.2). Anschliessend werden die Ziele auf Unternehmens-, Lern- und Projektebene erklärt (1.3), gefolgt von den beteiligten Stakeholdern und ihrem Einfluss auf die Arbeit (1.4).
+Dieses Kapitel führt in die Arbeit ein: Zunächst wird das Praxisproblem beschrieben, das die Motivation liefert (1.1), danach der Rahmen beim Arbeitgeber und im Demoprojekt (1.2). Anschliessend werden die Ziele auf Unternehmens-, Lern- und Projektebene erläutert (1.3), gefolgt von den beteiligten Stakeholdern und ihrem Einfluss auf die Arbeit (1.4).
 
 ### 1.1 Problembeschreibung
 
@@ -44,43 +44,42 @@ Automatisierte Tests gelten als Grundpfeiler moderner Softwareentwicklung. Softw
 
 Das Testing an sich via CI/CD-Automatisierung, die verbereitet im Einsatz ist, alleine senkt nicht den Aufwand (Felderer und Ramler 2016). Also CI/CD-Automatisierung setzt voraus, dass Tests bereits existieren, und löst damit nicht das eigentliche Nadelöhr — das Schreiben der Tests selbst. 
 
-Genau dieses Spannungsfeld zwischen begrenzter Zeit und hohem Testaufwand bildet den Ausgangspunkt der vorliegenden Arbeit. LLMs können PHP-Code analysieren und daraus Testcode generieren. Die zentrale Frage ist: Sind diese Tests praxistauglich — laufen sie durch, decken sie den Code sinnvoll ab, und erkennen sie echte Grenzwerte?
+Genau dieses Spannungsfeld zwischen begrenzter Zeit und hohem Testaufwand bildet den Ausgangspunkt der vorliegenden Arbeit. LLMs können PHP-Code analysieren und daraus Testcode generieren. Die zentrale Frage ist: Sind diese Tests praxistauglich, sind die generierten PHPUnit-Tests von guter Qualität, also laufen sie durch, decken sie den Code sinnvoll ab, und erkennen sie echte Grenzwerte?
 
-Untersucht wird dies anhand von fünf Klassen aus einer produktiven TYPO3-Extension, die in vielen Kundenprojekten benutzt wird. Die Klassen sind bewusst unterschiedlich gewählt — von einfacher Dummy-Logik über reine PHP-Logik bis hin zu komplexem TYPO3-abhängigem Code mit echtem Mocking-Bedarf. Die Ergebnisse werden quantitativ anhand von vier Kennzahlen gemessen: Erstellungszeit, Methodenabdeckung, PHPStan-Fehler und Mutation Score. Diese bilden zusammen die Grundlage für eine Einschätzung des Praxisnutzens KI-gestützter Testgenerierung.
+Untersucht wird dies anhand von fünf Klassen aus einer produktiven TYPO3-Extension 'hf-view-helpers', die in vielen Kundenprojekten benutzt wird. Die Klassen sind bewusst unterschiedlich gewählt — von einfacher Dummy-Logik über reine PHP-Logik bis hin zu komplexem TYPO3-abhängigem Code mit echtem Mocking-Bedarf. Die Ergebnisse werden quantitativ anhand von vier Kennzahlen gemessen: Erstellungszeit, Methodenabdeckung, PHPStan-Fehler und Mutation Score. Diese bilden zusammen die Grundlage für eine Einschätzung des Praxisnutzens KI-gestützter Testgenerierung.
 
 Noch wichtig zu erwähnen: PHP-Klassen enthalten oft mehr Information als nur den ausführbaren Code — zum Beispiel in PHPDoc- oder Inline-Kommentaren, die erklären, welche Werte eine Methode erwartet, was sie zurückgibt und warum sie so implementiert wurde. In dieser Arbeit werden Tests bewusst ohne solche Kommentare als zusätzliche Inputs oder Hinweis generiert, was zeigt, was das LLM allein aus dem Quellcode ableiten kann.
 
 Zugleich ist mir die Arbeit eine Gelegenheit, sich intensiv mit einem modernen Toolset
 auseinanderzusetzen, vor allem: 
-Claude Code — KI-gestützte Coding-Umgebung (Anthropic), hier zur automatisierten Testgenerierung eingesetzt.
-PHPUnit mit dem TYPO3 Testing Framework — Standard-Testframework für PHP, erweitert um TYPO3-spezifische Hilfsfunktionen.
-Infection für Mutationstests — verändert gezielt den Quellcode (Mutanten) und prüft anhand des Coverage-Reports, ob die bestehenden Tests diese Fehler erkennen ("töten"); das Ergebnis wird als Mutation Score ausgedrückt und zeigt so die tatsächliche Aussagekraft der Tests, nicht nur deren Abdeckung.
-PHPStan für die statische Analyse — findet Typ- und Codefehler, ohne den Code auszuführen.
+Claude Code — KI-gestützte Coding-Umgebung (Anthropic), hier als Visual-Studio-Code-Erweiterung innerhalb der IDE eingesetzt zur automatisierten Testgenerierung sowie zur Behebung von Fehlern.
+PHPUnit mit dem TYPO3 Testing Framework — Weit verbreitetes Standard-Testframework für PHP zur Erstellung und Ausführung von Unit- und funktionalen Tests, im vorliegenden Projekt erweitert um TYPO3-spezifische Hilfsfunktionen und Basisklassen (z. B. UnitTestCase).
+Infection für Mutationstests — Bibliothek für PHP. Verändert gezielt den Quellcode (Mutanten) und prüft anhand des Coverage-Reports, ob die bestehenden Tests diese Fehler erkennen ("töten"); das Ergebnis wird als Mutation Score ausgedrückt und zeigt so die tatsächliche Aussagekraft der Tests, nicht nur deren Abdeckung.
+PHPStan für die statische Analyse — Statisches Analyse-Tool für PHP. Findet Typ- und Codefehler, ohne den Code auszuführen.
 
 ### 1.2 Organisatorische Einbettung
 
 #### Unternehmenskontext
+Aus meiner langjährigen Erfahrung in verschiedenen Webagenturen mit TYPO3-Projekten zeigt sich: In der Praxis werden sie haufig weggelassen — nicht weil Entwicklerinnen und Entwickler ihren Nutzen nicht kennen, sondern weil der Aufwand im Projektalltag mit engem Zeitbudget oft zu hoch ist.
 
-Die vorliegende Arbeit entsteht im Rahmen meiner beruflichen Tätigkeit beim ehemaligen Arbeitgeber, einer Agentur mit Fokus auf TYPO3-Webentwicklung. Im Tagesgeschäft sind Entwicklerinnen und Entwickler für die Implementierung und Pflege von TYPO3-Extensions zuständig. Automatisierte Tests sind zwar bekannt, wie oben schon erwähnt, werden jedoch aufgrund des hohen manuellen Aufwands selten konsequent umgesetzt.
+Die vorliegende Arbeit entsteht im Rahmen meiner beruflichen Tätigkeit beim ehemaligen Arbeitgeber Hausformat GmbH, einer Agentur mit Fokus auf TYPO3-Webentwicklung. Den direkten Anlass für diese Arbeit liefert eine konkrete Aufgabe: Für die Extension 'hf-view-helpers' sollte eine PHPUnit-Testumgebung aufgesetzt und nachträglich für einige wichtige und exemplarische Klassen Unit-Tests geschrieben werden. 
 
-Den direkten Anlass für diese Arbeit liefert eine konkrete Aufgabe: Für die Extension EXT:hf-view-helpers sollte eine PHPUnit-Testumgebung aufgesetzt und nachträglich für einige zentrale Klassen Unit-Tests geschrieben werden. Die Extension hat viele Versionen, die betroffene ist eine Version mit der TYPO3-Version V14 kompatibel ist. 
-
-Diese Arbeit setzt genau an diesem Punkt an: Sie untersucht, ob ein LLM diesen Aufwand so weit reduzieren kann, dass Unit-Tests zum Standardbestandteil jedes Entwicklungszyklus werden.
+Die Extension hat viele Versionen, die betroffene ist eine Version mit der aktuellen TYPO3-Version 14 kompatibel ist. Diese Arbeit setzt genau an diesem Punkt an: Sie untersucht, ob ein LLM diesen Aufwand so weit reduzieren kann, dass Unit-Tests zum Standardbestandteil jedes Entwicklungszyklus werden und ob dabei eine ausreichende Testqualität erreicht wird.
 
 #### Projektkontext und Demo-Extension
 
 Als technische Basis dient das TYPO3-Demoprojekt 'cas_ai_phpunit', das lokal mit DDEV (Docker-basierte Entwicklungsumgebung) betrieben wird. Innerhalb dieses Projekts wird die Extension 'hf-view-helpers' als Testgegenstand verwendet. Sie bündelt fast 50 TYPO3 Fluid-ViewHelper-Klassen, die im Produktivbetrieb eingesetzt werden. 
 
-Um die Testbarkeit der Klassen systematisch zu erfassen, wurde im Rahmen dieser Arbeit ein eigenes Claude-Code LCI-Plugin entwickelt: 'typo3-test-audit'. Es enthält vier Skills, darunter der Skill 'test-audit-text' analysiert alle PHP-Klassen einer Extension und erstellt einen Überblick — wie viele Klassen existieren, welche sich für PHPUnit Unit-Tests eignen und welche funktionale Tests erfordern, jeweils mit kurzer Begründung. 
+Um die Testbarkeit der Klassen systematisch zu erfassen, wurde im Rahmen dieser Arbeit ein eigenes Claude-Code LCI-Plugin entwickelt: 'typo3-test-audit'. Es enthält vier Skills, darunter der wichtigste Skill 'test-audit-text', der als Grundlage für die Auswahl von 5 Klassen im Rahmen der CAS-Arbeit dient: Er analysiert alle PHP-Klassen einer Extension und erstellt einen Überblick, wie viele Klassen existieren, welche sich für PHPUnit-Unit-Tests eignen und welche funktionale Tests erfordern — jeweils mit kurzer Begründung.
 
-Die Auswahl der fünf Beispielklassen für diese Arbeit basiert auf diesem Audit-Report. Das CLI-Plugin ist nicht projektspezifisch und kann künftig bei beliebigen TYPO3-Projekten wiederverwendet werden — ein zusätzlicher Mehrwert/Benifit dieser Arbeit. Die Funktionsweise des CLI-Plugins wird in Abschnitt 3.1 erläutert.
+Die Auswahl der fünf Beispielklassen für diese Arbeit basiert auf diesem Audit-Report. Das CLI-Plugin ist nicht projektspezifisch und kann künftig bei beliebigen TYPO3-Projekten wiederverwendet werden — ein zusätzlicher Mehrwert/Benifit dieser Arbeit. Die Funktionsweise des CLI-Plugins wird in Abschnitt 3.2 und 3.3 erläutert.
 
 
-### 1.3 Unternehmens-, Lern-, und Projektziele
+### 1.3 KI-bezogene Unternehmens-, Lern-, und Projektziele
 
 Die Ziele dieser Arbeit lassen sich auf drei Ebenen betrachten.
 **Unternehmensziele (für ehemaligen auch zukünftigen Arbeitgeber)**
-Im Vordergrund steht, dass automatisierte Tests im Alltag tatsächlich geschrieben werden. Wie in Abschnitt 1.1 beschrieben, fehlt im Projektgeschäft schlicht die Zeit dafür. Dass dies kein Einzelproblem meines (ehemaligen) Arbeitgebers ist, sondern ein branchenweit dokumentiertes Muster, zeigt die systematische Literaturübersicht von Wiklund et al. (2017). Das Praxisproblem lässt sich also verallgemeinern, was den Nutzen einer KI-gestützten Lösung über den eigenen Arbeitgeber hinaus relevant macht.
+Im Vordergrund steht, dass automatisierte Tests im Alltag tatsächlich geschrieben werden. Wie in Abschnitt 1.1 beschrieben, fehlt im Projektgeschäft schlicht die Zeit dafür. Dass dies kein Einzelproblem meines (ehemaligen) Arbeitgebers ist, sondern ein branchenweit dokumentiertes Muster ist, zeigt die systematische Literaturübersicht von Wiklund et al. (2017). Das Praxisproblem lässt sich also verallgemeinern. Eine KI-gestützte Lösung wäre somit auch über den eigenen Arbeitgeber hinaus relevant.
 
 Das Unternehmen erhofft sich von dieser Arbeit zwei konkrete, messbare Verbesserungen für die Test-Erstellung, gemessen anhand der in Abschnitt 2.3/3.5 definierten Kennzahlen:
 
@@ -89,18 +88,18 @@ Weniger Aufwand — Ist: Für die betrachteten Klassen der Extension 'hf-view-he
 Weniger Fehler — Ist: Die Qualität von Unit-Tests wird heute nicht systematisch geprüft, es gibt weder statische Analyse noch Mutationstests. Soll: KI-generierte Tests sind statisch fehlerfrei (0 PHPStan-Fehler) und erreichen einen hohen Mutation Score. Die konkreten Schwellenwerte werden in Abschnitt 3.5 festgelegt (siehe Hypothesen H2, H7).
 
 **persönliche Lernziele**
-Neben den beiden inhaltlichen Zielen ist die Arbeit auch für Entwickler mit wenig Testing-Erfahrung von persönlichem Wert. PHPUnit-Tests sind für viele Entwickler bislang kaum Teil des Alltags — genau das macht diese Arbeit zu einer guten Gelegenheit, sich intensiv und strukturiert mit dem Thema Testing auseinanderzusetzen: Wie schreibt man sinnvolle Testfälle, wie funktioniert Mocking von TYPO3-Abhängigkeiten, wie liest man einen Coverage-Report richtig, und was sagt ein Mutation Score tatsächlich aus? Gleichzeitig lernt man den Umgang mit einem modernen Toolset, das über PHPUnit hinausgeht — insbesondere Claude Code als KI-gestützte Entwicklungsumgebung, PHPStan für die statische Analyse und Infection für Mutationstests. Dieses Wissen bleibt auch über die Arbeit hinaus nutzbar, sowohl persönlich als auch für den Einsatz beim Arbeitgeber.
+Neben den beiden inhaltlichen Zielen ist die Arbeit auch für Entwickler mit wenig Testing-Erfahrung von persönlichem Wert. PHPUnit-Tests sind für viele Entwickler bislang kaum Teil des Alltags — genau das macht diese Arbeit zu einer guten Gelegenheit, sich intensiv und strukturiert mit dem Thema Testing auseinanderzusetzen: Wie schreibt man sinnvolle Testfälle, wie funktioniert Mocking von TYPO3-Abhängigkeiten, wie liest man einen Coverage-Report richtig, und was sagt ein Mutation Score tatsächlich aus? Gleichzeitig lernt man den Umgang mit einem modernen Toolset — insbesondere Claude Code als KI-gestützte Entwicklungsumgebung, PHPStan für die statische Analyse und Infection für Mutationstests. Dieses Wissen bleibt auch über die Arbeit hinaus nutzbar, sowohl persönlich als auch für den Einsatz beim Arbeitgeber.
 
 **Projektziele (CAS-Arbeit)**
 Für die Arbeit selbst verfolge ich drei Hauptziele, die auch die Struktur der Auswertung in Kapitel 3 und 4 bestimmen:
 
-Erstes Hauptziel — Ein wiederverwendbares Werkzeug: Das im Rahmen dieser Arbeit entwickelte Plugin typo3-test-audit (siehe Abschnitt 1.2 und 3.1) soll nicht nur für diese Arbeit, sondern auch danach im Tagesgeschäft nutzbar sein — für beliebige TYPO3-Extensions, nicht nur für hf-view-helpers.
+Erstes Hauptziel — Ein wiederverwendbares Werkzeug: Das im Rahmen dieser Arbeit entwickelte Plugin typo3-test-audit (siehe Abschnitt 1.2 und 3.1) soll nicht nur für diese Arbeit, sondern auch danach im Tagesgeschäft nutzbar sein — für beliebige TYPO3-Extension, nicht nur für hf-view-helpers.
 
 Zweites Hauptziel — Machbarkeit zeigen: Nachgewiesen werden soll, dass sich aus einer bestehenden PHP-Klasse mithilfe eines LLM automatisch eine lauffähige PHPUnit-Testklasse erzeugen lässt, ohne dass die Tests von Grund auf manuell geschrieben werden müssen. „Lauffähig" heisst hier ganz konkret: Die Tests lassen sich mit PHPUnit ausführen, sie bestehen (grün) und sie prüfen sinnvolle Fälle statt nur oberflächlich zu bestehen.
 
 Drittes Hauptziel — Fairer Vergleich mit Zahlen: Die Behauptung, dass KI-generierte Tests gut sind, soll nicht nur aufgestellt, sondern mit Zahlen belegt werden. Dazu werden für jede der fünf ausgewählten Klassen die manuell geschriebenen Tests den KI-generierten Tests gegenübergestellt, anhand von vier klar messbaren Kriterien:
 Erstellungszeit — wie lange dauert es, bis eine lauffähige, fehlerfreie Testklasse vorliegt?Methodenabdeckung (Coverage) — wie viele der öffentlichen Methoden werden überhaupt von einem Test aufgerufen?
-PHPStan-Fehler — wie sauber und typsicher ist der generierte Testcode?
+PHPStan-Fehler — wie sauber und statisch fehlerfrei ist der generierte Testcode?
 Mutation Score — prüfen die Tests wirklich die Logik, oder würden sie auch bei einer fehlerhaften Implementierung noch grün bleiben?
 
 
@@ -114,7 +113,6 @@ Ehemaliger oder zukünftiger Arbeitgeber — Einfluss: mittel Die Firma profitie
 
 TYPO3-Community — Einfluss: niedrig für die breitere TYPO3-Community ist die Arbeit interessant. Da das Plugin typo3-test-audit wiederverwendbar ist (siehe Abschnitt 1.2), könnten die Ergebnisse auch anderen TYPO3-Entwicklerinnen und -Entwicklern nützen. Die Community ist aber nicht aktiv an der Arbeit beteiligt und hat deshalb keinen direkten Einfluss auf deren Verlauf.
 
-FHNW / Dozent — Einfluss: hoch Aus akademischer Sicht steht der wissenschaftliche Beitrag der Arbeit im Vordergrund: eine nachvollziehbare Methodik, überprüfbare Hypothesen (siehe Abschnitt 2.3) und eine saubere, messbare Auswertung. Der Dozent bzw. die Dozentin begleitet die Arbeit fachlich, gibt Feedback zu Aufbau und Methodik und bewertet am Ende das Ergebnis. Damit ist der Einfluss auf Anforderungen und Qualitätsmassstäbe hoch, auch wenn ich die inhaltliche Umsetzung selbst mache.
 
 ---
 
