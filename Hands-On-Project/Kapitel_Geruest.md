@@ -138,7 +138,7 @@ Sobald die PHP-Klasse fertig geschrieben ist, erzeugt der KI-Generator die passe
 
 CI/CD-Integration ist in der Praxis Standardverfahren, wird in dieser Arbeit jedoch bewusst nicht umgesetzt, sondern nur als Zielpunkt des Wertstroms mitgeführt — um den Aufwand im Rahmen des CAS auf die Testgenerierung selbst zu fokussieren (vgl. Abgrenzung in Abschnitt 1.2).
 
-Bezug zu DORA-Metriken-Theorie: Weil die Testerstellung schneller geht, wird auch die Zeit von der Codeänderung bis zur Auslieferung kürzer — das misst DORA mit der Kennzahl Lead Time for Changes. Ausserdem werden Fehler eher schon vor dem Deployment gefunden statt erst danach, wodurch weniger fehlerhafte Änderungen in Produktion landen — DORA misst das mit der Change Failure Rate. Die Wertstromanalyse zeigt also, warum die Zeitersparnis durch KI (Hypothese H1 in Abschnitt 2.3) für diese Arbeit wichtig ist.
+Ein kurzer Bezug zu DORA-Metriken-Theorie: Weil die Testerstellung schneller geht, wird auch die Zeit von der Codeänderung bis zur Auslieferung kürzer — das misst DORA mit der Kennzahl Lead Time for Changes. Ausserdem werden Fehler eher schon vor dem Deployment gefunden statt erst danach, wodurch weniger fehlerhafte Änderungen in Produktion landen — DORA misst das mit der Change Failure Rate. Die Wertstromanalyse zeigt, wo im Entwicklungsprozess am meisten Zeit verloren geht. Genau an dieser Stelle setzt Hypothese H1 an (Abschnitt 2.3): dass KI diese Zeitersparnis ermöglichen kann.
 
 ![Wertstromanalyse Soll-Zustand](images/wertstrom_soll_zustand.png)
 
@@ -190,20 +190,33 @@ Vergleich: Manuell vs. KI-generiert, Kriterien
 ![Abschnitt 3 — Bewertung & Erkenntnisse](images/ki_einsatz_abschnitt3.png)
 
 **Bemerkungen**:
-- Die konkrete Anwendung auf genau diese 5 Klassen (inkl. Begründung der Auswahl) ist bereits Inhalt von 2.4 "Vorgehen zur Einführung und Validierung" und wird in 3.2/3.4 mit echten Ergebnissen durchexerziert. 
+- Die Abschnitte 1 und 2 des obigen Ablaufs bilden den generischen Prozess, den z.B. das CLI-Plugin 'typo3-test-audit' bei jeder beliebigen TYPO3-Extension durchläuft — unabhängig vom konkreten Projekt.
 
-- Die 4 Plugin Skills finden Sie im Abschnitt 3.1 Tooling und Infrastruktur.
+- Abschnitt 3 dagegen — der Vergleich mit manuell geschriebenen Tests — ist kein Bestandteil dieses wiederverwendbaren Ablaufs, sondern ausschliesslich die Messmethodik, mit der in dieser CAS-Arbeit die Praxistauglichkeit der KI-generierten Tests überprüft wird (s. Abschnitt 3.5). 
 
-- Die Abschnitte 1 und 2 des obigen Ablaufs (Code-Analyse, Prompt, LLM-Aufruf, PHPUnit-Ausführung) bilden den generischen Prozess, den das Plugin typo3-test-audit bei jeder beliebigen Klasse einer TYPO3-Extension durchläuft — unabhängig vom konkreten Projekt.
+- Die konkrete Anwendung auf ausgewählte 5 Klassen (inkl. Begründung der Auswahl) ist bereits Inhalt von 2.4 "Vorgehen zur Einführung und Validierung" und wird in 3.2/3.4 mit echten Ergebnissen umgesetzt und ausgewertet. 
 
-- Abschnitt 3 dagegen — der Vergleich mit manuell geschriebenen Tests — ist kein Bestandteil dieses wiederverwendbaren Ablaufs, sondern ausschliesslich die Messmethodik, mit der in dieser CAS-Arbeit die Praxistauglichkeit der KI-generierten Tests überprüft wird (siehe Abschnitt 3.5). 
+- Die Vorstellung zu den 4 CLI-Plugin-Skills (Claude Code) finden Sie im Abschnitt 3.1 Tooling und Infrastruktur.
 
-- Für die Bewertung und Erkenntnisse dieser CAS-Arbeit bekommt die KI bei der Testgenerierung bewusst nur den reinen PHP-Code zu sehen — ohne PHPDoc oder Kommentare. Grund: So zeigt sich, was die KI rein aus dem Code selbst herausfinden kann, ohne zusätzliche Hilfestellung. (s. Abschnitt 1.1).
+- Für die Bewertung und Erkenntnisse dieser CAS-Arbeit bekommt die KI bei der Testgenerierung bewusst nur den reinen PHP-Code zu sehen — ohne PHPDoc oder Kommentare als Hinweise zu TestCase. Grund: So zeigt sich, was die KI rein aus dem Code selbst herausfinden kann, ohne zusätzliche Hilfestellung. (s. Abschnitt 1.1).
 
 ### 2.3 Hypothesen und erwartete Benefits
+Kriterien zur Bewertung sind Kombination von drei Testverfahren, nämlich (PhpUnit)-Codeabdeckungstest, PHPStan-Test und Mutationstest.
 
-**Hypothesen im Klartext:**
-Ich habe einige grobe Hypothesen wie folgendes aufgelistet.
+Codeabdeckung (Code Coverage) beschreibt, wie viel Prozent des Quellcodes durch Tests ausgeführt werden. Eine hohe Codeabdeckung deutet auf eine gründlichere Testung und ein geringeres Fehlerrisiko hin. In meiner Bewertung wird in der ersten Linie die Abdeckung nämlich Funktions- und Methodenabdeckung berücksichtigt, also wie viele Funktionen bzw. Methoden mindestens einmal durch Tests aufgerufen wurden.
+
+PHPStan ist ein leistungsstarkes Tool zur statischen Code-Analyse für PHP-Projekte. Es hilft Entwicklern, Fehler frühzeitig zu erkennen und die Codequalität zu verbessern, ohne den Code tatsächlich ausführen zu müssen.
+
+Ein PHPStan Level bestimmt die Strenge der statischen Code-Analyse in PHPStan. Die Level reichen von Stufe 0 (grundlegende Syntaxprüfungen) bis 10 (extrem strenge Typisierung). Bei meiner Bewertung ist der Level 6 in Einsatz. Level 6 ist der pragmatische Mittelweg: 
+1) Erzwingt vollständige Typ-Annotationen — wichtig für lesbare, wartbare Tests.
+2) Die PHPStan-PHPUnit-Extension greift auf Level 6 optimal: Sie erkennt falsch verwendete Mocks, fehlerhafte Assertion-Signaturen und ungültige DataProvider-Strukturen.
+3) Etablierter Standard in der TYPO3-Community für Testcode-Analyse.
+
+Mutationstest ist ein Softwaretest, wo künstliche Bugs (Mutationen) im Code produziert werden, um festzustellen, ob die vorhandenen Tests ausreichen, um diese künstlichen Fehler zu entdecken. Die Codeabdeckung reicht nicht immer aus, Mutationstests sind für Unit-Tests unerlässlich, da sie die tatsächliche Qualität und Aussagekraft Ihrer Tests überprüfen. Infection ist im Einsatz, Inection ist eine der bekanntesten Mutation Testing Frameworks für PHP. Bei meiner Bewertung ist der Indikator nämlich MSI-of covered berücksichtigt. Nämlich Mutation Score Indicator, der nur Mutanten in Code berücksichtigt, der tatsächlich von Tests ausgeführt wird.
+
+**Hypothesen als erwartete Benefits:**
+Einige grobe Hypothesen wie folgendes sind auflistet.
+
 H1: KI reduziert die Erstellungszeit deutlich gegenüber der manuellen Vorgehensweise. Bei trivialen Klassen ist eine sehr kurze Generierungszeit zu erwarten, bei komplexeren Klassen ist etwas mehr Korrekturzeit einzuplanen.
 
 H2: Die statische Fehlerrate (z.B. PHPStan-Fehler) in KI-generierten Testklassen ist niedrig bzw. mit manuell erstellten Tests vergleichbar — die KI produziert also nicht systematisch mehr syntaktische/statisch erkennbare Fehler als ein Mensch.
@@ -214,11 +227,10 @@ H4: Der Grossteil der generierten Tests läuft ohne manuelle Korrekturen durch. 
 
 H5: Bei Glue-Code mit TYPO3-Dependencies erfordert das KI-generierte Mocking manuelle Korrekturen, ist aber nicht grundsätzlich falsch. Die KI liefert einen brauchbaren Ausgangspunkt, der genaue Aufwand wird im Messprotokoll erfasst.
 
-H6: Unabhängig davon, ob zusätzlich PHPDoc und Inline-Kommentare als Kontext mitgegeben werden, liefert die KI generell Tests mit guter Assertions-Qualität: Grenzwerte werden geprüft und Edge-Cases sinnvoll behandelt.
+H6: Unabhängig davon, ob zusätzlich PHPDoc und Inline-Kommentare als Kontext/Hinweise für TestCase mitgegeben werden, liefert die KI generell Tests mit guter Assertions-Qualität: Grenzwerte werden geprüft und Edge-Cases sinnvoll behandelt.
 
 H7: KI-generierte Tests erzielen nach Korrektur einen hohen Mutation Score (MSI of Covered, gemessen mit Infection PHP). 
-
-Die Messmethodik sowie die genauen Zielwerte, Qualitätsreferrenz etc. werden im Abschnitt 3.5 nach den ersten Messdurchläufen gemessen und festgelegt und die Benefits werden ausführlich erläutet.
+Die Messmethodik sowie die genauen Zielwerte, Qualitätsreferrenz etc. werden im Abschnitt 3.5 nach den ersten Messdurchläufen gemessen und festgelegt und die Benefits werden ausführlich erläutert.
 
 ### 2.4 Vorgehen zur Einführung und Validierung
 
@@ -233,11 +245,13 @@ Begründung der Auswahl:
 Die Klassen stammen alle aus der Extension „hf-view-helpers“, die im Rahmen der CAS-Arbeit gezielt als Kandidaten für Unit-Tests ausgewählt wurde. Es handelt sich dabei um eine intern entwickelte Sammlung von ViewHelpern, die keine kundenspezifische Anwendungslogik implementiert und daher auch keine kundenspezifischen Daten enthält. Stattdessen dient sie als Framework und wird in zahlreichen Kundenprojekten eingesetzt. Aus diesem Grund ist die Qualität dieser Extension von besonderer Bedeutung: Werden Fehler erst in der Produktion entdeckt, ist der Aufwand für deren Analyse, Behebung und erneute Bereitstellung deutlich höher. Dort ist der Test-Audit-Workflow (CLI-Plugin 'typo3-test-audit') bereits eingerichtet und durchgeführt, alle 47 Klassen klassifiziert vorliegen. Die gewählten fünf Klassen decken bewusst den Bogen von trivialer Logik über komplexe reine PHP-Logik bis hin zu TYPO3-abhängigem Glue-Code ab.
 
 ### 2.5 Bekannte Chancen und Risiken aus Praxis und Forschung
-Auch der Blick auf bereits bekannte Erfahrungen — sowohl aus der Praxis als auch aus der Forschung — gehört zur Planung dieser Arbeit: Er wurde bewusst vor der Detailfestlegung der eigenen Hypothesen (2.3) und des Validierungsvorgehens (2.4) eingeholt und bildet die Grundlage für die eigenen Annahmen.
+Auch bekannte Erfahrungen aus Praxis und Forschung fliessen in die Planung dieser Arbeit ein. Sie wurden bewusst vor der Festlegung der eigenen Hypothesen (2.3) und des Validierungsvorgehens (2.4) eingeholt und bilden die Grundlage für die eigenen Annahmen.
 
-Praxiserfahrungen zeigen ein Muster aus Vor- und Nachteilen, das sich in ähnlicher Form auch in dieser Arbeit wiederfindet: Zeitersparnis und schnelle Coverage-Gewinne stehen Risiken wie dem „Echo-Chamber"-Effekt, etc. — verbunden mit entsprechenden Massnahmen zur Risikominderung.
+Praxiserfahrungen zeigen ein ähnliches Muster wie in dieser Arbeit: Zeitersparnis und schnelle Coverage-Gewinne stehen Risiken wie dem 'Echo-Chamber'-Effekt gegenüber. Diese Risiken lassen sich jedoch durch geeignete Massnahmen mindern.
 
-Akademische Forschung bestätigt dieses Bild ebenfalls weitgehend. Anders als eine Breitenstudie, die verschiedenste KI-Techniken über die Literatur hinweg vergleicht, liefert meine vorliegende Arbeit jedoch tool- und technologiespezifische Evidenz für einen konkreten LLM-Workflow (Claude API) im TYPO3/PHPUnit-Kontext.
+Akademische Forschung bestätigt dieses Bild weitgehend. Anders als breit angelegte Literaturvergleiche verschiedener KI-Techniken liefert die vorliegende Arbeit jedoch konkrete Evidenz für einen einzelnen LLM-Workflow (Claude API) im TYPO3/PHPUnit-Kontext.
+
+Wie diese hier skizzierten Praxis- und Forschungserfahrungen sich konkret zu den eigenen Ergebnissen dieser Arbeit verhalten, wird in Abschnitt 4.2 "Bezug zu bestehenden Erfahrungen und Studien" im Detail eingeordnet.
 
 ---
 
