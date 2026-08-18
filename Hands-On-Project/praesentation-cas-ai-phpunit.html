@@ -140,7 +140,7 @@
     margin:0; padding:0;
     display:flex; flex-direction:column;
     gap: clamp(10px,1.6vh,18px);
-    max-width: 78ch;
+    max-width: 100%;
   }
   ul.points li{
     display:flex;
@@ -259,6 +259,19 @@
   }
   table.results td.num{ font-family: ui-monospace,monospace; }
   table.results tr.hl td{ color: var(--accent); }
+  table.results.compact th, table.results.compact td{
+    padding: 5px 10px;
+    font-size: clamp(11px,1.05vw,12.5px);
+  }
+  .table-label{
+    margin:0 0 6px;
+    font-family: ui-monospace,monospace;
+    font-size: 12px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color: var(--text-dim);
+  }
+  .table-label.ai{ color: var(--accent); }
   .pill{
     display:inline-block;
     font-family: ui-monospace,monospace;
@@ -273,6 +286,11 @@
     background: color-mix(in srgb, var(--accent) 18%, transparent);
     color: var(--accent);
     border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  .pill.neutral{
+    background: color-mix(in srgb, var(--text-dim) 14%, transparent);
+    color: var(--text-dim);
+    border-color: var(--rule);
   }
 
   .hstack{ display:flex; gap: clamp(10px,2vw,22px); flex-wrap:wrap; }
@@ -418,15 +436,15 @@
 
     <!-- 1 — Titel -->
     <section class="slide">
-      <div class="kicker">00 / Start</div>
+      <div class="kicker">0 / Start</div>
       <h1>KI-gestützte Testgenerierung<br>mit PHPUnit in TYPO3</h1>
       <p class="lede">Evaluation · Qualitätsanalyse · Grenzen · Workflow</p>
     </section>
 
     <!-- 2 — Einleitung -->
     <section class="slide">
-      <div class="kicker">01 / Einleitung</div>
-      <h2>Das Problem: Zeit statt Tests</h2>
+      <div class="kicker">1 / Einleitung</div>
+      <h2>Ausgangslage und Forschungsfrage</h2>
       <ul class="points">
         <li><b>Tests sind teuer</b> <span class="dim">— bis zu 50% der Entwicklungskosten (Harrold 2000).</span></li>
         <li><b>Aus eigener Erfahrung:</b> <span class="dim">in der Agentur wurden PHPUnit-Tests im Alltag oft weggelassen — aus Zeitdruck, nicht aus Unwissen.</span></li>
@@ -437,7 +455,7 @@
 
     <!-- 3 — Wertstromanalyse -->
     <section class="slide">
-      <div class="kicker">02 / Planung — Wertstromanalyse</div>
+      <div class="kicker">2 / Planung — Wertstromanalyse</div>
       <h2>Ist-Zustand vs. Soll-Zustand</h2>
       <div class="card">
         <h3>Ist-Zustand</h3>
@@ -468,7 +486,7 @@
 
     <!-- 4 — Werkzeug -->
     <section class="slide">
-      <div class="kicker">03 / Umsetzung — Werkzeug</div>
+      <div class="kicker">3 / Umsetzung — Werkzeug</div>
       <h2>Werkzeuge zum Generieren, Messen, Validieren</h2>
       <div class="grid4">
         <div class="card">
@@ -497,105 +515,123 @@
       <p class="lede">Das CLI-Plugin analysiert die Klassen, generiert und korrigiert die Tests und liefert eigene Reports — Coverage, PHPStan und Infection liefern dafür die externe Messgrundlage zur Validierung, Qualitätssicherung und gezielten Nachbesserung.</p>
     </section>
 
-    <!-- 5 — Demo -->
+    <!-- 5 — Vorgehen -->
     <section class="slide">
-      <div class="kicker">03 / Umsetzung — Beispiel</div>
-      <h2>Workflow an <span class="mono" style="font-weight:800;">JsonDecodeViewHelper</span></h2>
-      <ul class="points">
-        <li><b>Generierung:</b> <span class="dim">9 Tests, 15 Assertions, First-Run GREEN, 100% Coverage.</span></li>
-        <li><b>Mutationstest:</b> <span class="dim">MSI of Covered nur 53.33% — 3 Mutanten überleben (z.B. Default-Argument <span class="mono">depth&nbsp;=&nbsp;512</span> ungeprüft).</span></li>
-        <li><b><span class="mono">fix-unit-tests</span>:</b> <span class="dim">3 neue TestCases gezielt für die überlebten Mutanten ergänzt.</span></li>
-      </ul>
-      <div class="hstack">
-        <div class="stat"><div class="num">53% → 100%</div><div class="label">Mutation Score</div></div>
-        <div class="stat"><div class="num">1.5 Min.</div><div class="label">Erstellung inkl. Fix</div></div>
-        <div class="stat"><div class="num">0</div><div class="label">PHPStan-Fehler</div></div>
+      <div class="kicker">3 / Umsetzung — Vorgehen</div>
+      <h2>Zwei Verfahren, fünf Klassen</h2>
+      <p class="lede">5 PHP-Klassen ausgewählt anhand des Reports von <span class="mono">test-audit-text</span> — von einfacher Logik bis zu einer Klasse mit TYPO3-Abhängigkeit, unterschiedliches Komplexitätsniveau.</p>
+      <div class="grid2">
+        <div class="card">
+          <h3>1 · Manuell — ohne KI</h3>
+          <ul class="skill-list" style="gap:11px;">
+            <li style="font-size:14px;"><b>Schreiben</b> — pro Klasse eine TestClass von Hand geschrieben.</li>
+            <li style="font-size:14px;"><b>Fehlerfrei</b> — so lange nachgebessert, bis PHPStan keine statischen Fehler mehr meldet.</li>
+            <li style="font-size:14px;"><b>Validieren</b> — Auswertung per PHPUnit Coverage und Mutationstest.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>2 · Mit KI</h3>
+          <ul class="skill-list" style="gap:11px;">
+            <li style="font-size:14px;"><b>Generieren</b> — pro Klasse eine TestClass per KI erzeugt.</li>
+            <li style="font-size:14px;"><b>Fehler beheben</b> — statische Fehler ebenfalls per KI korrigiert.</li>
+            <li style="font-size:14px;"><b class="mono">fix-unit-tests</b> — Skill schliesst gezielt die vom Mutationstest aufgedeckten Lücken.</li>
+          </ul>
+        </div>
       </div>
+      <blockquote class="code-note" style="border-left-color:var(--rule);">Beide Verfahren wurden pro Klasse identisch gemessen, dokumentiert und gegenübergestellt.</blockquote>
     </section>
 
     <!-- 6 — Ergebnisse -->
     <section class="slide">
-      <div class="kicker">03 / Umsetzung — Ergebnisse</div>
+      <div class="kicker">3 / Umsetzung — Ergebnisse</div>
       <h2>Manuell vs. KI — 5 Klassen im Vergleich</h2>
-      <div style="overflow-x:auto;">
-        <table class="results">
-          <thead>
-            <tr><th>Klasse</th><th>Zeit manuell</th><th>Zeit KI</th><th>Coverage KI</th><th>MSI KI (vor → nach)</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>JsonDecodeViewHelper</td><td class="num">&gt; 30 Min.</td><td class="num">1.5 Min.</td><td class="num">100%</td><td class="num">53% → 100%</td></tr>
-            <tr><td>ForViewHelper</td><td class="num">30 Min.</td><td class="num">3 Min.</td><td class="num">100%</td><td class="num">61% → 100%</td></tr>
-            <tr><td>RoundViewHelper</td><td class="num">&gt; 60 Min.</td><td class="num">2.5 Min.</td><td class="num">100%</td><td class="num">82% → 100%</td></tr>
-            <tr><td>Greeter</td><td class="num">30 Min.</td><td class="num">&lt; 1 Min.</td><td class="num">100%</td><td class="num">100%</td></tr>
-            <tr><td>DateViewHelper <span class="pill">TYPO3-Glue-Code</span></td><td class="num">&gt; 30 Min.</td><td class="num">2.5 Min.</td><td class="num">100%</td><td class="num">57% → 100%</td></tr>
-            <tr class="hl"><td><b>Nach Korrektur</b></td><td></td><td class="num">≤ 5 Min.</td><td class="num">100% / 100%</td><td class="num"><span class="pill ok">100%</span></td></tr>
-          </tbody>
-        </table>
+
+      <div>
+        <p class="table-label">Manuelle Referenz</p>
+        <div style="overflow-x:auto;">
+          <table class="results compact">
+            <thead>
+              <tr><th>Klasse</th><th>Zeit</th><th>PHPStan</th><th>Coverage (Methods)</th><th>Mutationstest (MSI of Covered)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>JsonDecodeViewHelper</td><td class="num">&gt; 30 Min.</td><td class="num">0</td><td class="num">50%</td><td class="num">41%</td></tr>
+              <tr><td>ForViewHelper</td><td class="num">30 Min.</td><td class="num">0</td><td class="num">100%</td><td class="num">53%</td></tr>
+              <tr><td>RoundViewHelper</td><td class="num">&gt; 60 Min.</td><td class="num">0</td><td class="num">47%</td><td class="num">34%</td></tr>
+              <tr><td>Greeter</td><td class="num">30 Min.</td><td class="num">0</td><td class="num">100%</td><td class="num">100%</td></tr>
+              <tr><td>DateViewHelper</td><td class="num">&gt; 30 Min.</td><td class="num">0</td><td class="num">50%</td><td class="num">48%</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <p class="lede">Faktor <b>≥ 6</b> schneller als manuell — bei gleichzeitig höherer Coverage. Bei 3 von 5 Klassen war eine kurze Korrekturphase nötig (PHPStan-Fehler, unter 2&nbsp;Min. behoben).</p>
+
+      <div>
+        <p class="table-label">KI-gestützt</p>
+        <div style="overflow-x:auto;">
+          <table class="results compact">
+            <thead>
+              <tr><th>Klasse</th><th>Zeit (Error-Fix)</th><th>PHPStan (Error)</th><th>Coverage (Methods)</th><th>Mutationstest (MSI of Covered)</th><th>Assert.-Stufe (1–5)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>JsonDecodeViewHelper</td><td class="num">1.5 Min.</td><td class="num">0</td><td class="num">100%</td><td class="num">53% → 100%</td><td class="num">3 → 5</td></tr>
+              <tr><td>ForViewHelper</td><td class="num">3 Min. (+2 Min.)</td><td class="num">6 → 0</td><td class="num">100%</td><td class="num">61% → 100%</td><td class="num">3 → 5</td></tr>
+              <tr><td>RoundViewHelper</td><td class="num">2.5 Min. (+1 Min.)</td><td class="num">1 → 0</td><td class="num">100%</td><td class="num">82% → 100%</td><td class="num">4 → 5</td></tr>
+              <tr><td>Greeter</td><td class="num">&lt; 1 Min.</td><td class="num">0</td><td class="num">100%</td><td class="num">100%</td><td class="num">5</td></tr>
+              <tr><td>DateViewHelper</td><td class="num">2.5 Min. (+1 Min.)</td><td class="num">2 → 0</td><td class="num">100%</td><td class="num">57% → 100%</td><td class="num">4 → 5</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="lede">Zusätzlich eigene <b class="mono">Assert.-Stufe (1–5)</b> <span class="dim">— basiert auf subjektiver Beobachtung und Analyse der gelieferten Daten, anhand von Methodenabdeckung, Happy-Path/Grenzwerten/Fehlerfällen, Tautologien, korrektem Mocking/Stubbing, Anzahl PHPStan-Fehler und Mutation Score (MSI).</span></p>
     </section>
 
     <!-- 7 — Hypothesen -->
     <section class="slide">
-      <div class="kicker">03 / Umsetzung — Hypothesen</div>
-      <h2>Was sich bestätigt hat</h2>
+      <div class="kicker">3 / Umsetzung — Hypothesen</div>
+      <h2>Sieben Hypothesen und Kernbefund</h2>
       <div class="grid2">
         <ul class="points">
           <li><span class="pill ok">H1</span> <b>Zeitersparnis</b> <span class="dim">klar bestätigt, Faktor ≥ 6.</span></li>
           <li><span class="pill ok">H3</span> <b>Methods Coverage</b> <span class="dim">100% bei allen 5 Klassen.</span></li>
           <li><span class="pill ok">H7</span> <b>Mutation Score</b> <span class="dim">100% nach Korrektur, bei allen Klassen.</span></li>
-          <li><span class="pill ok">H5 / H6</span> <b>Mocking &amp; Assertions</b> <span class="dim">brauchbar, gute Qualität, auch bei Glue-Code.</span></li>
+          <li><span class="pill ok">H5</span> <b>Mocking bei Glue-Code</b> <span class="dim">brauchbarer Ausgangspunkt bei TYPO3-Abhängigkeiten (DateViewHelper) — Stufe 4→5, MSI 57%→100%.</span></li>
+          <li><span class="pill ok">H6</span> <b>Assertions-Qualität</b> <span class="dim">Grenzwerte, Edge-Cases geprüft — einfach: Stufe 4–5, komplex: Stufe 3 → alle Stufe 5.</span></li>
         </ul>
         <ul class="points">
           <li><span class="pill">H2</span> <b>Statische Fehlerrate</b> <span class="dim">nicht bestätigt — KI erzeugte im ersten Wurf teils mehr PHPStan-Fehler als der Mensch.</span></li>
           <li><span class="pill">H4</span> <b>First-Run GREEN</b> <span class="dim">nur 2 von 5 Klassen sofort fehlerfrei — Korrektur war die Regel, nicht die Ausnahme.</span></li>
         </ul>
       </div>
-      <blockquote class="code-note">Kernbefund: KI übernimmt die Fleissarbeit vollständig — der Mensch bleibt für die kurze, gezielte Korrektur zuständig.</blockquote>
+      <blockquote class="code-note" style="border-left-color:var(--rule);">Kernbefund: KI unterstützt den Menschen, ersetzt ihn nicht — sie übernimmt die Fleissarbeit vollständig, der Mensch bleibt für die kurze, gezielte Korrektur zuständig.</blockquote>
     </section>
 
     <!-- 8 — Kapitel 4 Diskussion -->
     <section class="slide">
-      <div class="kicker">04 / Diskussion</div>
-      <h2>Der Echo-Chamber-Effekt</h2>
-      <div class="grid2">
-        <div class="card">
-          <h3>Beobachtung — ForViewHelper</h3>
-          <p style="margin:0 0 10px;">Statt echter Assertions generierte die KI nur einen Kommentar:</p>
-          <div class="cmd" style="white-space:pre-wrap;">// Assert - implicit via mock
-// expectations configured above</div>
-          <p style="margin-top:10px;color:var(--text-dim);font-size:14px;">Die Prüfung lief allein über Mock-Erwartungen — genau hier ist <b>human-in-the-loop</b> entscheidend.</p>
-        </div>
-        <ul class="points">
-          <li><b>Einordnung:</b> <span class="dim">deckt sich mit Durrani et al. (2025) — KI verbessert Test-Accuracy signifikant, der Effizienzgewinn allein ist es nicht; "human-in-the-loop" bleibt nötig.</span></li>
-          <li><b>Drei Absicherungen:</b> <span class="dim">menschliche Kontrolle, Mutationstests (Infection), ergänzende Integrationstests.</span></li>
-          <li><b>Empfehlung:</b> <span class="dim">reine PHP-Logik zuerst per KI testen, Korrekturschritt fest einplanen, Mutationstests dauerhaft neben PHPUnit &amp; PHPStan einsetzen.</span></li>
-        </ul>
-      </div>
+      <div class="kicker">4 / Diskussion</div>
+      <h2>Vergleich, Einordnung, Empfehlung</h2>
+      <ul class="points">
+        <li><b>Vergleich mit der Praxiserfahrung:</b> <span class="dim">Berichte und Publikationen im Internet zeigen ein ähnliches Muster: Vorteile wie schnelles Testgerüst, rasche Coverage-Gewinne, Ideen für Edge-Cases; Nachteile wie Echo-Chamber-Effekt, exzessives Mocking, veraltete Testmethoden. Zur Risikosenkung: drei Validierungsmassnahmen — menschliche Kontrolle, Mutationstests (Infection), ergänzende Integrationstests.</span></li>
+        <li><b>Einordnung in die Forschung:</b> <span class="dim">Durrani et al. (2025) — Test-Genauigkeit klar verbessert (p&nbsp;&lt;&nbsp;0.0001, kaum Zufall möglich), Zeitgewinn statistisch nicht abgesichert (p&nbsp;=&nbsp;0.1359, könnte Zufall sein); human-in-the-loop bleibt deshalb notwendig.</span></li>
+        <li><b>Empfehlung:</b> <span class="dim">reine PHP-Logik zuerst per KI testen, PHPDoc/Inline-Kommentare gezielt für die Generierung nutzen, Korrekturschritt fest einplanen, Mutationstests dauerhaft neben PHPUnit &amp; PHPStan einsetzen, Test-Driven Development mit KI-Unterstützung.</span></li>
+      </ul>
+      <p class="lede" style="font-size:13px;">p-Wert eines Signifikanztests: je kleiner, desto unwahrscheinlicher, dass das Ergebnis nur Zufall ist.</p>
     </section>
 
     <!-- 9 — Fazit -->
     <section class="slide">
-      <div class="kicker">Fazit</div>
-      <h2>KI unterstützt — sie ersetzt nicht</h2>
-      <div class="hstack">
-        <div class="stat"><div class="num">≥ 6×</div><div class="label">schneller als manuell</div></div>
-        <div class="stat"><div class="num">100%</div><div class="label">Coverage &amp; MSI nach Fix</div></div>
-        <div class="stat"><div class="num">0</div><div class="label">PHPStan-Fehler am Ende</div></div>
-      </div>
+      <div class="kicker">5 / Beitrag &amp; persönlicher Gewinn</div>
+      <h2>Beitrag und persönlicher Gewinn</h2>
       <ul class="points" style="margin-top:6px;">
-        <li><b>Für den Arbeitgeber:</b> <span class="dim">einfache PHP-Klassen zuerst automatisieren, Korrektur einplanen.</span></li>
-        <li><b>Für die Community:</b> <span class="dim"><span class="mono">typo3-test-audit</span> ist wiederverwendbar — für jede TYPO3-Extension.</span></li>
-        <li><b>Für die Praxis:</b> <span class="dim">Mutationstests dauerhaft neben PHPUnit &amp; PHPStan verankern.</span></li>
+        <li><b>Innovation:</b> <span class="dim">nicht nur der Nachweis, dass LLMs Tests generieren können — sondern ein wiederverwendbares CLI-Plugin, ein wiederverwendbares Tool, und eine Bewertung durch die Kombination aus Methods Coverage, PHPStan-Fehlerrate und Mutation Score (MSI of Covered).</span></li>
+        <li><b>Lernen:</b> <span class="dim">Testing-Grundlagen, Mocking von TYPO3-Abhängigkeiten, den Mutation Score verstehen — und Claude Code als CLI-Werkzeug für wiederkehrende Aufgaben einrichten.</span></li>
       </ul>
     </section>
 
     <!-- 10 — Danke -->
     <section class="slide">
-      <div class="kicker">Ende</div>
+      <div class="kicker">6 / Ende</div>
       <h1 style="font-size:clamp(30px,4.4vw,52px);">Danke — Fragen?</h1>
-      <p class="lede">Sinian Zhang · CAS AI Software Engineering, FHNW<br>Betreuer: Samuel Fricker, Dan Burns</p>
-      <div class="cmd"><span class="prompt">&gt;</span> github.com/sinianzhang/cas_ai_phpunit</div>
+      <p class="lede">Besonderer Dank an meine beiden Betreuer: Samuel Fricker und Dan Burns.</p>
     </section>
 
   </div>
@@ -634,16 +670,16 @@
   var total = slides.length;
 
   var scripts = [
-"Guten Tag zusammen. Ich zeige Ihnen in den nächsten 20 Minuten, was passiert, wenn Claude Sonnet 5 aus reinem PHP-Code selbständig PHPUnit-Tests schreiben soll — und wie gut die Ergebnisse wirklich sind.",
+"Guten Tag zusammen. Für diese Arbeit habe ich verschiedene KI-Werkzeuge eingesetzt — allen voran Claude Sonnet 5 —, Daten analysiert und gemessen, und die Ergebnisse mit eigener Erfahrung sowie mit bestehender Forschung anderer verglichen. Genau das zeige ich Ihnen in den nächsten 20 Minuten: was passiert, wenn eine KI selbständig PHPUnit-Tests schreiben soll — und wie gut die Ergebnisse wirklich sind.",
 "Softwaretests können bis zu 50 Prozent der Entwicklungskosten ausmachen. Aus eigener Erfahrung in der Agentur wurden PHPUnit-Tests im Projektalltag trotzdem oft weggelassen — schlicht aus Zeitdruck, nicht aus Unwissen. Genau daraus ist diese Arbeit entstanden: Ich habe die konkrete Aufgabe bekommen, für eine bestehende TYPO3-Extension eine PHPUnit-Testumgebung vorzubereiten und ein paar Beispiel-Tests zu schreiben. Ich nehme die Extension 'hf-view-helpers' als Testobjekt für meine Arbeit. Dabei stellte sich mir die Frage: Kann das nicht auch eine KI übernehmen? Kann ein LLM aus fertigem Code — bewusst ohne Kommentare als Hinweis zum konkreten TestCase — selbständig gute PHPUnit-Tests schreiben?",
 "Im Ist-Zustand ist die manuelle Testerstellung selbst der Bottleneck — sie wird deshalb oft komplett übersprungen, und der Code landet ungetestet in der Pipeline. Wird ein Fehler dann erst in Produktion entdeckt, kostet die nachträgliche Behebung deutlich mehr, als wenn er vorher aufgefallen wäre. Im Soll-Zustand generiert die KI die Tests inklusive Korrektur in Minuten statt Stunden, sodass dieser Schritt nicht mehr aus Zeitgründen entfällt. Das Ergebnis: höhere Codequalität, weniger Fehler in Produktion und weniger Kosten und Zeit für die nachträgliche Behebung. Das wirkt sich direkt auf zwei DORA-Metriken aus, mit denen man Software-Delivery-Performance misst: Erstens die Lead Time for Changes — die Zeit von der fertigen Code-Änderung bis zur erfolgreichen Auslieferung in Produktion — sie wird kürzer, weil die Testerstellung nicht mehr Stunden, sondern Minuten dauert. Zweitens die Change Failure Rate — der Anteil der Änderungen, die in Produktion zu einem Fehler führen — sie sinkt, weil der Testschritt nicht mehr aus Zeitgründen übersprungen wird und Fehler früher auffallen.",
 "Dafür habe ich ein eigenes Claude-Code-Plugin entwickelt: typo3-test-audit, mit vier aufeinander aufbauenden Skills. Test-audit-text klassifiziert alle Klassen einer Extension. Test-audit-chart visualisiert das als Donut-Diagramm. Generate-unit-tests erzeugt die eigentlichen PHPUnit-Tests nach dem AAA-Pattern. Und fix-unit-tests liest den Mutationstest-Report und schliesst gezielt Lücken. Wichtig: Das Plugin ist projektunabhängig und für jede beliebige TYPO3-Extension einsetzbar. Im Hintergrund arbeiten drei etablierte Analyse-Werkzeuge zusammen: Erstens PHPUnit Coverage — misst, wie viele Methoden und Zeilen des Codes von den Tests überhaupt ausgeführt werden. Zweitens PHPStan — eine statische Codeanalyse, die Typ- und Codefehler findet, ohne den Code auszuführen; ich nutze dafür Level 6. Und drittens Infection — ein Mutationstest-Framework, das gezielt künstliche Fehler in den Code einbaut und prüft, ob die Tests diese wirklich erkennen. Genau diesen Infection-Report liest der Skill fix-unit-tests, um gezielt nachzubessern. Wichtig ist der Unterschied: Das Plugin selbst analysiert die Klassen, generiert und korrigiert die Tests und liefert eigene Reports — die drei externen Werkzeuge Coverage, PHPStan und Infection liefern dafür die Messgrundlage, auf der das Plugin arbeitet: zur Validierung, zur Qualitätssicherung und als Grundlage für die gezielte Nachbesserung.",
-"Ein konkretes Beispiel: JsonDecodeViewHelper, reine PHP-Logik. Die KI generiert neun Tests mit fünfzehn Assertions, läuft sofort fehlerfrei durch, hundert Prozent Methods Coverage. Aber: Der Mutationstest zeigt nur 53 Prozent MSI of Covered — drei Mutanten überleben, zum Beispiel wird der Default-Wert des Arguments depth gleich 512 gar nicht geprüft. Der Skill fix-unit-tests liest genau diesen Report und ergänzt drei gezielte neue Testfälle. Ergebnis: 100 Prozent Mutation Score, bei insgesamt anderthalb Minuten Erstellungszeit inklusive Korrektur.",
-"Das ist kein Einzelfall — hier die Ergebnisse für alle fünf Klassen. Die manuelle Erstellung dauert zwischen 30 und über 60 Minuten. Die KI liegt bei allen fünf Klassen inklusive Korrektur unter 5 Minuten — das ist ein Faktor von mindestens 6. Wichtig: alle fünf Klassen erreichen am Ende 100 Prozent Coverage und 100 Prozent Mutation Score, auch DateViewHelper mit echten TYPO3-Abhängigkeiten. Aber: bei drei von fünf Klassen war eine kurze Korrekturphase nötig, wegen PHPStan-Fehlern im ersten Wurf.",
+"Für den Vergleich habe ich fünf PHP-Klassen ausgewählt — basierend auf dem Report des Skills test-audit-text, von einfacher Logik bis zu einer Klasse mit echter TYPO3-Abhängigkeit, also unterschiedliches Komplexitätsniveau. Für jede Klasse habe ich zwei Verfahren durchlaufen und gemessen. Erstens manuell, ohne KI: Ich schreibe pro Klasse von Hand eine TestClass, so lange, bis PHPStan keine statischen Fehler mehr meldet. Danach validiere und evaluiere ich das Ergebnis per PHPUnit Coverage und Mutationstest. Zweitens mit KI: Pro Klasse generiert die KI eine TestClass, statische Fehler werden ebenfalls von der KI behoben, und der Skill fix-unit-tests schliesst gezielt die Lücken, die der Mutationstest aufdeckt. Beide Verfahren wurden identisch gemessen, dokumentiert und miteinander verglichen.",
+"Das ist kein Einzelfall — hier die Ergebnisse für alle fünf Klassen. Die manuelle Erstellung dauert zwischen 30 und über 60 Minuten. Die KI liegt bei allen fünf Klassen inklusive Korrektur unter 5 Minuten — das ist ein Faktor von mindestens 6. Wichtig: alle fünf Klassen erreichen am Ende 100 Prozent Coverage und 100 Prozent Mutation Score, auch DateViewHelper mit echten TYPO3-Abhängigkeiten. Aber: bei drei von fünf Klassen war eine kurze Korrekturphase nötig, wegen PHPStan-Fehlern im ersten Wurf. Zusätzlich zu diesen gemessenen Zahlen habe ich die KI-generierten Testklassen mit einer eigenen Skala von 1 bis 5 bewertet — der Assertions-Stufe. Sie basiert auf subjektiver Beobachtung und Analyse der gelieferten Daten, anhand von: Methodenabdeckung, Happy-Path, Grenzwerten und Fehlerfällen, Tautologien, korrektem Mocking/Stubbing, Anzahl PHPStan-Fehler und Mutation Score (MSI). Sie misst nicht nur, ob ein Test durchläuft, sondern wie aussagekräftig er wirklich ist. Am unteren Ende, Stufe 1, bestehen die Tests zwar formal, prüfen aber keine sinnvollen Eigenschaften — selbst eine fehlerhafte Implementierung würde sie bestehen. Stufe 2 sind tautologische oder triviale Assertions, die die Kernlogik nicht wirklich verifizieren. Dazwischen, Stufe 3 und 4, sind die Assertions grundsätzlich sinnvoll, aber es fehlen einzelne Grenzwerte oder das Mocking ist nicht ganz sauber. Am oberen Ende, Stufe 5, sind alle Methoden geprüft, inklusive Grenzwerte und Fehlerfälle, das Mocking ist korrekt, kaum PHPStan-Fehler, und der Mutation Score liegt über 90 Prozent. Wichtig: Anders als die drei automatisch gemessenen Kennzahlen ist diese Einordnung meine eigene, subjektive Bewertung.",
 "Wenn ich das gegen meine sieben Hypothesen halte: Zeitersparnis, Coverage, Mutation Score, Mocking-Qualität und Assertion-Qualität wurden klar bestätigt. Zwei Hypothesen aber nicht ganz: Die KI produzierte im ersten Wurf teils sogar mehr statische Fehler als ich selbst von Hand — und nur zwei von fünf Klassen liefen beim ersten Versuch komplett fehlerfrei durch. Der Kernbefund: die KI übernimmt die Fleissarbeit vollständig, der Mensch bleibt für die kurze, gezielte Korrektur zuständig.",
-"Ein besonders lehrreiches Beispiel für den sogenannten Echo-Chamber-Effekt fand ich bei ForViewHelper: Statt einer echten Assertion generierte die KI nur einen Kommentar — 'Assert implicit via mock expectations configured above'. Die Prüfung lief also ausschliesslich über die Mock-Erwartungen selbst, nicht über eine echte Assertion. Genau hier zeigt sich, warum human-in-the-loop entscheidend bleibt. Das deckt sich mit der Forschung von Durrani et al. 2025: KI verbessert die Test-Accuracy signifikant, aber der Effizienzgewinn allein reicht nicht — menschliche Kontrolle und Mutationstests bleiben notwendig.",
-"Mein Fazit: KI unterstützt den Menschen, sie ersetzt ihn nicht. Mindestens sechsmal schneller, am Ende hundert Prozent Coverage und Mutation Score, keine PHPStan-Fehler mehr. Für den Arbeitgeber empfehle ich: einfache PHP-Klassen zuerst per KI testen lassen, die Korrektur fest einplanen, und Mutationstests dauerhaft neben PHPUnit und PHPStan einsetzen. Und mit typo3-test-audit bleibt ein wiederverwendbares Werkzeug, das über diese Arbeit hinaus nutzbar ist.",
-"Vielen Dank für Ihre Aufmerksamkeit — ich freue mich auf Ihre Fragen."
+"Wie ordnet sich das Ganze ein? Berichte und Publikationen im Internet zu KI-gestütztem Testing zeigen ein ähnliches Muster wie in dieser Arbeit. Auf der Vorteilsseite: ein schnelles Testgerüst, rasche Coverage-Gewinne, und auf Nachfrage liefert die KI brauchbare Ideen für Edge-Cases. Auf der Nachteilsseite stehen vor allem drei Risiken: der sogenannte Echo-Chamber-Effekt — die KI übernimmt Fehler aus dem Code, statt sie zu erkennen, und bestätigt Falsches, statt ihm zu widersprechen. Dazu exzessives Mocking, wo eigentlich das echte Verhalten geprüft werden sollte. Und teils veraltete Testmethoden. Zur Risikosenkung braucht es drei Validierungsmassnahmen: menschliche Kontrolle, Mutationstests und ergänzende Integrationstests. Auch die akademische Forschung bestätigt dieses Bild: Durrani et al. 2025 zeigen statistisch abgesichert, dass KI die Test-Genauigkeit deutlich verbessert — der p-Wert liegt unter 0,0001, das ist ein sehr starkes, verlässliches Ergebnis. Beim reinen Zeitgewinn sieht es anders aus: Dort liegt der p-Wert bei 0,1359, weit über der üblichen Signifikanzschwelle von 0,05. Das heisst, über viele Teams und Tools hinweg könnte der gemessene Effizienzgewinn auch einfach Zufall sein — es gibt keine verlässliche statistische Evidenz dafür. Genau deshalb bleibt human-in-the-loop notwendig. Daraus ergeben sich fünf Empfehlungen: reine PHP-Logik-Klassen zuerst per KI testen lassen, PHPDoc und Inline-Kommentare gezielt für die Generierung nutzen, den Korrekturschritt fest einplanen statt ihn zu überspringen, Mutationstests dauerhaft neben PHPUnit und PHPStan etablieren, und Test-Driven Development mit KI-Unterstützung ausprobieren — der Mensch schreibt den ersten Test, die KI übernimmt Implementierung, Refactoring und Edge-Cases.",
+"Mein Fazit: KI unterstützt den Menschen, sie ersetzt ihn nicht. Mindestens sechsmal schneller, am Ende hundert Prozent Coverage und Mutation Score, keine PHPStan-Fehler mehr. Zwei Dinge möchte ich noch hervorheben: Erstens die Innovation dieser Arbeit — der Neuheitswert liegt nicht nur darin, zu zeigen, dass LLMs Unit-Tests generieren können, das ist in der Literatur bereits dokumentiert, sondern vor allem in der konkreten, wiederverwendbaren Umsetzung: ein wiederverwendbares CLI-Plugin, ein wiederverwendbares Tool — das CLI-Plugin typo3-test-audit funktioniert für jede beliebige TYPO3-Extension —, und eine Bewertung durch die Kombination aus Methods Coverage, PHPStan-Fehlerrate und Mutation Score, dem MSI of Covered. Zweitens, was ich persönlich gelernt habe: den Aufbau sinnvoller Testfälle, das Mocking von TYPO3-Abhängigkeiten am Beispiel DateViewHelper, was ein Mutation Score wirklich aussagt, und wie man mit Claude Code eigene CLI-Werkzeuge für wiederkehrende Aufgaben baut.",
+"Vielen Dank für Ihre Aufmerksamkeit. Besonderer Dank geht an meine beiden Betreuer, Samuel Fricker und Dan Burns, für die Begleitung dieser Arbeit. Ich freue mich auf Ihre Fragen."
   ];
 
   idxTotal.textContent = String(total).padStart(2,'0');

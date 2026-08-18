@@ -4,27 +4,30 @@ Sinian Zhang · CAS AI Software Engineering, FHNW
 =================================================
 
 
-1 · Titel
+0 / Start
 ---------
+Guten Tag zusammen. Für diese Arbeit habe ich verschiedene Werkzeuge, KI
+eingesetzt, Daten analysiert und gemessen, die Erfahrungen der anderen und bestehende
+Forschungen bisschen recherchiert und verglichen. 20 Minuten sind sehr kurz, 
+ich versuche eine grobe Überblick zu geben.
 
 
-
-2 · Einleitung
+1 / Einleitung
 --------------
 Softwaretests können bis zu 50 Prozent der Entwicklungskosten ausmachen.
 Aus eigener Erfahrung in der Agentur wurden PHPUnit-Tests im Projektalltag
 trotzdem oft weggelassen — schlicht aus Zeitdruck, nicht aus Unwissen.
 Genau daraus ist diese Arbeit entstanden: Ich habe die konkrete Aufgabe
 bekommen, für eine bestehende TYPO3-Extension eine PHPUnit-Testumgebung
-vorzubereiten und ein paar Beispiel-Tests zu schreiben. Ich nehme die Extension 
-'hf-view-helpers' (hat viele Klassen immer wieder im Einsatz, keine Kundendaten) 
+vorzubereiten und ein paar Beispiel-Tests zu schreiben. Ich nehme die Extension
+'hf-view-helpers' (hat viele Klassen immer wieder im Einsatz, keine Kundendaten)
 als Testobjekt für meine Arbeit. Dabei stellte sich
 mir die Frage: Kann das nicht auch eine KI übernehmen? Kann ein LLM aus
-fertigem Code — bewusst ohne Kommentare als Hinweis zum konkreten TestCase — 
-selbständig gute PHPUnit-Tests schreiben? 
+fertigem Code — bewusst ohne Kommentare als Hinweis zum konkreten TestCase —
+selbständig gute PHPUnit-Tests schreiben?
 
-3 · Wertstromanalyse — Ist-Zustand vs. Soll-Zustand
-----------------------------------------------------
+2 / Planung — Wertstromanalyse
+-------------------------------
 Im Ist-Zustand ist die manuelle Testerstellung selbst der Bottleneck — sie
 wird deshalb oft komplett übersprungen, und der Code landet ungetestet in
 der Pipeline. Wird ein Fehler dann erst in Produktion entdeckt, kostet die
@@ -47,8 +50,8 @@ Software-Delivery-Performance misst:
    Zeitgründen übersprungen wird und Fehler früher auffallen.
 
 
-4 · Werkzeug
-------------
+3 / Umsetzung — Werkzeug
+-------------------------
 Dafür habe ich ein eigenes Claude-Code-Plugin entwickelt: typo3-test-audit,
 mit vier aufeinander aufbauenden Skills. Test-audit-text klassifiziert alle
 Klassen einer Extension. Test-audit-chart visualisiert das als Donut-
@@ -77,20 +80,29 @@ Messgrundlage, auf der das Plugin arbeitet: zur Validierung, zur
 Qualitätssicherung und als Grundlage für die gezielte Nachbesserung.
 
 
-5 · Demo
---------
-Ein konkretes Beispiel: JsonDecodeViewHelper, reine PHP-Logik. Die KI
-generiert neun Tests mit fünfzehn Assertions, läuft sofort fehlerfrei
-durch, hundert Prozent Methods Coverage. Aber: Der Mutationstest zeigt nur
-53 Prozent MSI of Covered — drei Mutanten überleben, zum Beispiel wird der
-Default-Wert des Arguments depth gleich 512 gar nicht geprüft. Der Skill
-fix-unit-tests liest genau diesen Report und ergänzt drei gezielte neue
-Testfälle. Ergebnis: 100 Prozent Mutation Score, bei insgesamt anderthalb
-Minuten Erstellungszeit inklusive Korrektur.
+3 / Umsetzung — Vorgehen
+-------------------------
+Für den Vergleich habe ich fünf PHP-Klassen ausgewählt — basierend auf dem
+Report des Skills test-audit-text, von einfacher Logik bis zu einer Klasse
+mit echter TYPO3-Abhängigkeit, also unterschiedliches Komplexitätsniveau.
+
+Für jede Klasse habe ich zwei Verfahren durchlaufen und gemessen:
+
+1) Manuell, ohne KI — Ich schreibe pro Klasse von Hand eine TestClass, so
+   lange, bis PHPStan keine statischen Fehler mehr meldet. Danach
+   validiere und evaluiere ich das Ergebnis per PHPUnit Coverage und
+   Mutationstest.
+
+2) Mit KI — Pro Klasse generiert die KI eine TestClass, statische Fehler
+   werden ebenfalls von der KI behoben, und der Skill fix-unit-tests
+   schliesst gezielt die Lücken, die der Mutationstest aufdeckt.
+
+Beide Verfahren wurden identisch gemessen, dokumentiert und miteinander
+verglichen.
 
 
-6 · Ergebnisse
---------------
+3 / Umsetzung — Ergebnisse
+----------------------------
 Das ist kein Einzelfall — hier die Ergebnisse für alle fünf Klassen. Die
 manuelle Erstellung dauert zwischen 30 und über 60 Minuten. Die KI liegt
 bei allen fünf Klassen inklusive Korrektur unter 5 Minuten — das ist ein
@@ -99,9 +111,18 @@ Prozent Coverage und 100 Prozent Mutation Score, auch DateViewHelper mit
 echten TYPO3-Abhängigkeiten. Aber: bei drei von fünf Klassen war eine
 kurze Korrekturphase nötig, wegen PHPStan-Fehlern im ersten Wurf.
 
+Zusätzlich zu diesen gemessenen Zahlen habe ich die KI-generierten
+Testklassen mit einer eigenen Skala von 1 bis 5 bewertet — der
+Assertions-Stufe. Sie basiert auf subjektiver Beobachtung und Analyse
+der gelieferten Daten, anhand von: Methodenabdeckung, Happy-Path,
+Grenzwerten und Fehlerfällen, Tautologien, korrektem Mocking/Stubbing,
+Anzahl PHPStan-Fehler und Mutation Score (MSI). Sie misst nicht nur, ob
+ein Test durchläuft, sondern wie aussagekräftig er wirklich ist.
 
-7 · Hypothesen
---------------
+
+
+3 / Umsetzung — Hypothesen
+----------------------------
 Wenn ich das gegen meine sieben Hypothesen halte: Zeitersparnis, Coverage,
 Mutation Score, Mocking-Qualität und Assertion-Qualität wurden klar
 bestätigt. Zwei Hypothesen aber nicht ganz: Die KI produzierte im ersten
@@ -111,30 +132,64 @@ durch. Der Kernbefund: die KI übernimmt die Fleissarbeit vollständig, der
 Mensch bleibt für die kurze, gezielte Korrektur zuständig.
 
 
-8 · Kapitel 4 / Diskussion
---------------------------
-Ein besonders lehrreiches Beispiel für den sogenannten Echo-Chamber-Effekt
-fand ich bei ForViewHelper: Statt einer echten Assertion generierte die KI
-nur einen Kommentar — "Assert implicit via mock expectations configured
-above". Die Prüfung lief also ausschliesslich über die Mock-Erwartungen
-selbst, nicht über eine echte Assertion. Genau hier zeigt sich, warum
-human-in-the-loop entscheidend bleibt. Das deckt sich mit der Forschung
-von Durrani et al. 2025: KI verbessert die Test-Accuracy signifikant,
-aber der Effizienzgewinn allein reicht nicht — menschliche Kontrolle und
-Mutationstests bleiben notwendig.
+4 / Diskussion
+---------------
+Wie ordnet sich das Ganze ein? Berichte und Publikationen im Internet zu
+KI-gestütztem Testing zeigen ein ähnliches Muster wie in dieser Arbeit.
+Auf der Vorteilsseite: ein schnelles Testgerüst, rasche Coverage-Gewinne,
+und auf Nachfrage liefert die KI brauchbare Ideen für Edge-Cases. Auf der
+Nachteilsseite stehen vor allem drei Risiken: der sogenannte
+Echo-Chamber-Effekt — die KI übernimmt Fehler aus dem Code, statt sie zu
+erkennen, und bestätigt Falsches, statt ihm zu widersprechen. Dazu
+exzessives Mocking, wo eigentlich das echte Verhalten geprüft werden
+sollte. Und teils veraltete Testmethoden. Zur Risikosenkung braucht es
+drei Validierungsmassnahmen: menschliche Kontrolle, Mutationstests und
+ergänzende Integrationstests.
+
+Auch die akademische Forschung bestätigt dieses Bild: Durrani et al. 2025
+zeigen statistisch abgesichert, dass KI die Test-Genauigkeit deutlich
+verbessert — der p-Wert liegt unter 0,0001, das ist ein sehr starkes,
+verlässliches Ergebnis. Beim reinen Zeitgewinn sieht es anders aus: Dort
+liegt der p-Wert bei 0,1359, weit über der üblichen Signifikanzschwelle
+von 0,05. Das heisst, über viele Teams und Tools hinweg könnte der
+gemessene Effizienzgewinn auch einfach Zufall sein — es gibt keine
+verlässliche statistische Evidenz dafür. Genau deshalb bleibt
+human-in-the-loop notwendig.
+
+Daraus ergeben sich fünf Empfehlungen: reine PHP-Logik-Klassen zuerst per
+KI testen lassen, PHPDoc und Inline-Kommentare gezielt für die
+Generierung nutzen, den Korrekturschritt fest einplanen statt ihn zu
+überspringen, Mutationstests dauerhaft neben PHPUnit und PHPStan
+etablieren, und Test-Driven Development mit KI-Unterstützung
+ausprobieren — der Mensch schreibt den ersten Test, die KI übernimmt
+Implementierung, Refactoring und Edge-Cases.
 
 
-9 · Fazit
----------
+5 / Beitrag & persönlicher Gewinn
+-----------------------------------
 Mein Fazit: KI unterstützt den Menschen, sie ersetzt ihn nicht. Mindestens
 sechsmal schneller, am Ende hundert Prozent Coverage und Mutation Score,
-keine PHPStan-Fehler mehr. Für den Arbeitgeber empfehle ich: einfache PHP-
-Klassen zuerst per KI testen lassen, die Korrektur fest einplanen, und
-Mutationstests dauerhaft neben PHPUnit und PHPStan einsetzen. Und mit
-typo3-test-audit bleibt ein wiederverwendbares Werkzeug, das über diese
-Arbeit hinaus nutzbar ist.
+keine PHPStan-Fehler mehr.
+
+Zwei Dinge möchte ich noch hervorheben:
+
+Erstens die Innovation dieser Arbeit — der Neuheitswert liegt nicht nur
+darin, zu zeigen, dass LLMs Unit-Tests generieren können, das ist in der
+Literatur bereits dokumentiert, sondern vor allem in der konkreten,
+wiederverwendbaren Umsetzung: ein wiederverwendbares CLI-Plugin, ein
+wiederverwendbares Tool — das CLI-Plugin typo3-test-audit funktioniert
+für jede beliebige TYPO3-Extension —, und eine Bewertung durch die
+Kombination aus Methods Coverage, PHPStan-Fehlerrate und Mutation Score,
+dem MSI of Covered.
+
+Zweitens, was ich persönlich gelernt habe: den Aufbau sinnvoller
+Testfälle, das Mocking von TYPO3-Abhängigkeiten am Beispiel
+DateViewHelper, was ein Mutation Score wirklich aussagt, und wie man mit
+Claude Code eigene CLI-Werkzeuge für wiederkehrende Aufgaben baut.
 
 
-10 · Danke/Fragen
------------------
-Vielen Dank für Ihre Aufmerksamkeit — ich freue mich auf Ihre Fragen.
+6 / Ende
+---------
+Vielen Dank für Ihre Aufmerksamkeit. Besonderer Dank geht an meine beiden
+Betreuer, Samuel Fricker und Dan Burns, für die Begleitung dieser Arbeit.
+Ich freue mich auf Ihre Fragen.
