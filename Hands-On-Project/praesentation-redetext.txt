@@ -140,13 +140,20 @@ Ich gehe jetzt nicht in die Details, einige davon habe ich in der Arbeit explizi
 
 3 / Umsetzung — Hypothesen
 ----------------------------
-Wenn ich das gegen meine sieben Hypothesen halte: Zeitersparnis, Coverage,
-Mutation Score, Mocking-Qualität und Assertion-Qualität wurden klar
-bestätigt. Zwei Hypothesen aber nicht ganz: Die KI produzierte im ersten
-Wurf teils sogar mehr statische Fehler als ich selbst von Hand — und nur
-zwei von fünf Klassen liefen beim ersten Versuch komplett fehlerfrei
-durch. Der Kernbefund: die KI übernimmt die Fleissarbeit vollständig, der
-Mensch bleibt für die kurze, gezielte Korrektur zuständig.
+Schlussfolgerung. Was habe ich gefunden, welche Erwartungen sind erfüllt, welche sind noch nicht ganz.
+
+Zusammengefasst: 5 meiner Hypothesen — Zeitersparnis, Coverage, Mutation Score, Mocking-Qualität und
+Assertion-Qualität(für Edge-Cases, Grenzwerte) — wurden klar bestätigt. 
+Bei diesen fünf Aspekten leistet die KI insgesamt sehr gute Arbeit/Korrektur.
+
+Zwei Hypothesen aber nicht ganz: 
+- Die KI produzierte im ersten Wurf teils sogar mehr statische Fehler als ich selbst von Hand.
+- nicht alle PHPUnit-Tests an sich liefen beim ersten Versuch komplett fehlerfrei durch.
+(Fehler wie z.B. fehlgeschlagene/leere Assertions, Lauffehler/Exceptions, falsche Mocking/Stubbing, etc.)
+
+
+Der Kernbefund: KI unterstützt den Menschen, ersetzt ihn nicht — sie übernimmt die Fleissarbeit vollständig,
+der Mensch bleibt für die kurze, gezielte Korrektur zuständig.
 
 
 4 / Diskussion
