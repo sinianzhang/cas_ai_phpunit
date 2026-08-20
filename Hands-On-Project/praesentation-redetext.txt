@@ -59,37 +59,37 @@ Es handelt sich genau um zwei DORA-Kennzahlen, die beiden sinken:
 
 2) Change Failure Rate — der Anteil von Codes, die in Produktion zu einem Fehler führen.
 
- Die Wertstromanalyse besagt, dass der KI-Einsatz hier sinnvoll is.
+Die Wertstromanalyse besagt, dass der KI-Einsatz hier sinnvoll is.
 
 
 3 / Umsetzung — Werkzeug
 -------------------------
-Dafür habe ich ein eigenes Claude-Code-Plugin entwickelt: typo3-test-audit,
-mit vier aufeinander aufbauenden Skills. Test-audit-text klassifiziert alle
-Klassen einer Extension. Test-audit-chart visualisiert das als Donut-
-Diagramm. Generate-unit-tests erzeugt die eigentlichen PHPUnit-Tests nach
-dem AAA-Pattern. Und fix-unit-tests liest den Mutationstest-Report und
-schliesst gezielt Lücken. Wichtig: Das Plugin ist projektunabhängig und für
-jede beliebige TYPO3-Extension einsetzbar.
+Überblick, welche Werkzeuge/Tools habe ich verwednet.
 
-Im Hintergrund arbeiten drei etablierte Analyse-Werkzeuge zusammen:
+Dafür habe ich ein eigenes Claude-Code-Plugin entwickelt, der Plugin hat 
+vier Skills. (hier ist der Screenshot, man lade den Plugin dann die Skills wie Kommando-Zeile-Befehl durchfürhen)
 
-1) PHPUnit Coverage — misst, wie viele Methoden und Zeilen des Codes von
-   den Tests überhaupt ausgeführt werden.
+Mit dem Skills kann man z.B. alle Klassen in einer TYPO3-Extension analysieren, klassifizieren, 
+man bekommt danach einen ausfürhlichen Audit-Report in Text- oder Diagramm-Format generieren. 
+(welche Klasse ist ehe geeinet für UnitTest, oder FunktionalTest, oder beides, oder gar nicht, mit Begründungen)
 
-2) PHPStan — eine statische Codeanalyse, die Typ- und Codefehler findet,
-   ohne den Code auszuführen; ich nutze dafür Level 6.
+Der Skill schreibt alle oder nur eine Klasse PHPUnitTests mit AAA-Pattern.
 
-3) Infection — ein Mutationstest-Framework, das gezielt künstliche Fehler
-   in den Code einbaut und prüft, ob die Tests diese wirklich erkennen.
-   Genau diesen Infection-Report liest der Skill fix-unit-tests, um
-   gezielt nachzubessern.
+Der Skill vervollständigt bzw. korriegt gezeilt die PhpUnitTests anhand von Mutationstest-Ergebnis.
 
-Wichtig ist der Unterschied: Das Plugin selbst analysiert die Klassen,
-generiert und korrigiert die Tests und liefert eigene Reports — die drei
-externen Werkzeuge Coverage, PHPStan und Infection liefern dafür die
-Messgrundlage, auf der das Plugin arbeitet: zur Validierung, zur
-Qualitätssicherung und als Grundlage für die gezielte Nachbesserung.
+Das Plugin als Tool kann man späer für beliebige TYPO3-Extension wieder verwenden.
+
+Man generiert PHPUnitTests manuell oder per KI, muss auch überprüft, wie gut/schlecht die Qualtität ist, 
+ggf. auch nach korrigieren, dafür veerwendet man die drei wichtigen Analyse-Werkzeuge. 
+
+1) PHPUnit Coverage — misst, wie viele PHP-Methoden und -Zeilen durch den UnitTest überhaupt ausgeführt oder abgedeckt werden.
+
+2) PHPStan — eine verbreitete statische Codeanalyse, findet z.B. PHP-Syntax- oder Typ-Fehler, etc. ohne den PHP-Codes auszuführen.
+
+3) Infection — ein PHP-Mutationstest-Framework, der Tool baut absichtlich diverse künstliche Fehler ein und prüft,
+   ob die Tests diese Fehler wirklich erkennen. 
+(der Tool liefert pro TestKasse ausführliche Report mit Zahlen: Mutation Score Indicator, alle diesen Daten kann man 
+genau analysieren) Das Thema Mutationstest haben wir auch mehr oder weniger im Seminar schon erwähnt
 
 
 3 / Umsetzung — Vorgehen
