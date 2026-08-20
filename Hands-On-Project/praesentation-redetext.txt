@@ -74,7 +74,8 @@ Mit dem Skills kann man z.B. alle Klassen in einer TYPO3-Extension analysieren, 
 man bekommt danach einen ausfürhlichen Audit-Report in Text- oder Diagramm-Format generieren. 
 (welche Klasse ist ehe geeinet für UnitTest, oder FunktionalTest, oder beides, oder gar nicht, mit Begründungen)
 
-Der Skill schreibt alle oder nur eine Klasse PHPUnitTests mit AAA-Pattern.
+Der Skill schreibt alle oder nur eine Klasse PHPUnitTests mit AAA-Pattern, eigenständig.
+Kann auch eine bestende TestKlasse anhand von PHP-Kommentar als Hinweise gezielt um Testcase erweitern. 
 
 Der Skill vervollständigt bzw. korriegt gezeilt die PhpUnitTests anhand von Mutationstest-Ergebnis.
 
@@ -95,27 +96,26 @@ genau analysieren) Das Thema Mutationstest haben wir auch mehr oder weniger im S
 
 3 / Umsetzung — Vorgehen
 -------------------------
-Kurze Vorstellung zum Vorgehen und Verfahren. 
+kurze Vorstellung zum Verfahren.
 
-In Grund genommen habe ich 2 Verfahren verglichen einmal manuelles ohne KI einmal mit KI. 
+Das Testobject also die Extension hat ca. 50 Klassen. 
+Für den Vergleich habe ich repräsentativ fünf PHP-Klassen ausgewählt — basierend auf dem
+Report des Skills test-audit-text, von der Klasser mit einfacher Logik bis zur Klasse
+mit complexer TYPO3-Abhängigkeit, also unterschiedliches Komplexitätsniveau.
 
-Für den Vergleich habe ich fünf PHP-Klassen ausgewählt — basierend auf dem
-Report des Skills test-audit-text, von einfacher Logik bis zu einer Klasse
-mit echter TYPO3-Abhängigkeit, also unterschiedliches Komplexitätsniveau.
+Für jede Klassen wurden zwei Verfahren durchgelaufen, gemessen, evaluiert, dokumentiert und gegeneineinander verglichen:
 
-Für jede Klasse habe ich zwei Verfahren durchlaufen und gemessen:
+( Hier auf der Folie ist nur eine sehr vereinfachte Darstellung.)
+1) Manuelles Verfahren ohne KI — Ich schreibe TestCases in einer TestClass.
+   Ich validiere und evaluiere die TestKlasse per PHPStan, PHPUnit Coverage und Mutationstest.
+   Dabei muss ich ggf. per Hand PHP-Fehler beheben. 
+   Der PHPUnitTest an sich soll schliesslich ohne Fehler durchlaufen.
+   
 
-1) Manuell, ohne KI — Ich schreibe pro Klasse von Hand eine TestClass, so
-   lange, bis PHPStan keine statischen Fehler mehr meldet. Danach
-   validiere und evaluiere ich das Ergebnis per PHPUnit Coverage und
-   Mutationstest.
-
-2) Mit KI — Pro Klasse generiert die KI eine TestClass, statische Fehler
-   werden ebenfalls von der KI behoben, und der Skill fix-unit-tests
-   schliesst gezielt die Lücken, die der Mutationstest aufdeckt.
-
-Beide Verfahren wurden identisch gemessen, dokumentiert und miteinander
-verglichen.
+2) Mit KI — Ähnlich, Pro Klasse generiert die KI eigenständlig eine TestClass.
+   Validieren/Evaluieren läuft eben auch durch PHPStan, PHPUnit Coverage und Mutationstest.
+   Dabei soll KI statische Fehler beheben, zusätzlich schliesst die KI gezielt die Lücken, die der Mutationstest aufdeckt.
+   Der PHPUnitTest an sich soll schliesslich ohne Fehler durchlaufen.
 
 
 3 / Umsetzung — Ergebnisse
