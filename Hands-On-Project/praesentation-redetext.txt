@@ -120,22 +120,22 @@ Für jede Klassen wurden zwei Verfahren durchgelaufen, gemessen, evaluiert, doku
 
 3 / Umsetzung — Ergebnisse
 ----------------------------
-Das ist kein Einzelfall — hier die Ergebnisse für alle fünf Klassen. Die
-manuelle Erstellung dauert zwischen 30 und über 60 Minuten. Die KI liegt
-bei allen fünf Klassen inklusive Korrektur unter 5 Minuten — das ist ein
-Faktor von mindestens 6. Wichtig: alle fünf Klassen erreichen am Ende 100
-Prozent Coverage und 100 Prozent Mutation Score, auch DateViewHelper mit
-echten TYPO3-Abhängigkeiten. Aber: bei drei von fünf Klassen war eine
-kurze Korrekturphase nötig, wegen PHPStan-Fehlern im ersten Wurf.
+Das ist die Ergebnistabelle. 5 Klassen im Vergleich.
 
-Zusätzlich zu diesen gemessenen Zahlen habe ich die KI-generierten
-Testklassen mit einer eigenen Skala von 1 bis 5 bewertet — der
-Assertions-Stufe. Sie basiert auf subjektiver Beobachtung und Analyse
-der gelieferten Daten, anhand von: Methodenabdeckung, Happy-Path,
-Grenzwerten und Fehlerfällen, Tautologien, korrektem Mocking/Stubbing,
-Anzahl PHPStan-Fehler und Mutation Score (MSI). Sie misst nicht nur, ob
-ein Test durchläuft, sondern wie aussagekräftig er wirklich ist.
+Man kann sehen, z.B. bei manuellen Verfahren, daueret es länger um eine TestClasse fertig zu erstellen, 
+dabei waren das Coverage(Methodenabdeckung) und Mutation Score beide nicht optimal.
 
+Bei KI-Verfahren, war die Erstellungszeit deutlich kürzer. 
+KI lieferte manchmal zuerst kein optimales Ergebnis bei Coverage und Mutationstest konnte aber sehr schnell korrigiern.
+
+
+Zusätzlich für die KI-generierten Testklassen habe ich eigene Qualitäts-Skala vergeben.
+Diese Stufe 1 bis 5 beidenasiert auf subjektiver Beobachtung und Analyse
+der gelieferten Daten, einige zusätzlichen Qualitätsfaktoren sind berücksichtigt:
+neben Anzahl PHPStan-Fehler, Coverage und Mutation Score (MSI), auch dazu Happy-Path/Grenzwerten/Fehlerfällen(Exceptions),
+Tautologien, korrektem Mocking/Stubbing, „Echo Chamber“-Effekt, etc.
+
+Ich gehe jetzt nicht in die Details, einige davon habe ich in der Arbeit explizit genannt und erläutert.
 
 
 3 / Umsetzung — Hypothesen
