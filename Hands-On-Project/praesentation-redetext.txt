@@ -29,7 +29,8 @@ Ich nehme genau die Extension 'hf-view-helpers' als Testobjekt für meine Arbeit
 (die Extension hat viele Klassen, wird immer wieder bei vielen Kunden im Einsatz, 
 hat selber keine kundenspezifische oder kritische Daten)
 
-Dabei stellt sich mir die Frage: Kann die KI seblstständig die Aufgabe übernehmen? 
+Dabei stellt sich mir die Frage: Im Gegensatz zur manuelle Erstellung von UnitTests, 
+kann die KI seblstständig die Aufgabe übernehmen? 
 Kann die KI ohne menschliche Hinweise gute UnitTests schreiben?
 
 2 / Planung — Wertstromanalyse
@@ -94,6 +95,10 @@ genau analysieren) Das Thema Mutationstest haben wir auch mehr oder weniger im S
 
 3 / Umsetzung — Vorgehen
 -------------------------
+Kurze Vorstellung zum Vorgehen und Verfahren. 
+
+In Grund genommen habe ich 2 Verfahren verglichen einmal manuelles ohne KI einmal mit KI. 
+
 Für den Vergleich habe ich fünf PHP-Klassen ausgewählt — basierend auf dem
 Report des Skills test-audit-text, von einfacher Logik bis zu einer Klasse
 mit echter TYPO3-Abhängigkeit, also unterschiedliches Komplexitätsniveau.
