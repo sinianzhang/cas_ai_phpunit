@@ -6,48 +6,60 @@ Sinian Zhang · CAS AI Software Engineering, FHNW
 
 0 / Start
 ---------
-Guten Tag zusammen. Für diese Arbeit habe ich verschiedene Werkzeuge, KI
-eingesetzt, Daten analysiert und gemessen, die Erfahrungen der anderen und bestehende
-Forschungen bisschen recherchiert und verglichen. 20 Minuten sind sehr kurz, 
+Guten Tag zusammen. 
+
+Das Thema meiner Arbeit ist KI für TYPO3-PHPUnit-Testing. 
+
+Ich habe KI und verschiedene Werkzeuge verwendet, ich habe analysiert, getestet, gemessen,
+die Erfahrungen und Forschungen der anderen recherchiert. 20 Minuten sind sehr kurz, 
 ich versuche eine grobe Überblick zu geben.
 
 
 1 / Einleitung
 --------------
-Softwaretests können bis zu 50 Prozent der Entwicklungskosten ausmachen.
-Aus eigener Erfahrung in der Agentur wurden PHPUnit-Tests im Projektalltag
-trotzdem oft weggelassen — schlicht aus Zeitdruck, nicht aus Unwissen.
-Genau daraus ist diese Arbeit entstanden: Ich habe die konkrete Aufgabe
-bekommen, für eine bestehende TYPO3-Extension eine PHPUnit-Testumgebung
-vorzubereiten und ein paar Beispiel-Tests zu schreiben. Ich nehme die Extension
-'hf-view-helpers' (hat viele Klassen immer wieder im Einsatz, keine Kundendaten)
-als Testobjekt für meine Arbeit. Dabei stellte sich
-mir die Frage: Kann das nicht auch eine KI übernehmen? Kann ein LLM aus
-fertigem Code — bewusst ohne Kommentare als Hinweis zum konkreten TestCase —
-selbständig gute PHPUnit-Tests schreiben?
+Softwaretests sind teuer, können bis zu 50 Prozent der Entwicklungskosten.
+
+Aus meiner eigenen Erfahrung in der Agentur wurden PHPUnit-Tests im Projektalltag
+oft weggelassen — aus mangelnden Buget und Zeit.
+
+Ich habe mal tatsächlich eine konkrete Aufgabe gehabt, für eine bestehende TYPO3-Extension, 
+PHPUnit-Testumgebung vorzubereiten und ein paar Beispiel-Tests zu schreiben. 
+
+Ich nehme genau die Extension 'hf-view-helpers' als Testobjekt für meine Arbeit. 
+(die Extension hat viele Klassen, wird immer wieder bei vielen Kunden im Einsatz, 
+hat selber keine kundenspezifische oder kritische Daten)
+
+Dabei stellt sich mir die Frage: Kann die KI seblstständig die Aufgabe übernehmen? 
+Kann die KI ohne menschliche Hinweise gute UnitTests schreiben?
 
 2 / Planung — Wertstromanalyse
 -------------------------------
-Im Ist-Zustand ist die manuelle Testerstellung selbst der Bottleneck — sie
-wird deshalb oft komplett übersprungen, und der Code landet ungetestet in
-der Pipeline. Wird ein Fehler dann erst in Produktion entdeckt, kostet die
-nachträgliche Behebung deutlich mehr, als wenn er vorher aufgefallen wäre.
+Bevor ich weiter erzähle, mal kurz zur Theorie: Wertstromanalyse Warum der KI-Einsatz sinnvoll ist.
 
-Im Soll-Zustand generiert die KI die Tests inklusive Korrektur in Minuten
-statt Stunden, sodass dieser Schritt nicht mehr aus Zeitgründen entfällt.
+Mein Arbeit betritt nur einen Abschnitt von meinem realen SE-Prozess. Hier ist dargestellt.
+
+Der Ist-Zustand:
+man schreit/ändert eine PHP-Klasse fertig, entweder aus mangelden Budget und Zeit schreibt man keine Tests, 
+die Klasse landet per CI/CD in die Produktion, falls die Fehler entdeckt werden, wird noch aufwendiger zu testen,
+die Fehler nachzubeheben.
+Das wäre ein Flaschenhals oder Engpass, rot markiert.
+
+Oder man schreit/ändert eine PHP-Klasse fertig und dazu noch UnitTests, integriert in CI/CD, 
+das kann sehr aufwendig sein, besonders wenn der Entwickler wenig Wissen oder Erfahrung mit Testing hat.
+Die manuelle Testerstellung wäre sicherlich auch ein Flaschenhals/Engpass.
+
+
+Der Soll-Zustand:
+KI soll schnell UnitTests generieren bzw. korrigieren.
 Das Ergebnis: höhere Codequalität, weniger Fehler in Produktion und
-weniger Kosten und Zeit für die nachträgliche Behebung.
+weniger Kosten und Zeit für die nachträgliche Behebung. Grün markiert.
 
-Das wirkt sich direkt auf zwei DORA-Metriken aus, mit denen man
-Software-Delivery-Performance misst:
+Es handelt sich genau um zwei DORA-Kennzahlen, die beiden sinken:
+1) Lead Time for Changes — die Zeit von der Code-Erstellung/Änderung bis zur erfolgreichen Auslieferung in Produktion. 
 
-1) Lead Time for Changes — die Zeit von der fertigen Code-Änderung bis zur
-   erfolgreichen Auslieferung in Produktion. Sie wird kürzer, weil die
-   Testerstellung nicht mehr Stunden, sondern Minuten dauert.
+2) Change Failure Rate — der Anteil von Codes, die in Produktion zu einem Fehler führen.
 
-2) Change Failure Rate — der Anteil der Änderungen, die in Produktion zu
-   einem Fehler führen. Sie sinkt, weil der Testschritt nicht mehr aus
-   Zeitgründen übersprungen wird und Fehler früher auffallen.
+ Die Wertstromanalyse besagt, dass der KI-Einsatz hier sinnvoll is.
 
 
 3 / Umsetzung — Werkzeug
