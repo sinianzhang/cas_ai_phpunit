@@ -158,35 +158,47 @@ der Mensch bleibt für die kurze, gezielte Korrektur zuständig.
 
 4 / Diskussion
 ---------------
-Wie ordnet sich das Ganze ein? Berichte und Publikationen im Internet zu
-KI-gestütztem Testing zeigen ein ähnliches Muster wie in dieser Arbeit.
-Auf der Vorteilsseite: ein schnelles Testgerüst, rasche Coverage-Gewinne,
-und auf Nachfrage liefert die KI brauchbare Ideen für Edge-Cases. Auf der
-Nachteilsseite stehen vor allem drei Risiken: der sogenannte
-Echo-Chamber-Effekt — die KI übernimmt Fehler aus dem Code, statt sie zu
-erkennen, und bestätigt Falsches, statt ihm zu widersprechen. Dazu
-exzessives Mocking, wo eigentlich das echte Verhalten geprüft werden
-sollte. Und teils veraltete Testmethoden. Zur Risikosenkung braucht es
-drei Validierungsmassnahmen: menschliche Kontrolle, Mutationstests und
-ergänzende Integrationstests.
+Recherchiert habe ich auch die Erfahrungen sowie Forschungen der anderen. Den Kaptitel zu diesem Thema findet man auch in emienr Arbeit.
 
-Auch die akademische Forschung bestätigt dieses Bild: Durrani et al. 2025
-zeigen statistisch abgesichert, dass KI die Test-Genauigkeit deutlich
-verbessert — der p-Wert liegt unter 0,0001, das ist ein sehr starkes,
-verlässliches Ergebnis. Beim reinen Zeitgewinn sieht es anders aus: Dort
-liegt der p-Wert bei 0,1359, weit über der üblichen Signifikanzschwelle
-von 0,05. Das heisst, über viele Teams und Tools hinweg könnte der
-gemessene Effizienzgewinn auch einfach Zufall sein — es gibt keine
-verlässliche statistische Evidenz dafür. Genau deshalb bleibt
-human-in-the-loop notwendig.
+Viele Berichte und Publikationen im Internet zu KI-gestütztem Testing
+zeigen ein ähnliches Muster wie in dieser Arbeit, zusammengefasst:
+Vorteile: 
+- KI schafft gut ein schnelles Testgerüst
+- KI schreibt Tests mit höhrem Coverage
+- KI liefert auf Nachfrage brauchbare Ideen für Edge-Cases. 
 
-Daraus ergeben sich fünf Empfehlungen: reine PHP-Logik-Klassen zuerst per
-KI testen lassen, PHPDoc und Inline-Kommentare gezielt für die
-Generierung nutzen, den Korrekturschritt fest einplanen statt ihn zu
-überspringen, Mutationstests dauerhaft neben PHPUnit und PHPStan
-etablieren, und Test-Driven Development mit KI-Unterstützung
-ausprobieren — der Mensch schreibt den ersten Test, die KI übernimmt
-Implementierung, Refactoring und Edge-Cases.
+Nachteile:
+- Echo-Chamber-Effekt
+- exzessives Mocking
+- veraltete Testmethoden
+(ausführlich erläutert in meiner Arbeit)
+
+Gegenmassnahmen: 
+- menschliche Kontrolle
+- Mutationstests
+- ergänzende Integrationstests (nicht nur UnitTest, sondern prüft ob mehrere Komponenten/Klassen zusammen korrekt funktionieren)
+
+Auch die akademische Forschung bestätigt dieses Bild: (Autor Durrani im Jahr 2025)
+(eine breite statistisch Studie über viele Software-Engineering-Phasen, mit verschiedenen Teams, Programmiersprachen und Tools)
+
+Das Ergebis mit p-Werit für Testing bedeutet:
+- KI kann die Test-Genauigkeit (Fehlerfindungsrate, Testabdeckung, Übereinstimmung mit menschlicher Referenz, etc.) deutlich verbessern, gutes präzises Testcase liefern
+(der p-Wert des Signifikanztests liegt unter 0,0001, je kleiner, desto zuverlässiger, unwahrscheinlich ein Zufall).
+
+- Beim reinen Zeitgewinn sieht es anders aus: (für Zeitgewinn keine verlässliche statistische Evidenz)
+der p-Wert liegt bei 0,1359, dass d.h. KI kann nicht immer 100% gesamt Testing-Prozess beschleunigen, 
+(manchmal kann Zufall sein, je nach dem Kontext, Erfahrung des Team, eingesetzte KI-Tools, Komplexität der Aufgabe, 
+KI kann Fehler generieren, nicht immer First-Run-Grün, usw, usf.)
+
+Goldene Regel: Genau deshalb bleibt human-in-the-loop notwendig!!!
+
+Daraus ergeben sich fünf Empfehlungen: 
+- reine PHP-Logik-Klassen zuerst per KI testen lassen
+- PHPDoc und Inline-Kommentare gezielt für die Generierung nutzen
+- den Korrekturschritt fest einplanen statt ihn zu überspringen (blind KI vertrauen)
+- Mutationstests dauerhaft neben PHPUnit Coverage und PHPStan etablieren
+- und Test-Driven Development mit KI-Unterstützung ausprobieren
+(der Mensch schreibt den ersten Test, die KI übernimmt Implementierung, Refactoring und Edge-Cases.)
 
 
 5 / Beitrag & persönlicher Gewinn

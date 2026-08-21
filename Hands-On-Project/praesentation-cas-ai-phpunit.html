@@ -632,11 +632,20 @@
       <div class="kicker">4 / Diskussion</div>
       <h2>Vergleich, Einordnung, Empfehlung</h2>
       <ul class="points">
-        <li><b>Vergleich mit der Praxiserfahrung:</b> <span class="dim">Berichte und Publikationen im Internet zeigen ein ähnliches Muster: Vorteile wie schnelles Testgerüst, rasche Coverage-Gewinne, Ideen für Edge-Cases; Nachteile wie Echo-Chamber-Effekt, exzessives Mocking, veraltete Testmethoden. Zur Risikosenkung: drei Validierungsmassnahmen — menschliche Kontrolle, Mutationstests (Infection), ergänzende Integrationstests.</span></li>
-        <li><b>Einordnung in die Forschung:</b> <span class="dim">Durrani et al. (2025) — Test-Genauigkeit klar verbessert (p&nbsp;&lt;&nbsp;0.0001, kaum Zufall möglich), Zeitgewinn statistisch nicht abgesichert (p&nbsp;=&nbsp;0.1359, könnte Zufall sein); human-in-the-loop bleibt deshalb notwendig.</span></li>
-        <li><b>Empfehlung:</b> <span class="dim">reine PHP-Logik zuerst per KI testen, PHPDoc/Inline-Kommentare gezielt für die Generierung nutzen, Korrekturschritt fest einplanen, Mutationstests dauerhaft neben PHPUnit &amp; PHPStan einsetzen, Test-Driven Development mit KI-Unterstützung.</span></li>
+        <li><b>Vergleich mit der Praxiserfahrung:</b> <span class="dim">Berichte und Publikationen im Internet zeigen ein ähnliches Muster: Vorteile wie schnelles Testgerüst, rasche Coverage-Gewinne, Ideen für Edge-Cases; Nachteile wie Echo-Chamber-Effekt, exzessives Mocking, veraltete Testmethoden. Zur Risikosenkung: drei Validierungsmassnahmen — <b style="color:color-mix(in srgb, var(--text) 45%, var(--text-dim));">menschliche Kontrolle, Mutationstests, ergänzende Integrationstests</b>.</span></li>
+        <li><b>Einordnung in die Forschung:</b> <span class="dim">Durrani et al. (2025) <span style="font-size:15px;">(eine breite statistische Studie über viele Software-Engineering-Phasen, mit verschiedenen Teams, Programmiersprachen und Tools)</span> — Test-Genauigkeit klar verbessert (*p&nbsp;&lt;&nbsp;0.0001, kaum Zufall möglich), Zeitgewinn statistisch nicht abgesichert (*p&nbsp;=&nbsp;0.1359, könnte Zufall sein); <b style="color:color-mix(in srgb, var(--text) 45%, var(--text-dim));">human-in-the-loop bleibt deshalb notwendig</b>.</span></li>
+        <li>
+          <b>Empfehlung:</b>
+          <ul class="skill-list" style="margin-top:6px;gap:5px;">
+            <li>Reine PHP-Logik zuerst per KI testen</li>
+            <li>PHPDoc/Inline-Kommentare gezielt für die Generierung nutzen</li>
+            <li>Korrekturschritt fest einplanen</li>
+            <li>Mutationstests dauerhaft neben PHPUnit Coverage &amp; PHPStan einsetzen</li>
+            <li>Test-Driven Development mit KI-Unterstützung</li>
+          </ul>
+        </li>
       </ul>
-      <p class="lede" style="font-size:13px;">p-Wert eines Signifikanztests: je kleiner, desto unwahrscheinlicher, dass das Ergebnis nur Zufall ist.</p>
+      <p class="lede" style="font-size:13px;max-width:100%;">(*p-Wert eines Signifikanztests: je kleiner, desto unwahrscheinlicher, dass das Ergebnis nur Zufall ist.)</p>
     </section>
 
     <!-- 9 — Fazit -->
