@@ -203,29 +203,31 @@ Daraus ergeben sich fünf Empfehlungen:
 
 5 / Beitrag & persönlicher Gewinn
 -----------------------------------
-Mein Fazit: KI unterstützt den Menschen, sie ersetzt ihn nicht. Mindestens
-sechsmal schneller, am Ende hundert Prozent Coverage und Mutation Score,
-keine PHPStan-Fehler mehr.
+Letzter Punkt, was habe ich beigetragen, gelernt.
 
-Zwei Dinge möchte ich noch hervorheben:
+Ich habe den Beweis gehabt, bestende Literatur hat auch dokumentiert, 
+dass KI Unit-Tests generieren kann und Testing gut unterstützen kann.
+Aber Achtung: KI unterstützt den Menschen, sie ersetzt ihn nicht. 
 
-Erstens die Innovation dieser Arbeit — der Neuheitswert liegt nicht nur
-darin, zu zeigen, dass LLMs Unit-Tests generieren können, das ist in der
-Literatur bereits dokumentiert, sondern vor allem in der konkreten,
-wiederverwendbaren Umsetzung: ein wiederverwendbares CLI-Plugin, ein
-wiederverwendbares Tool — das CLI-Plugin typo3-test-audit funktioniert
-für jede beliebige TYPO3-Extension —, und eine Bewertung durch die
-Kombination aus Methods Coverage, PHPStan-Fehlerrate und Mutation Score,
-dem MSI of Covered.
+Ich habe ich ein wiederverwendbares Tool, das CLI-Plugin funktioniert
+für jede beliebige TYPO3-Extension, ich kann das Plugin gut anwenden, mit 
+Kombination von anderen Tools.
 
-Zweitens, was ich persönlich gelernt habe: den Aufbau sinnvoller
-Testfälle, das Mocking von TYPO3-Abhängigkeiten am Beispiel
-DateViewHelper, was ein Mutation Score wirklich aussagt, und wie man mit
-Claude Code eigene CLI-Werkzeuge für wiederkehrende Aufgaben baut.
+Zweitens, ich habe persönlich gelernt, mich intensiv auseinendergesetzt
+- mit PHPUnit-Tests, Testing-Wissen in allgemein (Mocking/Stubbing)
+- mit verschieden Tools, wie man die Tools sinnvoll einsetzt, wie man die Daten auswertet, etc.
+- mit Claude Code, wie man damit Plugin/Skill schreibt und verwendet.
+
+
+Beide sind Test-Doubles (Ersatzobjekte für echte Abhängigkeiten)
+Stub liefert nur vorgegebene Rückgabewerte
+Kurz: Stub = "gib mir einen festen Wert zurück, ich will nur weitertesten". 
+
+Mock — prüft zusätzlich das Verhalten, also die Interaktion selbst
+Mock = "prüfe aktiv, ob diese Methode wirklich so aufgerufen wurde, wie erwartet".
 
 
 6 / Ende
 ---------
 Vielen Dank für Ihre Aufmerksamkeit. Besonderer Dank geht an meine beiden
 Betreuer, Samuel Fricker und Dan Burns, für die Begleitung dieser Arbeit.
-Ich freue mich auf Ihre Fragen.
