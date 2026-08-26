@@ -10,7 +10,7 @@ Guten Tag zusammen.
 
 Das Thema meiner Arbeit ist KI für TYPO3-PHPUnit-Testing. 
 
-Ich habe KI und verschiedene Werkzeuge verwendet, ich habe analysiert, getestet, gemessen,
+Ich habe verschiedene Werkzeuge verwendet, eigenes Tool entwickelt, analysiert, getestet, gemessen, 
 die Erfahrungen und Forschungen der anderen recherchiert. 20 Minuten sind sehr kurz, 
 ich versuche eine grobe Überblick zu geben.
 
@@ -22,43 +22,45 @@ Softwaretests sind teuer, können bis zu 50 Prozent der Entwicklungskosten.
 Aus meiner eigenen Erfahrung in der Agentur wurden PHPUnit-Tests im Projektalltag
 oft weggelassen — aus mangelnden Buget und Zeit.
 
-Ich habe mal tatsächlich eine konkrete Aufgabe gehabt, für eine bestehende TYPO3-Extension, 
-PHPUnit-Testumgebung vorzubereiten und ein paar Beispiel-Tests zu schreiben. 
+Ich habe mal eine konkrete Aufgabe gehabt, für eine bestehende TYPO3-Extension, 
+PHPUnit-Testumgebung vorzubereiten und ein paar Beispiel-Tests zu schreiben, in CI/CD-Prozess zu integrieren. 
 
 Ich nehme genau die Extension 'hf-view-helpers' als Testobjekt für meine Arbeit. 
+(Viewhelper sind PHP-Klasse, die customdefinierte Funktionalitäten im TYPO3-Template-Engine bereitstellen.)
 (die Extension hat viele Klassen, wird immer wieder bei vielen Kunden im Einsatz, 
 hat selber keine kundenspezifische oder kritische Daten)
 
-Dabei stellt sich mir die Frage: Im Gegensatz zur manuelle Erstellung von UnitTests, 
-kann die KI seblstständig die Aufgabe übernehmen? 
-Kann die KI ohne menschliche Hinweise gute UnitTests schreiben?
+Es stellt sich mir die Frage: Im Gegensatz zur manuelle Erstellung von UnitTests, 
+kann die KI seblstständig, ohne menschliche Hinweise, die Aufgabe übernehmen, gute UnitTests schreiben?
+Das Knowhow/Erfahrung wäre für mich wertvoll, kann in der Zukunft einsetzen und davon profitieren.
 
 2 / Planung — Wertstromanalyse
 -------------------------------
-Bevor ich weiter erzähle, mal kurz zur Theorie: Wertstromanalyse Warum der KI-Einsatz sinnvoll ist.
+Bevor ich weiter erzähle, mal kurz zur Theorie: Wertstromanalyse, Warum der KI-Einsatz sinnvoll ist.
 
-Mein Arbeit betritt nur einen Abschnitt von meinem realen SE-Prozess. Hier ist dargestellt.
+Mein Arbeit betritt nur einen kleinen Abschnitt von realen SE-Prozess. Hier ist die Darstellung.
 
-Der Ist-Zustand:
-man schreit/ändert eine PHP-Klasse fertig, entweder aus mangelden Budget und Zeit schreibt man keine Tests, 
-die Klasse landet per CI/CD in die Produktion, falls die Fehler entdeckt werden, wird noch aufwendiger zu testen,
-die Fehler nachzubeheben.
-Das wäre ein Flaschenhals oder Engpass, rot markiert.
-
-Oder man schreit/ändert eine PHP-Klasse fertig und dazu noch UnitTests, integriert in CI/CD, 
-das kann sehr aufwendig sein, besonders wenn der Entwickler wenig Wissen oder Erfahrung mit Testing hat.
-Die manuelle Testerstellung wäre sicherlich auch ein Flaschenhals/Engpass.
+Der Ist-Zustand: (hat entweder den oder den Flaschenhals/Engpass, rot markiert)
+man schreit/ändert eine PHP-Klasse fertig, und dazu noch UnitTests. 
+die manuelle Erstellung von UnitTests kann sehr aufwendig sein, viel Zeit in Anspruch nehmen, besonders für den Entwickler mit wenig Testing-Wissen oder -Erfahrung.
+Das wäre ein Engpass.
 
 
-Der Soll-Zustand:
-KI soll schnell UnitTests generieren bzw. korrigieren.
+oder man lässt UnitTests komplett weg, wie in der Prasix aus mangelden Budget und Zeit, 
+die Klasse landet per CI/CD in die Produktion, die Fehler werden später entdeckt, wird noch aufwendiger zu testen,
+die Fehler nachzubeheben. Das wäre auch ein Engpass.
+
+
+Der Soll-Zustand: (2 mal grün-markiert)
+KI soll schnell UnitTests generieren bzw. korrigieren/verbessern.
+
 Das Ergebnis: höhere Codequalität, weniger Fehler in Produktion und
-weniger Kosten und Zeit für die nachträgliche Behebung. Grün markiert.
+weniger Kosten und Zeit für die nachträgliche Fehlerbehebung. 2 mal grün markiert.
 
 Es handelt sich genau um zwei DORA-Kennzahlen, die beiden sinken:
-1) Lead Time for Changes — die Zeit von der Code-Erstellung/Änderung bis zur erfolgreichen Auslieferung in Produktion. 
+1) Lead Time for Changes — die Zeit von der Code-Erstellung/Änderung (inkls. Tests) bis zur erfolgreichen Deployment in die Produktion. 
 
-2) Change Failure Rate — der Anteil von Codes, die in Produktion zu einem Fehler führen.
+2) Change Failure Rate — der Anteil von Codes, die in der Produktion zu einem Fehler führt.
 
 Die Wertstromanalyse besagt, dass der KI-Einsatz hier sinnvoll is.
 
@@ -67,90 +69,101 @@ Die Wertstromanalyse besagt, dass der KI-Einsatz hier sinnvoll is.
 -------------------------
 Überblick, welche Werkzeuge/Tools habe ich verwednet.
 
-Dafür habe ich ein eigenes Claude-Code-Plugin entwickelt, der Plugin hat 
+Vor allem habe ich ein eigenes Claude-Code-Plugin entwickelt, der Plugin hat 
 vier Skills. (hier ist der Screenshot, man lade den Plugin dann die Skills wie Kommando-Zeile-Befehl durchfürhen)
 
 Mit dem Skills kann man z.B. alle Klassen in einer TYPO3-Extension analysieren, klassifizieren, 
-man bekommt danach einen ausfürhlichen Audit-Report in Text- oder Diagramm-Format generieren. 
-(welche Klasse ist ehe geeinet für UnitTest, oder FunktionalTest, oder beides, oder gar nicht, mit Begründungen)
+man bekommt danach einen ausfürhlichen Audit-Report mit oder ohne Diagramm. 
+(Liefert Info: welche Klasse ist ehe geeinet für UnitTest, oder FunktionalTest, oder beides, oder gar nicht testbar, mit Begründungen)
 
-Der Skill schreibt alle oder nur eine Klasse PHPUnitTests mit AAA-Pattern, eigenständig.
-Kann auch eine bestende TestKlasse anhand von PHP-Kommentar als Hinweise gezielt um Testcase erweitern. 
+Der Skill kann alle oder nur eine Klasse PHPUnitTestKlasse mit AAA-Pattern, eigenständig, generieren.
+Dabei auch benötige Pfadsturktur erstllen.
+(Arrage, Act, Assertion- nämlich einen Testcase Vorbereiten, Ausführen, Prüfen)
+(ein TestClasse kann mehrere TestCases haben)
+Kann auch PHP-Kommentar als Hinweise zum Test lesen/verstehen, in einer vorhandenen TestKlasse zusätzliche TestCase gezielt generieren. 
 
-Der Skill vervollständigt bzw. korriegt gezeilt die PhpUnitTests anhand von Mutationstest-Ergebnis.
+Der Skill kann Muationstest-Report anaylieren, vervollständigt die TestKlasse, dabei die Mutationslücke gezielt schliessen.
 
-Das Plugin als Tool kann man späer für beliebige TYPO3-Extension wieder verwenden.
+Das Plugin als Tool kann man später für beliebige TYPO3-Extension wieder verwenden.
 
 Man generiert PHPUnitTests manuell oder per KI, muss auch überprüft, wie gut/schlecht die Qualtität ist, 
-ggf. auch nach korrigieren, dafür veerwendet man die drei wichtigen Analyse-Werkzeuge. 
+ggf. auch nachkorrigieren, dafür verwende ich hauptsächlich die drei wichtigen Analyse-Werkzeuge. 
 
 1) PHPUnit Coverage — misst, wie viele PHP-Methoden und -Zeilen durch den UnitTest überhaupt ausgeführt oder abgedeckt werden.
 
-2) PHPStan — eine verbreitete statische Codeanalyse, findet z.B. PHP-Syntax- oder Typ-Fehler, etc. ohne den PHP-Codes auszuführen.
+2) PHPStan — verbreitet im Einsatz in der PHP-Welt, macht statische PHP-Codeanalyse, findet z.B. PHP-Syntax- oder Typ-Fehler, etc. ohne den PHP-Codes auszuführen.
 
-3) Infection — ein PHP-Mutationstest-Framework, der Tool baut absichtlich diverse künstliche Fehler ein und prüft,
-   ob die Tests diese Fehler wirklich erkennen. 
-(der Tool liefert pro TestKasse ausführliche Report mit Zahlen: Mutation Score Indicator, alle diesen Daten kann man 
-genau analysieren) Das Thema Mutationstest haben wir auch mehr oder weniger im Seminar schon erwähnt
+3) Infection — ein PHP-Mutationstest-Framework, der Tool baut absichtlich/systematisch diverse künstliche Fehler ein und prüft, ob die Tests diese Fehler wirklich erkennen. 
+
+(Coverage und Mutationstest sind nicht ganz fremd, haben wir auch mehr oder weniger im Seminar schon kennengelernt)
 
 
 3 / Umsetzung — Vorgehen
 -------------------------
-kurze Vorstellung zum Verfahren.
+Jetzt stelle ich das Verfahren kurz vor, wie habe ich den Vergleich durchgeführt, gemessen, evaluiert.
 
 Das Testobject also die Extension hat ca. 50 Klassen. 
-Für den Vergleich habe ich repräsentativ fünf PHP-Klassen ausgewählt — basierend auf dem
-Report des Skills test-audit-text, von der Klasser mit einfacher Logik bis zur Klasse
-mit complexer TYPO3-Abhängigkeit, also unterschiedliches Komplexitätsniveau.
+Ich habe das Test-Audit-Report analysiert. generiert durch den Claude-Plugin-Skill, und repräsentativ fünf PHP-Klassen ausgewählt, 
+von der Klasser mit einfacher Logik bis zur Klasse mit complexer TYPO3-Abhängigkeit, also unterschiedliches Komplexitätsniveau.
 
-Für jede Klassen wurden zwei Verfahren durchgelaufen, gemessen, evaluiert, dokumentiert und gegeneineinander verglichen:
+Für jede Klassen wurden zwei Verfahren(ohne und mit KI) durchgeführt, gemessen, evaluiert, dokumentiert und gegeneineinander verglichen:
 
-( Hier auf der Folie ist nur eine sehr vereinfachte Darstellung.)
-1) Manuelles Verfahren ohne KI — Ich schreibe TestCases in einer TestClass.
-   Ich validiere und evaluiere die TestKlasse per PHPStan, PHPUnit Coverage und Mutationstest.
-   Dabei muss ich ggf. per Hand PHP-Fehler beheben. 
-   Der PHPUnitTest an sich soll schliesslich ohne Fehler durchlaufen.
+( Hier auf der Folie ist nur eine sehr vereinfachte Abbildung.)
+1) Manuelles Verfahren ohne KI — Ich schreibe TestCases pro TestClass.
+   Ich validiere und evaluiere die TestKlasse per PHPStan, PHPUnit Coverage und Infection.
+   Die TestClasse bzw. alle TestCasesan sich sollen schliesslich ohne Fehler durchlaufen. Beim Fehler muss ich per Hand selber PHP-Fehler beheben. 
    
 
-2) Mit KI — Ähnlich, Pro Klasse generiert die KI eigenständlig eine TestClass.
-   Validieren/Evaluieren läuft eben auch durch PHPStan, PHPUnit Coverage und Mutationstest.
-   Dabei soll KI statische Fehler beheben, zusätzlich schliesst die KI gezielt die Lücken, die der Mutationstest aufdeckt.
-   Der PHPUnitTest an sich soll schliesslich ohne Fehler durchlaufen.
+2) KI-Verfahren — Ähnlich, Pro Klasse generiert die KI eigenständlig eine TestClass.
+   Das Validieren/Evaluieren geht eben auch mit Hilfe von PHPStan, PHPUnit Coverage und Infection.
+   Dabei soll KI statische Fehler beheben per Prompt, ein Claude-Plugin-Skill schliesst ggf. gezielt die Lücken, die der Mutationstest aufdeckt.
+   Schliesslich sollen die TestClasse mit allen TestCases ohne PHP-Fehler durchlaufen.
 
 
 3 / Umsetzung — Ergebnisse
 ----------------------------
-Das ist die Ergebnistabelle. 5 Klassen im Vergleich.
+Das ist die Ergebnistabelle. 5 Klassen, 2 Verfahren, im Vergleich.
 
-Man kann sehen, z.B. bei manuellen Verfahren, daueret es länger um eine TestClasse fertig zu erstellen, 
+Man kann sehen, z.B. bei manuellen Verfahren, daueret es lang um eine TestClasse fehlerfrei fertig zu erstellen, 
 dabei waren das Coverage(Methodenabdeckung) und Mutation Score beide nicht optimal.
 
+Hier ist das Verfahren mit KI (Zusätzlich Zeit für KI-Fix habe ich dokumentiert, sowie die Angaben vor und nach dem KI-Fix)
 Bei KI-Verfahren, war die Erstellungszeit deutlich kürzer. 
-KI lieferte manchmal zuerst kein optimales Ergebnis bei Coverage und Mutationstest konnte aber sehr schnell korrigiern.
+KI lieferte von Anfang an optimales Ergebnis bei Coverage,
+Aber genrierte einige statischen Fehlern und Mutationslücken, die musste ich nachverbessern und fixen, per KI, 
+die Korrektur/Nachversserung per KI lief in der Regal sehr zügig.
 
 
 Zusätzlich für die KI-generierten Testklassen habe ich eigene Qualitäts-Skala vergeben.
 Diese Stufe 1 bis 5 beidenasiert auf subjektiver Beobachtung und Analyse
 der gelieferten Daten, einige zusätzlichen Qualitätsfaktoren sind berücksichtigt:
-neben Anzahl PHPStan-Fehler, Coverage und Mutation Score (MSI), auch dazu Happy-Path/Grenzwerten/Fehlerfällen(Exceptions),
-Tautologien, korrektem Mocking/Stubbing, „Echo Chamber“-Effekt, etc.
+neben Fehleranzahl, Abdeckung und Mutation Score (MSI), z.b. ob ein Testcase gut genug war für Happy-Path/Grenzwerten/Fehlerfällen(Exceptions),
+ob ein Testcase Tautologien beinhaltete, Mocking/Stubbing waren gut, „Echo Chamber“-Effekt war vorhanden oder nicht, etc.
 
 Ich gehe jetzt nicht in die Details, einige davon habe ich in der Arbeit explizit genannt und erläutert.
 
+(KI übernimmt Fehler aus dem Code, statt sie zu erkennen: Rabatt 80% wäre richtig, im Code steht aber rabatt = 90%)
+KI macht einen Test nur 100*90%=90, Test bestanden. Mensch erkennt den Fehler, aber KI nicht.)
+(KI neigt dazu, Mocks exzessiv zu nutzen anstatt das tatsächliche funktionales Rückgabe-Verhalten einer Komponente zu prüfen)
 
 3 / Umsetzung — Hypothesen
 ----------------------------
-Schlussfolgerung. Was habe ich gefunden, welche Erwartungen sind erfüllt, welche sind noch nicht ganz.
+Schlussfolgerung. Was habe ich gefunden, ich habe 7 Erwartungen/Hypothese gehabt, 5 Erwartungen sind erfüllt, 2 sind noch nicht ganz.
 
-Zusammengefasst: 5 meiner Hypothesen — Zeitersparnis, Coverage, Mutation Score, Mocking-Qualität und
-Assertion-Qualität(für Edge-Cases, Grenzwerte) — wurden klar bestätigt. 
-Bei diesen fünf Aspekten leistet die KI insgesamt sehr gute Arbeit/Korrektur.
+Zusammengefasst: 5 meiner Hypothesen wurden bestätigt.
+- KI schafft sehr schnell ein Grundgerüst für eine TestKlasse, vor allem bei Klassen mit einfacher Logik.
+- KI liefert gutes Ergebnisse bei Coverage und Mutationstest.
+- KI generiert schon brauchbares (nicht unbedingt fehlerfrei) Mocking/Stubbing.
+- KI schreibt gute Tests für Grenzwerte und Edge-Cases.
+Im Bezug auf die fünf Aspekten leistet die KI insgesamt sehr gute Arbeit.
 
-Zwei Hypothesen aber nicht ganz: 
+(Grenzwert: neue Rabattberechnugn ab 100 Euro, inkl. 100 oder doch ab 101, 100 ist Grenzwert
+Edge-Case: eine Funktion macht Verschlüsselung oder Entschlüsselung, wann passit, wenn die Angabe leer ist oder NULL ist)
+
+2 Hypothesen aber nicht ganz bestätigt:  (genau da ist Kontrolle/Korrektur von Menschen benötigt)
 - Die KI produzierte im ersten Wurf teils sogar mehr statische Fehler als ich selbst von Hand.
 - nicht alle PHPUnit-Tests an sich liefen beim ersten Versuch komplett fehlerfrei durch.
-(Fehler wie z.B. fehlgeschlagene/leere Assertions, Lauffehler/Exceptions, falsche Mocking/Stubbing, etc.)
-
+(typische Fehler wie z.B. fehlgeschlagene/leere-Assertion(nämlich Prüfung/Behauptung), Lauffehler/Exceptions, zum Teil falsche Mocking/Stubbing, etc.)
 
 Der Kernbefund: KI unterstützt den Menschen, ersetzt ihn nicht — sie übernimmt die Fleissarbeit vollständig,
 der Mensch bleibt für die kurze, gezielte Korrektur zuständig.
@@ -161,11 +174,11 @@ der Mensch bleibt für die kurze, gezielte Korrektur zuständig.
 Recherchiert habe ich auch die Erfahrungen sowie Forschungen der anderen. Den Kaptitel zu diesem Thema findet man auch in emienr Arbeit.
 
 Viele Berichte und Publikationen im Internet zu KI-gestütztem Testing
-zeigen ein ähnliches Muster wie in dieser Arbeit, zusammengefasst:
+zeigen ein ähnliches Muster wie meine Arbeit, zusammengefasst:
 Vorteile: 
-- KI schafft gut ein schnelles Testgerüst
+- KI schafft ein Testgerüst schnell und gut, (dort kann man Testcase/logik erweitern und verfeinern.)
 - KI schreibt Tests mit höhrem Coverage
-- KI liefert auf Nachfrage brauchbare Ideen für Edge-Cases. 
+- KI liefert brauchbare Tests, kann z.B. Edge-Cases/Grenzwerte mit guter Qualtiät testen. 
 
 Nachteile:
 - Echo-Chamber-Effekt
@@ -173,52 +186,56 @@ Nachteile:
 - veraltete Testmethoden
 (ausführlich erläutert in meiner Arbeit)
 
-Gegenmassnahmen: 
+Gegenmassnahmen in der Praxis: 
 - menschliche Kontrolle
-- Mutationstests
-- ergänzende Integrationstests (nicht nur UnitTest, sondern prüft ob mehrere Komponenten/Klassen zusammen korrekt funktionieren)
+- Mutationstests (unverzichtbar)
+- ergänzende Integrationstests (nicht nur Komponenten im Einzeln, sondern prüft ob mehrere Komponenten/Klassen zusammen korrekt funktionieren)
 
-Auch die akademische Forschung bestätigt dieses Bild: (Autor Durrani im Jahr 2025)
-(eine breite statistisch Studie über viele Software-Engineering-Phasen, mit verschiedenen Teams, Programmiersprachen und Tools)
+Auch die akademische Forschung bestätigt dieses Bild: (von Durrani im Jahr 2025)
+(eine breite statistische Studie über viele Software-Engineering-Phasen, mit verschiedenen Teams/Entwicklern, Programmiersprachen und Tools, von relativ langem Zeitraum)
 
-Das Ergebis mit p-Werit für Testing bedeutet:
-- KI kann die Test-Genauigkeit (Fehlerfindungsrate, Testabdeckung, Übereinstimmung mit menschlicher Referenz, etc.) deutlich verbessern, gutes präzises Testcase liefern
-(der p-Wert des Signifikanztests liegt unter 0,0001, je kleiner, desto zuverlässiger, unwahrscheinlich ein Zufall).
+Hier sind 2 wichtige Ergebnisse: belegt mit p-Wert (je kleiner, desto zuverlässiger, unwahrscheinlicher dass es ein Zufall ist).
+- KI kann die Test-Genauigkeit deutlich verbessern, liefert gutes präzises Testcase.
+ (befasst, z.B.Fehlerfindungsrate, Testabdeckung, Übereinstimmung mit menschlicher Referenz, etc.)
 
-- Beim reinen Zeitgewinn sieht es anders aus: (für Zeitgewinn keine verlässliche statistische Evidenz)
-der p-Wert liegt bei 0,1359, dass d.h. KI kann nicht immer 100% gesamt Testing-Prozess beschleunigen, 
-(manchmal kann Zufall sein, je nach dem Kontext, Erfahrung des Team, eingesetzte KI-Tools, Komplexität der Aufgabe, 
-KI kann Fehler generieren, nicht immer First-Run-Grün, usw, usf.)
+ (menschlicher Referenz: Ideen, Logikdenken, wie und was testet ein Menach, macht die KI sehr ähnlich)
 
-Goldene Regel: Genau deshalb bleibt human-in-the-loop notwendig!!!
 
-Daraus ergeben sich fünf Empfehlungen: 
-- reine PHP-Logik-Klassen zuerst per KI testen lassen
-- PHPDoc und Inline-Kommentare gezielt für die Generierung nutzen
-- den Korrekturschritt fest einplanen statt ihn zu überspringen (blind KI vertrauen)
-- Mutationstests dauerhaft neben PHPUnit Coverage und PHPStan etablieren
-- und Test-Driven Development mit KI-Unterstützung ausprobieren
-(der Mensch schreibt den ersten Test, die KI übernimmt Implementierung, Refactoring und Edge-Cases.)
+- Beim reinen Zeitgewinn sieht es anders aus: (für Zeitgewinn keine zuverlässige statistische Evidenz)
+der p-Wert liegt bei 0,1359 bedeutet, dass d.h. KI kann nicht immer 100% das gesamte Testing-Prozess beschleunigen, 
+KI kann Fehler generieren, generierte Test läuft nicht immer sofort 100% fehlerfrei.
+(der Zeitgewinn für Testing per KI kann kann Zufall sein, je nach dem, viele andere Faktoren können mit beeinflussen, z.B. Kontext/Rahmenbedigungen eines Projektes, 
+das Teams/die Entwickler sind erfahren oder nicht, welche KI-Tools man setz ein, Komplexität der Aufgabe, Programmiersprachen...etc.)
+
+Die goldene Regel ist eindeutig: Genau deshalb bleibt human-in-the-loop notwendig!!!
+
+Daraus ergeben sich fünf Empfehlungen (gilt auch für UnitTests mit KI-Unterstützung nicht nur für PHP): 
+- reine/einfache (PHP)-Logik-Klassen zuerst per KI testen lassen
+- PHPDoc oder Inline-Kommentare gezielt für die Testsgenerierung nutzen
+- den Korrekturschritt fest einplanen im Projekt statt ihn zu überspringen (bzw. blind KI zu vertrauen)
+- Mutationstests dauerhaft neben andere Tools zur Evaluierung/validierung(PHPUnit Coverage und PHPStan) einsetzen 
+- und Test-Driven Development mit KI-Unterstützung
+(der Mensch schreibt von Anfang an den ersten Test, die KI übernimmt zum Teil Implementierung, Refaktorierung)
 
 
 5 / Beitrag & persönlicher Gewinn
 -----------------------------------
-Letzter Punkt, was habe ich beigetragen, gelernt.
+Ich habe nicht viel Zeit, zum Schluss, was habe ich beigetragen, gelernt.
 
-Ich habe den Beweis gehabt, bestende Literatur hat auch dokumentiert, 
-dass KI Unit-Tests generieren kann und Testing gut unterstützen kann.
+Ich habe den Beweis gehabt, wie die bestenden Literaturen/Berichte, 
+KI kann Unit-Tests generieren kann und Testing gut unterstützen kann.
 Aber Achtung: KI unterstützt den Menschen, sie ersetzt ihn nicht. 
 
-Ich habe ich ein wiederverwendbares Tool, das CLI-Plugin funktioniert
-für jede beliebige TYPO3-Extension, ich kann das Plugin gut anwenden, mit 
-Kombination von anderen Tools.
+Ich habe ich ein wiederverwendbares KI-Tool entwickelt, das Claude-Plugin (CLI-Befehle) funktioniert
+für jede beliebige TYPO3-Extension.
 
-Zweitens, ich habe persönlich gelernt, mich intensiv auseinendergesetzt
-- mit PHPUnit-Tests, Testing-Wissen in allgemein (Mocking/Stubbing)
-- mit verschieden Tools, wie man die Tools sinnvoll einsetzt, wie man die Daten auswertet, etc.
-- mit Claude Code, wie man damit Plugin/Skill schreibt und verwendet.
+Zweitens, ich habe viel gelesen und gelernt, mich intensiv auseinendergesetzt
+- mit PHPUnit-Tests, Testing-Wissen in allgemein
+- ich habe mit verschieden Tools zur Vlaidierung/Evaluierung gearbeitet, wie man die Tools sinnvoll einsetzt, wie man die ausgelieferten Daten auswertet, etc.
+- Erfarung mit Claude Code, als mächtigeer KI-Codingassitant, als wie man damit Plugin/Skill schreibt und verwendet.
 
 
+Mock vs. Stub
 Beide sind Test-Doubles (Ersatzobjekte für echte Abhängigkeiten)
 Stub liefert nur vorgegebene Rückgabewerte
 Kurz: Stub = "gib mir einen festen Wert zurück, ich will nur weitertesten". 
